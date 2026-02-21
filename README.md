@@ -149,7 +149,7 @@ Workspace-specific skills override global skills when they share the same name.
 
 ### Using Skills
 
-Simply use keywords related to your task. Copilot or Claude Code will automatically activate relevant skills:
+Simply use keywords related to your task. Copilot, Claude Code, or Codex will automatically activate relevant skills:
 
 - "Help me refactor this React component" → Activates `react-development`
 - "Create a PRD for the authentication feature" → Activates `documentation-authoring`

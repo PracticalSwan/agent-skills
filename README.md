@@ -1,11 +1,11 @@
 <div align="center">
 
-# Copilot Skills
+# Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Skills Count](https://img.shields.io/badge/Skills-40%2B-blue.svg)](https://github.com/copilot-skills/repository)
 
-A curated collection of domain-specific skill definitions for GitHub Copilot and Claude Code agents. Each skill encapsulates specialized knowledge, patterns, scripts, and references for specific technologies and domains.
+A curated collection of domain-specific skill definitions for GitHub Copilot, Claude Code, and Codex agents. Each skill encapsulates specialized knowledge, patterns, scripts, and references for specific technologies and domains.
 
 [Features](#features) • [Available Skills](#available-skills) • [Skill Structure](#skill-structure) • [Getting Started](#getting-started) • [Usage](#usage) • [Contributing](#contributing)
 
@@ -13,7 +13,7 @@ A curated collection of domain-specific skill definitions for GitHub Copilot and
 
 ## Overview
 
-Copilot Skills transform how GitHub Copilot and Claude Code agents understand and work with specific technologies. By activating relevant skills, agents gain domain expertise, apply best practices, and follow established patterns automatically.
+Copilot Skills transform how GitHub Copilot, Claude Code, and Codex agents understand and work with specific technologies. By activating relevant skills, agents gain domain expertise, apply best practices, and follow established patterns automatically.
 
 Skills are activated automatically based on keyword matching in user prompts, enabling context-aware assistance without manual configuration.
 

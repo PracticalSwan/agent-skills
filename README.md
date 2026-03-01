@@ -3,11 +3,11 @@
 # Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills Count](https://img.shields.io/badge/Skills-40%2B-blue.svg)](https://github.com/copilot-skills/repository)
+[![Skills Count](https://img.shields.io/badge/Skills-50-blue.svg)](https://github.com/PracticalSwan/agent-skills)
 
 A curated collection of domain-specific skill definitions for GitHub Copilot, Claude Code, and Codex agents. Each skill encapsulates specialized knowledge, patterns, scripts, and references for specific technologies and domains.
 
-[Features](#features) • [Available Skills](#available-skills) • [Skill Structure](#skill-structure) • [Getting Started](#getting-started) • [Usage](#usage) • [Contributing](#contributing)
+[Features](#features) • [Available Skills](#available-skills) • [Skill Structure](#skill-structure) • [Getting Started](#getting-started) • [Usage](#usage) • [Contributing](#contributing) • [Changelog](CHANGELOG.md)
 
 </div>
 
@@ -17,10 +17,13 @@ Copilot Skills transform how GitHub Copilot, Claude Code, and Codex agents under
 
 Skills are activated automatically based on keyword matching in user prompts, enabling context-aware assistance without manual configuration.
 
+> [!NOTE]
+> **What's New** — See [CHANGELOG.md](CHANGELOG.md) for recent updates including activation testing fixes, description rewrites, and cross-references between related skills.
+
 ## Features
 
 - **Automatic Activation** - Skills trigger based on relevant keywords in your prompts
-- **Domain Expertise** - Specialized knowledge for 40+ technologies and domains
+- **Domain Expertise** - Specialized knowledge for 50 technologies and domains
 - **Consistent Patterns** - Standardized structure with references, examples, and scripts
 - **MCP Integration** - Many skills integrate with Model Context Protocol servers
 - **Customizable** - Add project-specific skills to `.github/skills/` for team conventions

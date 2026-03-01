@@ -15,10 +15,6 @@ All notable changes to the Copilot Skills repository will be documented in this 
 - Verified keyword matching against diverse prompt patterns (agent delegation, Azure, documentation, frontend, JS/React/Vite, backend, database, office documents, DevOps, miscellaneous, testing, cross-skill overlap)
 - Confirmed acceptable context-dependent overlaps (API docs, database schemas, backend API prompts)
 
-### Updated
-- **CLAUDE.md**: Updated skill catalog entries to reflect description changes (frontend-design, web-testing, javascript-development, web-design-reviewer)
-- **Serena memories**: Created `active-context` and `progress` memories documenting current state
-
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

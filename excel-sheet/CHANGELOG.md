@@ -48,6 +48,17 @@ if any(kw in ['xlsx', 'excel', 'spreadsheet', 'worksheet', 'workbook', 'mcp_exce
 ### Future-Proof
 - MCP servers update independently
 - New tools added without skill updates
+
+---
+
+## [2026-02-28] — Description Rewrite & Cross-References
+
+### Changed
+- Rewrote skill description to ~200 characters with clear, specific activation keywords
+- Improved keyword specificity to reduce overlap with related skills
+
+### Added
+- `## Related Skills` cross-reference table with 2-4 related skills and "Use When" guidance
 - Community contributions to MCP ecosystem
 
 ## Migration Notes

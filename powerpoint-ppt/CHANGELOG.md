@@ -49,6 +49,17 @@ if any(kw in ['pptx', 'powerpoint', 'presentation', 'ppt', 'slide', 'deck', 'mcp
 - New tools added without skill updates
 - Community contributions to MCP ecosystem
 
+---
+
+## [2026-02-28] — Description Rewrite & Cross-References
+
+### Changed
+- Rewrote skill description to ~200 characters with clear, specific activation keywords
+- Improved keyword specificity to reduce overlap with related skills
+
+### Added
+- `## Related Skills` cross-reference table with 2-4 related skills and "Use When" guidance
+
 ## Migration Notes
 
 For existing code using old libraries:

@@ -1,6 +1,6 @@
 ---
 name: development-workflow
-description: Structured software development workflow combining spec-driven development, repository contribution guidelines, and project lifecycle management. Covers EARS notation for requirements, technical design documentation, implementation tracking, contribution guidelines, project planning, quality assurance processes, and Git/GitHub workflows. Use when starting new features, defining requirements, creating technical designs, managing implementation plans, ensuring thorough documentation, or contributing to repositories. Triggered by keywords like development workflow, project planning, feature development, requirements gathering, technical design, code review process, Git workflow, repository management.
+description: Spec-driven development lifecycle — EARS requirements, technical design docs, implementation tracking, and contribution guidelines. Use when planning features, defining requirements, or managing project lifecycle.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -802,3 +802,25 @@ Closes issue #123"
 
 ### Examples
 - [Feature Spec Example](./examples/feature-spec-example.md) — Complete spec-driven development example for User Authentication
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [devops-tooling](../devops-tooling/SKILL.md) | Git operations and CI/CD automation for the workflow |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Write specs and design docs within the workflow |
+| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Manage versioning during the release lifecycle |
+| [code-quality](../code-quality/SKILL.md) | Code review and quality gates in the workflow |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [devops-tooling](../devops-tooling/SKILL.md) | Git operations and CI/CD automation for the workflow |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Write specs and design docs within the workflow |
+| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Manage versioning during the release lifecycle |
+| [code-quality](../code-quality/SKILL.md) | Code review and quality gates in the workflow |

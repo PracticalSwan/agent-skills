@@ -1,6 +1,6 @@
 ---
 name: codexer
-description: Advanced Python research assistant with Context7 MCP integration. Use when conducting Python library research, building research workflows, implementing strict Python coding standards, or needing Context7 documentation lookups. Triggers on Python research, library evaluation, code quality enforcement, and documentation fetching tasks.
+description: Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -240,3 +240,22 @@ project/
 
 ### Examples
 - [Research Workflow](./examples/research-workflow.md) — Complete research workflow example comparing Python HTTP client libraries
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [javascript-development](../javascript-development/SKILL.md) | Node.js patterns complement Python research |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Document research findings and library evaluations |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [javascript-development](../javascript-development/SKILL.md) | Node.js patterns complement Python research |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Document research findings and library evaluations |

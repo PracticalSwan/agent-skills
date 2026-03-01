@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: Comprehensive frontend design expertise combining color theory, responsive design principles, React component design with Tailwind CSS, and visual UI review. Covers the 60-30-10 color rule, accessibility compliance (WCAG), responsive layouts, UI component patterns, and design quality assessment. Use when creating UI designs, choosing color palettes, building responsive layouts, ensuring accessibility, or reviewing and fixing frontend design issues. Triggered by keywords like UI design, frontend design, responsive design, color palette, accessibility, WCAG, component design, Tailwind CSS, visual design.
+description: UI/UX design — color theory (60-30-10 rule), responsive layouts, WCAG accessibility, CSS/Tailwind patterns, wireframes, and visual review. Use when designing interfaces, choosing palettes, writing CSS, or fixing layout/accessibility issues.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -913,3 +913,14 @@ module.exports = {
 
 ### Examples
 - [Responsive Recipe Card](./examples/responsive-recipe-card.md) — Complete React+Tailwind recipe card with responsive variants and states
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [react-development](../react-development/SKILL.md) | Implement designs as React components |
+| [stitch-design](../stitch-design/SKILL.md) | Design system and component conversion |
+| [web-design-reviewer](../web-design-reviewer/SKILL.md) | Visual review of implemented designs |
+| [canvas-design](../canvas-design/SKILL.md) | Design philosophy and visual aesthetics |

@@ -1,6 +1,6 @@
 ---
 name: breaking-changes-management
-description: Breaking changes documentation, migration guides, deprecation process, and versioning. Use when introducing breaking API changes, creating migration guides, deprecating features, updating changelogs, managing major version releases, or documenting version transitions. Triggered by keywords like breaking changes, migration guide, deprecation notice, version upgrade, changelog update, breaking API modification.
+description: Manage breaking API changes, migration guides, deprecation notices, and semver versioning. Use when introducing breaking changes, writing migration paths, updating changelogs, or releasing major versions.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -71,3 +71,24 @@ See [Deprecation Procedures](./references/deprecation.md) for:
 - [ ] Removal timeline specified
 - [ ] ChangeLog updated with BREAKING prefix
 - [ ] Before/after examples provided
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-patterns](../documentation-patterns/SKILL.md) | Templates for migration guides and breaking change docs |
+| [code-examples-sync](../code-examples-sync/SKILL.md) | Update code examples after breaking API changes |
+| [development-workflow](../development-workflow/SKILL.md) | Versioning and release lifecycle management |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-patterns](../documentation-patterns/SKILL.md) | Templates for migration guides and breaking change docs |
+| [code-examples-sync](../code-examples-sync/SKILL.md) | Update code examples after breaking API changes |
+| [development-workflow](../development-workflow/SKILL.md) | Versioning and release lifecycle management |

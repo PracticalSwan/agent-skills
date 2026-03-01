@@ -1,6 +1,6 @@
 ---
 name: serena-usage
-description: Serena MCP Server usage for project memory management, code navigation, and intelligent refactoring. Use when working with Serena memories, managing project context across sessions, performing symbol-based code navigation, executing safe code refactoring, or maintaining continuity between AI agent sessions using Serena's memory system. Triggered by keywords like Serena MCP, project memory, code navigation, symbol navigation, intelligent refactoring, memory management, AI session continuity, Serena memory system.
+description: Serena MCP for project memory and code navigation. Use when managing Serena memories, navigating symbols, performing intelligent refactoring, or maintaining context/continuity across AI agent sessions.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -650,3 +650,12 @@ edit_memory(
   mode="literal" # or "regex" as appropriate
 )
 ```
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [development-workflow](../development-workflow/SKILL.md) | Project lifecycle context for Serena memory |
+| [code-quality](../code-quality/SKILL.md) | Symbol-based refactoring with Serena tools |

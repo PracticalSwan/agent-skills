@@ -1,6 +1,6 @@
 ---
 name: documentation-authoring
-description: Master the art of structured documentation creation including PRDs, technical specs, design docs, decision records, and knowledge bases. Comprehensive workflow for context gathering, iterative refinement, and reader testing to ensure documentation works well for its audience. Use when writing documentation, creating proposals, drafting specs, defining requirements, or planning features. Triggered by keywords like documentation writing, technical writing, PRD creation, specification document, design document, knowledge base, decision record, API documentation.
+description: Create structured docs from scratch — PRDs, technical specs, design docs, decision records, knowledge bases. Use when drafting documentation, writing proposals, defining requirements, or planning features.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -419,3 +419,25 @@ Use this format for tracking implementation work and decisions:
 
 ### Examples
 - [PRD Example](./examples/prd-example.md) — Complete PRD for Recipe Search Enhancement in Kitchen Odyssey
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-patterns](../documentation-patterns/SKILL.md) | Apply templates when structuring new docs |
+| [documentation-quality](../documentation-quality/SKILL.md) | Enforce quality standards on authored docs |
+| [documentation-verification](../documentation-verification/SKILL.md) | Validate docs before publishing or merging |
+| [notion-docs](../notion-docs/SKILL.md) | Publish authored docs to Notion workspaces |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-patterns](../documentation-patterns/SKILL.md) | Apply templates when structuring new docs |
+| [documentation-quality](../documentation-quality/SKILL.md) | Enforce quality standards on authored docs |
+| [documentation-verification](../documentation-verification/SKILL.md) | Validate docs before publishing or merging |
+| [notion-docs](../notion-docs/SKILL.md) | Publish authored docs to Notion workspaces |

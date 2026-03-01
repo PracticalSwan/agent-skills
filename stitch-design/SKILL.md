@@ -1,6 +1,6 @@
 ---
 name: stitch-design
-description: Comprehensive Google Stitch design toolkit merging design system documentation, React component conversion, autonomous build loops, prompt enhancement, Remotion video walkthroughs, and shadcn/ui integration. Use when working with Stitch MCP projects, generating DESIGN.md files, converting Stitch screens to React, building multi-page sites, enhancing UI prompts, creating walkthrough videos, or integrating shadcn/ui components.
+description: Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -311,3 +311,13 @@ export function cn(...inputs: ClassValue[]) {
 
 ### Examples
 - [Design System Example](./examples/design-system-example.md) — Complete DESIGN.md example generated from Stitch screen data
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [react-development](../react-development/SKILL.md) | Implement Stitch screens as React code |
+| [frontend-design](../frontend-design/SKILL.md) | Design system and UI principles |
+| [canvas-design](../canvas-design/SKILL.md) | Design philosophy and visual aesthetics |

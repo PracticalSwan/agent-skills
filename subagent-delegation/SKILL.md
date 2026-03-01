@@ -1,6 +1,6 @@
 ---
 name: subagent-delegation
-description: Core subagent delegation patterns for boilerplate generation, data transformation, file analysis, documentation generation, and utility creation. Use when handling repetitive coding tasks, delegating routine work, or breaking down complex features into subtasks. Triggered by keywords like delegate to subagent, boilerplate generation, create utilities, transform data, analyze codebase, generate documentation.
+description: Delegate routine work to subagents — boilerplate generation, data transformation, file analysis, documentation drafting. Use when splitting tasks into independent subtasks for parallel subagent execution.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -13,32 +13,13 @@ license: Complete terms in LICENSE.txt
 
 ## Activation Conditions
 
-**SHOULD activate when task contains:**
-- Repetitive or boilerplate subtasks
-- Scanning or transformation subtasks
-- Documentation-helper subtasks
-
-**SHOULD activate when:**
+Activate this skill when:
 - Creating repetitive code structures or boilerplate
 - Performing data transformation tasks
 - Analyzing codebase for patterns or information
 - Generating documentation from existing code
 - Creating simple utility functions
 - Breaking down complex features into manageable subtasks
-
-## Non-Activation Conditions
-
-**Do NOT activate this skill when:**
-- Task involves core architecture decisions (planning must stay in main agent)
-- Task involves security-critical logic (must keep in main agent)
-- Task is a trivial one-shot task where delegation overhead is wasteful
-- Task requires complex architectural decisions or critical security implementations
-- User wants to learn how to implement the feature themselves
-- Project documentation and context are insufficient for delegation
-- Task is time-critical and delegation overhead would delay implementation
-- User needs real-time collaboration rather than asynchronous delegation
-- Core business logic or critical implementation paths are involved
-- Task is too simple to warrant delegation overhead
 
 ## Core Delegation Patterns
 
@@ -102,3 +83,13 @@ runSubagent({
 
 // Main agent implements core logic
 ```
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [agent-task-mapping](../agent-task-mapping/SKILL.md) | Map tasks to the right specialist agent |
+| [custom-agent-usage](../custom-agent-usage/SKILL.md) | Discover and invoke custom .agent.md agents |

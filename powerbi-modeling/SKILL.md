@@ -1,6 +1,6 @@
 ---
 name: powerbi-modeling
-description: 'Power BI semantic modeling assistant for building optimized data models. Use when working with Power BI semantic models, creating measures, designing star schemas, configuring relationships, implementing RLS, or optimizing model performance. Triggers on queries about DAX calculations, table relationships, dimension/fact table design, naming conventions, model documentation, cardinality, cross-filter direction, calculation groups, and data model best practices. Always connects to the active model first using power-bi-modeling MCP tools to understand the data structure before providing guidance.'
+description: 'Power BI semantic models — DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI.'
 ---
 
 
@@ -166,3 +166,14 @@ Research current best practices using `microsoft_docs_search` for:
 ### Scripts
 - [Power BI Model Audit](scripts/powerbi-model-audit.py) — Python script to audit Power BI models for best practices
 
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft SDK/docs for Power BI APIs |
+| [sql-development](../sql-development/SKILL.md) | SQL data sources for Power BI models |
+| [excel-sheet](../excel-sheet/SKILL.md) | Excel as data source or export target |

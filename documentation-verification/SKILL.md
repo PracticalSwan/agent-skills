@@ -1,6 +1,6 @@
 ---
 name: documentation-verification
-description: Documentation verification, validation procedures, and quality checks. Use when reviewing documentation before merging, checking doc completeness, verifying code examples work, ensuring no broken links, and validating accuracy. Triggered by keywords like documentation review, verify documentation, doc validation, check broken links, validate code examples.
+description: Validate documentation before merging — check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -58,3 +58,24 @@ npm run docs:lint         # Check for issues
 - [ ] README.md reflects current state
 - [ ] No broken internal links
 - [ ] No broken external references
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards to verify against |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Verify authored docs before publishing |
+| [code-examples-sync](../code-examples-sync/SKILL.md) | Validate code examples are current and working |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards to verify against |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Verify authored docs before publishing |
+| [code-examples-sync](../code-examples-sync/SKILL.md) | Validate code examples are current and working |

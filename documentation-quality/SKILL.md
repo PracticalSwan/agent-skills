@@ -1,6 +1,6 @@
 ---
 name: documentation-quality
-description: Documentation quality standards, formatting guidelines, and writing principles. Use when writing documentation, establishing docs quality standards, reviewing doc quality, creating writing guidelines, or setting documentation metrics. Triggered by keywords like documentation quality, writing guidelines, doc standards, formatting rules, documentation review principles.
+description: Documentation quality standards and writing principles. Use when establishing formatting rules, reviewing doc quality metrics, creating writing guidelines, or enforcing consistent documentation style across a project.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -57,3 +57,24 @@ expected output
 - [ ] Terminology is consistent
 - [ ] Error handling documented
 - [ ] Edge cases and limitations covered
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Apply quality standards during doc creation |
+| [documentation-verification](../documentation-verification/SKILL.md) | Verify quality metrics before merging docs |
+| [documentation-patterns](../documentation-patterns/SKILL.md) | Patterns that enforce quality consistency |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Apply quality standards during doc creation |
+| [documentation-verification](../documentation-verification/SKILL.md) | Verify quality metrics before merging docs |
+| [documentation-patterns](../documentation-patterns/SKILL.md) | Patterns that enforce quality consistency |

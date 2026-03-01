@@ -1,6 +1,6 @@
 ---
 name: javascript-development
-description: Comprehensive JavaScript development expertise with ES2024+, modern async/await patterns, DOM manipulation, Node.js, and API integration. Use when writing JavaScript code, creating React components, working with APIs, implementing frontend functionality, or configuring build tools. Triggered by keywords like JavaScript code, ES2024, async await, DOM manipulation, Node.js, API integration, React components, frontend functionality, build tools.
+description: JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -930,3 +930,15 @@ function truncate(text, maxLength) {
 - [JavaScript.info](https://javascript.info/) — Modern JavaScript tutorial
 - [JavaScript 30](https://javascript30.com/) — 30-day JavaScript challenge
 - [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS) — Deep dive into JavaScript
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [react-development](../react-development/SKILL.md) | React component and hook patterns |
+| [vite-development](../vite-development/SKILL.md) | Build tooling for JS projects |
+| [nestjs](../nestjs/SKILL.md) | Server-side JS with NestJS framework |
+| [web-testing](../web-testing/SKILL.md) | Test JS apps with Playwright and DevTools |

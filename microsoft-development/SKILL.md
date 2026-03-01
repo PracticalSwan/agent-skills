@@ -1,6 +1,6 @@
 ---
 name: microsoft-development
-description: Microsoft technology development hub combining documentation lookup, code reference, and sample retrieval for Azure, .NET, Microsoft 365, Windows, Power Platform, and all Microsoft technologies. Use when working with Azure SDKs, .NET libraries, building Microsoft APIs, looking up API references, or needing official Microsoft documentation samples.
+description: Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval.
 compatibility: Requires Microsoft Learn MCP Server (https://learn.microsoft.com/api/mcp)
 license: Complete terms in LICENSE.txt
 ---
@@ -724,3 +724,16 @@ using System.Text.Json;
 
 ### Examples
 - [Azure Function API Example](./examples/azure-function-api-example.md) — Azure Functions v4 isolated API with Cosmos DB and GitHub Actions
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [azure-integrations](../azure-integrations/SKILL.md) | Deploy and configure Azure resources |
+| [powerbi-modeling](../powerbi-modeling/SKILL.md) | Power BI data modeling with MS stack |
+| [excel-sheet](../excel-sheet/SKILL.md) | Excel manipulation via MCP |
+| [word-document](../word-document/SKILL.md) | Word document manipulation via MCP |
+| [powerpoint-ppt](../powerpoint-ppt/SKILL.md) | PowerPoint manipulation via MCP |

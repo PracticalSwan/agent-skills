@@ -1,6 +1,6 @@
 ---
 name: excel-sheet
-description: Microsoft Excel (.xlsx) spreadsheet manipulation using MCP server tools. Use this any time an Excel spreadsheet is involved - as input, output, or both. Activate the excel-server MCP for Excel operations. Covers creating workbooks, managing worksheets, formatting cells, writing formulas, creating charts, building pivot tables, and data analysis with professional standards.
+description: Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -538,3 +538,15 @@ pip install openpyxl
 ```
 
 ---
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft SDK and docs reference |
+| [powerbi-modeling](../powerbi-modeling/SKILL.md) | Export data for Power BI modeling |
+| [word-document](../word-document/SKILL.md) | Embed Excel data in Word reports |
+| [powerpoint-ppt](../powerpoint-ppt/SKILL.md) | Insert charts into presentations |

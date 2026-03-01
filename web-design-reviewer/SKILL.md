@@ -1,6 +1,6 @@
 ---
 name: web-design-reviewer
-description: 'This skill enables visual inspection of websites running locally or remotely to identify and fix design issues. Triggers on requests like "review website design", "check the UI", "fix the layout", "find design problems". Detects issues with responsive design, accessibility, visual consistency, and layout breakage, then performs fixes at the source code level.'
+description: 'Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing.'
 ---
 
 # Web Design Reviewer
@@ -366,3 +366,14 @@ The same workflow can be implemented with these tools. As long as they provide t
 2. Use more specific selectors
 3. Consider using CSS Modules or scoped styles
 4. Consult user to confirm impact scope
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [web-testing](../web-testing/SKILL.md) | Playwright-based verification after design fixes |
+| [frontend-design](../frontend-design/SKILL.md) | Design principles to review against |
+| [react-development](../react-development/SKILL.md) | Fix design issues in React source code |

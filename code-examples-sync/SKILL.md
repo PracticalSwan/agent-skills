@@ -1,6 +1,6 @@
 ---
 name: code-examples-sync
-description: Code example synchronization, verification, and update patterns. Use when function signatures change, API interfaces are modified, best practices evolve, or examples need updates. Triggers on code example outdated, example syntax errors, updating imports, verifying documentation snippets, and maintaining example consistency across docs.
+description: Synchronize and verify code examples in documentation. Use when function signatures change, API interfaces update, imports shift, or documentation snippets become outdated and need correction.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -47,3 +47,24 @@ When code changes affect examples:
 - [ ] Output matches documented results
 - [ ] Syntax is consistent across language
 - [ ] Error handling is demonstrated where applicable
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-verification](../documentation-verification/SKILL.md) | Validate code examples before merging docs |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Keep authored docs in sync with code changes |
+| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Update examples after breaking API changes |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-verification](../documentation-verification/SKILL.md) | Validate code examples before merging docs |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Keep authored docs in sync with code changes |
+| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Update examples after breaking API changes |

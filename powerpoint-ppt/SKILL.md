@@ -1,6 +1,6 @@
 ---
 name: powerpoint-ppt
-description: Microsoft PowerPoint (.pptx) presentation manipulation using MCP server tools. Use this any time a PowerPoint presentation is involved - as input, output, or both. Activate the presentation-server MCP for PowerPoint operations. Covers creating, editing, formatting slides, managing placeholders, adding images, applying templates, and extracting text from presentations with professional standards.
+description: PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -411,3 +411,14 @@ activate_information_extraction_and_management();// extract text, slide masters,
 - [PPT Automation Script](./scripts/ppt-automation.py) — Python script for presentation automation
 
 ---
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft SDK/docs reference |
+| [excel-sheet](../excel-sheet/SKILL.md) | Embed Excel data/charts in slides |
+| [word-document](../word-document/SKILL.md) | Companion Office document creation |

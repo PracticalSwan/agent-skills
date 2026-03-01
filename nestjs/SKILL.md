@@ -1,6 +1,6 @@
 ---
 name: nestjs
-description: NestJS development standards for building scalable Node.js server-side applications. Use when building NestJS APIs, implementing dependency injection, creating modules and controllers, configuring TypeORM entities, setting up JWT authentication, implementing RBAC guards, writing DTOs with class-validator, or testing NestJS services and controllers.
+description: NestJS framework — modules, controllers, DI, TypeORM, JWT auth, RBAC guards, DTOs with class-validator, and testing. Use when building server-side Node.js APIs or services with the NestJS framework.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -353,3 +353,14 @@ export class AuthController {
 
 ### Examples
 - [CRUD Module Example](./examples/crud-module-example.md) — Complete Products CRUD module with controller, service, DTOs, entity, and tests
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [mongodb-mongoose](../mongodb-mongoose/SKILL.md) | MongoDB integration with NestJS |
+| [javascript-development](../javascript-development/SKILL.md) | Core JS/TS patterns for NestJS |
+| [sql-development](../sql-development/SKILL.md) | SQL/TypeORM database integration |
+| [php-development](../php-development/SKILL.md) | Alternative backend framework comparison |

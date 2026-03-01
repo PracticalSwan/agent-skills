@@ -1,2 +1,5 @@
-# Exclude CLAUDE.md from git tracking
+# Exclude CLAUDE.md
 CLAUDE.md
+
+# Exclude Serena memories
+.serena

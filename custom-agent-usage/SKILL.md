@@ -1,6 +1,6 @@
 ---
 name: custom-agent-usage
-description: Discovering and using custom agents (.agent.md files) for specialized tasks. Use when finding available .agent.md files, checking agent invocability, understanding agent frontmatter, or using specific custom agent with the agentName parameter. Triggered by keywords like custom agent, .agent.md file, agent discovery, agentName parameter, disable-model-invocation.
+description: Discover, validate, and invoke .agent.md custom agents. Use when finding agent files, checking frontmatter, verifying disable-model-invocation/invocability settings, or determining agentName for runSubagent calls.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -13,28 +13,12 @@ license: Complete terms in LICENSE.txt
 
 ## Activation Conditions
 
-**SHOULD activate when delegation requires:**
-- Picking a specific custom agent
-- Discovering `.agent.md` files
-- Verifying invocability (`disable-model-invocation`)
-
-**SHOULD activate when:**
+Activate this skill when:
 - Discovering available custom agents in workspace
 - Understanding .agent.md file structure and frontmatter
 - Checking if an agent can be invoked as a subagent
 - Learning which agentName to use for delegation
 - Understanding agent tools and capabilities
-
-## Non-Activation Conditions
-
-**Do NOT activate this skill when:**
-- No custom-agent discovery/selection is needed
-- Using purpose-built agents with clear documentation and usage patterns
-- Task requires directly implementing solution rather than delegation
-- Need to consult documentation about core agents (not custom agents)
-- User wants to learn about built-in agents instead of custom ones
-- Task is simple enough that delegation would add unnecessary complexity
-- Working with agents that don't follow the .agent.md file structure
 
 ## Custom Agent Discovery
 
@@ -127,3 +111,22 @@ runSubagent({
 
 - [Agent Discovery Workflow](./examples/agent-discovery-workflow.md) — Examples of finding and using custom agents
 - [Agent Finder Script](./scripts/agent-finder.js) — Node.js script to discover and inspect custom agents
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [agent-task-mapping](../agent-task-mapping/SKILL.md) | Map tasks to agents after discovering available agents |
+| [subagent-delegation](../subagent-delegation/SKILL.md) | Delegation patterns after validating agent invocability |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [agent-task-mapping](../agent-task-mapping/SKILL.md) | Map tasks to agents after discovering available agents |
+| [subagent-delegation](../subagent-delegation/SKILL.md) | Delegation patterns after validating agent invocability |

@@ -1,6 +1,6 @@
 ---
 name: sql-development
-description: SQL development standards combining stored procedure generation and MS SQL Server DBA best practices. Use when writing SQL queries, generating stored procedures, designing database schemas, performing DBA tasks, tuning SQL Server performance, managing backups, configuring security, or working with SQL Server 2025+ features. Triggered by keywords like SQL query, stored procedure, database schema, DBA tasks, SQL Server performance, backup management, SQL security, database design, T-SQL.
+description: T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -152,3 +152,14 @@ Comprehensive SQL development guidelines combining SQL coding standards, stored 
 
 ### Examples
 - [Schema Design Example](./examples/schema-design-example.md) — Recipe Management System with 10 tables, stored procedures, and migrations
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [nestjs](../nestjs/SKILL.md) | TypeORM integration with NestJS |
+| [php-development](../php-development/SKILL.md) | PDO/MySQL database access from PHP |
+| [mongodb-mongoose](../mongodb-mongoose/SKILL.md) | Alternative NoSQL database approach |
+| [powerbi-modeling](../powerbi-modeling/SKILL.md) | SQL sources for Power BI semantic models |

@@ -1,6 +1,6 @@
 ---
 name: documentation-automation
-description: Documentation automation tools, JSDoc/TSDoc integration, linters, and pre-commit hooks. Use when automating doc generation, setting up doc linting, configuring pre-commit checks, integrating JSDoc or TSDoc, or ensuring doc builds succeed. Triggered by keywords like documentation automation, JSDoc, TSDoc, doc linters, markdownlint, pre-commit hooks, automated documentation.
+description: Automate doc generation with JSDoc/TSDoc, linters, and pre-commit hooks. Use when setting up markdownlint, configuring doc linting pipelines, integrating JSDoc/TSDoc, or building automated documentation workflows.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -60,3 +60,23 @@ See [Automated Tools](./references/tools.md) for:
     "docs:validate": "Run all documentation checks"
   }
 }
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Generate docs that automation tools process |
+| [devops-tooling](../devops-tooling/SKILL.md) | Pre-commit hooks and CI pipeline integration |
+| [documentation-verification](../documentation-verification/SKILL.md) | Automated validation in doc pipelines |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Generate docs that automation tools process |
+| [devops-tooling](../devops-tooling/SKILL.md) | Pre-commit hooks and CI pipeline integration |
+| [documentation-verification](../documentation-verification/SKILL.md) | Automated validation in doc pipelines |

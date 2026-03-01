@@ -1,6 +1,6 @@
 ---
 name: code-quality
-description: Comprehensive code quality management including code review, refactoring techniques, and self-improvement loops for agent outputs. Covers surgical code refactoring, code review prioritization, evaluation rubrics, and iterative improvement workflows. Use when reviewing code, refactoring existing implementations, implementing self-critique systems, or improving code maintainability and quality. Triggered by keywords like code review, refactor code, improve code quality, code smell, technical debt, code cleanup, code optimization, maintainability.
+description: Code review, refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -426,3 +426,23 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 
 ### Examples
 - [Refactoring Walkthrough](./examples/refactoring-walkthrough.md) — Step-by-step React component refactoring from 160 lines to clean architecture
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [development-workflow](../development-workflow/SKILL.md) | Quality gates within the development lifecycle |
+| [documentation-quality](../documentation-quality/SKILL.md) | Consistent quality standards for code and docs |
+| [serena-usage](../serena-usage/SKILL.md) | Symbol-based refactoring via Serena code navigation |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [development-workflow](../development-workflow/SKILL.md) | Quality gates within the development lifecycle |
+| [documentation-quality](../documentation-quality/SKILL.md) | Consistent quality standards for code and docs |
+| [serena-usage](../serena-usage/SKILL.md) | Symbol-based refactoring via Serena code navigation |

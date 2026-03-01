@@ -1,6 +1,6 @@
 ---
 name: react-development
-description: Comprehensive React development expertise with React 19+, modern hooks, TypeScript, custom hooks, Tailwind CSS integration, state management patterns, and performance optimization. Use when building React components, implementing custom hooks, managing state (useState, useReducer, useContext), data fetching (React Query, SWR), or optimizing React app performance. Covers component design, hooks patterns, form handling, routing, testing, and accessibility. Triggered by keywords like React component, React hooks, useState, useEffect, custom hook, React state management, React Query, SWR, React testing, React performance.
+description: React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -1074,3 +1074,15 @@ describe('UseFetch Hook', () => {
 
 ### Examples
 - [Custom Hooks Gallery](./examples/custom-hooks-gallery.md) — 12 production-ready custom hooks with full implementations and tests
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [frontend-design](../frontend-design/SKILL.md) | UI/UX design principles for React apps |
+| [vite-development](../vite-development/SKILL.md) | Build tooling for React projects |
+| [javascript-development](../javascript-development/SKILL.md) | Core JS patterns underlying React |
+| [stitch-design](../stitch-design/SKILL.md) | Convert Stitch screens to React components |
+| [web-testing](../web-testing/SKILL.md) | Test React apps with Playwright |

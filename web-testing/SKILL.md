@@ -1,6 +1,6 @@
 ---
 name: web-testing
-description: Comprehensive web application testing toolkit combining Playwright automation, Chrome DevTools debugging, and browser interaction. Supports verifying frontend functionality, debugging UI behavior, capturing screenshots, viewing browser logs, network traffic analysis, console inspection, and user flow validation. Covers local web applications and remote sites. Triggered by keywords like web testing, Playwright, browser automation, UI testing, screenshot capture, DevTools debugging, network analysis, console inspection, user flow testing.
+description: Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -694,3 +694,13 @@ npx playwright codegen https://example.com
 
 ### Examples
 - [E2E Recipe App Tests](./examples/e2e-recipe-app-tests.md) — Kitchen Odyssey test suite with Page Objects and CI configuration
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [web-design-reviewer](../web-design-reviewer/SKILL.md) | Visual design review with browser tools |
+| [javascript-development](../javascript-development/SKILL.md) | JS apps being tested |
+| [react-development](../react-development/SKILL.md) | Test React components and user flows |

@@ -1,6 +1,6 @@
 ---
 name: php-development
-description: Comprehensive PHP development expertise for XAMPP environment, RESTful API development, PDO database integration, and modern PHP 8.0+ best practices. Use when building PHP backends, creating API endpoints, working with MySQL/MariaDB, implementing authentication, or configuring XAMPP environments. Triggered by keywords like PHP development, XAMPP, RESTful API, PDO, MySQL, MariaDB, PHP authentication, backend development, API endpoints.
+description: PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, and authentication. Use when building PHP backends, creating API endpoints, configuring XAMPP, or integrating PHP with databases.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -846,3 +846,14 @@ date.timezone = "Asia/Bangkok"
 - [OWASP PHP Security](https://owasp.org/www-community/attacks/xss/) — XSS prevention
 - [SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) — SQL injection prevention
 - [PHP Security Guide](https://www.php.net/manual/en/security.php) — Official PHP security considerations
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [sql-development](../sql-development/SKILL.md) | SQL database integration with PHP/PDO |
+| [nestjs](../nestjs/SKILL.md) | Alternative Node.js backend framework |
+| [javascript-development](../javascript-development/SKILL.md) | Frontend JS to pair with PHP backend |

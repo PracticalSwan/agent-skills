@@ -1,6 +1,6 @@
 ---
 name: agent-task-mapping
-description: Mapping tasks to specialized subagents (Code Explainer, UI Designer, Universal Janitor, Next.js Expert, React Expert, Playwright Tester, Tech Writer, etc.). Use when determining which agent to delegate to, reviewing agent capabilities, or finding appropriate specialist for specific tasks. Triggered by keywords like which agent to use, agent specialization, delegate to expert, specialized subagent, task delegation mapping.
+description: Map tasks to specialist agents. Use when choosing which agent for a job, comparing agent capabilities, or routing to React/Next.js/Playwright/docs/code-quality experts. Keywords: which agent, best agent for this, delegate to expert, agent capability mapping.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -18,16 +18,6 @@ Use this skill when:
 - Reviewing agent capabilities and expertise areas
 - Trying to match a specific task to an appropriate specialist
 - Needing quick reference for available agents and their purposes
-
-## Non-Activation Conditions
-
-**Do NOT activate this skill when:**
-- Task is already in progress and delegation timing would disrupt workflow
-- User wants to handle the task directly without delegation
-- Task is trivial and would take less time to complete than to delegate
-- There are no suitable agents available for the specific task
-- User is asking for help with choosing a tool, not an agent
-- Task requires real-time collaboration rather than asynchronous delegation
 
 ## Available Agents
 
@@ -90,3 +80,22 @@ When choosing an agent for delegation:
 
 ### Design
 - Use **UI Designer** for UI/UX improvements and design implementations
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [custom-agent-usage](../custom-agent-usage/SKILL.md) | Discover and validate .agent.md files before mapping tasks |
+| [subagent-delegation](../subagent-delegation/SKILL.md) | Execute delegated work after mapping to the right agent |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [custom-agent-usage](../custom-agent-usage/SKILL.md) | Discover and validate .agent.md files before mapping tasks |
+| [subagent-delegation](../subagent-delegation/SKILL.md) | Execute delegated work after mapping to the right agent |

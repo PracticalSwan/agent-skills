@@ -1,6 +1,6 @@
 ---
 name: azure-integrations
-description: Azure deployment and integration patterns for web applications including Static Web Apps, App Service, Blob Storage, Bicep templates, and GitHub Actions CI/CD. Use when deploying Next.js or Vite apps to Azure, setting up CI/CD workflows, configuring Azure resources with Bicep/ARM, managing Blob Storage, or integrating Azure services into full-stack applications.
+description: Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -404,3 +404,26 @@ jobs:
 ### Examples
 - [Vite SWA Deployment Guide](./examples/vite-swa-deployment.md) — End-to-end walkthrough deploying a Vite+React app to Azure Static Web Apps
 
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [microsoft-development](../microsoft-development/SKILL.md) | Look up Azure SDK docs and code samples |
+| [devops-tooling](../devops-tooling/SKILL.md) | CI/CD pipelines and GitHub Actions for Azure deployments |
+| [vite-development](../vite-development/SKILL.md) | Build Vite apps before deploying to Azure SWA |
+| [react-development](../react-development/SKILL.md) | Build React apps for Azure deployment targets |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [microsoft-development](../microsoft-development/SKILL.md) | Look up Azure SDK docs and code samples |
+| [devops-tooling](../devops-tooling/SKILL.md) | CI/CD pipelines and GitHub Actions for Azure deployments |
+| [vite-development](../vite-development/SKILL.md) | Build Vite apps before deploying to Azure SWA |
+| [react-development](../react-development/SKILL.md) | Build React apps for Azure deployment targets |

@@ -1,6 +1,6 @@
 ---
 name: excalidraw-diagram-generator
-description: 'Generate Excalidraw diagrams from natural language descriptions. Use when asked to "create a diagram", "make a flowchart", "visualize a process", "draw a system architecture", "create a mind map", or "generate an Excalidraw file". Supports flowcharts, relationship diagrams, mind maps, and system architecture diagrams. Outputs .excalidraw JSON files that can be opened directly in Excalidraw. Triggered by keywords like create diagram, make flowchart, visualize process, system architecture, mind map, UML diagram, sequence diagram, network diagram.'
+description: 'Generate .excalidraw diagrams from natural language. Use when creating flowcharts, mind maps, system architecture diagrams, sequence diagrams, ER diagrams, network diagrams, or any visual process visualization.'
 ---
 
 # Excalidraw Diagram Generator
@@ -616,3 +616,22 @@ Potential improvements:
 - Import from Mermaid/PlantUML syntax
 - Template library expansion
 - Interactive editing after generation
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [canvas-design](../canvas-design/SKILL.md) | Design philosophy for visual diagram creation |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Embed diagrams in technical documentation |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [canvas-design](../canvas-design/SKILL.md) | Design philosophy for visual creation |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Embed diagrams in technical documents |

@@ -1,6 +1,6 @@
 ---
 name: devops-tooling
-description: Comprehensive DevOps and automation toolkit combining Git workflow management, shell scripting for automation, CI/CD pipeline configuration, and terminal operations. Covers conventional commits, Git operations, PowerShell/Bash scripting with error handling, and automation patterns for development workflows. Use when working with Git, writing automation scripts, configuring CI/CD pipelines, or managing development tooling.
+description: Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -1792,3 +1792,24 @@ stages:
 
 ### Examples
 - [GitHub Actions Templates](./examples/github-actions-templates.md) — 8 production-ready workflow templates for Node.js, Python, Docker, Terraform
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [development-workflow](../development-workflow/SKILL.md) | Project lifecycle that DevOps tooling supports |
+| [azure-integrations](../azure-integrations/SKILL.md) | Azure-specific CI/CD and deployment pipelines |
+| [documentation-automation](../documentation-automation/SKILL.md) | Pre-commit hooks and automated doc generation |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [development-workflow](../development-workflow/SKILL.md) | Project lifecycle that DevOps tooling supports |
+| [azure-integrations](../azure-integrations/SKILL.md) | Azure-specific CI/CD and deployment pipelines |
+| [documentation-automation](../documentation-automation/SKILL.md) | Pre-commit hooks and automated doc generation |

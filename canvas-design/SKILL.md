@@ -1,6 +1,6 @@
 ---
 name: canvas-design
-description: Design philosophy documentation and canvas-based visual creation for thoughtful, intentional design. Use when creating design philosophy documents, generating visual designs with canvas tools, articulating design principles, crafting multi-page design documents, or when asked to explore design thinking and aesthetic philosophy.
+description: Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -137,3 +137,22 @@ Design is a craft. The difference between good and great design:
 
 ### Examples
 - [Kitchen Odyssey Design Philosophy](./examples/design-philosophy-example.md) — Complete design philosophy document example for a recipe sharing platform
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [frontend-design](../frontend-design/SKILL.md) | Color theory and layout principles for visual designs |
+| [excalidraw-diagram-generator](../excalidraw-diagram-generator/SKILL.md) | Diagram generation for architecture and process visuals |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [frontend-design](../frontend-design/SKILL.md) | Color theory and layout principles for visual designs |
+| [excalidraw-diagram-generator](../excalidraw-diagram-generator/SKILL.md) | Diagram generation for architecture and process visuals |

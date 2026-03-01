@@ -1,6 +1,6 @@
 ---
 name: legacy-circuit-mockups
-description: 'Generate breadboard circuit mockups and visual diagrams using HTML5 Canvas drawing techniques. Use when asked to create circuit layouts, visualize electronic component placements, draw breadboard diagrams, mockup 6502 builds, generate retro computer schematics, or design vintage electronics projects. Supports 555 timers, W65C02S microprocessors, 28C256 EEPROMs, W65C22 VIA chips, 7400-series logic gates, LEDs, resistors, capacitors, switches, buttons, crystals, and wires.'
+description: 'Breadboard circuit mockups via HTML5 Canvas. Use when creating circuit layouts, visualizing 6502/retro electronics components, drawing breadboard diagrams, or designing vintage computer schematics with discrete parts.'
 ---
 
 
@@ -285,3 +285,13 @@ Detailed component specifications are available in the bundled reference files:
 ### Scripts
 - [Circuit Component Registry](scripts/circuit-component-registry.js) — Component registry for circuit mockups
 
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [canvas-design](../canvas-design/SKILL.md) | Canvas drawing techniques and visual design |
+| [excalidraw-diagram-generator](../excalidraw-diagram-generator/SKILL.md) | Alternative diagram generation approach |

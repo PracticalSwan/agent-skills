@@ -1,6 +1,6 @@
 ---
 name: word-document
-description: Microsoft Word (.docx) document manipulation using MCP server tools. Use this any time a Word document is involved - as input, output, or both. Activate the word-document-server MCP for Word operations. Covers reading, editing, creating, formatting, analyzing, and converting Word documents with professional standards including tables, footnotes, comments, images, and PDF conversion.
+description: Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -699,3 +699,14 @@ activate_document_security_and_conversion(); // convert_to_pdf, protect, unprote
 - [DOC Template Generator](./scripts/doc-template-generator.py) — Python script for document template generation
 
 ---
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft SDK/docs reference |
+| [excel-sheet](../excel-sheet/SKILL.md) | Embed Excel data in Word tables |
+| [powerpoint-ppt](../powerpoint-ppt/SKILL.md) | Companion Office document creation |

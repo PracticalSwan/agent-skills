@@ -1,6 +1,6 @@
 ---
 name: documentation-patterns
-description: Documentation templates and patterns for API docs, feature docs, configuration guides, breaking changes. Use when creating or updating documentation structure, writing API reference documentation, documenting REST endpoints, creating feature documentation, standardizing config file documentation, or applying Markdown templates for consistency. Triggered by keywords like documentation template, API docs, REST endpoint format, feature documentation, config guide documentation.
+description: Templates and structural patterns for API docs, feature docs, config guides, and REST endpoint documentation. Use when structuring docs, applying Markdown templates, or standardizing doc formats.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -38,3 +38,24 @@ See [Configuration Documentation Templates](./references/config-templates.md) fo
 - Document edge cases and limitations
 - Provide clear, concise descriptions
 - Use accurate type information for parameters
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Use patterns when creating new documents |
+| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards that patterns should follow |
+| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Templates for migration guides and changelogs |
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Use patterns when creating new documents |
+| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards that patterns should follow |
+| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Templates for migration guides and changelogs |

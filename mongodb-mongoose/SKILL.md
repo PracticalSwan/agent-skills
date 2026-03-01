@@ -1,6 +1,6 @@
 ---
 name: mongodb-mongoose
-description: Mongoose models, repository pattern, aggregation pipelines, migrations, and MongoDB Atlas connection management. Use when designing MongoDB schemas, building database queries, implementing aggregation pipelines, creating Mongoose models with validation, setting up Atlas connections, or integrating MongoDB with Next.js applications.
+description: MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -322,3 +322,13 @@ async function migrateUsers() {
 
 ### Examples
 - [Recipe API Example](./examples/recipe-api-example.md) — Complete Mongoose + Next.js Recipe CRUD API with models, routes, and validation
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [nestjs](../nestjs/SKILL.md) | NestJS backend using Mongoose models |
+| [javascript-development](../javascript-development/SKILL.md) | JS patterns for database integration |
+| [sql-development](../sql-development/SKILL.md) | Alternative relational database approach |

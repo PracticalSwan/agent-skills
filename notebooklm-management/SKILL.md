@@ -1,6 +1,6 @@
 ---
 name: notebooklm-management
-description: Comprehensive toolkit for managing NotebookLM MCP server and its tools. Use when asked to query NotebookLM notebooks, add new notebooks from share links, manage notebook library, handle authentication issues, reset sessions, or work with Google's NotebookLM conversational research service. Covers notebook discovery, question-answering, session management, and metadata updates.
+description: NotebookLM MCP server management — query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks.
 license: MIT
 ---
 
@@ -202,3 +202,13 @@ See [scripts/README.md](./scripts/README.md) for complete usage guide.
 ## Encoding
 
 All files are UTF-8 encoded without BOM. Ensure all modifications maintain this encoding standard.
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [notion-docs](../notion-docs/SKILL.md) | Alternative knowledge management platform |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Source content for notebook research |

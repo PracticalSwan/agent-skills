@@ -1,6 +1,6 @@
 ---
 name: notion-docs
-description: Notion documentation and workspace management using Notion MCP tools for creating databases, pages, comments, and structured knowledge bases. Use when creating Notion pages, building Notion databases, managing documentation in Notion, organizing project wikis, adding comments for review workflows, or integrating Notion into development documentation processes. Triggered by keywords like Notion documentation, Notion database, Notion workspace, documentation management, knowledge base, project wiki, review workflows, Notion integration.
+description: Notion workspace management via MCP — create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -200,3 +200,12 @@ What problem are we solving?
 
 ### Examples
 - [Workspace Setup Example](./examples/workspace-setup-example.md) — Complete dev team workspace setup with 9 MCP tool calls
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [notebooklm-management](../notebooklm-management/SKILL.md) | Alternative research/knowledge tool |
+| [documentation-authoring](../documentation-authoring/SKILL.md) | Create structured docs to store in Notion |

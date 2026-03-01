@@ -1,6 +1,6 @@
 ---
 name: vite-development
-description: Vite 6+ tooling expertise for fast builds, HMR, and optimized production assets. Use when configuring Vite, optimizing build performance, or setting up React/Vue projects. Triggered by keywords like Vite configuration, Vite build, hot module replacement, Vite plugin, frontend build tool, Vite performance, Vite HMR, Vite setup.
+description: Vite 6+ build tooling — HMR, fast builds, plugins, and optimized production assets. Use when configuring Vite, setting up React/Vue projects with Vite, or optimizing frontend build performance.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -268,3 +268,14 @@ export default defineConfig({
 - [Vite Documentation](https://vite.dev/)
 - [Vite Plugins](https://vite.dev/plugins/)
 - [Rollup Options](https://vite.dev/config/build-options.html#build-rollupoptions)
+
+
+---
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| [react-development](../react-development/SKILL.md) | React projects built with Vite |
+| [javascript-development](../javascript-development/SKILL.md) | JS/TS code that Vite bundles |
+| [frontend-design](../frontend-design/SKILL.md) | Design patterns for Vite-powered frontends |

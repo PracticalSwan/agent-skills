@@ -1,168 +1,256 @@
-<div align="center">
-
 # Agent Skills
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills Count](https://img.shields.io/badge/Skills-52-blue.svg)](README.md)
+Maintained skill catalog for GitHub Copilot, Codex, and Claude-style agents.
+Each maintained skill combines a focused workflow, current references,
+and runnable helpers.
 
-A maintained skill catalog for GitHub Copilot, Codex, and Claude-style agents. Each skill combines a focused workflow, current references, and runnable helpers.
+## Scope
 
-</div>
+- `52` total skill directories in this workspace
+- `38` maintained skill folders in this repo
+- `14` copied Claude Code official superpowers kept for local discovery
+  and intentionally left unchanged
 
-## Overview
-
-This workspace currently contains:
-
-- `52` total skills
-- `38` editable domain skills maintained here
-- `14` copied Claude Code official superpowers kept for local discovery and intentionally left unchanged
-
-The current maintenance standard is pragmatic:
-
-- concise `SKILL.md` files
-- separate `references/` for larger notes
-- separate `scripts/` for runnable helpers
-- real MCP guidance where public or verifiable
-- explicit fallback paths when a host-specific MCP surface is unavailable
-
-## Skill Structure
-
-Every maintained skill should follow this shape:
+## Maintained Skill Structure
 
 ```text
 skill-name/
-â”œâ”€â”€ SKILL.md
-â”œâ”€â”€ scripts/
-â”‚   â””â”€â”€ useful-helper.py
-â””â”€â”€ references/
-    â””â”€â”€ reference-notes.md
+|- SKILL.md
+|- CHANGELOG.md
+|- references/
+|  `- notes.md
+|- scripts/
+|  `- helper.py
+`- examples/
+   `- example.md
 ```
 
-Optional additions:
-
-- `examples/` for realistic walkthroughs
-- `LICENSE.txt`
+Required:
+- `SKILL.md`
 - `CHANGELOG.md`
+- `references/`
+- `scripts/`
+
+Optional:
+- `examples/`
+- `LICENSE.txt`
 
 ## Loading Order
-
-Skills are resolved in this order:
 
 1. Workspace skills from `.github/skills/`
 2. Global fallback skills from `C:/Users/LOQ/.agents/skills/`
 
-Workspace skills take precedence when names collide.
+Workspace skills win on name collisions.
 
-## MCP Guidance
+## Maintained Skill Catalog
 
-The repo now distinguishes between:
+### Workflow and Delivery
 
-### Publicly documented or directly verifiable MCP servers
-
-- Notion MCP
-- Microsoft Learn Docs MCP
-- NotebookLM MCP
-- Serena MCP
-- Playwright MCP
-- Context7 MCP
-
-### Host-specific MCP surfaces
-
-Some Office and Power BI workflows depend on tools exposed by a particular host such as GitHub Copilot or Microsoft 365 tooling. Those skills document that reality directly and include local fallback scripts instead of assuming the same tool names exist everywhere.
-
-## Skill Categories
-
-### Frontend and UX
-
-- `frontend-design`
-- `react-development`
-- `vite-development`
-- `web-design-reviewer`
-- `web-testing`
-- `stitch-design`
-
-### Backend and Data
-
-- `nestjs`
-- `php-development`
-- `mongodb-mongoose`
-- `sql-development`
-- `powerbi-modeling`
-
-### Microsoft and Azure
-
-- `microsoft-development`
-- `azure-integrations`
-- `excel-sheet`
-- `word-document`
-- `powerpoint-ppt`
-
-### Documentation and Delivery
-
+- `breaking-changes-management`
+- `code-examples-sync`
+- `code-quality`
+- `development-workflow`
+- `devops-tooling`
 - `documentation-authoring`
 - `documentation-automation`
 - `documentation-patterns`
 - `documentation-quality`
 - `documentation-verification`
-- `code-examples-sync`
-- `breaking-changes-management`
 
-### Agent and Research Workflows
+### Frontend, Design, and Testing
 
-- `serena-usage`
-- `notion-docs`
-- `notebooklm-management`
-- `codexer`
+- `canvas-design`
+- `excalidraw-diagram-generator`
+- `frontend-design`
+- `legacy-circuit-mockups`
+- `react-development`
+- `stitch-design`
+- `vite-development`
+- `web-design-reviewer`
+- `web-testing`
+
+### Backend and Data
+
+- `javascript-development`
+- `mongodb-mongoose`
+- `nestjs`
+- `php-development`
+- `powerbi-modeling`
+- `sql-development`
+
+### Microsoft and Office
+
+- `azure-integrations`
+- `excel-sheet`
+- `microsoft-development`
+- `powerpoint-ppt`
+- `word-document`
+
+### Agent and Research
+
 - `agent-task-mapping`
+- `codexer`
 - `custom-agent-usage`
+- `notebooklm-management`
+- `notion-docs`
+- `serena-usage`
 - `subagent-delegation`
-
-For `custom-agent-usage`, the maintained discovery roots are:
-
-- `C:\Users\LOQ\.claude\agents`
-- `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
-
-The VS Code Insiders prompts folder can also contain `.prompt.md` and `.instructions.md`; only `*.agent.md` files should be treated as subagent definitions.
 
 ### Specialized
 
-- `canvas-design`
-- `legacy-circuit-mockups`
 - `infostealer-malware-detector`
-- `excalidraw-diagram-generator`
 
-## Working With the Repo
+## MCP Coverage
 
-### Editing Skills
+This repo currently has `12` maintained skills that are MCP-backed or
+MCP-aware. The remaining maintained skills are local guidance, CLI workflows,
+or script-first utilities.
 
-When updating a skill:
+Status legend:
+- `Primary`: the skill is designed around that MCP server
+- `Host-specific`: the MCP surface exists, but depends on the client
+- `Client-specific`: the skill expects a local or private MCP surface
+- `None`: no MCP server is required for normal use
 
-1. Keep `SKILL.md` focused on activation conditions, workflow, and local links.
-2. Move large or slow-changing material into `references/`.
-3. Keep helper automation in `scripts/`.
-4. Update repo docs if visible behavior or repo structure changes.
+## Verified MCP Servers
 
-### Validation Expectations
+Validated on `2026-03-10` using official docs or primary repo sources where
+public docs exist.
 
-Use the checks that match the files you touched:
+| Server | What it covers | Sources |
+|--------|----------------|---------|
+| Serena MCP | Activation, memories, symbol search, refactors | [1] |
+| Context7 MCP | Resolve library IDs and query package docs | [2] |
+| Notion MCP | Search, read, update pages and databases | [3], [4] |
+| Microsoft Learn Docs MCP | Search Microsoft docs and code samples | [5] |
+| Playwright MCP | Browser navigation, snapshots, actions, screenshots | [6] |
+| Power BI Remote MCP | Discover Power BI items and drive model workflows | [7] |
+| Microsoft Word MCP | Word document operations in Microsoft Agent 365 | [8] |
+| Microsoft Agent 365 Office preview | Preview Office agent workflows | [9] |
+| NotebookLM MCP | Notebook research and session management | [10] |
 
-- Python scripts: `python -m py_compile`
-- JavaScript files: `node --check`
-- PowerShell files: parse validation
-- Markdown files: local link checks and spot review
+Notes:
+- No public official Google NotebookLM MCP package was located on `2026-03-10`.
+  Treat NotebookLM MCP as a community or environment-provided dependency.
+- `stitch-design` references a Stitch MCP surface, but no public official
+  Stitch MCP documentation was located on `2026-03-10`.
+- Office and Power BI skills remain host-specific even when public docs or
+  repos exist.
 
-Generated test artifacts such as `__pycache__` should not remain in the workspace.
+## Per-Skill MCP Map
 
-## Notable Recent Improvements
+### Workflow and Delivery
 
-The latest modernization pass focused on:
+| Skill | MCP | Notes |
+|-------|-----|-------|
+| `breaking-changes-management` | `None` | Local semver, deprecation, and migration guidance |
+| `code-examples-sync` | `None` | Local doc and snippet sync checks |
+| `code-quality` | `None` | Local review and refactor guidance; use `serena-usage` if available |
+| `development-workflow` | `None` | Specs, plans, and contribution workflows are local |
+| `devops-tooling` | `None` | Git, shell, CI/CD, and automation work is local |
+| `documentation-authoring` | `None` | Source documentation creation does not require MCP |
+| `documentation-automation` | `None` | Linters and doc pipelines are local toolchain work |
+| `documentation-patterns` | `None` | Templates and structure patterns are local |
+| `documentation-quality` | `None` | Style and readability checks are local |
+| `documentation-verification` | `None` | Local completeness, links, and example validation |
 
-- deduplicating repeated `## Related Skills` sections
-- adding missing `scripts/` directories and working helpers
-- rewriting stale MCP-heavy skills around current 2026 behavior
-- replacing broken PowerShell scripts with valid ASCII versions
-- updating the repo structure and usage docs to match the actual workspace
+### Frontend, Design, and Testing
+
+| Skill | MCP | Notes |
+|-------|-----|-------|
+| `canvas-design` | `None` | Design philosophy and canvas docs are local |
+| `excalidraw-diagram-generator` | `None` | Uses local diagram helpers, not MCP |
+| `frontend-design` | `None` | Layout, accessibility, and CSS guidance is local |
+| `legacy-circuit-mockups` | `None` | HTML5 Canvas and local assets only |
+| `react-development` | `None` | React guidance does not require MCP |
+| `stitch-design` | `Client-specific: Stitch MCP, optional Remotion MCP` | Validate locally; no official public Stitch MCP doc found |
+| `vite-development` | `None` | Vite configuration and build work is local |
+| `web-design-reviewer` | `Primary: Playwright MCP` | Best when browser snapshot and screenshot tools are available |
+| `web-testing` | `Primary: Playwright MCP` | Playwright CLI remains a valid fallback |
+
+### Backend and Data
+
+| Skill | MCP | Notes |
+|-------|-----|-------|
+| `javascript-development` | `None` | JS and TS implementation guidance is local |
+| `mongodb-mongoose` | `None` | Schema and query work is local to the codebase |
+| `nestjs` | `None` | Framework guidance is local |
+| `php-development` | `None` | PHP and PDO guidance is local |
+| `powerbi-modeling` | `Host-specific: Power BI MCP, optional MS Learn MCP` | Prefer remote or model tools; local audit fallback exists |
+| `sql-development` | `None` | Pair with `microsoft-development` for Microsoft docs lookup |
+
+### Microsoft and Office
+
+| Skill | MCP | Notes |
+|-------|-----|-------|
+| `azure-integrations` | `None` | Use Azure CLI, Bicep, and CI/CD; docs lookup lives in `microsoft-development` |
+| `excel-sheet` | `Host-specific: MS Agent 365 Office/Excel preview` | Client-dependent Office tools; local Python fallback exists |
+| `microsoft-development` | `Primary: Microsoft Learn Docs MCP` | Official Microsoft docs and code sample retrieval |
+| `powerpoint-ppt` | `Host-specific: MS Agent 365 presentation tools` | Validate the client surface; local Python fallback exists |
+| `word-document` | `Host-specific: Microsoft Word MCP` | Public preview exists; local Python fallback exists |
+
+### Agent and Research
+
+| Skill | MCP | Notes |
+|-------|-----|-------|
+| `agent-task-mapping` | `None` | Maps work to local custom agents rather than MCP servers |
+| `codexer` | `Primary: Context7 MCP` | Resolve library IDs and query current package docs |
+| `custom-agent-usage` | `None` | Discovers local `.agent.md` files, not MCP servers |
+| `notebooklm-management` | `Primary: NotebookLM MCP` | Community or environment-provided; validate locally |
+| `notion-docs` | `Primary: Notion MCP` | Supports remote endpoint or local stdio package |
+| `serena-usage` | `Primary: Serena MCP` | Project memories, symbol navigation, and refactoring |
+| `subagent-delegation` | `None` | Delegation workflow only |
+
+### Specialized
+
+| Skill | MCP | Notes |
+|-------|-----|-------|
+| `infostealer-malware-detector` | `None` | Detection guidance and local scripts only |
+
+## Non-MCP Notes
+
+- `custom-agent-usage` is not MCP-based. It discovers local custom agents from:
+  - `C:\Users\LOQ\.claude\agents`
+  - `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+- In the VS Code Insiders prompts directory, only `*.agent.md` files count as
+  subagent definitions.
+
+## MCP Sources
+
+1. [Serena MCP](https://github.com/oraios/serena)
+2. [Context7 Docs](https://docs.context7.com/)
+3. [Notion MCP Quickstart](https://developers.notion.com/docs/get-started-with-mcp)
+4. [Working with Notion MCP](https://developers.notion.com/docs/working-with-notion-mcp)
+5. [Microsoft Learn Docs MCP](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/get-started?tabs=windows)
+6. [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
+7. [microsoft/powerbi-mcp](https://github.com/microsoft/powerbi-mcp)
+8. [Word MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/word)
+9. [Use and collaborate with agents](https://learn.microsoft.com/en-us/microsoft-agent-365/agents/how-to/use)
+10. [NotebookLM MCP Server](https://github.com/jgravelle/NotebookLM-MCP-Server)
+
+## Copied Official Superpowers
+
+These `14` directories are copied for local discovery and are intentionally not
+maintained here:
+
+- `brainstorming`
+- `dispatching-parallel-agents`
+- `executing-plans`
+- `finishing-a-development-branch`
+- `receiving-code-review`
+- `requesting-code-review`
+- `subagent-driven-development`
+- `systematic-debugging`
+- `test-driven-development`
+- `using-git-worktrees`
+- `using-superpowers`
+- `verification-before-completion`
+- `writing-plans`
+- `writing-skills`
+
+They are excluded from the per-skill MCP map above because this repo does not
+maintain their server requirements.
 
 ## Changelog
 
-See [CHANGELOG.md](./CHANGELOG.md) for the detailed history.
+See [CHANGELOG.md](./CHANGELOG.md) for repository history.

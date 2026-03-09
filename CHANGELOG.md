@@ -2,22 +2,48 @@
 
 All notable changes to the Copilot Skills repository will be documented in this file.
 
+## [2026-03-10] - README MCP Inventory Refresh
+
+### Changed
+- Rewrote `README.md` in clean ASCII to remove the visible encoding corruption
+  in the structure examples and formatting blocks
+- Added a complete maintained-skill catalog so the README now covers all 38
+  editable skills instead of a partial subset
+- Added a verified MCP server inventory with current sources for Serena,
+  Context7, Notion, Microsoft Learn Docs, Playwright, Power BI,
+  Microsoft Agent 365 Office preview, and NotebookLM
+- Added a per-skill MCP map to show which maintained skills are MCP-backed,
+  host-specific, client-specific, or fully local
+
+### Tested
+- Verified the new README content after the rewrite and reviewed the diff
+  for formatting regressions
+
 ## [2026-03-09] - Custom Agent Discovery Alignment
 
 ### Changed
-- Updated the `custom-agent-usage` skill, examples, and helper script to use the real custom-agent discovery directories on this machine: `C:\Users\LOQ\.claude\agents` and `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
-- Added repo-level guidance that the VS Code Insiders prompts folder contains mixed prompt file types and must be filtered to `*.agent.md` for subagent discovery
+- Updated the `custom-agent-usage` skill, examples, and helper script to use
+  the real custom-agent discovery directories on this machine:
+  `C:\Users\LOQ\.claude\agents` and
+  `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+- Added repo-level guidance that the VS Code Insiders prompts folder contains
+  mixed prompt file types and must be filtered to `*.agent.md`
+  for subagent discovery
 
 ### Fixed
 - Removed stale custom-agent discovery references to legacy `.copilot/agents` and `.github/copilot/agents` locations
-- Removed the external `glob` dependency from `custom-agent-usage/scripts/agent-finder.js` so the helper runs in the current local Node environment
+- Removed the external `glob` dependency from
+  `custom-agent-usage/scripts/agent-finder.js` so the helper runs
+  in the current local Node environment
 
 ## [2026-03-09] - Workspace Skill Modernization
 
 ### Changed
 - Modernized editable skill folders to align with the maintained structure of `SKILL.md`, `scripts/`, and `references/`
 - Removed duplicated `## Related Skills` sections across the editable skill set
-- Rewrote outdated MCP-heavy skills to reflect current 2026 behavior, especially for Notion, Microsoft Learn, NotebookLM, Power BI, and Office-document workflows
+- Rewrote outdated MCP-heavy skills to reflect current 2026 behavior,
+  especially for Notion, Microsoft Learn, NotebookLM, Power BI,
+  and Office-document workflows
 - Updated `README.md` to reflect the real workspace layout, current counts, loading order, and MCP guidance
 
 ### Added

@@ -432,12 +432,3 @@ Use this format for tracking implementation work and decisions:
 | [notion-docs](../notion-docs/SKILL.md) | Publish authored docs to Notion workspaces |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-patterns](../documentation-patterns/SKILL.md) | Apply templates when structuring new docs |
-| [documentation-quality](../documentation-quality/SKILL.md) | Enforce quality standards on authored docs |
-| [documentation-verification](../documentation-verification/SKILL.md) | Validate docs before publishing or merging |
-| [notion-docs](../notion-docs/SKILL.md) | Publish authored docs to Notion workspaces |

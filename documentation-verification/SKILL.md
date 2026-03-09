@@ -1,76 +1,42 @@
 ---
 name: documentation-verification
-description: Validate documentation before merging — check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation.
+description: Validate documentation before merging - check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation.
 license: Complete terms in LICENSE.txt
 ---
 
 # Documentation Verification
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+Use this skill when a docs change needs evidence, not just a writing pass.
 
 ## Activation Conditions
 
-Use this skill when:
-- Reviewing documentation before merging
-- Checking documentation completeness
-- Validating code examples
-- Ensuring no broken links
-- Verifying configuration accuracy
+- Reviewing docs before merge or release
+- Checking README, setup, or config accuracy
+- Verifying local links, commands, and code samples
+- Confirming docs changed alongside user-facing behavior
 
-## Before Applying Changes
+## Verification Workflow
 
-**Check documentation completeness:**
-
-1. All new public APIs are documented
-2. Code examples compile and run
-3. Links in documentation are valid
-4. Configuration examples are accurate
-5. Installation steps are current
-6. README.md reflects current state
-
-## Documentation Testing
-
-See [Validation Procedures](./references/validation.md) for:
-- Verifying code examples compile/run
-- Checking for broken internal/external links
-- Validating configuration examples against schemas
-- Ensuring API examples match current implementation
-
-## Validation Commands
-
-```bash
-# Example validation commands
-npm run docs:check         # Verify docs build
-npm run docs:test-examples # Test code examples
-npm run docs:lint         # Check for issues
-```
+1. Confirm the docs cover the changed behavior.
+2. Check relative links and referenced files.
+3. Validate commands and snippets where feasible.
+4. Report missing coverage and stale claims explicitly.
 
 ## Review Checklist
 
-- [ ] All new public APIs are documented
-- [ ] Code examples compile and run
-- [ ] Links in documentation are valid
-- [ ] Configuration examples are accurate
-- [ ] Installation steps are current
-- [ ] README.md reflects current state
-- [ ] No broken internal links
-- [ ] No broken external references
+- [ ] Public behavior changes are documented
+- [ ] Local links resolve
+- [ ] Examples and commands still make sense
+- [ ] Setup steps reflect current tool versions
+- [ ] README and CHANGELOG were updated when required
 
+## References & Resources
 
----
+### Documentation
+- [Validation Procedures](./references/validation.md) - Practical checks for links, examples, config, and coverage
 
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards to verify against |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Verify authored docs before publishing |
-| [code-examples-sync](../code-examples-sync/SKILL.md) | Validate code examples are current and working |
-
----
+### Scripts
+- [Doc Link Check](./scripts/doc-link-check.py) - Validate relative Markdown links across one file or an entire docs tree
 
 ## Related Skills
 

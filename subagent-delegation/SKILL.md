@@ -9,7 +9,7 @@ license: Complete terms in LICENSE.txt
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.copilot/skills/`
+- Global skills: `C:/Users/LOQ/.agents/skills/`
 
 ## Activation Conditions
 

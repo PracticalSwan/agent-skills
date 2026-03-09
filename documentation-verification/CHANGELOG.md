@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Reworked the skill around evidence-based documentation verification before merge or release
+
+### Added
+- `scripts/doc-link-check.py` for validating relative Markdown links
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

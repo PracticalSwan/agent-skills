@@ -418,12 +418,3 @@ jobs:
 | [react-development](../react-development/SKILL.md) | Build React apps for Azure deployment targets |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Look up Azure SDK docs and code samples |
-| [devops-tooling](../devops-tooling/SKILL.md) | CI/CD pipelines and GitHub Actions for Azure deployments |
-| [vite-development](../vite-development/SKILL.md) | Build Vite apps before deploying to Azure SWA |
-| [react-development](../react-development/SKILL.md) | Build React apps for Azure deployment targets |

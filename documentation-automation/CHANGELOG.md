@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Rewrote the skill around practical local-plus-CI documentation automation patterns
+
+### Added
+- `scripts/docs-pipeline-scaffold.py` for generating starter `docs:*` automation commands
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

@@ -1805,11 +1805,3 @@ stages:
 | [documentation-automation](../documentation-automation/SKILL.md) | Pre-commit hooks and automated doc generation |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [development-workflow](../development-workflow/SKILL.md) | Project lifecycle that DevOps tooling supports |
-| [azure-integrations](../azure-integrations/SKILL.md) | Azure-specific CI/CD and deployment pipelines |
-| [documentation-automation](../documentation-automation/SKILL.md) | Pre-commit hooks and automated doc generation |

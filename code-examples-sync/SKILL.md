@@ -6,60 +6,38 @@ license: Complete terms in LICENSE.txt
 
 # Code Example Synchronization
 
-Maintain code examples in documentation that stay synchronized with actual code.
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+Use this skill when docs contain code snippets that are likely to drift from the real implementation.
 
 ## Activation Conditions
 
-Use this skill when:
-- Function signatures or parameters change
-- API interfaces are modified
-- Best practices evolve (deprecated patterns emerge)
-- Code examples become outdated
-- Imports or dependencies change
+- Function signatures changed
+- Imports or package names changed
+- Request or response contracts changed
+- Framework guidance or recommended patterns changed
+- A doc snippet compiles conceptually but no longer matches the codebase
 
-## Verification Checks
+## Workflow
 
-See [Code Example Verification](./references/verification.md) for:
-- Checking examples compile/run correctly
-- Verifying imports are up to date
-- Testing example output matches documentation
-- Ensuring consistent syntax across examples
-
-## Update Patterns
-
-When code changes affect examples:
-
-1. **Function signature changes**: Update all snippets using the function, verify examples compile, update imports if needed
-
-2. **API interface changes**: Update request/response examples, revise client code examples, update SDK usage examples
-
-3. **Best practice evolution**: Replace outdated patterns, update to current recommended approaches, add deprecation notices for old patterns
+1. Find the canonical implementation first.
+2. Update every affected snippet in docs, examples, and READMEs.
+3. Verify syntax, imports, and expected outputs.
+4. Note any intentional divergence, such as simplified tutorial snippets.
 
 ## Quality Checklist
 
-- [ ] All code examples compile/run successfully
-- [ ] Imports and dependencies are current
-- [ ] Output matches documented results
-- [ ] Syntax is consistent across language
-- [ ] Error handling is demonstrated where applicable
+- [ ] Snippet matches current API shape
+- [ ] Imports and package names are current
+- [ ] Async, error handling, and setup steps still make sense
+- [ ] Output examples match current behavior
+- [ ] Duplicate snippets across docs were updated together
 
+## References & Resources
 
----
+### Documentation
+- [Code Example Verification](./references/verification.md) - Checks for examples, imports, outputs, and compatibility
 
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-verification](../documentation-verification/SKILL.md) | Validate code examples before merging docs |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Keep authored docs in sync with code changes |
-| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Update examples after breaking API changes |
-
----
+### Scripts
+- [Example Sync Check](./scripts/example-sync-check.py) - Audit Markdown files for untyped fences, placeholder text, and obviously stale examples
 
 ## Related Skills
 

@@ -4,14 +4,14 @@
 
 ### Step 1: Discover Available Agents
 
-Search for `.agent.md` files in your workspace:
+Search the real agent directories and keep only `*.agent.md` files:
 
-```bash
-# Using command line
-find . -name "*.agent.md"
-
-# Or using search in your editor
-# Search for: *.agent.md
+```powershell
+Get-ChildItem `
+  'C:\Users\LOQ\.claude\agents', `
+  'C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts' `
+  -Filter *.agent.md `
+  -File
 ```
 
 ### Step 2: Check Agent Frontmatter
@@ -34,7 +34,7 @@ tools: [Read, Write, Bash, WebSearch]
 runSubagent({
   agentName: "Playwright Tester Mode",
   description: "Test checkout flow",
-  prompt: "Perform exploratory testing on the checkout flow: product selection → cart → payment confirmation. Generate comprehensive Playwright tests covering success scenarios, validation errors, edge cases (empty cart, payment failures), and accessibility."
+  prompt: "Perform exploratory testing on the checkout flow: product selection -> cart -> payment confirmation. Generate comprehensive Playwright tests covering success scenarios, validation errors, edge cases (empty cart, payment failures), and accessibility."
 });
 ```
 
@@ -43,8 +43,18 @@ runSubagent({
 ### Discovery Workflow
 
 ```javascript
-// 1. Find all .agent.md files
-const agentFiles = glob("*.agent.md");
+// 1. Find all .agent.md files in the configured directories
+const agentDirs = [
+  'C:\\Users\\LOQ\\.claude\\agents',
+  'C:\\Users\\LOQ\\AppData\\Roaming\\Code - Insiders\\User\\prompts'
+];
+const agentFiles = agentDirs.flatMap(findAgentFilesInDirectory);
+
+function findAgentFilesInDirectory(rootDir) {
+  return fs.readdirSync(rootDir)
+    .filter(name => name.endsWith('.agent.md'))
+    .map(name => path.join(rootDir, name));
+}
 
 // 2. Read each file's frontmatter
 for (const file of agentFiles) {
@@ -87,7 +97,7 @@ function isAgentInvocable(agentFilePath) {
 }
 
 // Usage
-const playwrightTester = './agents/Playwright-Tester.agent.md';
+const playwrightTester = 'C:\\Users\\LOQ\\.claude\\agents\\playwright-tester.agent.md';
 if (isAgentInvocable(playwrightTester)) {
   console.log('This agent can be invoked as a subagent');
 } else {
@@ -117,7 +127,7 @@ function getAgentName(agentFilePath) {
 }
 
 // Usage
-const agentName = getAgentName('./agents/Code-Explainer.agent.md');
+const agentName = getAgentName('C:\\Users\\LOQ\\.claude\\agents\\Code-Explainer.agent.md');
 // Returns: "Code Explainer" (from frontmatter)
 // or: "Code-Explainer" (from filename if no frontmatter name)
 ```
@@ -130,7 +140,11 @@ const agentName = getAgentName('./agents/Code-Explainer.agent.md');
  */
 function delegateToAppropriateAgent(taskDescription) {
   // 1. Find all agent files
-  const agentFiles = glob('**/*.agent.md');
+  const agentDirs = [
+    'C:\\Users\\LOQ\\.claude\\agents',
+    'C:\\Users\\LOQ\\AppData\\Roaming\\Code - Insiders\\User\\prompts'
+  ];
+  const agentFiles = agentDirs.flatMap(findAgentFilesInDirectory);
 
   // 2. Extract agent info
   const agents = agentFiles.map(file => ({

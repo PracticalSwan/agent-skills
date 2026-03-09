@@ -815,12 +815,3 @@ Closes issue #123"
 | [code-quality](../code-quality/SKILL.md) | Code review and quality gates in the workflow |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [devops-tooling](../devops-tooling/SKILL.md) | Git operations and CI/CD automation for the workflow |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Write specs and design docs within the workflow |
-| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Manage versioning during the release lifecycle |
-| [code-quality](../code-quality/SKILL.md) | Code review and quality gates in the workflow |

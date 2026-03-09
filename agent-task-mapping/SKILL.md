@@ -9,7 +9,7 @@ license: Complete terms in LICENSE.txt
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.copilot/skills/`
+- Global skills: `C:/Users/LOQ/.agents/skills/`
 
 ## Activation Conditions
 
@@ -92,10 +92,3 @@ When choosing an agent for delegation:
 | [subagent-delegation](../subagent-delegation/SKILL.md) | Execute delegated work after mapping to the right agent |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [custom-agent-usage](../custom-agent-usage/SKILL.md) | Discover and validate .agent.md files before mapping tasks |
-| [subagent-delegation](../subagent-delegation/SKILL.md) | Execute delegated work after mapping to the right agent |

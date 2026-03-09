@@ -1,179 +1,56 @@
 ---
 name: powerbi-modeling
-description: 'Power BI semantic models — DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI.'
+description: Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI.
 ---
 
+# Power BI Modeling
 
+Use this skill when the work is inside a Power BI semantic model rather than a generic SQL schema or spreadsheet.
 
-## Skill Paths
+## Activation Conditions
 
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Designing or cleaning up a star schema
+- Creating or reviewing DAX measures
+- Configuring relationships and cross-filter direction
+- Implementing row-level security
+- Auditing model health and performance
 
+## Practical Workflow
 
-Guide users in building optimized, well-documented Power BI semantic models following Microsoft best practices.
+1. Inspect the current model before changing anything.
+2. Classify tables as dimension, fact, bridge, or helper tables.
+3. Prefer explicit measures over implicit aggregation.
+4. Keep relationships simple and single-direction unless the use case is proven.
+5. Hide technical fields from report authors.
 
-## When to Use This Skill
+## MCP Reality
 
-- Creating or optimizing Power BI semantic models
-- Designing star schemas (dimension/fact tables)
-- Writing DAX measures or calculated columns
-- Configuring relationships (cardinality and cross-filter direction)
-- Implementing row-level security (RLS) and model governance
-- Improving model naming, documentation, and performance
+Power BI model tooling is host-specific. If your client exposes a Power BI modeling MCP server, inspect the available operations first and map them to the model areas you need: connections, tables, columns, measures, relationships, DAX queries, and security roles.
 
-## Prerequisites
+For Microsoft documentation, the Microsoft Learn MCP server is a good companion. Prefer:
 
-### Required Tools
-- **Power BI Modeling MCP Server**: Required for connecting to and modifying semantic models
-  - Enables: connection_operations, table_operations, measure_operations, relationship_operations, etc.
-  - Must be configured and running to interact with models
-
-### Optional Dependencies
-- **Microsoft Learn MCP Server**: Recommended for researching latest best practices
-  - Enables: microsoft_docs_search, microsoft_docs_fetch
-  - Use for complex scenarios, new features, and official documentation
-
-## Workflow
-
-### 1. Connect and Analyze First
-
-Before providing any modeling guidance, always examine the current model state:
-
-```
-1. List connections: connection_operations(operation: "ListConnections")
-2. If no connection, check for local instances: connection_operations(operation: "ListLocalInstances")
-3. Connect to the model (Desktop or Fabric)
-4. Get model overview: model_operations(operation: "Get")
-5. List tables: table_operations(operation: "List")
-6. List relationships: relationship_operations(operation: "List")
-7. List measures: measure_operations(operation: "List")
-```
-
-### 2. Evaluate Model Health
-
-After connecting, assess the model against best practices:
-
-- **Star Schema**: Are tables properly classified as dimension or fact?
-- **Relationships**: Correct cardinality? Minimal bidirectional filters?
-- **Naming**: Human-readable, consistent naming conventions?
-- **Documentation**: Do tables, columns, measures have descriptions?
-- **Measures**: Explicit measures for key calculations?
-- **Hidden Fields**: Are technical columns hidden from report view?
-
-### 3. Provide Targeted Guidance
-
-Based on analysis, guide improvements using references:
-- Star schema design: See [STAR-SCHEMA.md](references/STAR-SCHEMA.md)
-- Relationship configuration: See [RELATIONSHIPS.md](references/RELATIONSHIPS.md)
-- DAX measures and naming: See [MEASURES-DAX.md](references/MEASURES-DAX.md)
-- Performance optimization: See [PERFORMANCE.md](references/PERFORMANCE.md)
-- Row-level security: See [RLS.md](references/RLS.md)
-
-## Quick Reference: Model Quality Checklist
-
-| Area | Best Practice |
-|------|--------------|
-| Tables | Clear dimension vs fact classification |
-| Naming | Human-readable: `Customer Name` not `CUST_NM` |
-| Descriptions | All tables, columns, measures documented |
-| Measures | Explicit DAX measures for business metrics |
-| Relationships | One-to-many from dimension to fact |
-| Cross-filter | Single direction unless specifically needed |
-| Hidden fields | Hide technical keys, IDs from report view |
-| Date table | Dedicated marked date table |
-
-## MCP Tools Reference
-
-Use these Power BI Modeling MCP operations:
-
-| Operation Category | Key Operations |
-|-------------------|----------------|
-| `connection_operations` | Connect, ListConnections, ListLocalInstances, ConnectFabric |
-| `model_operations` | Get, GetStats, ExportTMDL |
-| `table_operations` | List, Get, Create, Update, GetSchema |
-| `column_operations` | List, Get, Create, Update (descriptions, hidden, format) |
-| `measure_operations` | List, Get, Create, Update, Move |
-| `relationship_operations` | List, Get, Create, Update, Activate, Deactivate |
-| `dax_query_operations` | Execute, Validate |
-| `calculation_group_operations` | List, Create, Update |
-| `security_role_operations` | List, Create, Update, GetEffectivePermissions |
-
-## Common Tasks
-
-### Add Measure with Description
-```
-measure_operations(
-  operation: "Create",
-  definitions: [{
-    name: "Total Sales",
-    tableName: "Sales",
-    expression: "SUM(Sales[Amount])",
-    formatString: "$#,##0",
-    description: "Sum of all sales amounts"
-  }]
-)
-```
-
-### Update Column Description
-```
-column_operations(
-  operation: "Update",
-  definitions: [{
-    tableName: "Customer",
-    name: "CustomerKey",
-    description: "Unique identifier for customer dimension",
-    isHidden: true
-  }]
-)
-```
-
-### Create Relationship
-```
-relationship_operations(
-  operation: "Create",
-  definitions: [{
-    fromTable: "Sales",
-    fromColumn: "CustomerKey",
-    toTable: "Customer",
-    toColumn: "CustomerKey",
-    crossFilteringBehavior: "OneDirection"
-  }]
-)
-```
-
-## When to Use Microsoft Learn MCP
-
-Research current best practices using `microsoft_docs_search` for:
-- Latest DAX function documentation
-- New Power BI features and capabilities
-- Complex modeling scenarios (SCD Type 2, many-to-many)
-- Performance optimization techniques
-- Security implementation patterns
+- `microsoft_docs_search_by_product` with `power-bi`
+- `microsoft_docs_fetch` for the final page
 
 ## References & Resources
 
 ### Documentation
-- [MEASURES-DAX](references/MEASURES-DAX.md) — DAX measure creation and best practices
-- [PERFORMANCE](references/PERFORMANCE.md) — Model performance optimization
-- [RELATIONSHIPS](references/RELATIONSHIPS.md) — Relationship configuration and cardinality
-- [RLS](references/RLS.md) — Row-level security implementation
-- [STAR-SCHEMA](references/STAR-SCHEMA.md) — Star schema design principles
-
-### Examples
-- [Model Examples](examples/model-examples.md) — Examples of creating Power BI models programmatically
+- [STAR-SCHEMA](./references/STAR-SCHEMA.md) - Dimension and fact modeling guidance
+- [RELATIONSHIPS](./references/RELATIONSHIPS.md) - Relationship patterns and cross-filter tradeoffs
+- [MEASURES-DAX](./references/MEASURES-DAX.md) - DAX naming and measure design
+- [PERFORMANCE](./references/PERFORMANCE.md) - High-impact optimization ideas
+- [RLS](./references/RLS.md) - Row-level security patterns
 
 ### Scripts
-- [Power BI Model Audit](scripts/powerbi-model-audit.py) — Python script to audit Power BI models for best practices
+- [Power BI Model Audit](./scripts/powerbi-model-audit.py) - Local audit helper for naming, documentation, and modeling smells
 
-
-
----
+### Examples
+- [Model Examples](./examples/model-examples.md) - Example modeling patterns and DAX structure
 
 ## Related Skills
 
 | Skill | Relationship |
 |-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft SDK/docs for Power BI APIs |
-| [sql-development](../sql-development/SKILL.md) | SQL data sources for Power BI models |
-| [excel-sheet](../excel-sheet/SKILL.md) | Excel as data source or export target |
+| [microsoft-development](../microsoft-development/SKILL.md) | Official Microsoft docs for Power BI capabilities and limits |
+| [sql-development](../sql-development/SKILL.md) | Shape the upstream warehouse or SQL source feeding the model |
+| [excel-sheet](../excel-sheet/SKILL.md) | Excel as a data source or export target |

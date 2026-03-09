@@ -2,6 +2,11 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Added
+- Added a 2026-03-09 maintenance entry after reviewing the skill; the earlier TypeScript activation fix remained the only content change needed.
+
 ## [2026-03-01] — Activation Fix
 
 ### Fixed

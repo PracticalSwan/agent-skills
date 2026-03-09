@@ -438,11 +438,3 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 | [serena-usage](../serena-usage/SKILL.md) | Symbol-based refactoring via Serena code navigation |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [development-workflow](../development-workflow/SKILL.md) | Quality gates within the development lifecycle |
-| [documentation-quality](../documentation-quality/SKILL.md) | Consistent quality standards for code and docs |
-| [serena-usage](../serena-usage/SKILL.md) | Symbol-based refactoring via Serena code navigation |

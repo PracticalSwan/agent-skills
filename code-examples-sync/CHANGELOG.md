@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Reworked the skill into a concise synchronization workflow centered on API drift, imports, and example integrity
+
+### Added
+- `scripts/example-sync-check.py` for lightweight example-drift auditing in Markdown files
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Rewrote the skill around the current Playwright MCP tool names used for visual review
+
+### Added
+- `scripts/css-risk-audit.py` for lightweight CSS and front-end risk scanning before or after visual review
+
 ## [2026-03-01] — Activation Fix
 
 ### Fixed

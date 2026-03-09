@@ -6,84 +6,47 @@ license: Complete terms in LICENSE.txt
 
 # Breaking Changes Management
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+Use this skill when behavior, interfaces, configuration, or compatibility contracts change in a way that can break consumers.
 
 ## Activation Conditions
 
-Use this skill when:
-- Introducing breaking API changes
-- Creating migration guides
-- Deprecating features with timeline
-- Updating CHANGELOG.md for major versions
-- Managing version transitions
+- Releasing a major version
+- Renaming or removing public APIs
+- Changing request or response shapes
+- Replacing config keys, env vars, CLI flags, or file formats
+- Writing migration notes, deprecation notices, or upgrade checklists
 
-## Breaking Change Documentation
+## Workflow
 
-**When breaking API changes occur:**
-- Document what changed
-- Provide before/after examples
-- Include step-by-step migration instructions
-- Update CHANGELOG.md with BREAKING prefix
+1. Identify the exact consumer-visible break.
+2. State who is affected and from which version.
+3. Provide the replacement path or mitigation.
+4. Add before/after examples.
+5. Update `CHANGELOG.md` and any setup or usage docs that changed.
 
-## Deprecation Process
+## Required Outputs
 
-See [Deprecation Procedures](./references/deprecation.md) for:
-- marking deprecated features
-- suggesting alternative approaches
-- creating migration guides
-- updating changelog with deprecation notice
-- setting timeline for removal
+- Changelog entry with a clear `BREAKING` label
+- Migration guide with old usage, new usage, and upgrade steps
+- Deprecation timeline if removal is delayed
+- Validation notes for any examples or scripts that changed
 
-## Migration Guides
+## Migration Checklist
 
-**Create migration guides when:**
+- [ ] Old behavior described precisely
+- [ ] New behavior described precisely
+- [ ] Replacement path documented
+- [ ] Upgrade steps ordered and testable
+- [ ] Rollback or compatibility notes included
+- [ ] README/setup docs updated if user-facing behavior changed
 
-1. **Breaking API changes occur**: Document what changed, provide before/after examples, include step-by-step migration instructions
+## References & Resources
 
-2. **Major version updates**: List all breaking changes, provide upgrade checklist, include common migration issues and solutions
+### Documentation
+- [Deprecation Procedures](./references/deprecation.md) - Deprecation wording, timelines, and migration guidance patterns
 
-3. **Deprecating features**: Mark deprecated features clearly, suggest alternative approaches, include timeline for removal
-
-## Changelog Format
-
-```markdown
-## [Version] - YYYY-MM-DD
-
-### Added
-- New feature description with reference to PR/issue
-
-### Changed
-- **BREAKING**: Description of breaking change
-- Other changes
-
-### Fixed
-- Bug fix description
-```
-
-## Review Checklist
-
-- [ ] Breaking changes clearly documented
-- [ ] Migration guide created if needed
-- [ ] Deprecated features marked with alternative suggestions
-- [ ] Removal timeline specified
-- [ ] ChangeLog updated with BREAKING prefix
-- [ ] Before/after examples provided
-
-
----
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-patterns](../documentation-patterns/SKILL.md) | Templates for migration guides and breaking change docs |
-| [code-examples-sync](../code-examples-sync/SKILL.md) | Update code examples after breaking API changes |
-| [development-workflow](../development-workflow/SKILL.md) | Versioning and release lifecycle management |
-
----
+### Scripts
+- [Migration Guide Scaffold](./scripts/migration-guide-scaffold.py) - Generate a migration guide skeleton with version, impact, and step sections
 
 ## Related Skills
 

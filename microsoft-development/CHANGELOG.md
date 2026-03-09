@@ -2,6 +2,17 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Rewrote the skill around the current Microsoft Learn Docs MCP workflow and documented the currently published tool names
+
+### Added
+- `references/microsoft-learn-mcp.md` with the current install command and tool summary
+
+### Fixed
+- Replaced `scripts/azure-health-check.ps1` with a valid PowerShell health-check script
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

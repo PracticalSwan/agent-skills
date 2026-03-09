@@ -149,10 +149,3 @@ Design is a craft. The difference between good and great design:
 | [excalidraw-diagram-generator](../excalidraw-diagram-generator/SKILL.md) | Diagram generation for architecture and process visuals |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [frontend-design](../frontend-design/SKILL.md) | Color theory and layout principles for visual designs |
-| [excalidraw-diagram-generator](../excalidraw-diagram-generator/SKILL.md) | Diagram generation for architecture and process visuals |

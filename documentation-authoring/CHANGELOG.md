@@ -2,6 +2,11 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Removed duplicated related-skill content from `SKILL.md` to keep the authored-doc workflow concise
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

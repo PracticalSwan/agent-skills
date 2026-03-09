@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Fixed
+- Replaced `scripts/deploy-appservice.ps1` with a valid App Service zip-deployment workflow that parses and runs cleanly
+
+### Changed
+- Removed duplicated related-skill content from `SKILL.md`
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

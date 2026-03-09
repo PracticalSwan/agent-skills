@@ -628,10 +628,3 @@ Potential improvements:
 | [documentation-authoring](../documentation-authoring/SKILL.md) | Embed diagrams in technical documentation |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [canvas-design](../canvas-design/SKILL.md) | Design philosophy for visual creation |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Embed diagrams in technical documents |

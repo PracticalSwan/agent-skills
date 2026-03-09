@@ -31,11 +31,11 @@ Every maintained skill should follow this shape:
 
 ```text
 skill-name/
-├── SKILL.md
-├── scripts/
-│   └── useful-helper.py
-└── references/
-    └── reference-notes.md
+â”œâ”€â”€ SKILL.md
+â”œâ”€â”€ scripts/
+â”‚   â””â”€â”€ useful-helper.py
+â””â”€â”€ references/
+    â””â”€â”€ reference-notes.md
 ```
 
 Optional additions:
@@ -116,6 +116,13 @@ Some Office and Power BI workflows depend on tools exposed by a particular host 
 - `agent-task-mapping`
 - `custom-agent-usage`
 - `subagent-delegation`
+
+For `custom-agent-usage`, the maintained discovery roots are:
+
+- `C:\Users\LOQ\.claude\agents`
+- `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+
+The VS Code Insiders prompts folder can also contain `.prompt.md` and `.instructions.md`; only `*.agent.md` files should be treated as subagent definitions.
 
 ### Specialized
 

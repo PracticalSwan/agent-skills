@@ -252,10 +252,3 @@ project/
 | [documentation-authoring](../documentation-authoring/SKILL.md) | Document research findings and library evaluations |
 
 ---
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [javascript-development](../javascript-development/SKILL.md) | Node.js patterns complement Python research |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Document research findings and library evaluations |

@@ -6,72 +6,38 @@ license: Complete terms in LICENSE.txt
 
 # Documentation Automation
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+Use this skill when documentation quality should be enforced by scripts, CI, or local hooks instead of manual review alone.
 
 ## Activation Conditions
 
-Use this skill when:
-- Setting up automated documentation generation
-- Configuring JSDoc/TSDoc for JS/TS projects
-- Implementing documentation linting
-- Adding pre-commit doc validation
-- Integrating documentation generators
+- Adding `docs:*` scripts to a project
+- Setting up markdownlint, cspell, lychee, or remark-lint
+- Generating API docs from source comments
+- Adding pre-commit or CI validation for docs
+- Standardizing documentation checks across repositories
 
-## Documentation Generation Tools
+## Automation Targets
 
-See [Automated Tools](./references/tools.md) for:
-- JSDoc/TSDoc for JavaScript/TypeScript
-- Sphinx/pdoc for Python
-- Javadoc for Java
-- xmldoc for C#
-- godoc for Go
-- rustdoc for Rust
+- Build generated API docs
+- Lint Markdown structure and style
+- Check internal and external links
+- Validate code examples and commands
+- Enforce changelog or README updates when behavior changes
 
-## Documentation Linting
+## Recommended Pipeline
 
-**Validate documentation with:**
-- Markdown linters: `markdownlint`, `remark-lint`
-- Link checkers: `markdown-link-check`, `lychee`
-- Spell checkers: `cspell`, `aspell`
-- Code example validators
+1. Add local commands that can run without CI.
+2. Make CI call the same commands.
+3. Keep failure output actionable and fast.
+4. Prefer incremental checks in pre-commit and fuller checks in CI.
 
-## Pre-Commit Hooks
+## References & Resources
 
-**Add pre-commit checks for:**
-- Documentation build succeeds
-- No broken links
-- Code examples are valid
-- Changelog entry exists for changes
-- Markdown formatting is clean
+### Documentation
+- [Automated Tools](./references/tools.md) - Current doc tooling options by language and validation task
 
-## Example Configuration
-
-```json
-{
-  "scripts": {
-    "docs:build": "Build documentation",
-    "docs:test": "Test code examples in docs",
-    "docs:lint": "Lint documentation files",
-    "docs:links": "Check for broken links",
-    "docs:spell": "Spell check documentation",
-    "docs:validate": "Run all documentation checks"
-  }
-}
-
----
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Generate docs that automation tools process |
-| [devops-tooling](../devops-tooling/SKILL.md) | Pre-commit hooks and CI pipeline integration |
-| [documentation-verification](../documentation-verification/SKILL.md) | Automated validation in doc pipelines |
-
----
+### Scripts
+- [Docs Pipeline Scaffold](./scripts/docs-pipeline-scaffold.py) - Print starter `docs:*` scripts and a CI checklist for Node or Python projects
 
 ## Related Skills
 

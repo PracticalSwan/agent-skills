@@ -2,6 +2,16 @@
 
 All notable changes to the Copilot Skills repository will be documented in this file.
 
+## [2026-03-09] - Custom Agent Discovery Alignment
+
+### Changed
+- Updated the `custom-agent-usage` skill, examples, and helper script to use the real custom-agent discovery directories on this machine: `C:\Users\LOQ\.claude\agents` and `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+- Added repo-level guidance that the VS Code Insiders prompts folder contains mixed prompt file types and must be filtered to `*.agent.md` for subagent discovery
+
+### Fixed
+- Removed stale custom-agent discovery references to legacy `.copilot/agents` and `.github/copilot/agents` locations
+- Removed the external `glob` dependency from `custom-agent-usage/scripts/agent-finder.js` so the helper runs in the current local Node environment
+
 ## [2026-03-09] - Workspace Skill Modernization
 
 ### Changed

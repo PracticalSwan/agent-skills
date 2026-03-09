@@ -64,18 +64,21 @@ tools: [Browser, Page, Locator]
 
 ### Command Line
 
-```bash
-# Find all agent files
-find . -name "*.agent.md"
+```powershell
+# Claude Code agent directory
+Get-ChildItem 'C:\Users\LOQ\.claude\agents' -Filter *.agent.md -File
 
-# Find in specific directory
-find .github/copilot/agents -name "*.agent.md"
+# VS Code Insiders prompts directory
+# Keep only *.agent.md because this folder can also contain .prompt.md and .instructions.md
+Get-ChildItem 'C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts' -Filter *.agent.md -File
 ```
 
 ### VS Code Search
 
 - Use file search with pattern: `*.agent.md`
-- Include: `**/*.agent.md`
+- Search inside:
+  - `C:\Users\LOQ\.claude\agents`
+  - `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
 - Exclude: `node_modules/**`
 
 ## Validation Checklist
@@ -87,4 +90,4 @@ Before using an agent as a subagent, verify:
 - [ ] `disable-model-invocation` is explicitly set to `false`
 - [ ] `name` field is present and meaningful
 - [ ] `description` explains agent's purpose clearly
-- [ ] File is in discoverable location (project or system directory)
+- [ ] File is in a discoverable directory: `C:\Users\LOQ\.claude\agents` or `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`

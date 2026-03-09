@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-03-09] - Workspace Modernization
+
+### Changed
+- Rewrote the skill around the current hosted and local Notion MCP connection options
+
+### Added
+- `references/notion-mcp-quickstart.md` with the hosted endpoint, local package, and rate-limit notes
+
 ## [2026-02-28] — Description Rewrite & Cross-References
 
 ### Changed

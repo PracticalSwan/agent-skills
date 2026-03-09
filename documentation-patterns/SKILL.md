@@ -6,51 +6,31 @@ license: Complete terms in LICENSE.txt
 
 # Documentation Patterns
 
-This skill provides standardized templates and patterns for creating developer documentation.
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+Use this skill when the main problem is document shape and consistency rather than writing quality alone.
 
 ## Activation Conditions
 
-Use these patterns when:
-- Creating new API documentation
-- Documenting REST endpoints or HTTP methods
-- Writing feature documentation
-- Standardizing configuration documentation
-- Applying consistent Markdown formatting
-- Creating migration or breaking change guides
+- Creating a new API, feature, or config guide
+- Standardizing Markdown sections across repositories
+- Writing migration or runbook documents
+- Picking the right template for a doc request
 
-## Documentation Templates
+## Pattern Selection
 
-See [API Documentation Templates](./references/api-templates.md) for standard API endpoint, function, and method documentation formats.
+- API docs: endpoints, auth, request and response schema, errors
+- Feature docs: purpose, UX, dependencies, rollout, support
+- Config docs: env vars, defaults, examples, failure modes
+- Migration docs: changed behavior, upgrade path, verification
 
-See [Feature Documentation Templates](./references/feature-templates.md) for feature descriptions, usage examples, and troubleshooting sections.
+## References & Resources
 
-See [Configuration Documentation Templates](./references/config-templates.md) for environment variable, config file, and deployment documentation.
+### Documentation
+- [API Documentation Templates](./references/api-templates.md) - Endpoint, SDK, and function documentation patterns
+- [Feature Documentation Templates](./references/feature-templates.md) - Feature overview, rollout, and troubleshooting patterns
+- [Configuration Documentation Templates](./references/config-templates.md) - Config and environment variable templates
 
-## Best Practices
-
-- Use consistent heading hierarchy
-- Include working code examples
-- Document edge cases and limitations
-- Provide clear, concise descriptions
-- Use accurate type information for parameters
-
-
----
-
-## Related Skills
-
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Use patterns when creating new documents |
-| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards that patterns should follow |
-| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Templates for migration guides and changelogs |
-
----
+### Scripts
+- [Doc Template Picker](./scripts/doc-template-picker.py) - Print a starter Markdown template for `api`, `feature`, `config`, or `migration`
 
 ## Related Skills
 

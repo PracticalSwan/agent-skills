@@ -43,9 +43,9 @@ my-nextjs-app/
 
 ```bash
 # Variables
-RG_NAME="rg-recipe-app"
+RG_NAME="rg-my-nextjs-app"
 LOCATION="eastus"
-APP_NAME="kitchen-odyssey"
+APP_NAME="my-nextjs-app"
 APP_SERVICE_PLAN="${APP_NAME}-plan"
 STORAGE_ACCOUNT="${APP_NAME}stg"
 KEY_VAULT="${APP_NAME}-kv"
@@ -362,14 +362,14 @@ Deploy:
 
 ```bash
 # Get MongoDB connection string (you'll provide this)
-MONGODB_URI="mongodb+srv://username:password@cluster.mongodb.net/kitchenodyssey"
+MONGODB_URI="mongodb+srv://username:password@cluster.mongodb.net/mydatabase"
 
 az deployment group create \
-  --name deploy-recipe-app \
-  --resource-group rg-recipe-app \
+  --name deploy-my-nextjs-app \
+  --resource-group rg-my-nextjs-app \
   --template-file infra/main.bicep \
   --parameters \
-    appName=kitchen-odyssey \
+    appName=my-nextjs-app \
     location=eastus \
     sku=B1 \
     mongoDbConnectionString=$MONGODB_URI
@@ -429,7 +429,7 @@ import { DefaultAzureCredential } from '@azure/identity';
 import { SecretClient } from '@azure/keyvault-secrets';
 
 const credential = new DefaultAzureCredential();
-const keyVaultName = process.env.AZURE_KEYVAULT_NAME || 'kitchen-odysseykv';
+const keyVaultName = process.env.AZURE_KEYVAULT_NAME || 'my-nextjs-appkv';
 const keyVaultUrl = `https://${keyVaultName}.vault.azure.net`;
 
 const client = new SecretClient(keyVaultUrl, credential);
@@ -584,12 +584,12 @@ jobs:
         id: deploy
         uses: azure/webapps-deploy@v3
         with:
-          app-name: kitchen-odyssey-staging
+          app-name: my-nextjs-app-staging
           package: .
 
       - name: Monitor deployment
         run: |
-          echo "Staging URL: https://kitchen-odyssey-staging.azurewebsites.net"
+          echo "Staging URL: https://my-nextjs-app-staging.azurewebsites.net"
 
   deploy-production:
     needs: test
@@ -622,19 +622,19 @@ jobs:
         id: deploy
         uses: azure/webapps-deploy@v3
         with:
-          app-name: kitchen-odyssey
+          app-name: my-nextjs-app
           package: .
 
       - name: Health check
         run: |
           sleep 30
-          curl -f https://kitchen-odyssey.azurewebsites.net/api/health || exit 1
+          curl -f https://my-nextjs-app.azurewebsites.net/api/health || exit 1
 
       - name: Rollback on failure
         if: failure()
         uses: azure/webapps-deploy-action@v2
         with:
-          app-name: kitchen-odyssey
+          app-name: my-nextjs-app
           slot-name: staging
 ```
 
@@ -647,17 +647,17 @@ Enable deployment slots for zero-downtime deployments:
 ```bash
 # Enable deployment slots on App Service
 az webapp deployment slot create \
-  --name kitchen-odyssey \
-  --resource-group rg-recipe-app \
+  --name my-nextjs-app \
+  --resource-group rg-my-nextjs-app \
   --slot staging
 
 # Configure staging slot settings
 az webapp config appsettings set \
-  --name kitchen-odyssey-slots-staging \
-  --resource-group rg-recipe-app \
+  --name my-nextjs-app-slots-staging \
+  --resource-group rg-my-nextjs-app \
   --settings \
     NODE_ENV=staging \
-    NEXTAUTH_URL=https://kitchen-odyssey-staging.azurewebsites.net
+    NEXTAUTH_URL=https://my-nextjs-app-staging.azurewebsites.net
 ```
 
 Updated workflow for slot deployment:
@@ -666,7 +666,7 @@ Updated workflow for slot deployment:
 - name: Deploy to Staging Slot
   uses: azure/webapps-deploy@v3
   with:
-    app-name: kitchen-odyssey
+    app-name: my-nextjs-app
     slot-name: staging
     package: .
 
@@ -674,8 +674,8 @@ Updated workflow for slot deployment:
   if: github.ref == 'refs/heads/main'
   run: |
     az webapp deployment slot swap \
-      --name kitchen-odyssey \
-      --resource-group rg-recipe-app \
+      --name my-nextjs-app \
+      --resource-group rg-my-nextjs-app \
       --slot staging \
       --target-slot production
 ```
@@ -879,7 +879,7 @@ az storage cors add \
   --account-key <ACCOUNT_KEY> \
   --services b \
   --methods PUT GET DELETE OPTIONS \
-  --origins "https://kitchen-odyssey.azurewebsites.net" \
+  --origins "https://my-nextjs-app.azurewebsites.net" \
   --allowed-headers "*" \
   --exposed-headers "*"
 ```
@@ -890,19 +890,19 @@ az storage cors add \
 ```bash
 # Check current app settings
 az webapp config appsettings list \
-  --name kitchen-odyssey \
-  --resource-group rg-recipe-app \
+  --name my-nextjs-app \
+  --resource-group rg-my-nextjs-app \
   --query [].[name,value]
 
 # Verify Managed Identity is enabled
 az webapp identity show \
-  --name kitchen-odyssey \
-  --resource-group rg-recipe-app
+  --name my-nextjs-app \
+  --resource-group rg-my-nextjs-app
 
 # Test Key Vault access locally (requires Azure CLI login)
 az keyvault secret show \
   --name MongoDB-Uri \
-  --vault-name kitchen-odysseykv
+  --vault-name my-nextjs-appkv
 ```
 
 #### Issue: Application Insights not receiving telemetry

@@ -3,249 +3,159 @@
 # Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills Count](https://img.shields.io/badge/Skills-50-blue.svg)](https://github.com/PracticalSwan/agent-skills)
+[![Skills Count](https://img.shields.io/badge/Skills-52-blue.svg)](README.md)
 
-A curated collection of domain-specific skill definitions for GitHub Copilot, Claude Code, and Codex agents. Each skill encapsulates specialized knowledge, patterns, scripts, and references for specific technologies and domains.
-
-[Features](#features) • [Available Skills](#available-skills) • [Skill Structure](#skill-structure) • [Getting Started](#getting-started) • [Usage](#usage) • [Contributing](#contributing) • [Changelog](CHANGELOG.md)
+A maintained skill catalog for GitHub Copilot, Codex, and Claude-style agents. Each skill combines a focused workflow, current references, and runnable helpers.
 
 </div>
 
 ## Overview
 
-Copilot Skills transform how GitHub Copilot, Claude Code, and Codex agents understand and work with specific technologies. By activating relevant skills, agents gain domain expertise, apply best practices, and follow established patterns automatically.
+This workspace currently contains:
 
-Skills are activated automatically based on keyword matching in user prompts, enabling context-aware assistance without manual configuration.
+- `52` total skills
+- `38` editable domain skills maintained here
+- `14` copied Claude Code official superpowers kept for local discovery and intentionally left unchanged
 
-> [!NOTE]
-> **What's New** — See [CHANGELOG.md](CHANGELOG.md) for recent updates including activation testing fixes, description rewrites, and cross-references between related skills.
+The current maintenance standard is pragmatic:
 
-## Features
-
-- **Automatic Activation** - Skills trigger based on relevant keywords in your prompts
-- **Domain Expertise** - Specialized knowledge for 50 technologies and domains
-- **Consistent Patterns** - Standardized structure with references, examples, and scripts
-- **MCP Integration** - Many skills integrate with Model Context Protocol servers
-- **Customizable** - Add project-specific skills to `.github/skills/` for team conventions
-- **Dual Loading** - Workspace-specific and global skill locations
-
-## Available Skills
-
-### Frontend Development
-- **react-development** - React 19+, hooks, TypeScript, Tailwind CSS
-- **frontend-design** - Color theory, responsive design, accessibility (WCAG)
-- **stitch-design** - Design systems, shadcn/ui component conversion
-- **vite-development** - Vite 6+ build tooling and optimization
-- **web-design-reviewer** - Visual inspection and responsive design testing
-
-### Backend Development
-- **nestjs** - NestJS framework, decorators, dependency injection
-- **php-development** - PHP 8.0+, XAMPP, REST APIs, PDO
-- **sql-development** - T-SQL, stored procedures, SQL Server DBA practices
-- **mongodb-mongoose** - Mongoose models, aggregation pipelines, schemas
-
-### Microsoft Technologies
-- **microsoft-development** - Azure, .NET, Microsoft 365, Windows
-- **azure-integrations** - Azure deployment, SWA, App Service, Bicep, GitHub Actions
-- **powerbi-modeling** - Data models, DAX measures, star schemas, RLS
-
-### Office Documents (via MCP)
-- **excel-sheet** - Excel (.xlsx) manipulation via MCP server
-- **powerpoint-ppt** - PowerPoint (.pptx) manipulation via MCP server
-- **word-document** - Word (.docx) manipulation via MCP server
-
-### DevOps & Tooling
-- **devops-tooling** - Git workflows, shell scripting, CI/CD pipelines
-- **web-testing** - Playwright testing, browser automation, DevTools integration
-
-### Documentation & Design
-- **documentation-authoring** - PRDs, specs, design docs, knowledge bases
-- **documentation-automation** - JSDoc/TSDoc, linters, pre-commit hooks
-- **documentation-patterns** - API docs, feature docs, templates
-- **documentation-quality** - Quality standards, formatting guidelines
-- **documentation-verification** - Review, validation, quality checks
-- **excalidraw-diagram-generator** - Diagrams from natural language
-- **canvas-design** - Design philosophy and canvas-based visual creation
-
-### Code Quality
-- **code-quality** - Refactoring, code review, self-critique workflows
-- **breaking-changes-management** - Migration guides, deprecation, versioning
-- **code-examples-sync** - Example verification and synchronization
-
-### Development Workflow
-- **development-workflow** - Spec-driven development, EARS notation, Git workflow
-- **javascript-development** - ES2024+, async patterns, DOM manipulation
-- **codexer** - Python research assistant with Context7 MCP
-- **serena-usage** - Project memory, code navigation, intelligent refactoring
-
-### Agent Delegation & Orchestration
-- **agent-task-mapping** - Mapping tasks to specialized subagents
-- **custom-agent-usage** - Discovering and using custom .agent.md files
-- **subagent-delegation** - Core delegation patterns for utilities
-
-### Superpowers (Workflow Skills)
-- **brainstorming** - Pre-implementation design exploration
-- **dispatching-parallel-agents** - Parallel task execution
-- **executing-plans** - Implementation plan execution with checkpoints
-- **finishing-a-development-branch** - Completion and merge decisions
-- **receiving-code-review** - Code review feedback processing
-- **requesting-code-review** - Pre-merge verification
-- **subagent-driven-development** - Implementation with independent tasks
-- **systematic-debugging** - Bug diagnosis before proposing fixes
-- **test-driven-development** - TDD before implementation
-- **using-git-worktrees** - Isolated feature workspace creation
-- **using-superpowers** - Skill discovery and usage
-- **verification-before-completion** - Pre-completion verification
-- **writing-plans** - Implementation plan creation from specs
-- **writing-skills** - Creating and verifying new skills
-
-### Specialized
-- **legacy-circuit-mockups** - Breadboard circuit diagrams and visual mockups
-- **notion-docs** - Notion workspace management via MCP
-- **notebooklm-management** - NotebookLM MCP server management
+- concise `SKILL.md` files
+- separate `references/` for larger notes
+- separate `scripts/` for runnable helpers
+- real MCP guidance where public or verifiable
+- explicit fallback paths when a host-specific MCP surface is unavailable
 
 ## Skill Structure
 
-Each skill follows a consistent structure:
+Every maintained skill should follow this shape:
 
-```
+```text
 skill-name/
-├── SKILL.md              # Main skill definition with activation triggers
-├── LICENSE.txt           # License terms (typically MIT)
-├── CHANGELOG.md          # Optional: Version history and breaking changes
-├── SKILL.md.bak          # Backup of previous version
-├── references/           # Domain reference documentation
-│   └── *.md            # Technical references, patterns, quick guides
-├── examples/            # Code examples and workflows
-│   └── *.md            # Implementation examples
-└── scripts/             # Utility scripts and templates
-    ├── *.ps1           # PowerShell scripts
-    ├── *.py            # Python scripts
-    ├── *.sql           # SQL templates
-    └── README.md       # Script documentation
+├── SKILL.md
+├── scripts/
+│   └── useful-helper.py
+└── references/
+    └── reference-notes.md
 ```
 
-### SKILL.md Format
+Optional additions:
 
-Every skill file includes YAML frontmatter:
+- `examples/` for realistic walkthroughs
+- `LICENSE.txt`
+- `CHANGELOG.md`
 
-```yaml
----
-name: skill-name
-description: Comprehensive description with use cases and trigger keywords
-license: Complete terms in LICENSE.txt
----
-```
+## Loading Order
 
-The description field contains activation keywords that trigger the skill when matched in user prompts.
+Skills are resolved in this order:
 
-## Getting Started
+1. Workspace skills from `.github/skills/`
+2. Global fallback skills from `C:/Users/LOQ/.agents/skills/`
 
-### Skill Loading Order
+Workspace skills take precedence when names collide.
 
-Skills are loaded from two locations (in order):
+## MCP Guidance
 
-1. **Workspace skills**: `.github/skills/` (project-specific)
-2. **Global skills**: `C:/Users/LOQ/.copilot/skills/` or `C:/Users/LOQ/.agents/skills/` (user-specific)
+The repo now distinguishes between:
 
-Workspace-specific skills override global skills when they share the same name.
+### Publicly documented or directly verifiable MCP servers
 
-### Using Skills
+- Notion MCP
+- Microsoft Learn Docs MCP
+- NotebookLM MCP
+- Serena MCP
+- Playwright MCP
+- Context7 MCP
 
-Simply use keywords related to your task. Copilot, Claude Code, or Codex will automatically activate relevant skills:
+### Host-specific MCP surfaces
 
-- "Help me refactor this React component" → Activates `react-development`
-- "Create a PRD for the authentication feature" → Activates `documentation-authoring`
-- "Set up Azure deployment for this Next.js app" → Activates `azure-integrations`
-- "Debug failing tests before implementing the fix" → Activates `systematic-debugging`
+Some Office and Power BI workflows depend on tools exposed by a particular host such as GitHub Copilot or Microsoft 365 tooling. Those skills document that reality directly and include local fallback scripts instead of assuming the same tool names exist everywhere.
 
-> [!TIP]
-> Use the `using-superpowers` skill to discover available skills and learn how to activate them intentionally.
+## Skill Categories
 
-## Usage
+### Frontend and UX
 
-### Reading a Skill
+- `frontend-design`
+- `react-development`
+- `vite-development`
+- `web-design-reviewer`
+- `web-testing`
+- `stitch-design`
 
-Before editing any skill, read the `SKILL.md` file to understand:
-- Activation triggers and keywords
-- Domain-specific knowledge (organized by numbered Parts)
-- Quick reference tables
-- Code examples and patterns
+### Backend and Data
 
-### Creating a New Skill
+- `nestjs`
+- `php-development`
+- `mongodb-mongoose`
+- `sql-development`
+- `powerbi-modeling`
 
-1. Create a new directory following the `skill-name` pattern
-2. Create `SKILL.md` with proper YAML frontmatter
-3. Add `LICENSE.txt` (MIT recommended)
-4. Create `references/` and `examples/` subdirectories as needed
-5. Add `scripts/` if the skill includes utilities or templates
+### Microsoft and Azure
 
-### Modifying an Existing Skill
+- `microsoft-development`
+- `azure-integrations`
+- `excel-sheet`
+- `word-document`
+- `powerpoint-ppt`
 
-1. Always read `SKILL.md` first to understand the full context
-2. Create `SKILL.md.bak` backup before major changes
-3. Update the `description` field if adding new trigger keywords
-4. Maintain the Part-based organization structure
-5. Update `CHANGELOG.md` if the skill has one
-6. Update related reference files and examples as needed
+### Documentation and Delivery
 
-### Content Guidelines
+- `documentation-authoring`
+- `documentation-automation`
+- `documentation-patterns`
+- `documentation-quality`
+- `documentation-verification`
+- `code-examples-sync`
+- `breaking-changes-management`
 
-- **Be specific to the domain** - Avoid generic advice
-- **Include actionable patterns** - Code snippets, templates, workflows
-- **Maintain consistency** - Use similar organization across skills
-- **Document MCP tools** - Include tool activation patterns for MCP-enabled skills
-- **Keep examples current** - Ensure code examples use latest syntax
+### Agent and Research Workflows
 
-## MCP Server Integration
+- `serena-usage`
+- `notion-docs`
+- `notebooklm-management`
+- `codexer`
+- `agent-task-mapping`
+- `custom-agent-usage`
+- `subagent-delegation`
 
-Many skills integrate with Model Context Protocol (MCP) servers for enhanced capabilities:
+### Specialized
 
-- `office-documents` - Word, PowerPoint, Excel MCP servers
-- `notion-docs` - Notion MCP tools
-- `notebooklm-management` - NotebookLM MCP server
-- `serena-usage` - Serena MCP tools
-- `codexer` - Context7 MCP integration
+- `canvas-design`
+- `legacy-circuit-mockups`
+- `infostealer-malware-detector`
+- `excalidraw-diagram-generator`
 
-Working with MCP-enabled skills:
-1. Read the skill's quick reference table for tool names
-2. Activate tool groups before using (e.g., `activate_document_creation_and_styling()`)
-3. Follow MCP-specific parameter structures
-4. Handle MCP server errors gracefully
+## Working With the Repo
 
-## Script Files
+### Editing Skills
 
-Skills include automation scripts:
+When updating a skill:
 
-- **PowerShell (.ps1)** - Windows-native automation
-- **Python (.py)** - Cross-platform utilities
-- **SQL (.sql)** - Database scaffolding templates
-- **Excalidraw (.excalidraw)** - JSON diagram templates
+1. Keep `SKILL.md` focused on activation conditions, workflow, and local links.
+2. Move large or slow-changing material into `references/`.
+3. Keep helper automation in `scripts/`.
+4. Update repo docs if visible behavior or repo structure changes.
 
-Example script usage:
-```bash
-# PowerShell
-powershell -File script.ps1
+### Validation Expectations
 
-# Python
-python script.py
-```
+Use the checks that match the files you touched:
 
-## File Encoding
+- Python scripts: `python -m py_compile`
+- JavaScript files: `node --check`
+- PowerShell files: parse validation
+- Markdown files: local link checks and spot review
 
-All skill files use UTF-8 without BOM:
-- `.md` files - Documentation
-- `.ps1`, `.py`, `.sql` files - Scripts and templates
-- `.excalidraw` files - Diagram templates (JSON)
+Generated test artifacts such as `__pycache__` should not remain in the workspace.
 
-## Contributing
+## Notable Recent Improvements
 
-We welcome contributions! When adding or modifying skills:
+The latest modernization pass focused on:
 
-1. Follow the established skill structure
-2. Include comprehensive descriptions with trigger keywords
-3. Add a `LICENSE.txt` file (MIT recommended)
-4. Provide relevant examples and references
-5. Test activation triggers thoroughly
+- deduplicating repeated `## Related Skills` sections
+- adding missing `scripts/` directories and working helpers
+- rewriting stale MCP-heavy skills around current 2026 behavior
+- replacing broken PowerShell scripts with valid ASCII versions
+- updating the repo structure and usage docs to match the actual workspace
 
-Contributions should enhance agent capabilities in specific domains while maintaining consistency with existing skills.
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for the detailed history.

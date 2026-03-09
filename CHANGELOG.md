@@ -2,6 +2,27 @@
 
 All notable changes to the Copilot Skills repository will be documented in this file.
 
+## [2026-03-10] — nextjs-development Skill Added
+
+### Added
+
+- New `nextjs-development` maintained skill folder covering Next.js 15/16 (v16.1.6)
+- `SKILL.md` with 12 parts: App Router routing, Server/Client Components, `use cache` directive,
+  `cacheTag()`/`cacheLife()`, Server Actions, `<Form>` component, `after()`, `connection()`,
+  Turbopack, metadata API, auth interrupts (`forbidden()`/`unauthorized()`), and upgrade codemods
+- Async Request APIs section covering the v15 breaking change for `params`, `searchParams`,
+  `cookies()`, and `headers()`
+- Next.js MCP dev tools coverage (`next-devtools-mcp`) with `.mcp.json` setup, all 5 runtime
+  tool descriptions, and example agent prompts
+- `references/app-router-reference.md`: complete file conventions table, dynamic routes,
+  route groups, parallel routes, intercepting routes, and OG image generation
+- `references/nextjs-mcp-server.md`: full `next-devtools-mcp` setup guide and troubleshooting
+- `examples/data-fetching-patterns.md`: 8 patterns from `use cache` to SWR with TypeScript
+- `examples/server-client-components.md`: RSC/RCC decision guide and 9 composition patterns
+- `scripts/page-generator.ps1`: scaffold `page.tsx`, `loading.tsx`, `error.tsx` for any route,
+  with automatic handling of dynamic segment params
+- `CHANGELOG.md` and `LICENSE.txt` (MIT) for the skill folder
+
 ## [2026-03-10] - README MCP Inventory Refresh
 
 ### Changed

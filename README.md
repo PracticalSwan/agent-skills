@@ -6,8 +6,8 @@ and runnable helpers.
 
 ## Scope
 
-- `52` total skill directories in this workspace
-- `38` maintained skill folders in this repo
+- `53` total skill directories in this workspace
+- `39` maintained skill folders in this repo
 - `14` copied Claude Code official superpowers kept for local discovery
   and intentionally left unchanged
 
@@ -63,6 +63,7 @@ Workspace skills win on name collisions.
 - `excalidraw-diagram-generator`
 - `frontend-design`
 - `legacy-circuit-mockups`
+- `nextjs-development`
 - `react-development`
 - `stitch-design`
 - `vite-development`
@@ -102,7 +103,7 @@ Workspace skills win on name collisions.
 
 ## MCP Coverage
 
-This repo currently has `15` maintained skills that are MCP-backed or
+This repo currently has `16` maintained skills that are MCP-backed or
 MCP-aware. The remaining maintained skills are local guidance, CLI workflows,
 or script-first utilities.
 
@@ -132,14 +133,15 @@ documentation where public sources exist.
 | MongoDB MCP | Database queries, schema inspection, and aggregation | [13] |
 | Azure MCP | Azure resource management, deployment, and queries | [14] |
 | GitHub MCP | Repository, issues, PRs, commits, and branch management | [15] |
+| Next.js MCP (next-devtools-mcp) | Live dev server errors, logs, routes, Server Actions, project metadata | [16] |
 
 Notes:
 - NotebookLM MCP is community-provided via jgravelle/NotebookLM-MCP-Server.
   Validate that the server is installed before use.
 - Stitch MCP is environment-provided by Google. No separate installation is
   needed when the MCP surface is already active in your client.
-- Office MCP servers (Word, Excel, PowerPoint) share the Microsoft Agent 365
-  host surface but expose separate tool namespaces per application.
+- Office MCP servers (Word, Excel, PowerPoint) are installed as separate PyPI
+  packages via `uvx` and expose independent tool namespaces per application.
 
 ## Per-Skill MCP Map
 
@@ -166,6 +168,7 @@ Notes:
 | `excalidraw-diagram-generator` | `None` | Uses local diagram helpers, not MCP |
 | `frontend-design` | `None` | Layout, accessibility, and CSS guidance is local |
 | `legacy-circuit-mockups` | `None` | HTML5 Canvas and local assets only |
+| `nextjs-development` | `Optional: Next.js MCP` | Core patterns are local; `next-devtools-mcp` adds live error, log, and runtime queries |
 | `react-development` | `None` | React guidance does not require MCP |
 | `stitch-design` | `Primary: Stitch MCP` | Available when Stitch MCP is configured in the client |
 | `vite-development` | `None` | Vite configuration and build work is local |
@@ -225,17 +228,18 @@ Notes:
 2. [Context7](https://context7.com/)
 3. [Notion MCP Quickstart](https://developers.notion.com/docs/get-started-with-mcp)
 4. [makenotion/notion-mcp-server](https://github.com/makenotion/notion-mcp-server)
-5. [Microsoft Learn Docs MCP](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/)
+5. [Microsoft Learn Docs MCP](https://github.com/MicrosoftDocs/mcp)
 6. [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
-7. [microsoft/powerbi-mcp](https://github.com/microsoft/powerbi-mcp)
-8. [Word MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/word)
-9. [Excel MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/excel)
-10. [PowerPoint MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/powerpoint)
+7. [Power BI MCP (Docker Desktop)](https://docs.docker.com/ai/mcp-catalog-and-toolkit/)
+8. [office-word-mcp-server](https://pypi.org/project/office-word-mcp-server/)
+9. [excel-mcp-server](https://pypi.org/project/excel-mcp-server/)
+10. [office-powerpoint-mcp-server](https://pypi.org/project/office-powerpoint-mcp-server/)
 11. [NotebookLM MCP Server](https://github.com/jgravelle/NotebookLM-MCP-Server)
 12. [Stitch by Google](https://stitch.withgoogle.com/)
 13. [MongoDB MCP](https://www.mongodb.com/products/tools/mcp)
 14. [Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/)
 15. [GitHub MCP Server](https://github.com/github/github-mcp-server)
+16. [next-devtools-mcp](https://github.com/vercel/next-devtools-mcp)
 
 ## Copied Official Superpowers
 

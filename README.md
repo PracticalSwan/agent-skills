@@ -102,40 +102,44 @@ Workspace skills win on name collisions.
 
 ## MCP Coverage
 
-This repo currently has `12` maintained skills that are MCP-backed or
+This repo currently has `15` maintained skills that are MCP-backed or
 MCP-aware. The remaining maintained skills are local guidance, CLI workflows,
 or script-first utilities.
 
 Status legend:
 - `Primary`: the skill is designed around that MCP server
-- `Host-specific`: the MCP surface exists, but depends on the client
-- `Client-specific`: the skill expects a local or private MCP surface
+- `Optional`: the MCP server enhances the skill but is not required
 - `None`: no MCP server is required for normal use
 
 ## Verified MCP Servers
 
-Validated on `2026-03-10` using official docs or primary repo sources where
-public docs exist.
+Validated on `2026-03-10` using available tool surfaces and official
+documentation where public sources exist.
 
 | Server | What it covers | Sources |
 |--------|----------------|---------|
 | Serena MCP | Activation, memories, symbol search, refactors | [1] |
 | Context7 MCP | Resolve library IDs and query package docs | [2] |
 | Notion MCP | Search, read, update pages and databases | [3], [4] |
-| Microsoft Learn Docs MCP | Search Microsoft docs and code samples | [5] |
+| Microsoft Learn Docs MCP | Search Microsoft and Azure documentation | [5] |
 | Playwright MCP | Browser navigation, snapshots, actions, screenshots | [6] |
-| Power BI Remote MCP | Discover Power BI items and drive model workflows | [7] |
-| Microsoft Word MCP | Word document operations in Microsoft Agent 365 | [8] |
-| Microsoft Agent 365 Office preview | Preview Office agent workflows | [9] |
-| NotebookLM MCP | Notebook research and session management | [10] |
+| Power BI MCP | Manage model tables, measures, DAX, and relationships | [7] |
+| Word Document MCP | Word document read, edit, format, and export | [8] |
+| Excel MCP | Workbook, worksheet, and chart manipulation | [9] |
+| PowerPoint MCP | Presentation creation, editing, and template management | [10] |
+| NotebookLM MCP | Notebook research and session management | [11] |
+| Stitch MCP | Screen generation, project management, variant creation | [12] |
+| MongoDB MCP | Database queries, schema inspection, and aggregation | [13] |
+| Azure MCP | Azure resource management, deployment, and queries | [14] |
+| GitHub MCP | Repository, issues, PRs, commits, and branch management | [15] |
 
 Notes:
-- No public official Google NotebookLM MCP package was located on `2026-03-10`.
-  Treat NotebookLM MCP as a community or environment-provided dependency.
-- `stitch-design` references a Stitch MCP surface, but no public official
-  Stitch MCP documentation was located on `2026-03-10`.
-- Office and Power BI skills remain host-specific even when public docs or
-  repos exist.
+- NotebookLM MCP is community-provided via jgravelle/NotebookLM-MCP-Server.
+  Validate that the server is installed before use.
+- Stitch MCP is environment-provided by Google. No separate installation is
+  needed when the MCP surface is already active in your client.
+- Office MCP servers (Word, Excel, PowerPoint) share the Microsoft Agent 365
+  host surface but expose separate tool namespaces per application.
 
 ## Per-Skill MCP Map
 
@@ -147,7 +151,7 @@ Notes:
 | `code-examples-sync` | `None` | Local doc and snippet sync checks |
 | `code-quality` | `None` | Local review and refactor guidance; use `serena-usage` if available |
 | `development-workflow` | `None` | Specs, plans, and contribution workflows are local |
-| `devops-tooling` | `None` | Git, shell, CI/CD, and automation work is local |
+| `devops-tooling` | `Optional: GitHub MCP` | Core workflow is local; GitHub MCP available for repository and PR operations |
 | `documentation-authoring` | `None` | Source documentation creation does not require MCP |
 | `documentation-automation` | `None` | Linters and doc pipelines are local toolchain work |
 | `documentation-patterns` | `None` | Templates and structure patterns are local |
@@ -163,31 +167,31 @@ Notes:
 | `frontend-design` | `None` | Layout, accessibility, and CSS guidance is local |
 | `legacy-circuit-mockups` | `None` | HTML5 Canvas and local assets only |
 | `react-development` | `None` | React guidance does not require MCP |
-| `stitch-design` | `Client-specific: Stitch MCP, optional Remotion MCP` | Validate locally; no official public Stitch MCP doc found |
+| `stitch-design` | `Primary: Stitch MCP` | Available when Stitch MCP is configured in the client |
 | `vite-development` | `None` | Vite configuration and build work is local |
-| `web-design-reviewer` | `Primary: Playwright MCP` | Best when browser snapshot and screenshot tools are available |
-| `web-testing` | `Primary: Playwright MCP` | Playwright CLI remains a valid fallback |
+| `web-design-reviewer` | `Primary: Playwright MCP, optional Chrome MCP` | Best when browser snapshot and screenshot tools are available |
+| `web-testing` | `Primary: Playwright MCP, optional Chrome MCP` | Playwright CLI remains a valid fallback |
 
 ### Backend and Data
 
 | Skill | MCP | Notes |
 |-------|-----|-------|
 | `javascript-development` | `None` | JS and TS implementation guidance is local |
-| `mongodb-mongoose` | `None` | Schema and query work is local to the codebase |
+| `mongodb-mongoose` | `Primary: MongoDB MCP` | Use for queries, schema inspection, stats, and aggregation |
 | `nestjs` | `None` | Framework guidance is local |
 | `php-development` | `None` | PHP and PDO guidance is local |
-| `powerbi-modeling` | `Host-specific: Power BI MCP, optional MS Learn MCP` | Prefer remote or model tools; local audit fallback exists |
+| `powerbi-modeling` | `Primary: Power BI MCP` | Full model surface confirmed; use local audit script as fallback |
 | `sql-development` | `None` | Pair with `microsoft-development` for Microsoft docs lookup |
 
 ### Microsoft and Office
 
 | Skill | MCP | Notes |
 |-------|-----|-------|
-| `azure-integrations` | `None` | Use Azure CLI, Bicep, and CI/CD; docs lookup lives in `microsoft-development` |
-| `excel-sheet` | `Host-specific: MS Agent 365 Office/Excel preview` | Client-dependent Office tools; local Python fallback exists |
+| `azure-integrations` | `Primary: Azure MCP` | Use for deploying, managing, and querying Azure resources |
+| `excel-sheet` | `Primary: Excel MCP` | Confirmed via mcp_excel_* tool surface |
 | `microsoft-development` | `Primary: Microsoft Learn Docs MCP` | Official Microsoft docs and code sample retrieval |
-| `powerpoint-ppt` | `Host-specific: MS Agent 365 presentation tools` | Validate the client surface; local Python fallback exists |
-| `word-document` | `Host-specific: Microsoft Word MCP` | Public preview exists; local Python fallback exists |
+| `powerpoint-ppt` | `Primary: PowerPoint MCP` | Confirmed via mcp_ppt_* tool surface |
+| `word-document` | `Primary: Word Document MCP` | Confirmed via mcp_word-document_* tool surface |
 
 ### Agent and Research
 
@@ -218,15 +222,20 @@ Notes:
 ## MCP Sources
 
 1. [Serena MCP](https://github.com/oraios/serena)
-2. [Context7 Docs](https://docs.context7.com/)
+2. [Context7](https://context7.com/)
 3. [Notion MCP Quickstart](https://developers.notion.com/docs/get-started-with-mcp)
-4. [Working with Notion MCP](https://developers.notion.com/docs/working-with-notion-mcp)
-5. [Microsoft Learn Docs MCP](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/get-started?tabs=windows)
+4. [makenotion/notion-mcp-server](https://github.com/makenotion/notion-mcp-server)
+5. [Microsoft Learn Docs MCP](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/)
 6. [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
 7. [microsoft/powerbi-mcp](https://github.com/microsoft/powerbi-mcp)
 8. [Word MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/word)
-9. [Use and collaborate with agents](https://learn.microsoft.com/en-us/microsoft-agent-365/agents/how-to/use)
-10. [NotebookLM MCP Server](https://github.com/jgravelle/NotebookLM-MCP-Server)
+9. [Excel MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/excel)
+10. [PowerPoint MCP Server Reference](https://learn.microsoft.com/en-us/microsoft-agent-365/mcp-server-reference/powerpoint)
+11. [NotebookLM MCP Server](https://github.com/jgravelle/NotebookLM-MCP-Server)
+12. [Stitch by Google](https://stitch.withgoogle.com/)
+13. [MongoDB MCP](https://www.mongodb.com/products/tools/mcp)
+14. [Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/)
+15. [GitHub MCP Server](https://github.com/github/github-mcp-server)
 
 ## Copied Official Superpowers
 

@@ -6,10 +6,11 @@ and runnable helpers.
 
 ## Scope
 
-- `53` total skill directories in this workspace
-- `39` maintained skill folders in this repo
-- `14` copied Claude Code official superpowers kept for local discovery
-  and intentionally left unchanged
+- `52` total skill folders in this workspace
+- `38` maintained skill folders in this repo
+- `14` copied Claude Code official superpowers tracked locally for discovery
+  and Codex sync
+- `.serena/` is workspace metadata and is not counted as a skill
 
 ## Maintained Skill Structure
 
@@ -22,7 +23,7 @@ skill-name/
 |- scripts/
 |  `- helper.py
 `- examples/
-   `- example.md
+   `- optional-example.md
 ```
 
 Required:
@@ -41,6 +42,19 @@ Optional:
 2. Global fallback skills from `C:/Users/LOQ/.agents/skills/`
 
 Workspace skills win on name collisions.
+
+## Sync Workflow
+
+- Source of truth: `C:\Users\LOQ\.copilot\skills`
+- Maintained skills sync to:
+  - `C:\Users\LOQ\.agents\skills`
+  - `C:\Users\LOQ\.claude\skills`
+- Copied official superpowers sync only to:
+  - `C:\Users\LOQ\.agents\skills\superpowers`
+- Claude plugin-managed superpowers are intentionally not mirrored into
+  `C:\Users\LOQ\.claude\skills` to avoid duplicate local overrides
+- Run `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`
+  after updating workspace skills
 
 ## Maintained Skill Catalog
 
@@ -74,7 +88,6 @@ Workspace skills win on name collisions.
 
 - `javascript-development`
 - `mongodb-mongoose`
-- `nestjs`
 - `php-development`
 - `powerbi-modeling`
 - `sql-development`
@@ -139,7 +152,7 @@ Notes:
 - NotebookLM MCP is community-provided via jgravelle/NotebookLM-MCP-Server.
   Validate that the server is installed before use.
 - Stitch MCP is environment-provided by Google. No separate installation is
-  needed when the MCP surface is already active in your client.
+  needed when the MCP surface is already active in the client.
 - Office MCP servers (Word, Excel, PowerPoint) are installed as separate PyPI
   packages via `uvx` and expose independent tool namespaces per application.
 
@@ -153,7 +166,7 @@ Notes:
 | `code-examples-sync` | `None` | Local doc and snippet sync checks |
 | `code-quality` | `None` | Local review and refactor guidance; use `serena-usage` if available |
 | `development-workflow` | `None` | Specs, plans, and contribution workflows are local |
-| `devops-tooling` | `Optional: GitHub MCP` | Core workflow is local; GitHub MCP available for repository and PR operations |
+| `devops-tooling` | `Optional: GitHub MCP` | Core workflow is local; GitHub MCP is available for repository and PR operations |
 | `documentation-authoring` | `None` | Source documentation creation does not require MCP |
 | `documentation-automation` | `None` | Linters and doc pipelines are local toolchain work |
 | `documentation-patterns` | `None` | Templates and structure patterns are local |
@@ -181,7 +194,6 @@ Notes:
 |-------|-----|-------|
 | `javascript-development` | `None` | JS and TS implementation guidance is local |
 | `mongodb-mongoose` | `Primary: MongoDB MCP` | Use for queries, schema inspection, stats, and aggregation |
-| `nestjs` | `None` | Framework guidance is local |
 | `php-development` | `None` | PHP and PDO guidance is local |
 | `powerbi-modeling` | `Primary: Power BI MCP` | Full model surface confirmed; use local audit script as fallback |
 | `sql-development` | `None` | Pair with `microsoft-development` for Microsoft docs lookup |
@@ -222,6 +234,12 @@ Notes:
 - In the VS Code Insiders prompts directory, only `*.agent.md` files count as
   subagent definitions.
 
+## Repository Docs
+
+- `CHANGELOG.md`: repo-wide history
+- `CLAUDE.md`: repo maintenance guidance
+- `LESSON.md`: lessons learned and maintenance mistakes to avoid
+
 ## MCP Sources
 
 1. [Serena MCP](https://github.com/oraios/serena)
@@ -240,30 +258,3 @@ Notes:
 14. [Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/)
 15. [GitHub MCP Server](https://github.com/github/github-mcp-server)
 16. [next-devtools-mcp](https://github.com/vercel/next-devtools-mcp)
-
-## Copied Official Superpowers
-
-These `14` directories are copied for local discovery and are intentionally not
-maintained here:
-
-- `brainstorming`
-- `dispatching-parallel-agents`
-- `executing-plans`
-- `finishing-a-development-branch`
-- `receiving-code-review`
-- `requesting-code-review`
-- `subagent-driven-development`
-- `systematic-debugging`
-- `test-driven-development`
-- `using-git-worktrees`
-- `using-superpowers`
-- `verification-before-completion`
-- `writing-plans`
-- `writing-skills`
-
-They are excluded from the per-skill MCP map above because this repo does not
-maintain their server requirements.
-
-## Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for repository history.

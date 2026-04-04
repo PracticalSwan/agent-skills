@@ -7,7 +7,7 @@ Install or import new maintained skills here first, then sync them outward to th
 
 ## Current Inventory
 
-- `65` total skill folders in this workspace
+- `65` tracked skill folders in this workspace
 - `51` maintained skills in this repo
 - `14` copied official Claude/Codex-style superpowers tracked locally for discovery and sync
 - Every skill now includes:
@@ -120,6 +120,12 @@ Sync maintained skills to Codex, the shared mirror, and Claude, sync the full ca
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"
 ```
 
+Sync only the personal global targets and skip workspace-local roots:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -SkipWorkspaceRoots
+```
+
 ## Workspace-Aware Sync
 
 The sync script can now discover and update local project skill folders under a workspace root when they live under:
@@ -228,9 +234,11 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 
 The registry for MCP mappings and no-MCP fallback guidance is stored in [scripts/skill-registry.json](c:\Users\LOQ\.copilot\skills\scripts\skill-registry.json).
 
-## Reference Skill Installs
+## Reference Skill Imports
 
-The following high-quality skills were added after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
+The following externally sourced skills are currently maintained in this repo.
+
+Imported after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
 
 - `agentic-eval`
 - `cloud-design-patterns`

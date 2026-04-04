@@ -3,6 +3,17 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-04] - Public Docs Cleanup for Ignored Local-Only Skills
+
+### Changed
+
+- Removed ignored local-only skill families from the public inventory, provenance notes, and lessons.
+- Restored the tracked documentation counts to `65` total skill folders and `51` maintained skills.
+
+### Tested
+
+- Recomputed the tracked catalog counts by excluding ignored local-only skill folders from the public inventory.
+
 ## [2026-04-04] - Curated Skill Imports, AGENTS Upgrade, and Full Sync Refresh
 
 ### Added

@@ -16,6 +16,10 @@
     "awesome_codex_skills": {
       "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
       "commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793"
+    },
+    "googleworkspace_cli": {
+      "repo": "https://github.com/googleworkspace/cli",
+      "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"
     }
   },
   "mcp_skills": {
@@ -273,6 +277,354 @@
       "source_commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793",
       "source_path": "spreadsheet-formula-helper",
       "reason": "The workspace contains spreadsheet-heavy coursework and XLSX files where formula debugging is a recurring need."
+    },
+    "gws-shared": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-shared",
+      "reason": "Shared auth, global flags, and safety guidance for all locally enabled Google Workspace CLI workflows."
+    },
+    "gws-drive": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-drive",
+      "reason": "Drive API and OAuth scope are enabled locally, so file, folder, and shared drive workflows are available."
+    },
+    "gws-drive-upload": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-drive-upload",
+      "reason": "Drive upload helper is useful because the local auth grant already includes Drive write access."
+    },
+    "gws-sheets": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-sheets",
+      "reason": "Sheets API and OAuth scope are enabled locally, so spreadsheet workflows are available through gws."
+    },
+    "gws-sheets-read": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-sheets-read",
+      "reason": "Read helper complements the locally enabled Sheets API with a narrower data-extraction workflow."
+    },
+    "gws-sheets-append": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-sheets-append",
+      "reason": "Append helper complements the locally enabled Sheets API with a common row-write workflow."
+    },
+    "gws-docs": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-docs",
+      "reason": "Docs API and OAuth scope are enabled locally, so document read and structure workflows are available."
+    },
+    "gws-docs-write": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-docs-write",
+      "reason": "Docs write helper matches the locally enabled Docs API for content insertion and update tasks."
+    },
+    "gws-slides": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-slides",
+      "reason": "Slides API and presentations scope are enabled locally, so presentation workflows are available."
+    },
+    "gws-gmail": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail",
+      "reason": "Gmail API is enabled locally with modify scope, so mailbox read and message-management workflows are available."
+    },
+    "gws-gmail-send": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-send",
+      "reason": "Send helper matches the locally enabled Gmail API for outbound email tasks."
+    },
+    "gws-gmail-read": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-read",
+      "reason": "Read helper matches the locally enabled Gmail API for message inspection and extraction tasks."
+    },
+    "gws-gmail-reply": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-reply",
+      "reason": "Reply helper matches the locally enabled Gmail API for threaded response workflows."
+    },
+    "gws-gmail-reply-all": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-reply-all",
+      "reason": "Reply-all helper matches the locally enabled Gmail API for multi-recipient threaded response workflows."
+    },
+    "gws-gmail-forward": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-forward",
+      "reason": "Forward helper matches the locally enabled Gmail API for message handoff workflows."
+    },
+    "gws-gmail-triage": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-triage",
+      "reason": "Triage helper matches the locally enabled Gmail API for inbox review workflows."
+    },
+    "gws-gmail-watch": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-gmail-watch",
+      "reason": "Watch helper is relevant because the local Gmail grant supports mailbox monitoring workflows."
+    },
+    "gws-calendar": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-calendar",
+      "reason": "Calendar API and OAuth scope are enabled locally, so calendar and event workflows are available."
+    },
+    "gws-calendar-agenda": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-calendar-agenda",
+      "reason": "Agenda helper matches the locally enabled Calendar API for read-only schedule review workflows."
+    },
+    "gws-calendar-insert": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-calendar-insert",
+      "reason": "Event-insert helper matches the locally enabled Calendar API for event creation workflows."
+    },
+    "gws-tasks": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-tasks",
+      "reason": "Tasks API and OAuth scope are enabled locally, so task-list workflows are available."
+    },
+    "gws-workflow": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-workflow",
+      "reason": "Cross-service Google Workspace CLI workflows are useful when combining the locally enabled Gmail, Calendar, Drive, Docs, Sheets, Slides, and Tasks surfaces."
+    },
+    "gws-workflow-email-to-task": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-workflow-email-to-task",
+      "reason": "This workflow only depends on the locally enabled Gmail and Tasks APIs."
+    },
+    "gws-workflow-meeting-prep": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-workflow-meeting-prep",
+      "reason": "This read-only workflow depends on the locally enabled Calendar API."
+    },
+    "gws-workflow-standup-report": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-workflow-standup-report",
+      "reason": "This workflow depends on the locally enabled Calendar and Tasks APIs."
+    },
+    "gws-workflow-weekly-digest": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/gws-workflow-weekly-digest",
+      "reason": "This workflow depends on the locally enabled Gmail and Calendar APIs."
+    },
+    "recipe-backup-sheet-as-csv": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-backup-sheet-as-csv",
+      "reason": "Back up a Google Sheet to CSV using only the locally enabled Sheets and Drive services."
+    },
+    "recipe-batch-invite-to-event": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-batch-invite-to-event",
+      "reason": "Batch invite attendees to Calendar events using only the locally enabled Calendar service."
+    },
+    "recipe-block-focus-time": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-block-focus-time",
+      "reason": "Block focus time in Google Calendar using only the locally enabled Calendar service."
+    },
+    "recipe-bulk-download-folder": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-bulk-download-folder",
+      "reason": "Bulk-download Drive folder contents using only the locally enabled Drive service."
+    },
+    "recipe-compare-sheet-tabs": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-compare-sheet-tabs",
+      "reason": "Compare two worksheet tabs using only the locally enabled Sheets service."
+    },
+    "recipe-copy-sheet-for-new-month": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-copy-sheet-for-new-month",
+      "reason": "Duplicate and roll forward a monthly worksheet using only the locally enabled Sheets service."
+    },
+    "recipe-create-doc-from-template": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-doc-from-template",
+      "reason": "Create a Doc from a Drive template using only the locally enabled Drive and Docs services."
+    },
+    "recipe-create-events-from-sheet": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-events-from-sheet",
+      "reason": "Create Calendar events from sheet rows using only the locally enabled Sheets and Calendar services."
+    },
+    "recipe-create-expense-tracker": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-expense-tracker",
+      "reason": "Create an expense tracker workflow using only the locally enabled Sheets and Drive services."
+    },
+    "recipe-create-gmail-filter": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-gmail-filter",
+      "reason": "Create Gmail filters using only the locally enabled Gmail service."
+    },
+    "recipe-create-presentation": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-presentation",
+      "reason": "Create a Slides presentation using only the locally enabled Slides service."
+    },
+    "recipe-create-shared-drive": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-shared-drive",
+      "reason": "Create a shared drive using only the locally enabled Drive service."
+    },
+    "recipe-create-task-list": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-task-list",
+      "reason": "Create a Google Tasks list using only the locally enabled Tasks service."
+    },
+    "recipe-create-vacation-responder": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-create-vacation-responder",
+      "reason": "Configure a Gmail vacation responder using only the locally enabled Gmail service."
+    },
+    "recipe-draft-email-from-doc": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-draft-email-from-doc",
+      "reason": "Draft an email from a Google Doc using only the locally enabled Docs and Gmail services."
+    },
+    "recipe-email-drive-link": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-email-drive-link",
+      "reason": "Email a Drive link using only the locally enabled Drive and Gmail services."
+    },
+    "recipe-find-free-time": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-find-free-time",
+      "reason": "Find a shared free slot using only the locally enabled Calendar service."
+    },
+    "recipe-find-large-files": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-find-large-files",
+      "reason": "Find large Drive files using only the locally enabled Drive service."
+    },
+    "recipe-forward-labeled-emails": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-forward-labeled-emails",
+      "reason": "Forward Gmail messages by label using only the locally enabled Gmail service."
+    },
+    "recipe-generate-report-from-sheet": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-generate-report-from-sheet",
+      "reason": "Generate a Doc report from spreadsheet data using only the locally enabled Sheets, Docs, and Drive services."
+    },
+    "recipe-label-and-archive-emails": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-label-and-archive-emails",
+      "reason": "Label and archive Gmail messages using only the locally enabled Gmail service."
+    },
+    "recipe-log-deal-update": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-log-deal-update",
+      "reason": "Log structured updates to a sheet using only the locally enabled Sheets and Drive services."
+    },
+    "recipe-organize-drive-folder": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-organize-drive-folder",
+      "reason": "Organize a Drive folder using only the locally enabled Drive service."
+    },
+    "recipe-plan-weekly-schedule": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-plan-weekly-schedule",
+      "reason": "Plan a weekly schedule using only the locally enabled Calendar service."
+    },
+    "recipe-reschedule-meeting": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-reschedule-meeting",
+      "reason": "Reschedule a Calendar meeting using only the locally enabled Calendar service."
+    },
+    "recipe-review-overdue-tasks": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-review-overdue-tasks",
+      "reason": "Review overdue tasks using only the locally enabled Tasks service."
+    },
+    "recipe-save-email-attachments": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-save-email-attachments",
+      "reason": "Save Gmail attachments into Drive using only the locally enabled Gmail and Drive services."
+    },
+    "recipe-save-email-to-doc": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-save-email-to-doc",
+      "reason": "Save email content into a Google Doc using only the locally enabled Gmail and Docs services."
+    },
+    "recipe-schedule-recurring-event": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-schedule-recurring-event",
+      "reason": "Schedule recurring Calendar events using only the locally enabled Calendar service."
+    },
+    "recipe-share-doc-and-notify": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-share-doc-and-notify",
+      "reason": "Share a Doc and notify recipients using only the locally enabled Drive, Docs, and Gmail services."
+    },
+    "recipe-share-event-materials": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-share-event-materials",
+      "reason": "Share Drive materials with meeting attendees using only the locally enabled Calendar and Drive services."
+    },
+    "recipe-share-folder-with-team": {
+      "source_repo": "https://github.com/googleworkspace/cli",
+      "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+      "source_path": "skills/recipe-share-folder-with-team",
+      "reason": "Share a Drive folder with teammates using only the locally enabled Drive service."
     }
   }
 }

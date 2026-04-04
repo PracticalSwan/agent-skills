@@ -11,8 +11,8 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 
 ## Current Counts
 
-- `65` total skill folders
-- `51` maintained skills
+- `123` total skill folders
+- `109` maintained skills
 - `14` copied official superpowers
 
 ## Downstream Sync Targets
@@ -62,6 +62,12 @@ Use:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"
+```
+
+To skip workspace-local targets and sync only the personal global roots, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -SkipWorkspaceRoots
 ```
 
 ## Maintained Skill Expectations

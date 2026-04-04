@@ -2,3 +2,7 @@
 .gemini/
 # Exclude Serena memories
 .serena
+# Exclude Google Workspace skills
+gws-*/
+# Exclude Google Workspace recipes
+recipe-*/

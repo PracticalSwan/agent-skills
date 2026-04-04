@@ -36,6 +36,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 - Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
 - Keep root docs aligned on supported clients. If Gemini CLI support changes, update `README.md`, `CLAUDE.md`, and `GEMINI.md` together.
+- If a skill family is intentionally kept local-only and gitignored, exclude
+  it from public counts, public catalogs, and public provenance docs.
 - Keep documentation ASCII-first unless Unicode materially improves clarity.
 
 ## Verification Lessons

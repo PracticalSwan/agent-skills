@@ -3,7 +3,6 @@ name: notion-docs
 description: Notion workspace management via MCP - create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content.
 license: Complete terms in LICENSE.txt
 ---
-
 # Notion Documentation
 
 Use this skill when Notion is the system of record for specs, runbooks, project tracking, or knowledge management.
@@ -50,8 +49,31 @@ Hosted mode uses OAuth. Local mode uses an internal integration token. Official 
 ### Examples
 - [Workspace Setup Example](./examples/workspace-setup-example.md) - Example team workspace structure using pages, databases, and review comments
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:notion-docs` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py notion-docs` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Notion MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Draft content locally in Markdown or JSON, then use `scripts/notion-templates.js` and the Notion web UI for final publishing.
+- Prefer page and database templates from this skill to avoid duplicate structures when working without MCP.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [notebooklm-management](../notebooklm-management/SKILL.md) | Alternative research and knowledge workflow |

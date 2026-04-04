@@ -3,7 +3,6 @@ name: codexer
 description: Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7.
 license: Complete terms in LICENSE.txt
 ---
-
 # Codexer - Python Research Assistant
 
 Expert Python researcher with 10+ years of software development experience. Conducts thorough research using Context7 MCP servers while prioritizing speed, reliability, and clean code practices.
@@ -11,7 +10,7 @@ Expert Python researcher with 10+ years of software development experience. Cond
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -244,8 +243,31 @@ project/
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:codexer` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py codexer` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Context7 MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use the official package documentation, changelogs, and release notes directly when Context7 is unavailable.
+- Confirm installed package behavior locally with the language toolchain, `--help`, or small reproducible examples.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [javascript-development](../javascript-development/SKILL.md) | Node.js patterns complement Python research |

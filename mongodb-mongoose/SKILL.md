@@ -3,13 +3,10 @@ name: mongodb-mongoose
 description: MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps.
 license: Complete terms in LICENSE.txt
 ---
-
-
-
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and Atlas integration for Node.js/Next.js applications.
@@ -325,8 +322,31 @@ async function migrateUsers() {
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:mongodb-mongoose` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py mongodb-mongoose` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `MongoDB MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use `mongosh`, MongoDB Atlas UI, local schema files, and Mongoose model inspection when the MCP server is unavailable.
+- Validate indexes, queries, and aggregation pipelines against a local or staging database before finalizing changes.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [nestjs](../nestjs/SKILL.md) | NestJS backend using Mongoose models |

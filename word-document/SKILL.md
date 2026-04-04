@@ -3,7 +3,6 @@ name: word-document
 description: Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion.
 license: Complete terms in LICENSE.txt
 ---
-
 # Word Document Workflows
 
 Use this skill when `.docx` layout and document structure matter, not just the raw text.
@@ -46,8 +45,31 @@ Microsoft publicly documents a Word MCP server in the Microsoft 365 Agents Toolk
 ### Examples
 - [Report Generation Example](./examples/report-generation-example.md) - Example report workflow for `.docx` output
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:word-document` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py word-document` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Word Document MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use `python-docx`, Word desktop, or document export scripts when the MCP surface is unavailable.
+- Re-open or render the document locally so formatting, comments, and pagination are verified before delivery.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [microsoft-development](../microsoft-development/SKILL.md) | Microsoft ecosystem context and official docs |

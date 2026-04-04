@@ -2,7 +2,6 @@
 name: using-superpowers
 description: Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions
 ---
-
 <EXTREMELY-IMPORTANT>
 If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
 
@@ -13,9 +12,10 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## How to Access Skills
 
-**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.
-
-**In other environments:** Check your platform's documentation for how skills are loaded.
+- **Claude Code:** Use the native `Skill` tool when it is available. When the host loads a skill into context for you, follow that loaded content directly instead of manually reading the skill file.
+- **Codex:** Keep shared skills in the configured skills directory and invoke the matching skill workflow before acting.
+- **Gemini CLI:** Use the generated `/skills:<skill-name>` command or the equivalent global skill folder integration provided by the current setup.
+- **GitHub Copilot and similar clients:** Use the client's supported skill, instruction, or plugin path so the workflow is available before you start work.
 
 # Using Skills
 
@@ -93,3 +93,25 @@ The skill itself tells you which.
 ## User Instructions
 
 Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:using-superpowers` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py using-superpowers` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
+- Treat local verification as the fallback evidence path before closing the task.
+
+<!-- MCP:END -->

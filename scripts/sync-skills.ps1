@@ -1,10 +1,16 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [string]$SourceRoot = "",
-    [string]$CodexRoot = "C:\Users\LOQ\.agents\skills",
+    [string]$CodexRoot = "C:\Users\LOQ\.codex\skills",
+    [string]$SharedRoot = "C:\Users\LOQ\.agents\skills",
     [string]$ClaudeRoot = "C:\Users\LOQ\.claude\skills",
+    [string]$GeminiRoot = "C:\Users\LOQ\.gemini\antigravity\global_skills",
+    [string]$WorkspaceSearchRoot = "",
     [switch]$SkipCodex,
-    [switch]$SkipClaude
+    [switch]$SkipShared,
+    [switch]$SkipClaude,
+    [switch]$SkipGemini,
+    [switch]$SkipWorkspaceRoots
 )
 
 Set-StrictMode -Version Latest
@@ -88,6 +94,31 @@ function Sync-SkillFolders {
     return $synced
 }
 
+function Get-WorkspaceSkillRoots {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$WorkspaceRoot
+    )
+
+    if (-not (Test-Path -LiteralPath $WorkspaceRoot)) {
+        throw "Workspace root '$WorkspaceRoot' does not exist."
+    }
+
+    $skipPattern = [regex]'\\(node_modules|dist|build|vendor|coverage|tmp|temp|\.git|\.pnpm|\.next|out|bin|obj)\\'
+
+    return @(
+        Get-ChildItem -LiteralPath $WorkspaceRoot -Directory -Recurse -Force -Filter skills | Where-Object {
+            $fullPath = $_.FullName
+            if ($skipPattern.IsMatch($fullPath)) {
+                return $false
+            }
+
+            $parentName = Split-Path -Leaf (Split-Path -Parent $fullPath)
+            return $parentName -in @(".agent", ".agents", ".claude")
+        } | Sort-Object FullName -Unique
+    )
+}
+
 $defaultSourceRoot = Join-Path (Split-Path -Parent $PSCommandPath) ".."
 if ([string]::IsNullOrWhiteSpace($SourceRoot)) {
     $SourceRoot = $defaultSourceRoot
@@ -95,27 +126,33 @@ if ([string]::IsNullOrWhiteSpace($SourceRoot)) {
 
 $workspaceRoot = Get-NormalizedPath $SourceRoot
 $codexRootPath = Get-NormalizedPath $CodexRoot
+$sharedRootPath = Get-NormalizedPath $SharedRoot
 $claudeRootPath = Get-NormalizedPath $ClaudeRoot
-$codexSuperpowersRoot = Join-Path $codexRootPath "superpowers"
+$geminiRootPath = Get-NormalizedPath $GeminiRoot
+$sharedSuperpowersRoot = Join-Path $sharedRootPath "superpowers"
 
 if (-not (Test-Path -LiteralPath $workspaceRoot)) {
     throw "Source root '$workspaceRoot' does not exist."
 }
 
-if (-not (Test-Path -LiteralPath $codexSuperpowersRoot)) {
-    throw "Codex superpowers root '$codexSuperpowersRoot' does not exist."
+if (-not (Test-Path -LiteralPath $sharedSuperpowersRoot)) {
+    throw "Shared superpowers root '$sharedSuperpowersRoot' does not exist."
 }
 
 $skillSet = Get-SkillSet -RootPath $workspaceRoot
 
 $summary = [ordered]@{
-    workspace = [ordered]@{
+    source = [ordered]@{
         root = $workspaceRoot
         maintained_count = $skillSet.Maintained.Count
         copied_official_count = $skillSet.CopiedOfficial.Count
     }
     codex = [ordered]@{
         root = $codexRootPath
+        synced_maintained = @()
+    }
+    shared = [ordered]@{
+        root = $sharedRootPath
         synced_maintained = @()
         synced_superpowers = @()
     }
@@ -124,14 +161,28 @@ $summary = [ordered]@{
         synced_maintained = @()
         skipped_superpowers = @($skillSet.CopiedOfficial | Select-Object -ExpandProperty Name)
     }
+    gemini = [ordered]@{
+        root = $geminiRootPath
+        synced_all = @()
+    }
+    workspace_targets = [ordered]@{
+        root = if ([string]::IsNullOrWhiteSpace($WorkspaceSearchRoot)) { $null } else { (Get-NormalizedPath $WorkspaceSearchRoot) }
+        synced_maintained = @()
+    }
 }
 
 if (-not $SkipCodex) {
     $summary.codex.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $codexRootPath -Label "Codex maintained"
     )
-    $summary.codex.synced_superpowers = @(
-        Sync-SkillFolders -SkillDirs $skillSet.CopiedOfficial -TargetRoot $codexSuperpowersRoot -Label "Codex superpower"
+}
+
+if (-not $SkipShared) {
+    $summary.shared.synced_maintained = @(
+        Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $sharedRootPath -Label "Shared maintained"
+    )
+    $summary.shared.synced_superpowers = @(
+        Sync-SkillFolders -SkillDirs $skillSet.CopiedOfficial -TargetRoot $sharedSuperpowersRoot -Label "Shared superpower"
     )
 }
 
@@ -139,6 +190,31 @@ if (-not $SkipClaude) {
     $summary.claude.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $claudeRootPath -Label "Claude maintained"
     )
+}
+
+if (-not $SkipGemini) {
+    $allSkills = @($skillSet.Maintained + $skillSet.CopiedOfficial) | Sort-Object Name
+    $summary.gemini.synced_all = @(
+        Sync-SkillFolders -SkillDirs $allSkills -TargetRoot $geminiRootPath -Label "Gemini skill"
+    )
+}
+
+if (-not $SkipWorkspaceRoots -and -not [string]::IsNullOrWhiteSpace($WorkspaceSearchRoot)) {
+    $workspaceRoots = Get-WorkspaceSkillRoots -WorkspaceRoot $WorkspaceSearchRoot
+    $workspaceSummary = @()
+
+    foreach ($workspaceSkillRoot in $workspaceRoots) {
+        $synced = @(
+            Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $workspaceSkillRoot.FullName -Label "Workspace maintained"
+        )
+
+        $workspaceSummary += [pscustomobject]@{
+            root = $workspaceSkillRoot.FullName
+            synced_maintained = $synced
+        }
+    }
+
+    $summary.workspace_targets.synced_maintained = $workspaceSummary
 }
 
 $summary | ConvertTo-Json -Depth 5

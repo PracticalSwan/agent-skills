@@ -3,7 +3,6 @@ name: web-testing
 description: Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications.
 license: Complete terms in LICENSE.txt
 ---
-
 # Web Application Testing & Debugging
 
 Comprehensive toolkit for testing and debugging web applications using Playwright automation and Chrome DevTools.
@@ -11,7 +10,7 @@ Comprehensive toolkit for testing and debugging web applications using Playwrigh
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -697,8 +696,32 @@ npx playwright codegen https://example.com
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:web-testing` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py web-testing` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Playwright MCP` (primary)
+- `Chrome DevTools MCP (optional)` (primary)
+
+If MCP is unavailable in the current host:
+- Use Playwright CLI (`npx playwright test`, headed mode, or codegen) and browser devtools when MCP browser tools are unavailable.
+- Keep screenshots, console logs, and network traces as test evidence when reproducing issues manually.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [web-design-reviewer](../web-design-reviewer/SKILL.md) | Visual design review with browser tools |

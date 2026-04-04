@@ -1,35 +1,55 @@
 # Lessons
 
-Lessons and maintenance mistakes for the shared Copilot/Codex/Claude skill catalog.
+Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and Gemini CLI skill catalog.
 
 ## Source of Truth
 
 - Edit skills in `C:\Users\LOQ\.copilot\skills` first.
-- Treat `C:\Users\LOQ\.agents\skills` and `C:\Users\LOQ\.claude\skills` as deploy targets, not authoring locations.
-- Sync maintained skills outward after every structural or content update.
+- Install or import new maintained skills in `C:\Users\LOQ\.copilot\skills` first.
+- Treat `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.claude\skills`, and workspace-local skill roots as deployment targets.
+- Rebuild Gemini commands after changing `SKILL.md` content.
+- Keep `GEMINI.md` tracked in the repo; only the generated `.gemini/` directory should stay ignored.
 
-## Layout Lessons
+## Inventory Lessons
 
-- Count actual skill folders with `SKILL.md` instead of counting top-level directories. The workspace also contains `.serena`, which is metadata and not a skill.
-- Derive the maintained-skill count from folders that contain both `SKILL.md` and `CHANGELOG.md`. That avoids silently drifting counts when copied official skills are present.
-- Keep copied official superpowers distinct from maintained skills. They are tracked locally for discovery, but they do not follow the same maintenance contract.
+- Count real skill folders by checking for `SKILL.md`, not by counting directories.
+- Derive the maintained count from folders that also contain `CHANGELOG.md`.
+- Keep copied official superpowers separate from maintained skills so counts and maintenance expectations stay honest.
 
-## Host-Specific Lessons
+## Portability Lessons
 
-- Codex stores copied official superpowers under `C:\Users\LOQ\.agents\skills\superpowers`, not as top-level skill folders.
-- Claude already ships plugin-managed superpowers outside `C:\Users\LOQ\.claude\skills`. Do not mirror copied official superpowers into that folder unless you intentionally want local overrides.
-- A one-way sync from the workspace avoids conflicting edits across clients.
+- A portability footer alone is not enough; imported skills may still contain host-specific wording in frontmatter or body content.
+- Every MCP-aware skill needs an explicit no-MCP fallback path or it will fail in at least one client.
+- Gemini CLI command files must be generated with safely escaped TOML strings. Raw multiline embedding breaks on Windows paths, Markdown code fences, and backslashes.
 
-## Documentation Mistakes Fixed
+## Sync Lessons
 
-- The root README had drifted to `39` maintained skills and still listed a non-existent `nestjs` skill. Use live inventory, not memory, when updating catalog counts.
-- `CLAUDE.md` and the root changelog had visible mojibake from copied box-drawing and punctuation characters. Keep repository docs ASCII-first unless Unicode is truly needed.
-- Old target folders had leftover `SKILL.md.bak` files and placeholder `references/README.md` and `scripts/README.md` files that no longer existed in the workspace. Mirror copies should remove those stale artifacts.
+- The workspace sync script should treat the repo inventory and discovered workspace targets as separate summary keys. Reusing the same key hides useful state.
+- Downstream skill folders behave like branch mirrors: make changes in this repo first, then publish them outward with the sync script.
+- Keep the primary Codex root (`C:\Users\LOQ\.codex\skills`) distinct from the shared mirror (`C:\Users\LOQ\.agents\skills`) so documentation does not blur installation targets.
+- Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` are worth syncing when the broader workspace depends on shared skills.
+- Gemini Antigravity can consume the full current skill catalog from `C:\Users\LOQ\.gemini\antigravity\global_skills`, so it should be treated as a first-class sync target rather than a manual copy.
+- Mirror copies should replace stale skill folders entirely so old `SKILL.md.bak` files or removed support files do not linger.
+
+## Documentation Lessons
+
+- Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
+- Keep root docs aligned on supported clients. If Gemini CLI support changes, update `README.md`, `CLAUDE.md`, and `GEMINI.md` together.
+- Keep documentation ASCII-first unless Unicode materially improves clarity.
+
+## Verification Lessons
+
+- Structural validation is not enough for Gemini support; export and parse the generated TOML files too.
+- Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
+- Record source repo and commit metadata for imported skills so later updates can be traced safely.
 
 ## Update Checklist
 
 1. Edit the workspace copy.
-2. Update `README.md`, `CLAUDE.md`, and `CHANGELOG.md` if repo structure, counts, or sync behavior changed.
-3. Run `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`.
-4. Re-run the inventory diff to confirm the workspace and target folders match where they are supposed to.
-5. Record any new maintenance gotchas here before closing the task.
+2. If the change is a new skill, install or import it into this repo before touching downstream targets.
+3. Update per-skill `CHANGELOG.md` files for touched maintained skills.
+4. Update root docs if counts, support matrix, sync behavior, or client guidance changed.
+5. Run `python scripts/validate-skills.py`.
+6. Run `python scripts/export-gemini-skill.py --all`.
+7. Sync outward with `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`.
+8. Record any new gotchas here before closing the task.

@@ -3,7 +3,6 @@ name: notebooklm-management
 description: NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks.
 license: MIT
 ---
-
 # NotebookLM MCP Management
 
 Use this skill when research should be grounded in NotebookLM notebooks instead of a generic web search.
@@ -64,8 +63,31 @@ This repository already targets a real NotebookLM MCP workflow. The concrete too
 - [multi-turn-conversation.py](./examples/multi-turn-conversation.py) - Session reuse pattern
 - [library-management.py](./examples/library-management.py) - Library search and organization
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:notebooklm-management` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py notebooklm-management` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `NotebookLM MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use the NotebookLM web UI directly, capture answers in Markdown, and store session notes locally when the MCP server is unavailable.
+- Preserve notebook URLs, prompt history, and manual research notes so the workflow remains reproducible.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [notion-docs](../notion-docs/SKILL.md) | Alternative knowledge-management workflow |

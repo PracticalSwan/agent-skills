@@ -1,16 +1,59 @@
 # Agent Skills
 
-Maintained skill catalog for GitHub Copilot, Codex, and Claude-style agents.
-Each maintained skill combines a focused workflow, current references,
-and runnable helpers.
+Shared skill catalog for GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 
-## Scope
+This workspace is the main branch for maintained skills, cross-client portability guidance, Gemini command generation, and MCP fallback rules.
+Install or import new maintained skills here first, then sync them outward to the downstream targets.
 
-- `52` total skill folders in this workspace
-- `38` maintained skill folders in this repo
-- `14` copied Claude Code official superpowers tracked locally for discovery
-  and Codex sync
-- `.serena/` is workspace metadata and is not counted as a skill
+## Current Inventory
+
+- `60` total skill folders in this workspace
+- `46` maintained skills in this repo
+- `14` copied official Claude/Codex-style superpowers tracked locally for discovery and sync
+- Every skill now includes:
+  - a cross-client portability section
+  - an MCP section that names the preferred server and a no-MCP fallback path
+
+## Main Workspace
+
+- Author, import, and maintain new skills in `C:\Users\LOQ\.copilot\skills`
+- Treat the following paths as downstream sync targets or branch mirrors, not authoring roots:
+  - `C:\Users\LOQ\.codex\skills`
+  - `C:\Users\LOQ\.agents\skills`
+  - `C:\Users\LOQ\.claude\skills`
+- Sync the full current skill catalog to:
+  - `C:\Users\LOQ\.gemini\antigravity\global_skills`
+- Sync copied official superpowers only to:
+  - `C:\Users\LOQ\.agents\skills\superpowers`
+- Leave host-provided or plugin-managed skills outside this repo unless you intentionally choose to vendor and maintain them here
+- Generated Gemini CLI commands live under:
+  - [`.gemini/commands/skills`](c:\Users\LOQ\.copilot\skills\.gemini\commands\skills)
+
+## Client Support
+
+### GitHub Copilot
+
+- Keep skills in a Copilot-visible skill path or load them through project instructions where folder-based skills are not supported directly.
+
+### Claude Code
+
+- Sync maintained skills to `C:\Users\LOQ\.claude\skills`
+- Keep copied official superpowers out of that folder unless you intentionally want local overrides
+
+### Codex
+
+- Sync maintained skills to `C:\Users\LOQ\.codex\skills`
+- Keep `C:\Users\LOQ\.agents\skills` as a shared mirror for cross-client reuse and fallback lookups
+- Sync copied official superpowers to `C:\Users\LOQ\.agents\skills\superpowers`
+- Do not install new maintained skills directly into those target roots; install them in this repo first
+
+### Gemini CLI
+
+- Sync the full current skill catalog to `C:\Users\LOQ\.gemini\antigravity\global_skills`
+- Use the generated `/skills:<skill-name>` commands from [`.gemini/commands/skills`](c:\Users\LOQ\.copilot\skills\.gemini\commands\skills)
+- Rebuild them with `python scripts/export-gemini-skill.py --all`
+- Reload them in Gemini CLI with `/commands reload`
+- See [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md) for usage notes
 
 ## Maintained Skill Structure
 
@@ -19,42 +62,71 @@ skill-name/
 |- SKILL.md
 |- CHANGELOG.md
 |- references/
-|  `- notes.md
+|  `- supporting-notes.md
 |- scripts/
 |  `- helper.py
 `- examples/
    `- optional-example.md
 ```
 
-Required:
+Expected:
+
 - `SKILL.md`
 - `CHANGELOG.md`
+
+Recommended:
+
 - `references/`
 - `scripts/`
 
 Optional:
+
 - `examples/`
 - `LICENSE.txt`
 
-## Loading Order
+## Validation and Maintenance Commands
 
-1. Workspace skills from `.github/skills/`
-2. Global fallback skills from `C:/Users/LOQ/.agents/skills/`
+When adding a new maintained skill:
 
-Workspace skills win on name collisions.
+1. Add or import it into `C:\Users\LOQ\.copilot\skills`
+2. Update `REFERENCE_SOURCES.md` if the skill came from an external source
+3. Update the touched changelogs and root docs
+4. Validate and export
+5. Sync outward from this repo
 
-## Sync Workflow
+Validate all skills and generated Gemini commands:
 
-- Source of truth: `C:\Users\LOQ\.copilot\skills`
-- Maintained skills sync to:
-  - `C:\Users\LOQ\.agents\skills`
-  - `C:\Users\LOQ\.claude\skills`
-- Copied official superpowers sync only to:
-  - `C:\Users\LOQ\.agents\skills\superpowers`
-- Claude plugin-managed superpowers are intentionally not mirrored into
-  `C:\Users\LOQ\.claude\skills` to avoid duplicate local overrides
-- Run `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`
-  after updating workspace skills
+```powershell
+python scripts/validate-skills.py
+```
+
+Regenerate Gemini CLI commands:
+
+```powershell
+python scripts/export-gemini-skill.py --all
+```
+
+Refresh portability and MCP sections across all skills:
+
+```powershell
+python scripts/modernize-skills.py
+```
+
+Sync maintained skills to Codex, the shared mirror, and Claude, sync the full catalog to Gemini Antigravity, and sync maintained skills to discovered workspace-local roots:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"
+```
+
+## Workspace-Aware Sync
+
+The sync script can now discover and update local project skill folders under a workspace root when they live under:
+
+- `.agent\skills`
+- `.agents\skills`
+- `.claude\skills`
+
+That allows one pass from this repo into your Codex root, shared mirror root, and project-local skill roots inside `C:\Assumption University`.
 
 ## Maintained Skill Catalog
 
@@ -78,26 +150,33 @@ Workspace skills win on name collisions.
 - `frontend-design`
 - `legacy-circuit-mockups`
 - `nextjs-development`
+- `premium-frontend-ui`
 - `react-development`
 - `stitch-design`
 - `vite-development`
 - `web-design-reviewer`
 - `web-testing`
 
-### Backend and Data
+### Languages, Backend, and Data
 
+- `csharp-xunit`
+- `dotnet-best-practices`
+- `java-docs`
+- `java-junit`
 - `javascript-development`
 - `mongodb-mongoose`
 - `php-development`
 - `powerbi-modeling`
 - `sql-development`
 
-### Microsoft and Office
+### Microsoft, Documents, and Office
 
 - `azure-integrations`
 - `excel-sheet`
 - `microsoft-development`
+- `pdf`
 - `powerpoint-ppt`
+- `spreadsheet-formula-helper`
 - `word-document`
 
 ### Agent and Research
@@ -110,151 +189,52 @@ Workspace skills win on name collisions.
 - `serena-usage`
 - `subagent-delegation`
 
-### Specialized
+### Security and Specialized
 
 - `infostealer-malware-detector`
+- `security-review`
 
-## MCP Coverage
+## MCP-Aware Skills
 
-This repo currently has `16` maintained skills that are MCP-backed or
-MCP-aware. The remaining maintained skills are local guidance, CLI workflows,
-or script-first utilities.
+These maintained skills are MCP-backed or MCP-aware in this repo:
 
-Status legend:
-- `Primary`: the skill is designed around that MCP server
-- `Optional`: the MCP server enhances the skill but is not required
-- `None`: no MCP server is required for normal use
+- `azure-integrations`
+- `codexer`
+- `devops-tooling`
+- `excel-sheet`
+- `microsoft-development`
+- `mongodb-mongoose`
+- `nextjs-development`
+- `notebooklm-management`
+- `notion-docs`
+- `powerbi-modeling`
+- `powerpoint-ppt`
+- `serena-usage`
+- `stitch-design`
+- `web-design-reviewer`
+- `web-testing`
+- `word-document`
 
-## Verified MCP Servers
+The registry for MCP mappings and no-MCP fallback guidance is stored in [scripts/skill-registry.json](c:\Users\LOQ\.copilot\skills\scripts\skill-registry.json).
 
-Validated on `2026-03-10` using available tool surfaces and official
-documentation where public sources exist.
+## Reference Skill Installs
 
-| Server | What it covers | Sources |
-|--------|----------------|---------|
-| Serena MCP | Activation, memories, symbol search, refactors | [1] |
-| Context7 MCP | Resolve library IDs and query package docs | [2] |
-| Notion MCP | Search, read, update pages and databases | [3], [4] |
-| Microsoft Learn Docs MCP | Search Microsoft and Azure documentation | [5] |
-| Playwright MCP | Browser navigation, snapshots, actions, screenshots | [6] |
-| Power BI MCP | Manage model tables, measures, DAX, and relationships | [7] |
-| Word Document MCP | Word document read, edit, format, and export | [8] |
-| Excel MCP | Workbook, worksheet, and chart manipulation | [9] |
-| PowerPoint MCP | Presentation creation, editing, and template management | [10] |
-| NotebookLM MCP | Notebook research and session management | [11] |
-| Stitch MCP | Screen generation, project management, variant creation | [12] |
-| MongoDB MCP | Database queries, schema inspection, and aggregation | [13] |
-| Azure MCP | Azure resource management, deployment, and queries | [14] |
-| GitHub MCP | Repository, issues, PRs, commits, and branch management | [15] |
-| Next.js MCP (next-devtools-mcp) | Live dev server errors, logs, routes, Server Actions, project metadata | [16] |
+The following high-quality skills were added after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
 
-Notes:
-- NotebookLM MCP is community-provided via jgravelle/NotebookLM-MCP-Server.
-  Validate that the server is installed before use.
-- Stitch MCP is environment-provided by Google. No separate installation is
-  needed when the MCP surface is already active in the client.
-- Office MCP servers (Word, Excel, PowerPoint) are installed as separate PyPI
-  packages via `uvx` and expose independent tool namespaces per application.
+- `csharp-xunit`
+- `dotnet-best-practices`
+- `java-docs`
+- `java-junit`
+- `pdf`
+- `premium-frontend-ui`
+- `security-review`
+- `spreadsheet-formula-helper`
 
-## Per-Skill MCP Map
-
-### Workflow and Delivery
-
-| Skill | MCP | Notes |
-|-------|-----|-------|
-| `breaking-changes-management` | `None` | Local semver, deprecation, and migration guidance |
-| `code-examples-sync` | `None` | Local doc and snippet sync checks |
-| `code-quality` | `None` | Local review and refactor guidance; use `serena-usage` if available |
-| `development-workflow` | `None` | Specs, plans, and contribution workflows are local |
-| `devops-tooling` | `Optional: GitHub MCP` | Core workflow is local; GitHub MCP is available for repository and PR operations |
-| `documentation-authoring` | `None` | Source documentation creation does not require MCP |
-| `documentation-automation` | `None` | Linters and doc pipelines are local toolchain work |
-| `documentation-patterns` | `None` | Templates and structure patterns are local |
-| `documentation-quality` | `None` | Style and readability checks are local |
-| `documentation-verification` | `None` | Local completeness, links, and example validation |
-
-### Frontend, Design, and Testing
-
-| Skill | MCP | Notes |
-|-------|-----|-------|
-| `canvas-design` | `None` | Design philosophy and canvas docs are local |
-| `excalidraw-diagram-generator` | `None` | Uses local diagram helpers, not MCP |
-| `frontend-design` | `None` | Layout, accessibility, and CSS guidance is local |
-| `legacy-circuit-mockups` | `None` | HTML5 Canvas and local assets only |
-| `nextjs-development` | `Optional: Next.js MCP` | Core patterns are local; `next-devtools-mcp` adds live error, log, and runtime queries |
-| `react-development` | `None` | React guidance does not require MCP |
-| `stitch-design` | `Primary: Stitch MCP` | Available when Stitch MCP is configured in the client |
-| `vite-development` | `None` | Vite configuration and build work is local |
-| `web-design-reviewer` | `Primary: Playwright MCP, optional Chrome MCP` | Best when browser snapshot and screenshot tools are available |
-| `web-testing` | `Primary: Playwright MCP, optional Chrome MCP` | Playwright CLI remains a valid fallback |
-
-### Backend and Data
-
-| Skill | MCP | Notes |
-|-------|-----|-------|
-| `javascript-development` | `None` | JS and TS implementation guidance is local |
-| `mongodb-mongoose` | `Primary: MongoDB MCP` | Use for queries, schema inspection, stats, and aggregation |
-| `php-development` | `None` | PHP and PDO guidance is local |
-| `powerbi-modeling` | `Primary: Power BI MCP` | Full model surface confirmed; use local audit script as fallback |
-| `sql-development` | `None` | Pair with `microsoft-development` for Microsoft docs lookup |
-
-### Microsoft and Office
-
-| Skill | MCP | Notes |
-|-------|-----|-------|
-| `azure-integrations` | `Primary: Azure MCP` | Use for deploying, managing, and querying Azure resources |
-| `excel-sheet` | `Primary: Excel MCP` | Confirmed via mcp_excel_* tool surface |
-| `microsoft-development` | `Primary: Microsoft Learn Docs MCP` | Official Microsoft docs and code sample retrieval |
-| `powerpoint-ppt` | `Primary: PowerPoint MCP` | Confirmed via mcp_ppt_* tool surface |
-| `word-document` | `Primary: Word Document MCP` | Confirmed via mcp_word-document_* tool surface |
-
-### Agent and Research
-
-| Skill | MCP | Notes |
-|-------|-----|-------|
-| `agent-task-mapping` | `None` | Maps work to local custom agents rather than MCP servers |
-| `codexer` | `Primary: Context7 MCP` | Resolve library IDs and query current package docs |
-| `custom-agent-usage` | `None` | Discovers local `.agent.md` files, not MCP servers |
-| `notebooklm-management` | `Primary: NotebookLM MCP` | Community or environment-provided; validate locally |
-| `notion-docs` | `Primary: Notion MCP` | Supports remote endpoint or local stdio package |
-| `serena-usage` | `Primary: Serena MCP` | Project memories, symbol navigation, and refactoring |
-| `subagent-delegation` | `None` | Delegation workflow only |
-
-### Specialized
-
-| Skill | MCP | Notes |
-|-------|-----|-------|
-| `infostealer-malware-detector` | `None` | Detection guidance and local scripts only |
-
-## Non-MCP Notes
-
-- `custom-agent-usage` is not MCP-based. It discovers local custom agents from:
-  - `C:\Users\LOQ\.claude\agents`
-  - `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
-- In the VS Code Insiders prompts directory, only `*.agent.md` files count as
-  subagent definitions.
+Reference provenance, source commits, and selection reasons are documented in [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md).
 
 ## Repository Docs
 
-- `CHANGELOG.md`: repo-wide history
-- `CLAUDE.md`: repo maintenance guidance
-- `LESSON.md`: lessons learned and maintenance mistakes to avoid
-
-## MCP Sources
-
-1. [Serena MCP](https://github.com/oraios/serena)
-2. [Context7](https://context7.com/)
-3. [Notion MCP Quickstart](https://developers.notion.com/docs/get-started-with-mcp)
-4. [makenotion/notion-mcp-server](https://github.com/makenotion/notion-mcp-server)
-5. [Microsoft Learn Docs MCP](https://github.com/MicrosoftDocs/mcp)
-6. [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
-7. [Power BI MCP (Docker Desktop)](https://docs.docker.com/ai/mcp-catalog-and-toolkit/)
-8. [office-word-mcp-server](https://pypi.org/project/office-word-mcp-server/)
-9. [excel-mcp-server](https://pypi.org/project/excel-mcp-server/)
-10. [office-powerpoint-mcp-server](https://pypi.org/project/office-powerpoint-mcp-server/)
-11. [NotebookLM MCP Server](https://github.com/jgravelle/NotebookLM-MCP-Server)
-12. [Stitch by Google](https://stitch.withgoogle.com/)
-13. [MongoDB MCP](https://www.mongodb.com/products/tools/mcp)
-14. [Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/)
-15. [GitHub MCP Server](https://github.com/github/github-mcp-server)
-16. [next-devtools-mcp](https://github.com/vercel/next-devtools-mcp)
+- [CHANGELOG.md](c:\Users\LOQ\.copilot\skills\CHANGELOG.md): repo-wide history
+- [CLAUDE.md](c:\Users\LOQ\.copilot\skills\CLAUDE.md): maintenance guidance for Claude-style workflows
+- [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md): Gemini CLI command guidance
+- [LESSON.md](c:\Users\LOQ\.copilot\skills\LESSON.md): maintenance lessons and gotchas

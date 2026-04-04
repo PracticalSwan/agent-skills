@@ -2,7 +2,6 @@
 name: web-design-reviewer
 description: Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing.
 ---
-
 # Web Design Reviewer
 
 Use this skill for visual QA and source-level fixes after a page is already running. This is not the right skill for functional automation or regression suites.
@@ -48,8 +47,32 @@ These tool names are current in the Playwright MCP server used by Codex:
 ### Scripts
 - [CSS Risk Audit](./scripts/css-risk-audit.py) - Scan CSS and front-end source for risky fixed widths, viewport traps, and overflow patterns
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:web-design-reviewer` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py web-design-reviewer` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Playwright MCP` (primary)
+- `Chrome DevTools MCP (optional)` (primary)
+
+If MCP is unavailable in the current host:
+- Use Playwright CLI, browser devtools, screenshots, and manual responsive checks when MCP browser tools are unavailable.
+- Capture console or network issues with the browser or terminal before proposing visual fixes.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [web-testing](../web-testing/SKILL.md) | Functional and automated browser testing after design fixes |

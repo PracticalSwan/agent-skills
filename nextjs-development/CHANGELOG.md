@@ -2,6 +2,19 @@
 
 All notable changes to the `nextjs-development` skill will be documented in this file.
 
+## [2026-04-04] - Gemini Path Clarification
+
+### Changed
+- Expanded the explicit global path example so it documents both the Codex global skill path and the current Gemini Antigravity global skill path.
+
+## [2026-04-04] - Cross-Client Portability Refresh
+
+### Changed
+- Added a standard portability note covering GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+- Documented the preferred MCP server surface for this skill and a local no-MCP fallback workflow.
+
+### Tested
+- Validated `SKILL.md` frontmatter, portability sections, and Gemini export readiness with `python scripts/validate-skills.py`.
 ## [2026-03-10] — Initial Release
 
 ### Added

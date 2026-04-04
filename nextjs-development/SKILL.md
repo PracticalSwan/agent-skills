@@ -3,7 +3,6 @@ name: nextjs-development
 description: Next.js 15/16 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation. Latest version 16.1.6.
 license: Complete terms in LICENSE.txt
 ---
-
 # Next.js Development
 
 Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.1.6**) with the App Router, TypeScript, and modern patterns. Covers project structure, Server/Client Components, data fetching, caching with the `use cache` directive, Server Actions, MCP devtools integration, and performance optimization.
@@ -11,7 +10,7 @@ Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.1.6
 ## Skill Paths
 
 - Workspace: `.github/skills/nextjs-development/SKILL.md`
-- Global: `C:/Users/LOQ/.agents/skills/nextjs-development/SKILL.md`
+- Global: `C:/Users/LOQ/.codex/skills/nextjs-development/SKILL.md` for Codex, `C:/Users/LOQ/.agents/skills/nextjs-development/SKILL.md` for the shared mirror, or `C:/Users/LOQ/.gemini/antigravity/global_skills/nextjs-development/SKILL.md` for the current Gemini Antigravity setup
 
 ## Activation Conditions
 
@@ -819,8 +818,31 @@ npx @next/codemod@latest next-og-import .
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:nextjs-development` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py nextjs-development` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Next.js MCP` (optional)
+
+If MCP is unavailable in the current host:
+- Use `next dev`, `next build`, `next lint`, browser console output, and local server logs when live MCP diagnostics are unavailable.
+- Verify routing, rendering mode, and data-fetching behavior with the bundled examples and a running dev server.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Use When |
 |-------|---------|
 | `react-development` | React 19 hooks, component patterns, performance (useMemo, useCallback, Suspense) |

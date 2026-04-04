@@ -3,13 +3,10 @@ name: devops-tooling
 description: Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows.
 license: Complete terms in LICENSE.txt
 ---
-
-
-
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Comprehensive toolkit for Git workflows, shell scripting, and development automation.
@@ -64,7 +61,7 @@ Breaking changes must be indicated by `!` after the type/scope, or via `BREAKING
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 feat(api)!: remove deprecated v1 endpoint
 
@@ -73,7 +70,7 @@ feat(api)!: remove deprecated v1 endpoint
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 feat(api): remove deprecated v1 endpoint
 
@@ -88,7 +85,7 @@ BREAKING CHANGE: v1 endpoints are no longer supported. Use v2.
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 feat(auth): implement JWT refresh tokens
 
@@ -97,7 +94,7 @@ feat(auth): implement JWT refresh tokens
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 fix(ui): resolve mobile navigation overlap issue
 
@@ -106,7 +103,7 @@ fix(ui): resolve mobile navigation overlap issue
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 docs(api): add authentication examples
 
@@ -115,7 +112,7 @@ docs(api): add authentication examples
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 refactor(user): extract validation logic to separate module
 
@@ -124,7 +121,7 @@ refactor(user): extract validation logic to separate module
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 perf(images): implement lazy loading
 
@@ -133,7 +130,7 @@ perf(images): implement lazy loading
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 feat(core)!: change data structure from array to object
 ```
@@ -148,7 +145,7 @@ feat(core)!: change data structure from array to object
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git checkout -b feature/PROJ-123/user-auth
 
@@ -157,7 +154,7 @@ git checkout -b feature/PROJ-123/user-auth
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git checkout develop
 
@@ -166,7 +163,7 @@ git checkout develop
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git branch -d feature/PROJ-123/user-auth
 
@@ -175,7 +172,7 @@ git branch -d feature/PROJ-123/user-auth
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git push origin --delete feature/PROJ-123/user-auth
 
@@ -184,7 +181,7 @@ git push origin --delete feature/PROJ-123/user-auth
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git branch -m new-name
 
@@ -193,7 +190,7 @@ git branch -m new-name
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git branch -a
 ```
@@ -206,7 +203,7 @@ git branch -a
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git add .
 
@@ -215,7 +212,7 @@ git add .
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git add file1.ts file2.ts
 
@@ -224,7 +221,7 @@ git add file1.ts file2.ts
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git add -i
 
@@ -233,7 +230,7 @@ git add -i
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git commit -m "feat(auth): add OAuth2 support"
 
@@ -242,7 +239,7 @@ git commit -m "feat(auth): add OAuth2 support"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git commit --amend
 
@@ -251,7 +248,7 @@ git commit --amend
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git log --oneline --graph --all
 
@@ -260,7 +257,7 @@ git log --oneline --graph --all
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git show <commit-hash>
 ```
@@ -273,7 +270,7 @@ git show <commit-hash>
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git merge feature/new-feature
 
@@ -282,7 +279,7 @@ git merge feature/new-feature
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git rebase develop
 
@@ -291,7 +288,7 @@ git rebase develop
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git rebase -i HEAD~3
 
@@ -300,7 +297,7 @@ git rebase -i HEAD~3
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git rebase --abort
 git merge --abort
@@ -310,7 +307,7 @@ git merge --abort
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git rebase --continue
 git merge --continue
@@ -324,14 +321,14 @@ git merge --continue
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git status
 
@@ -340,14 +337,14 @@ git status
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 vim conflicting-file.ts
 
@@ -356,7 +353,7 @@ vim conflicting-file.ts
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 
@@ -364,7 +361,7 @@ vim conflicting-file.ts
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git add conflicting-file.ts
 
@@ -373,7 +370,7 @@ git add conflicting-file.ts
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git commit  # for merges
 git rebase --continue  # for rebases
@@ -387,7 +384,7 @@ git rebase --continue  # for rebases
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git stash push -m "Work in progress"
 
@@ -396,7 +393,7 @@ git stash push -m "Work in progress"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git stash pop
 
@@ -405,7 +402,7 @@ git stash pop
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git stash apply stash@{2}
 
@@ -414,7 +411,7 @@ git stash apply stash@{2}
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git stash list
 
@@ -423,7 +420,7 @@ git stash list
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git stash drop stash@{2}
 
@@ -432,7 +429,7 @@ git stash drop stash@{2}
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git stash clear
 ```
@@ -445,7 +442,7 @@ git stash clear
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git tag -a v1.0.0 -m "Release v1.0.0"
 
@@ -454,7 +451,7 @@ git tag -a v1.0.0 -m "Release v1.0.0"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git tag v1.0.0
 
@@ -463,7 +460,7 @@ git tag v1.0.0
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git tag
 
@@ -472,7 +469,7 @@ git tag
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git push origin --tags
 
@@ -481,7 +478,7 @@ git push origin --tags
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git push origin v1.0.0
 
@@ -490,7 +487,7 @@ git push origin v1.0.0
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git tag -d v1.0.0
 
@@ -499,7 +496,7 @@ git tag -d v1.0.0
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git push origin --delete v1.0.0
 ```
@@ -512,7 +509,7 @@ git push origin --delete v1.0.0
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git diff
 
@@ -521,7 +518,7 @@ git diff
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git diff --staged
 
@@ -530,7 +527,7 @@ git diff --staged
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git diff src/app.ts
 
@@ -539,7 +536,7 @@ git diff src/app.ts
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git diff HEAD~2 HEAD
 
@@ -548,7 +545,7 @@ git diff HEAD~2 HEAD
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git log --oneline v1.0.0..v2.0.0
 
@@ -557,7 +554,7 @@ git log --oneline v1.0.0..v2.0.0
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git diff --stat
 ```
@@ -570,7 +567,7 @@ git diff --stat
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git config --global user.name "Your Name"
 git config --global user.email "your@email.com"
@@ -580,7 +577,7 @@ git config --global user.email "your@email.com"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git config --global init.defaultBranch main
 
@@ -589,7 +586,7 @@ git config --global init.defaultBranch main
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git config --global commit.gpgsign true
 
@@ -598,7 +595,7 @@ git config --global commit.gpgsign true
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git config --global alias.co checkout
 git config --global alias.br branch
@@ -610,7 +607,7 @@ git config --global alias.st status
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git config --unset user.name
 
@@ -619,7 +616,7 @@ git config --unset user.name
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 git config --list
 ```
@@ -674,7 +671,7 @@ trap cleanup EXIT
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 trap 'echo "Interrupted"; cleanup; exit 1' INT TERM
 ```
@@ -708,7 +705,7 @@ validate_requirements() {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if ! validate_requirements; then
     exit 1
@@ -723,7 +720,7 @@ fi
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 echo "Config: ${CONFIG_FILE:-./config.default.yaml}"
 
@@ -732,7 +729,7 @@ echo "Config: ${CONFIG_FILE:-./config.default.yaml}"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 name="World"
 echo "Hello, ${name}!"
@@ -742,7 +739,7 @@ echo "Hello, ${name}!"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 apps=("app1" "app2" "app3")
 for app in "${apps[@]}"; do
@@ -754,7 +751,7 @@ done
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 declare -A config
 config[host]="localhost"
@@ -770,7 +767,7 @@ echo "Connecting to ${config[host]}:${config[port]}"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "Linux detected"
@@ -785,7 +782,7 @@ fi
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 case "$1" in
     start)
@@ -805,7 +802,7 @@ esac
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 for i in {1..5}; do
     echo "Iteration $i"
@@ -816,7 +813,7 @@ done
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 timeout=30
 elapsed=0
@@ -838,7 +835,7 @@ done
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 result=$(curl -s "https://api.example.com/data")
 name=$(echo "$result" | jq -r '.name')
@@ -850,7 +847,7 @@ first_item=$(echo "$result" | jq -r '.items[0]')
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 active_users=$(echo "$result" | jq '.users[] | select(.status == "active")')
 
@@ -859,7 +856,7 @@ active_users=$(echo "$result" | jq '.users[] | select(.status == "active")')
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 read -r first_name last_name email <<<$(echo "$result" | jq -r '"\(.firstName) \(.lastName) \(.email)"')
 
@@ -868,7 +865,7 @@ read -r first_name last_name email <<<$(echo "$result" | jq -r '"\(.firstName) \
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 echo "$result" | jq '.count += 1' > updated.json
 
@@ -877,7 +874,7 @@ echo "$result" | jq '.count += 1' > updated.json
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 jq -n \
   --arg name "John" \
@@ -895,7 +892,7 @@ jq -n \
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 verbose=0
 output_file="output.txt"
@@ -906,7 +903,7 @@ config="./config.yaml"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -946,7 +943,7 @@ echo "Verbose: $verbose"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if [[ -f "$FILE_PATH" ]]; then
     echo "File exists"
@@ -957,7 +954,7 @@ fi
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if [[ ! -d "$DIR_PATH" ]]; then
     mkdir -p "$DIR_PATH"
@@ -968,7 +965,7 @@ fi
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 mkdir -p ./dir1/dir2
 
@@ -977,7 +974,7 @@ mkdir -p ./dir1/dir2
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 cp -r source_dir/ dest_dir/
 
@@ -986,7 +983,7 @@ cp -r source_dir/ dest_dir/
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 rm -f file.txt          # Force delete file
 rm -rf directory/       # Recursive delete directory
@@ -996,7 +993,7 @@ rm -rf directory/       # Recursive delete directory
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 find . -name "*.py"           # All Python files
 find . -type f -name "*.js"   # All JS files (regular files only)
@@ -1007,14 +1004,14 @@ find . -mtime -7              # Modified in last 7 days
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 temp_file=$(mktemp)
 echo "data" > "$temp_file"
@@ -1023,7 +1020,7 @@ echo "data" > "$temp_file"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 rm -f "$temp_file"
 
@@ -1032,7 +1029,7 @@ rm -f "$temp_file"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 temp_dir=$(mktemp -d)
 
@@ -1040,7 +1037,7 @@ temp_dir=$(mktemp -d)
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 rm -rf "$temp_dir"
 ```
@@ -1053,7 +1050,7 @@ rm -rf "$temp_dir"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if pgrep -x "nginx" > /dev/null; then
     echo "Nginx is running"
@@ -1066,7 +1063,7 @@ fi
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 while pgrep -x "script-name" > /dev/null; do
     sleep 1
@@ -1077,7 +1074,7 @@ done
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 timeout 30s ./long-running-script.sh || echo "Timed out after 30s"
 
@@ -1086,7 +1083,7 @@ timeout 30s ./long-running-script.sh || echo "Timed out after 30s"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ./script.sh &
 job_pid=$!
@@ -1096,7 +1093,7 @@ job_pid=$!
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 trap "kill $job_pid 2>/dev/null" EXIT
 ```
@@ -1111,7 +1108,7 @@ trap "kill $job_pid 2>/dev/null" EXIT
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 LOG_INFO() {
     echo "[INFO] $(date '+%Y-%m-%d %H:%M:%S') $*"
@@ -1136,7 +1133,7 @@ LOG_DEBUG() {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 LOG_INFO "Starting deployment"
 LOG_WARN "This is a warning"
@@ -1164,7 +1161,7 @@ LOG_DEBUG "Detailed debugging info"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Set-StrictMode -Version Latest
 
@@ -1173,7 +1170,7 @@ Set-StrictMode -Version Latest
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $ErrorActionPreference = "Stop"
 
@@ -1182,7 +1179,7 @@ $ErrorActionPreference = "Stop"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 try {
     $result = Invoke-RestMethod -Uri "https://api.example.com/data" -Method Get
@@ -1205,7 +1202,7 @@ finally {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 trap {
     Write-Error "Script failed: $_"
@@ -1246,7 +1243,7 @@ Write-Output "Verbose: $Verbose"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $user = [PSCustomObject]@{
     Name = "John"
@@ -1260,7 +1257,7 @@ $user = [PSCustomObject]@{
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Write-Output $user.Name
 
@@ -1269,7 +1266,7 @@ Write-Output $user.Name
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $user | Add-Member -MemberType NoteProperty -Name "City" -Value "Anytown"
 
@@ -1278,7 +1275,7 @@ $user | Add-Member -MemberType NoteProperty -Name "City" -Value "Anytown"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $users | Where-Object { $_.Age -gt 25 }
 
@@ -1287,7 +1284,7 @@ $users | Where-Object { $_.Age -gt 25 }
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $users | Select-Object Name, Email
 
@@ -1296,7 +1293,7 @@ $users | Select-Object Name, Email
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $users | Sort-Object Name
 
@@ -1305,7 +1302,7 @@ $users | Sort-Object Name
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $users | Group-Object City
 ```
@@ -1318,7 +1315,7 @@ $users | Group-Object City
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $json = '{"name": "John", "age": 30}'
 $obj = $json | ConvertFrom-Json
@@ -1330,7 +1327,7 @@ Write-Output $obj.name
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $data = @{ name = "John"; age = 30 }
 $json = $data | ConvertTo-Json -Depth 10
@@ -1341,7 +1338,7 @@ Write-Output $json
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $config = Get-Content "config.json" | ConvertFrom-Json
 
@@ -1350,7 +1347,7 @@ $config = Get-Content "config.json" | ConvertFrom-Json
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $config | ConvertTo-Json -Depth 10 | Set-Content "config.json"
 ```
@@ -1363,7 +1360,7 @@ $config | ConvertTo-Json -Depth 10 | Set-Content "config.json"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $files = @("file1.txt", "file2.txt", "file3.txt")
 
@@ -1372,7 +1369,7 @@ $files = @("file1.txt", "file2.txt", "file3.txt")
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $files += "file4.txt"
 
@@ -1381,7 +1378,7 @@ $files += "file4.txt"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $filtered = $files | Where-Object { $_ -like "*.txt" }
 
@@ -1390,7 +1387,7 @@ $filtered = $files | Where-Object { $_ -like "*.txt" }
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $config = @{
     host = "localhost"
@@ -1403,7 +1400,7 @@ $config = @{
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Write-Output $config.host
 
@@ -1412,7 +1409,7 @@ Write-Output $config.host
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $key = "port"
 Write-Output $config[$key]
@@ -1422,7 +1419,7 @@ Write-Output $config[$key]
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 foreach ($item in $config.GetEnumerator()) {
     Write-Output "$($item.Name) = $($item.Value)"
@@ -1437,7 +1434,7 @@ foreach ($item in $config.GetEnumerator()) {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if (Test-Path "C:\path\to\file.txt") {
     Write-Output "File exists"
@@ -1448,7 +1445,7 @@ if (Test-Path "C:\path\to\file.txt") {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 New-Item -ItemType Directory -Path "C:\new\dir" -Force
 
@@ -1457,7 +1454,7 @@ New-Item -ItemType Directory -Path "C:\new\dir" -Force
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Remove-Item "C:\path\to\file.txt" -Force
 Remove-Item "C:\path\to\directory" -Recurse -Force
@@ -1467,7 +1464,7 @@ Remove-Item "C:\path\to\directory" -Recurse -Force
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Copy-Item "source.txt" "destination.txt" -Force
 Copy-Item "dir\" "backup\" -Recurse
@@ -1477,7 +1474,7 @@ Copy-Item "dir\" "backup\" -Recurse
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Move-Item "old_name.txt" "new_name.txt"
 
@@ -1486,7 +1483,7 @@ Move-Item "old_name.txt" "new_name.txt"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $content = Get-Content "file.txt"
 $content = Get-Content "file.txt" -Raw  # As single string
@@ -1496,7 +1493,7 @@ $content = Get-Content "file.txt" -Raw  # As single string
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $content | Set-Content "file.txt"
 
@@ -1505,7 +1502,7 @@ $content | Set-Content "file.txt"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 "more content" | Add-Content "file.txt"
 ```
@@ -1518,7 +1515,7 @@ $content | Set-Content "file.txt"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $name = "John"
 Write-Output "Hello, $name!"
@@ -1528,7 +1525,7 @@ Write-Output "Hello, $name!"
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 Write-Output ("Hello, {0}! Your score is {1:N2}" -f $name, 95.5)
 
@@ -1537,7 +1534,7 @@ Write-Output ("Hello, {0}! Your score is {1:N2}" -f $name, 95.5)
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $string = "  Hello World  "
 
@@ -1546,7 +1543,7 @@ $string = "  Hello World  "
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $trimmed = $string.Trim()
 
@@ -1555,7 +1552,7 @@ $trimmed = $string.Trim()
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $replaced = $string.Replace("World", "PowerShell")
 
@@ -1564,7 +1561,7 @@ $replaced = $string.Replace("World", "PowerShell")
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if ($string -like "*World*") {
     Write-Output "Contains 'World'"
@@ -1575,7 +1572,7 @@ if ($string -like "*World*") {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 if ($string -match "^Hello") {
     Write-Output "Starts with 'Hello'"
@@ -1586,7 +1583,7 @@ if ($string -match "^Hello") {
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 $parts = "a,b,c".Split(",")
 ```
@@ -1796,8 +1793,31 @@ stages:
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:devops-tooling` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py devops-tooling` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `GitHub MCP` (optional)
+
+If MCP is unavailable in the current host:
+- Use standard local tools such as `git`, `gh`, CI logs, and shell automation scripts for repository and pipeline work.
+- Prefer the bundled repo scripts or direct YAML edits when the MCP host does not expose GitHub operations.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [development-workflow](../development-workflow/SKILL.md) | Project lifecycle that DevOps tooling supports |

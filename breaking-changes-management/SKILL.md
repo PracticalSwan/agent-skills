@@ -3,7 +3,6 @@ name: breaking-changes-management
 description: Manage breaking API changes, migration guides, deprecation notices, and semver versioning. Use when introducing breaking changes, writing migration paths, updating changelogs, or releasing major versions.
 license: Complete terms in LICENSE.txt
 ---
-
 # Breaking Changes Management
 
 Use this skill when behavior, interfaces, configuration, or compatibility contracts change in a way that can break consumers.
@@ -48,8 +47,29 @@ Use this skill when behavior, interfaces, configuration, or compatibility contra
 ### Scripts
 - [Migration Guide Scaffold](./scripts/migration-guide-scaffold.py) - Generate a migration guide skeleton with version, impact, and step sections
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:breaking-changes-management` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py breaking-changes-management` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
+- Treat local verification as the fallback evidence path before closing the task.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [documentation-patterns](../documentation-patterns/SKILL.md) | Templates for migration guides and breaking change docs |

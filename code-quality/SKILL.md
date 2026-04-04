@@ -3,7 +3,6 @@ name: code-quality
 description: Code review, refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability.
 license: Complete terms in LICENSE.txt
 ---
-
 # Code Quality Management
 
 Comprehensive skill for improving code quality through code review, surgical refactoring, and self-evaluation loops.
@@ -11,7 +10,7 @@ Comprehensive skill for improving code quality through code review, surgical ref
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -429,8 +428,29 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:code-quality` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py code-quality` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
+- Treat local verification as the fallback evidence path before closing the task.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [development-workflow](../development-workflow/SKILL.md) | Quality gates within the development lifecycle |

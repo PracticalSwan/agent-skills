@@ -3,7 +3,6 @@ name: powerpoint-ppt
 description: PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files.
 license: Complete terms in LICENSE.txt
 ---
-
 # PowerPoint Presentation Workflows
 
 Use this skill when a `.pptx` deck is the output and slide composition matters.
@@ -45,8 +44,31 @@ Presentation MCP tooling is host-dependent. Some clients expose Office presentat
 ### Examples
 - [Presentation Examples](./examples/presentation-examples.md) - Example deck structures and content patterns
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:powerpoint-ppt` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py powerpoint-ppt` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `PowerPoint MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use `python-pptx`, PowerPoint desktop, or a scriptable slide generator when the MCP surface is unavailable.
+- Render the final deck and manually verify layout, overflow, and speaker-facing notes before delivery.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [microsoft-development](../microsoft-development/SKILL.md) | Microsoft ecosystem context and official docs |

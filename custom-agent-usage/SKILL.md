@@ -3,13 +3,12 @@ name: custom-agent-usage
 description: Discover, validate, and invoke .agent.md custom agents. Use when finding agent files in the local Claude or VS Code Insiders directories, checking frontmatter, verifying disable-model-invocation, or determining agentName for runSubagent calls.
 license: Complete terms in LICENSE.txt
 ---
-
 # Custom Agent Usage
 
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -123,8 +122,29 @@ runSubagent({
 - [Agent Discovery Workflow](./examples/agent-discovery-workflow.md) - Examples of finding and using custom agents
 - [Agent Finder Script](./scripts/agent-finder.js) - Node.js script to discover and inspect custom agents
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:custom-agent-usage` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py custom-agent-usage` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
+- Treat local verification as the fallback evidence path before closing the task.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [agent-task-mapping](../agent-task-mapping/SKILL.md) | Map tasks to agents after discovering available agents |

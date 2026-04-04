@@ -3,13 +3,10 @@ name: azure-integrations
 description: Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps.
 license: Complete terms in LICENSE.txt
 ---
-
-
-
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Deployment and integration patterns for Azure cloud services, focusing on web application hosting, CI/CD automation, and infrastructure as code.
@@ -49,7 +46,7 @@ Deployment and integration patterns for Azure cloud services, focusing on web ap
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 name: Deploy to Azure Static Web Apps
 
@@ -134,7 +131,7 @@ Automated deployment script: **[scripts/deploy-appservice.ps1](./scripts/deploy-
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 name: Deploy Next.js to App Service
 
@@ -193,7 +190,7 @@ jobs:
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 az webapp config appsettings set --name <app-name> --resource-group <rg> --settings \
   AZURE_KEYVAULT_RESOURCEENDPOINT="https://<vault-name>.vault.azure.net" \
@@ -209,7 +206,7 @@ az webapp config appsettings set --name <app-name> --resource-group <rg> --setti
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 az webapp config appsettings set --name <app-name> --resource-group <rg> --settings \
   MONGODB_URI="mongodb+srv://..." \
@@ -408,8 +405,31 @@ jobs:
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:azure-integrations` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py azure-integrations` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Azure MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use Azure CLI (`az`), Bicep or ARM templates, and the bundled PowerShell deployment scripts in this skill when the MCP server is unavailable.
+- Validate resources with `az` queries, deployment logs, and portal checks before closing the task.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [microsoft-development](../microsoft-development/SKILL.md) | Look up Azure SDK docs and code samples |

@@ -3,7 +3,6 @@ name: microsoft-development
 description: Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval.
 license: Complete terms in LICENSE.txt
 ---
-
 # Microsoft Development
 
 Use this skill when the answer should come from Microsoft documentation rather than memory or third-party summaries.
@@ -60,8 +59,31 @@ Microsoft's getting-started docs also describe installation through `npx -y @mic
 ### Examples
 - [Azure Function API Example](./examples/azure-function-api-example.md) - Example serverless API workflow tied back to official Microsoft docs
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:microsoft-development` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py microsoft-development` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Microsoft Learn Docs MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use Microsoft Learn in a browser and local SDK or CLI documentation when the docs MCP server is unavailable.
+- Verify generated commands or samples with the native toolchain (`dotnet`, `az`, PowerShell, etc.) before shipping them.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [azure-integrations](../azure-integrations/SKILL.md) | Deploy and configure Azure resources after researching them |

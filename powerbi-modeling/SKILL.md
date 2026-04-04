@@ -2,7 +2,6 @@
 name: powerbi-modeling
 description: Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI.
 ---
-
 # Power BI Modeling
 
 Use this skill when the work is inside a Power BI semantic model rather than a generic SQL schema or spreadsheet.
@@ -47,8 +46,31 @@ For Microsoft documentation, the Microsoft Learn MCP server is a good companion.
 ### Examples
 - [Model Examples](./examples/model-examples.md) - Example modeling patterns and DAX structure
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:powerbi-modeling` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py powerbi-modeling` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Power BI MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use Power BI Desktop, Tabular Editor, DAX Studio, and exported model metadata when the MCP surface is unavailable.
+- Validate measures, relationships, and performance with local model tools before completion.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [microsoft-development](../microsoft-development/SKILL.md) | Official Microsoft docs for Power BI capabilities and limits |

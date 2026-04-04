@@ -3,7 +3,6 @@ name: excel-sheet
 description: Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets.
 license: Complete terms in LICENSE.txt
 ---
-
 # Excel Spreadsheet Workflows
 
 Use this skill when the deliverable is an `.xlsx` workbook or when spreadsheet structure matters.
@@ -45,8 +44,31 @@ Excel MCP tooling is host-dependent. In GitHub Copilot, Excel actions may appear
 ### Examples
 - [Excel Workbook Examples](./examples/excel-workbook-examples.md) - Example workbook structures and automation patterns
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:excel-sheet` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py excel-sheet` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Excel MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use `scripts/csv-to-xlsx.py`, `openpyxl`, or desktop Excel when the spreadsheet MCP surface is missing.
+- Re-open the generated workbook locally to verify formulas, ranges, and frozen panes.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [microsoft-development](../microsoft-development/SKILL.md) | Microsoft docs and ecosystem context |

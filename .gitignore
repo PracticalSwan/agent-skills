@@ -1,5 +1,4 @@
-# Exclude CLAUDE.md
-CLAUDE.md
-
+# Exclude Agent files
+.gemini/
 # Exclude Serena memories
 .serena

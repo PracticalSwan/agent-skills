@@ -3,13 +3,10 @@ name: stitch-design
 description: Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects.
 license: Complete terms in LICENSE.txt
 ---
-
-
-
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Comprehensive toolkit for Google Stitch projects — combining design system documentation, React component conversion, autonomous build loops, prompt engineering, video walkthroughs, and shadcn/ui component integration. Based on [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills).
@@ -54,7 +51,7 @@ Analyze Stitch project screens and synthesize a semantic design system into `DES
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 **Project ID:** [ID]
 
@@ -227,7 +224,7 @@ Expert guidance for integrating shadcn/ui components into React applications.
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 npx shadcn@latest create
 
@@ -236,7 +233,7 @@ npx shadcn@latest create
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 npx shadcn@latest init
 
@@ -245,7 +242,7 @@ npx shadcn@latest init
 ## Skill Paths
 
 - Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.agents/skills/`
+- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 npx shadcn@latest add button card dialog
 ```
@@ -314,8 +311,31 @@ export function cn(...inputs: ClassValue[]) {
 
 ---
 
-## Related Skills
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
 
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:stitch-design` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py stitch-design` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP servers for this skill:
+- `Stitch MCP` (primary)
+
+If MCP is unavailable in the current host:
+- Use screenshots, HTML prototypes, Figma exports, and local design notes when Stitch MCP is not exposed by the host.
+- Treat generated React or design assets as drafts that still need local browser verification.
+
+<!-- MCP:END -->
+
+## Related Skills
 | Skill | Relationship |
 |-------|-------------|
 | [react-development](../react-development/SKILL.md) | Implement Stitch screens as React code |

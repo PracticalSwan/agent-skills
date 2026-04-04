@@ -3,6 +3,89 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-04] - Main Workspace Policy Clarification
+
+### Changed
+
+- Clarified in root documentation that `C:\Users\LOQ\.copilot\skills` is the canonical main workspace for maintained skills and that new maintained skills must be added here first
+- Documented downstream skill roots as synced branch mirrors rather than authoring locations
+- Updated maintenance guidance so external skill imports are recorded and reviewed in this repo before outward sync
+
+## [2026-04-04] - Codex Path Alignment and Sync Refresh
+
+### Changed
+
+- Realigned `scripts/sync-skills.ps1` so maintained skills now target `C:\Users\LOQ\.codex\skills` for Codex while keeping `C:\Users\LOQ\.agents\skills` as a shared mirror
+- Updated root documentation to distinguish the primary Codex install root from the shared mirror path instead of treating them as the same destination
+- Refreshed installed Codex skills from the current workspace catalog before the full sync pass
+
+### Fixed
+
+- Removed the stale assumption that `C:\Users\LOQ\.agents\skills` was the only Codex sync target
+
+## [2026-04-04] - Gemini Antigravity Sync and Cleanup
+
+### Changed
+
+- Added `C:\Users\LOQ\.gemini\antigravity\global_skills` as a first-class sync target in `scripts/sync-skills.ps1`
+- Updated root documentation to describe Gemini Antigravity global-skill syncing alongside generated Gemini CLI commands
+- Refined high-impact meta-skill wording in `using-superpowers`, `writing-skills`, and `nextjs-development` so they read more cleanly across clients instead of assuming only Claude or Codex paths
+
+### Fixed
+
+- Removed the accidental `GEMINI.md` ignore rule from `.gitignore` so the Gemini-specific documentation can be tracked with the repo
+
+### Tested
+
+- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"` after adding the Gemini target
+- Verified the Gemini Antigravity root now mirrors the current full skill catalog in `C:\Users\LOQ\.gemini\antigravity\global_skills`
+
+## [2026-04-04] - Four-Client Portability and Workspace Skill Expansion
+
+### Added
+
+- Added `scripts/skill-registry.json` to track MCP-backed skills, no-MCP fallback guidance, reference sources, and imported-skill provenance
+- Added `scripts/export-gemini-skill.py` to generate Gemini CLI `/skills:<skill-name>` commands from repo `SKILL.md` files
+- Added `scripts/modernize-skills.py` to inject the standard cross-client portability section and MCP fallback section across skills
+- Added `scripts/validate-skills.py` to verify skill frontmatter, required sections, and generated Gemini command validity
+- Added [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md) for Gemini CLI usage guidance
+- Added [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md) documenting imported skill sources, commits, and selection rationale
+- Imported and maintained these new skills after auditing `C:\Assumption University`:
+  - `csharp-xunit`
+  - `dotnet-best-practices`
+  - `java-docs`
+  - `java-junit`
+  - `pdf`
+  - `premium-frontend-ui`
+  - `security-review`
+  - `spreadsheet-formula-helper`
+
+### Changed
+
+- Updated every skill folder so the current catalog works across GitHub Copilot, Claude Code, Codex, and Gemini CLI instead of assuming a single host
+- Added explicit no-MCP fallback guidance to MCP-aware skills so the workflows stay usable even when a client lacks the preferred MCP server
+- Rewrote root docs for the new `60` total skill / `46` maintained skill inventory and the four-client support model
+- Extended `scripts/sync-skills.ps1` to discover workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills`
+- Fixed `scripts/sync-skills.ps1` summary handling so source inventory and discovered workspace targets are tracked separately
+- Reworked Gemini command export to use TOML-safe escaped strings instead of fragile raw multiline embedding
+- Normalized imported skill descriptions and wording where they still assumed Copilot-only or host-specific placeholders
+
+### Tested
+
+- Ran `python scripts/export-gemini-skill.py --all`
+- Ran `python scripts/validate-skills.py` and confirmed `60` skills plus `60` Gemini commands
+- Syntax-checked repo Python helpers with `py_compile`
+- Syntax-checked repo JavaScript helpers with `node --check`
+- Syntax-checked repo PowerShell helpers with PowerShell's parser API
+- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"`
+- Verified synced copies in:
+  - `C:\Users\LOQ\.agents\skills`
+  - `C:\Users\LOQ\.claude\skills`
+  - `C:\Assumption University\Finished\CSX4107\Assignments\.agent\skills`
+  - `C:\Assumption University\Finished\ITX2007\Assignments\.agent\skills`
+  - `C:\Assumption University\Workshops\ThreeJS\.agents\skills`
+  - `C:\Assumption University\Workshops\ThreeJS\Mini_Hands_On_Cube\.agents\skills`
+
 ## [2026-03-28] - Cross-Client Sync and Lessons
 
 ### Added

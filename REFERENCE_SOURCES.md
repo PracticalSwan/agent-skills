@@ -32,5 +32,7 @@ Reference catalogs used for discovery and selection during the 2026-04-04 worksp
 
 - The wider `C:\Assumption University` workspace was inventoried before adding skills.
 - Installed skills were chosen to match real technologies found in that workspace, not just to maximize catalog size.
+- Imported skills are installed into `C:\Users\LOQ\.copilot\skills` first because this repo is the canonical maintained source.
+- Downstream skill folders such as `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.claude\skills`, and workspace-local skill roots are synced from this repo after import and review.
 - Imported skills were then modernized in this repo so they work as shared skills across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 - MCP-aware skills were required to include a no-MCP fallback path before being treated as valid maintained skills.

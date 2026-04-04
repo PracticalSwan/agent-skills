@@ -1,0 +1,232 @@
+{
+  "gemini_namespace": "skills",
+  "source_commits": {
+    "awesome_copilot": {
+      "repo": "https://github.com/github/awesome-copilot",
+      "commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f"
+    },
+    "awesome_claude_skills": {
+      "repo": "https://github.com/travisvn/awesome-claude-skills",
+      "commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e"
+    },
+    "awesome_codex_skills": {
+      "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
+      "commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793"
+    }
+  },
+  "mcp_skills": {
+    "azure-integrations": {
+      "mode": "Primary",
+      "servers": [
+        "Azure MCP"
+      ],
+      "fallback": [
+        "Use Azure CLI (`az`), Bicep or ARM templates, and the bundled PowerShell deployment scripts in this skill when the MCP server is unavailable.",
+        "Validate resources with `az` queries, deployment logs, and portal checks before closing the task."
+      ]
+    },
+    "codexer": {
+      "mode": "Primary",
+      "servers": [
+        "Context7 MCP"
+      ],
+      "fallback": [
+        "Use the official package documentation, changelogs, and release notes directly when Context7 is unavailable.",
+        "Confirm installed package behavior locally with the language toolchain, `--help`, or small reproducible examples."
+      ]
+    },
+    "devops-tooling": {
+      "mode": "Optional",
+      "servers": [
+        "GitHub MCP"
+      ],
+      "fallback": [
+        "Use standard local tools such as `git`, `gh`, CI logs, and shell automation scripts for repository and pipeline work.",
+        "Prefer the bundled repo scripts or direct YAML edits when the MCP host does not expose GitHub operations."
+      ]
+    },
+    "excel-sheet": {
+      "mode": "Primary",
+      "servers": [
+        "Excel MCP"
+      ],
+      "fallback": [
+        "Use `scripts/csv-to-xlsx.py`, `openpyxl`, or desktop Excel when the spreadsheet MCP surface is missing.",
+        "Re-open the generated workbook locally to verify formulas, ranges, and frozen panes."
+      ]
+    },
+    "microsoft-development": {
+      "mode": "Primary",
+      "servers": [
+        "Microsoft Learn Docs MCP"
+      ],
+      "fallback": [
+        "Use Microsoft Learn in a browser and local SDK or CLI documentation when the docs MCP server is unavailable.",
+        "Verify generated commands or samples with the native toolchain (`dotnet`, `az`, PowerShell, etc.) before shipping them."
+      ]
+    },
+    "mongodb-mongoose": {
+      "mode": "Primary",
+      "servers": [
+        "MongoDB MCP"
+      ],
+      "fallback": [
+        "Use `mongosh`, MongoDB Atlas UI, local schema files, and Mongoose model inspection when the MCP server is unavailable.",
+        "Validate indexes, queries, and aggregation pipelines against a local or staging database before finalizing changes."
+      ]
+    },
+    "nextjs-development": {
+      "mode": "Optional",
+      "servers": [
+        "Next.js MCP"
+      ],
+      "fallback": [
+        "Use `next dev`, `next build`, `next lint`, browser console output, and local server logs when live MCP diagnostics are unavailable.",
+        "Verify routing, rendering mode, and data-fetching behavior with the bundled examples and a running dev server."
+      ]
+    },
+    "notebooklm-management": {
+      "mode": "Primary",
+      "servers": [
+        "NotebookLM MCP"
+      ],
+      "fallback": [
+        "Use the NotebookLM web UI directly, capture answers in Markdown, and store session notes locally when the MCP server is unavailable.",
+        "Preserve notebook URLs, prompt history, and manual research notes so the workflow remains reproducible."
+      ]
+    },
+    "notion-docs": {
+      "mode": "Primary",
+      "servers": [
+        "Notion MCP"
+      ],
+      "fallback": [
+        "Draft content locally in Markdown or JSON, then use `scripts/notion-templates.js` and the Notion web UI for final publishing.",
+        "Prefer page and database templates from this skill to avoid duplicate structures when working without MCP."
+      ]
+    },
+    "powerbi-modeling": {
+      "mode": "Primary",
+      "servers": [
+        "Power BI MCP"
+      ],
+      "fallback": [
+        "Use Power BI Desktop, Tabular Editor, DAX Studio, and exported model metadata when the MCP surface is unavailable.",
+        "Validate measures, relationships, and performance with local model tools before completion."
+      ]
+    },
+    "powerpoint-ppt": {
+      "mode": "Primary",
+      "servers": [
+        "PowerPoint MCP"
+      ],
+      "fallback": [
+        "Use `python-pptx`, PowerPoint desktop, or a scriptable slide generator when the MCP surface is unavailable.",
+        "Render the final deck and manually verify layout, overflow, and speaker-facing notes before delivery."
+      ]
+    },
+    "serena-usage": {
+      "mode": "Primary",
+      "servers": [
+        "Serena MCP"
+      ],
+      "fallback": [
+        "Use `rg`, `git diff`, targeted file reads, and local Markdown memory files when Serena is unavailable.",
+        "Keep a lightweight Memory Bank in repo docs or notes so project continuity still survives across sessions."
+      ]
+    },
+    "stitch-design": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use screenshots, HTML prototypes, Figma exports, and local design notes when Stitch MCP is not exposed by the host.",
+        "Treat generated React or design assets as drafts that still need local browser verification."
+      ]
+    },
+    "web-design-reviewer": {
+      "mode": "Primary",
+      "servers": [
+        "Playwright MCP",
+        "Chrome DevTools MCP (optional)"
+      ],
+      "fallback": [
+        "Use Playwright CLI, browser devtools, screenshots, and manual responsive checks when MCP browser tools are unavailable.",
+        "Capture console or network issues with the browser or terminal before proposing visual fixes."
+      ]
+    },
+    "web-testing": {
+      "mode": "Primary",
+      "servers": [
+        "Playwright MCP",
+        "Chrome DevTools MCP (optional)"
+      ],
+      "fallback": [
+        "Use Playwright CLI (`npx playwright test`, headed mode, or codegen) and browser devtools when MCP browser tools are unavailable.",
+        "Keep screenshots, console logs, and network traces as test evidence when reproducing issues manually."
+      ]
+    },
+    "word-document": {
+      "mode": "Primary",
+      "servers": [
+        "Word Document MCP"
+      ],
+      "fallback": [
+        "Use `python-docx`, Word desktop, or document export scripts when the MCP surface is unavailable.",
+        "Re-open or render the document locally so formatting, comments, and pagination are verified before delivery."
+      ]
+    }
+  },
+  "reference_installs": {
+    "csharp-xunit": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/csharp-xunit",
+      "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
+    },
+    "dotnet-best-practices": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/dotnet-best-practices",
+      "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
+    },
+    "java-docs": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/java-docs",
+      "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java documentation guidance."
+    },
+    "java-junit": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/java-junit",
+      "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java testing guidance."
+    },
+    "pdf": {
+      "source_repo": "https://github.com/travisvn/awesome-claude-skills",
+      "source_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
+      "source_path": "Official skill reference -> anthropics/skills/pdf",
+      "local_source_path": "C:/Users/LOQ/.codex/skills/pdf",
+      "reason": "The workspace contains many PDF course materials and student deliverables that need layout-aware PDF handling."
+    },
+    "premium-frontend-ui": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/premium-frontend-ui",
+      "reason": "The workspace includes several React, Vite, Next.js, and Three.js frontends where higher-quality UI direction is useful."
+    },
+    "security-review": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/security-review",
+      "reason": "The workspace includes multiple web apps and APIs that benefit from repeatable security review guidance."
+    },
+    "spreadsheet-formula-helper": {
+      "source_repo": "https://github.com/ComposioHQ/awesome-codex-skills",
+      "source_commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793",
+      "source_path": "spreadsheet-formula-helper",
+      "reason": "The workspace contains spreadsheet-heavy coursework and XLSX files where formula debugging is a recurring need."
+    }
+  }
+}

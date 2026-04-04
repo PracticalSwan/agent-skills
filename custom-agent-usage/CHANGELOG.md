@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-04-04] - Cross-Client Portability Refresh
+
+### Changed
+- Added a standard portability note covering GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+- Clarified that the core workflow does not require a dedicated MCP server and can run with local tools alone.
+
+### Tested
+- Validated `SKILL.md` frontmatter, portability sections, and Gemini export readiness with `python scripts/validate-skills.py`.
 ## [2026-03-09] - Custom Agent Discovery Correction
 
 ### Changed

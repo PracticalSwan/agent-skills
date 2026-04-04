@@ -1,0 +1,117 @@
+---
+name: secret-scanning
+description: Configure GitHub secret scanning and push protection, triage secret alerts, and run local pre-commit secret audits. Use when enabling secret scanning, handling blocked pushes, defining custom patterns, or checking a repo for accidental credentials before commit.
+---
+# Secret Scanning
+
+Protect repositories from committed credentials and make secret handling part of the normal engineering workflow.
+
+## When to Use
+
+- You are enabling GitHub secret scanning or push protection for a repo or org.
+- A push was blocked because a secret was detected.
+- You need to define or review custom secret patterns and exclusions.
+- You want a local pre-commit secret check before pushing code.
+- You are triaging secret alerts and planning remediation.
+
+## Core Workflows
+
+### 1. Enable Repository or Organization Coverage
+
+For GitHub-hosted secret scanning:
+
+1. Enable the repository or organization security feature set.
+2. Turn on push protection where available.
+3. Review exclusions carefully before committing them.
+4. Record who owns remediation for any future alert.
+
+Use the references when you need the detailed UI or policy steps.
+
+### 2. Resolve a Blocked Push Safely
+
+Prefer this order:
+
+1. Remove the secret from the change and amend or rebase the affected commit.
+2. Rotate or revoke the credential immediately if the value was real.
+3. Use bypass only when you can justify it and the risk is understood.
+4. Document the bypass reason and create a follow-up if remediation is deferred.
+
+### 3. Run a Local Pre-Commit Audit
+
+Use the bundled helper before commit when you want a fast local scan:
+
+```powershell
+python secret-scanning/scripts/precommit-secret-audit.py --path .
+```
+
+Scan a narrower surface:
+
+```powershell
+python secret-scanning/scripts/precommit-secret-audit.py --path src --path .github
+```
+
+By default the helper skips generated folders and Markdown-heavy docs to reduce false positives. Use `--include-docs` when you want documentation scanned too.
+
+### 4. Triage and Remediate Alerts
+
+When an alert exists:
+
+1. Confirm whether the detected value is real.
+2. Revoke or rotate the credential first.
+3. Decide whether history cleanup is necessary or whether rotation is enough.
+4. Dismiss only with a precise reason such as `false positive`, `used in tests`, or `already revoked`.
+5. Capture any follow-up owner if broader cleanup is still needed.
+
+### 5. Custom Patterns and Exclusions
+
+Use custom patterns when your organization has internal token formats not covered by provider defaults.
+
+Guidelines:
+
+- dry-run patterns before publishing them
+- keep exclusions as narrow as possible
+- review exclusions and custom patterns periodically
+- treat custom patterns as production policy, not one-off experiments
+
+## Scripts And References
+
+- [Local Pre-Commit Secret Audit](./scripts/precommit-secret-audit.py)
+- [Push Protection Reference](./references/push-protection.md)
+- [Custom Patterns Reference](./references/custom-patterns.md)
+- [Alerts And Remediation Reference](./references/alerts-and-remediation.md)
+
+## Practical Notes
+
+- Rotation is usually more urgent than history rewriting.
+- Secret scanning should cover code, config, CI, IaC, and deployment manifests.
+- Avoid committing `.env` files, private keys, connection strings, or real tokens in examples.
+- Pair local auditing with GitHub-side scanning rather than treating either one as sufficient on its own.
+
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:secret-scanning` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py secret-scanning` and then run `/commands reload` inside Gemini CLI.
+
+## MCP Availability And Fallback
+
+Preferred MCP or plugin surfaces for this skill:
+
+- `GitHub Advanced Security` plugin or equivalent secret-scanning tool surface (optional)
+
+If MCP or plugin support is unavailable in the current host:
+
+- Use the bundled `precommit-secret-audit.py` script for a local first pass.
+- Use `gh`, the GitHub web UI, and direct Git history edits for alert handling, bypass review, and remediation.
+- Treat credential rotation, repo diff review, and a clean local audit as the fallback evidence path before commit or push.
+
+## Related Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| [security-review](../security-review/SKILL.md) | Broader application security review after credential risks are handled |
+| [devops-tooling](../devops-tooling/SKILL.md) | Git history cleanup, CI policy updates, and shell automation |
+| [verification-before-completion](../verification-before-completion/SKILL.md) | Final pre-close evidence gate that should include secret checks |

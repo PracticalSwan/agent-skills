@@ -56,6 +56,8 @@ That validation checks:
 - Gemini command count
 - TOML parseability of generated commands
 
+For externally imported skills, normalize the workspace copy and run any local smoke tests before exporting new Gemini command files. The generated command should only mirror maintained content that already passed the repo checks.
+
 ## Notes
 
 - The Gemini command prompt tells Gemini to resolve relative paths against the source skill folder.

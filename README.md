@@ -7,8 +7,8 @@ Install or import new maintained skills here first, then sync them outward to th
 
 ## Current Inventory
 
-- `60` total skill folders in this workspace
-- `46` maintained skills in this repo
+- `65` total skill folders in this workspace
+- `51` maintained skills in this repo
 - `14` copied official Claude/Codex-style superpowers tracked locally for discovery and sync
 - Every skill now includes:
   - a cross-client portability section
@@ -89,10 +89,12 @@ Optional:
 When adding a new maintained skill:
 
 1. Add or import it into `C:\Users\LOQ\.copilot\skills`
-2. Update `REFERENCE_SOURCES.md` if the skill came from an external source
-3. Update the touched changelogs and root docs
-4. Validate and export
-5. Sync outward from this repo
+2. Prefer the canonical upstream source when a discovery catalog points to a stronger maintained original
+3. Update `REFERENCE_SOURCES.md` and `scripts/skill-registry.json` if the skill came from an external source
+4. Smoke-test any bundled helper scripts or local fallback workflow
+5. Update the touched changelogs and root docs
+6. Validate and export
+7. Sync outward from this repo
 
 Validate all skills and generated Gemini commands:
 
@@ -132,9 +134,11 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 
 ### Workflow and Delivery
 
+- `agentic-eval`
 - `breaking-changes-management`
 - `code-examples-sync`
 - `code-quality`
+- `context-map`
 - `development-workflow`
 - `devops-tooling`
 - `documentation-authoring`
@@ -142,6 +146,11 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `documentation-patterns`
 - `documentation-quality`
 - `documentation-verification`
+
+### Architecture and Platform
+
+- `cloud-design-patterns`
+- `mcp-builder`
 
 ### Frontend, Design, and Testing
 
@@ -192,6 +201,7 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 ### Security and Specialized
 
 - `infostealer-malware-detector`
+- `secret-scanning`
 - `security-review`
 
 ## MCP-Aware Skills
@@ -209,6 +219,7 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `notion-docs`
 - `powerbi-modeling`
 - `powerpoint-ppt`
+- `secret-scanning`
 - `serena-usage`
 - `stitch-design`
 - `web-design-reviewer`
@@ -221,12 +232,17 @@ The registry for MCP mappings and no-MCP fallback guidance is stored in [scripts
 
 The following high-quality skills were added after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
 
+- `agentic-eval`
+- `cloud-design-patterns`
+- `context-map`
 - `csharp-xunit`
 - `dotnet-best-practices`
 - `java-docs`
 - `java-junit`
+- `mcp-builder`
 - `pdf`
 - `premium-frontend-ui`
+- `secret-scanning`
 - `security-review`
 - `spreadsheet-formula-helper`
 

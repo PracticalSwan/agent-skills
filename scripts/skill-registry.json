@@ -9,6 +9,10 @@
       "repo": "https://github.com/travisvn/awesome-claude-skills",
       "commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e"
     },
+    "anthropic_skills": {
+      "repo": "https://github.com/anthropics/skills",
+      "commit": "98669c11ca63e9c81c11501e1437e5c47b556621"
+    },
     "awesome_codex_skills": {
       "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
       "commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793"
@@ -125,6 +129,16 @@
         "Render the final deck and manually verify layout, overflow, and speaker-facing notes before delivery."
       ]
     },
+    "secret-scanning": {
+      "mode": "Optional",
+      "servers": [
+        "GitHub Advanced Security plugin"
+      ],
+      "fallback": [
+        "Use `secret-scanning/scripts/precommit-secret-audit.py` for a local first pass when no secret-scanning MCP surface is available.",
+        "Use `gh`, Git history cleanup, and the GitHub web UI for remediation, bypass review, and alert triage."
+      ]
+    },
     "serena-usage": {
       "mode": "Primary",
       "servers": [
@@ -179,6 +193,24 @@
     }
   },
   "reference_installs": {
+    "agentic-eval": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/agentic-eval",
+      "reason": "Evaluator-optimizer and rubric workflows are broadly useful across code, documentation, and planning tasks."
+    },
+    "cloud-design-patterns": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/cloud-design-patterns",
+      "reason": "Distributed-system and cloud architecture trade-offs are common enough to justify a reusable shortlist skill."
+    },
+    "context-map": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/context-map",
+      "reason": "A dedicated pre-edit scoping skill is useful for safer multi-file changes and bug investigations."
+    },
     "csharp-xunit": {
       "source_repo": "https://github.com/github/awesome-copilot",
       "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
@@ -203,6 +235,14 @@
       "source_path": "skills/java-junit",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java testing guidance."
     },
+    "mcp-builder": {
+      "source_repo": "https://github.com/anthropics/skills",
+      "source_commit": "98669c11ca63e9c81c11501e1437e5c47b556621",
+      "source_path": "skills/mcp-builder",
+      "discovery_repo": "https://github.com/travisvn/awesome-claude-skills",
+      "discovery_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
+      "reason": "MCP server creation is a durable cross-client workflow and the official Anthropic skill is stronger than the discovery index copy."
+    },
     "pdf": {
       "source_repo": "https://github.com/travisvn/awesome-claude-skills",
       "source_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
@@ -215,6 +255,12 @@
       "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
       "source_path": "skills/premium-frontend-ui",
       "reason": "The workspace includes several React, Vite, Next.js, and Three.js frontends where higher-quality UI direction is useful."
+    },
+    "secret-scanning": {
+      "source_repo": "https://github.com/github/awesome-copilot",
+      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_path": "skills/secret-scanning",
+      "reason": "Local pre-commit secret hygiene and GitHub alert workflows are broadly useful and safe to ship in a shared catalog."
     },
     "security-review": {
       "source_repo": "https://github.com/github/awesome-copilot",

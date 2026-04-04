@@ -21,6 +21,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - A portability footer alone is not enough; imported skills may still contain host-specific wording in frontmatter or body content.
 - Every MCP-aware skill needs an explicit no-MCP fallback path or it will fail in at least one client.
 - Gemini CLI command files must be generated with safely escaped TOML strings. Raw multiline embedding breaks on Windows paths, Markdown code fences, and backslashes.
+- Discovery catalogs are not automatically the canonical source. If a discovery repo points to an official upstream skill, record both and import from the stronger maintained original.
 
 ## Sync Lessons
 
@@ -42,6 +43,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Structural validation is not enough for Gemini support; export and parse the generated TOML files too.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
 - Record source repo and commit metadata for imported skills so later updates can be traced safely.
+- Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
+- Local secret scans should ignore generated command folders and agent metadata by default or they will drown in false positives.
 
 ## Update Checklist
 

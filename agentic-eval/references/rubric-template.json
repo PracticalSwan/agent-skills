@@ -1,0 +1,21 @@
+{
+  "max_score": 5,
+  "dimensions": {
+    "correctness": {
+      "weight": 0.4,
+      "description": "Does the artifact solve the actual task without factual or behavioral errors?"
+    },
+    "completeness": {
+      "weight": 0.25,
+      "description": "Does it cover the full requested scope and major edge cases?"
+    },
+    "clarity": {
+      "weight": 0.15,
+      "description": "Is the result easy to understand and act on?"
+    },
+    "maintainability": {
+      "weight": 0.2,
+      "description": "Will the result be easy to evolve, verify, and support later?"
+    }
+  }
+}

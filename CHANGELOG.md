@@ -3,6 +3,40 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-04] - Curated Skill Imports, AGENTS Upgrade, and Full Sync Refresh
+
+### Added
+
+- Imported and maintained these new skills after researching the reference catalogs in parallel:
+  - `agentic-eval`
+  - `cloud-design-patterns`
+  - `context-map`
+  - `mcp-builder`
+  - `secret-scanning`
+- Added local helper scripts so the imported skills are useful even without host-specific MCP or plugin support:
+  - `agentic-eval/scripts/rubric-scorecard.py`
+  - `cloud-design-patterns/scripts/pattern-shortlist.py`
+  - `context-map/scripts/build-context-map.py`
+  - `secret-scanning/scripts/precommit-secret-audit.py`
+- Added per-skill changelogs for all newly maintained imports
+
+### Changed
+
+- Updated root documentation for the new `65` total skill / `51` maintained skill inventory
+- Extended provenance tracking to record canonical upstream sources separately from discovery catalogs when the discovery repo was not the best maintained origin
+- Rewrote the top-level imported skill instructions into the repo house style while preserving upstream references and helper assets where they added value
+- Strengthened the global Codex `AGENTS.md` guidance to require safer skill import screening, canonical-source preference, import smoke tests, and repo-wide sync discipline
+
+### Tested
+
+- Smoke-tested the new helper scripts:
+  - `python context-map/scripts/build-context-map.py --root . --query sync-skills --query codex --limit 5`
+  - `python agentic-eval/scripts/rubric-scorecard.py --rubric agentic-eval/references/rubric-template.json --scores agentic-eval/references/example-scores.json --threshold 0.8`
+  - `python secret-scanning/scripts/precommit-secret-audit.py --path secret-scanning/scripts`
+  - `python cloud-design-patterns/scripts/pattern-shortlist.py --concern reliability --concern migration --concern security`
+  - `python -m py_compile mcp-builder/scripts/connections.py mcp-builder/scripts/evaluation.py`
+- Planned repo-wide validation, Gemini export, downstream sync, and sensitive-data review after the documentation and AGENTS updates
+
 ## [2026-04-04] - Main Workspace Policy Clarification
 
 ### Changed

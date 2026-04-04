@@ -11,8 +11,8 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 
 ## Current Counts
 
-- `60` total skill folders
-- `46` maintained skills
+- `65` total skill folders
+- `51` maintained skills
 - `14` copied official superpowers
 
 ## Downstream Sync Targets
@@ -114,9 +114,11 @@ After meaningful changes:
 After adding a new maintained skill:
 
 1. Install or import it into this repo first
-2. Update `REFERENCE_SOURCES.md` when the source was external
-3. Update root docs and the relevant changelogs
-4. Then sync it to the downstream targets
+2. Prefer the canonical upstream source when a discovery list points to a stronger maintained original
+3. Update `REFERENCE_SOURCES.md` and `scripts/skill-registry.json` when the source was external
+4. Smoke-test any bundled helper scripts or local fallback workflow
+5. Update root docs and the relevant changelogs
+6. Then sync it to the downstream targets
 
 ## Documentation Rules
 

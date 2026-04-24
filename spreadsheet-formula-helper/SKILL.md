@@ -1,9 +1,11 @@
 ---
 name: spreadsheet-formula-helper
-description: Write and debug spreadsheet formulas (Excel/Google Sheets), pivot tables, and array formulas; translate between dialects; use when users need working formulas with examples and edge-case checks.
-metadata:
-  short-description: Build/debug Excel or Sheets formulas
+version: "1.0"
+last_updated: 2026-04-24
+tags: [spreadsheet, formula, helper, documents, automation]
+description: "Write and debug spreadsheet formulas (Excel/Google Sheets), pivot tables, and array formulas; translate between dialects; use when users need working formulas with examples and edge-case checks."
 ---
+
 # Spreadsheet Formula Helper
 
 Produce reliable spreadsheet formulas with explanations.
@@ -23,6 +25,12 @@ Produce reliable spreadsheet formulas with explanations.
 - Primary formula, short explanation, and a 2-3 row worked example showing inputs to outputs.
 - Optional: quick troubleshooting checklist for common errors.
 
+## Anti-Patterns
+
+- Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
+- Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
+- Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -38,9 +46,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Spreadsheet Formula Helper skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.
+- [pdf](../pdf/SKILL.md): Use it when the workflow also needs PDF extraction, generation, and layout-aware review.
+- [word-document](../word-document/SKILL.md): Use it when the workflow also needs Word document authoring and formatting workflows.

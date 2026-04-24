@@ -1,7 +1,11 @@
 ---
 name: brainstorming
+version: "1.0"
+last_updated: 2026-04-24
+tags: [brainstorming, agents, delegation, workflow, automation]
 description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
 ---
+
 # Brainstorming Ideas Into Designs
 
 ## Overview
@@ -17,6 +21,12 @@ Do NOT invoke any implementation skill, write any code, scaffold any project, or
 ## Anti-Pattern: "This Is Too Simple To Need A Design"
 
 Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
+
+## Anti-Patterns
+
+- Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
+- Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
+- Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
 ## Checklist
 
@@ -109,9 +119,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Brainstorming Ideas Into Designs skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [agent-task-mapping](../agent-task-mapping/SKILL.md): Use it when the workflow also needs task-to-agent routing decisions.
+- [custom-agent-usage](../custom-agent-usage/SKILL.md): Use it when the workflow also needs loading and invoking custom agent definitions safely.
+- [subagent-delegation](../subagent-delegation/SKILL.md): Use it when the workflow also needs safe, scoped delegation to helper agents.
+- [subagent-driven-development](../subagent-driven-development/SKILL.md): Use it when the workflow also needs plan-driven implementation with reviewer loops.

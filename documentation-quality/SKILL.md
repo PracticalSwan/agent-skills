@@ -1,8 +1,11 @@
 ---
 name: documentation-quality
-description: Documentation quality standards and writing principles. Use when establishing formatting rules, reviewing doc quality metrics, creating writing guidelines, or enforcing consistent documentation style across a project.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [documentation, quality, docs, writing, templates]
+description: "Documentation quality standards and writing principles. Use when establishing formatting rules, reviewing doc quality metrics, creating writing guidelines, or enforcing consistent documentation style across a project."
 ---
+
 # Documentation Quality Standards
 
 Use this skill when documentation should be judged against explicit standards instead of subjective preference.
@@ -22,6 +25,12 @@ Use this skill when documentation should be judged against explicit standards in
 - Consistent terminology
 - Explicit edge cases, constraints, and failure modes
 
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
 ## Quality Checklist
 
 - [ ] Title and purpose are clear
@@ -29,6 +38,22 @@ Use this skill when documentation should be judged against explicit standards in
 - [ ] Code examples have language tags and realistic inputs
 - [ ] Commands match current tooling
 - [ ] Links and file paths are accurate
+
+## Cross-Skill Workflow
+
+- Use [documentation-authoring](../documentation-authoring/SKILL.md) when the content itself still needs to be drafted or clarified.
+- Use [documentation-patterns](../documentation-patterns/SKILL.md) when the review shows that the problem is document shape rather than wording.
+- Use this skill as the final standards check before publish or merge.
+
+## Agent Prompt Template
+
+```text
+Use the documentation-quality skill to review this document against explicit standards.
+Artifact: [file or pasted draft].
+Audience: [who will read it].
+Check for clarity, completeness, accurate examples, terminology consistency, and stale references.
+Report concrete findings first, then suggest the smallest high-value fixes.
+```
 
 ## References & Resources
 
@@ -53,16 +78,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Documentation Quality Standards skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Apply quality standards during doc creation |
-| [documentation-verification](../documentation-verification/SKILL.md) | Verify quality metrics before merging docs |
-| [documentation-patterns](../documentation-patterns/SKILL.md) | Patterns that enforce quality consistency |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.

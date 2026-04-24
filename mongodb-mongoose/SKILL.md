@@ -1,9 +1,12 @@
 ---
 name: mongodb-mongoose
-description: MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [mongodb, mongoose, development, testing, quality]
+description: "MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps."
 ---
 
+# Mongodb Mongoose
 
 Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and Atlas integration for Node.js/Next.js applications.
 
@@ -19,6 +22,27 @@ Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and A
 
 
 ---
+
+## Anti-Patterns
+
+- Modeling documents like normalized tables by default: MongoDB performance depends on query-driven shape, not relational purity.
+- Returning full hydrated documents for every request: Over-fetching and hydration overhead accumulate quickly in API paths.
+- Adding middleware without write-path tests: Hooks can silently change create, update, and migration behavior.
+
+## Before and After Example
+
+```javascript
+// Before
+const recipes = await Recipe.find({ author: userId }).populate('author');
+
+// After
+const recipes = await Recipe.find({ author: userId, isPublished: true })
+  .select({ title: 1, slug: 1, createdAt: 1 })
+  .sort({ createdAt: -1 })
+  .lean();
+```
+
+Narrows the query shape, avoids unnecessary hydration, and aligns the result with the view model actually needed.
 
 ## Schema Design
 
@@ -304,6 +328,12 @@ async function migrateUsers() {
 
 ---
 
+## Common Pitfalls
+
+- Modeling data like a normalized relational schema by default: MongoDB performance depends on query-driven document shape, not tables-first design.
+- Returning full hydrated documents everywhere: Hydration and over-fetching add cost when a lean projection would do.
+- Adding middleware without explicit write-path tests: Hooks can silently change behavior in create, update, and migration flows.
+
 ## References & Resources
 
 ### Documentation
@@ -333,17 +363,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `MongoDB MCP` (primary)
+Preferred MCP Server: MongoDB MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Mongodb Mongoose skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use `mongosh`, MongoDB Atlas UI, local schema files, and Mongoose model inspection when the MCP server is unavailable.
 - Validate indexes, queries, and aggregation pipelines against a local or staging database before finalizing changes.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [javascript-development](../javascript-development/SKILL.md) | JS patterns for database integration |
-| [sql-development](../sql-development/SKILL.md) | Alternative relational database approach |
+
+- [javascript-development](../javascript-development/SKILL.md): Use it when the workflow also needs modern JavaScript and TypeScript application code.
+- [nextjs-development](../nextjs-development/SKILL.md): Use it when the workflow also needs Next.js App Router and server-first React patterns.
+- [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.

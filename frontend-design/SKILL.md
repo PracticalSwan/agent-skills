@@ -1,8 +1,11 @@
 ---
 name: frontend-design
-description: UI/UX design — color theory (60-30-10 rule), responsive layouts, WCAG accessibility, CSS/Tailwind patterns, wireframes, and visual review. Use when designing interfaces, choosing palettes, writing CSS, or fixing layout/accessibility issues.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [frontend, design, ui, visual]
+description: "UI/UX design — color theory (60-30-10 rule), responsive layouts, WCAG accessibility, CSS/Tailwind patterns, wireframes, and visual review. Use when designing interfaces, choosing palettes, writing CSS, or fixing layout/accessibility issues."
 ---
+
 # Frontend Design
 
 Expert guidance for creating beautiful, accessible, and responsive frontend designs using modern UI principles, color theory, and React+Tailwind CSS patterns.
@@ -99,116 +102,6 @@ module.exports = {
   },
 };
 ```
-
-### Color Palette Examples
-
-#### Modern Professional
-
-```javascript
-const palette = {
-  // 60% - Primary
-  primary: {
-    background: '#f8fafc',  // Slate-50
-    surface: '#ffffff',       // White
-    text: '#334155',         // Slate-700
-  },
-  // 30% - Secondary
-  secondary: {
-    border: '#e2e8f0',      // Slate-200
-    muted: '#94a3b8',        // Slate-400
-    mutedForeground: '#64748b', // Slate-500
-  },
-  // 10% - Accent
-  accent: {
-    foreground: '#0f172a',   // Slate-900
-    primary: '#3b82f6',      // Blue-500
-    'primary-hover': '#2563eb', // Blue-600
-    destructive: '#ef4444',  // Red-500
-  },
-};
-```
-
-#### Warm & Inviting
-
-```javascript
-const palette = {
-  primary: {
-    background: '#fff7ed',  // Orange-50
-    surface: '#ffffff',
-    text: '#431407',         // Orange-950
-  },
-  secondary: {
-    border: '#fed7aa',        // Orange-200
-    muted: '#fdba74',         // Orange-300
-    mutedForeground: '#9a3412', // Orange-800
-  },
-  accent: {
-    primary: '#f97316',      // Orange-500
-    'primary-hover': '#ea580c', // Orange-600
-  },
-};
-```
-
-#### Deep & Dark
-
-```javascript
-const palette = {
-  primary: {
-    background: '#020617',  // Slate-950
-    surface: '#0f172a',       // Slate-900
-    text: '#f8fafc',         // Slate-50
-  },
-  secondary: {
-    border: '#1e293b',        // Slate-800
-    muted: '#64748b',          // Slate-500
-    mutedForeground: '#94a3b8', // Slate-400
-  },
-  accent: {
-    primary: '#6366f1',       // Indigo-500
-    'primary-hover': '#4f46e5', // Indigo-600
-  },
-};
-```
-
-### Background Colors
-
-#### ✅ Recommended
-
-```css
-/* Clean, readable backgrounds */
-.bg-clean {
-  background: #ffffff;                    /* Pure white */
-  background: #fafbfc;                    /* Off-white */
-  background: #f5f7fa;                    /* Light cool gray */
-  background: #f0f2f5;                    /* Another neutral option */
-}
-
-/* Subtle gradients */
-.bg-gradient-subtle {
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
-}
-
-/* Color tints for sections */
-.bg-tint-blue {
-  background: #f1f5f9;          /* Light blue tint (10% blue) */
-}
-.bg-tint-green {
-  background: #f0fdf4;         /* Light green tint */
-}
-```
-
-#### ❌ Avoid
-
-```css
-/* Too dark or saturated */
-.bg-bad {
-  background: #2d3748;                    /* Dark background with light text can strain eyes */
-  background: #ff0000;                    /* Pure red - never use as primary bg */
-  background: repeating-linear-gradient(...);  /* Busy patterns - distracting */
-}
-```
-
----
 
 ## Part 2: Accessibility (WCAG Compliance)
 
@@ -646,6 +539,12 @@ export function FormField({
 
 ---
 
+## Anti-Patterns
+
+- Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
+- Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
+- Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
 ## Part 5: Design Review Checklist
 
 ### Visual Inspection Process
@@ -926,17 +825,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Frontend Design skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [react-development](../react-development/SKILL.md) | Implement designs as React components |
-| [stitch-design](../stitch-design/SKILL.md) | Design system and component conversion |
-| [web-design-reviewer](../web-design-reviewer/SKILL.md) | Visual review of implemented designs |
-| [canvas-design](../canvas-design/SKILL.md) | Design philosophy and visual aesthetics |
+
+- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
+- [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
+- [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.
+- [canvas-design](../canvas-design/SKILL.md): Use it when the workflow also needs visual composition and presentation-ready diagram work.

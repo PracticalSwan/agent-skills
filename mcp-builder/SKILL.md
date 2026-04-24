@@ -1,8 +1,11 @@
 ---
 name: mcp-builder
-description: Build high-quality MCP servers with strong tool design, structured outputs, clear error handling, and realistic evaluations. Use when creating or improving MCP servers in TypeScript or Python for external APIs, services, or internal platforms.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [mcp, builder, workflow, quality, planning]
+description: "Build high-quality MCP servers with strong tool design, structured outputs, clear error handling, and realistic evaluations. Use when creating or improving MCP servers in TypeScript or Python for external APIs, services, or internal platforms."
 ---
+
 # MCP Builder
 
 Design MCP servers that are easy for agents to discover, compose, and trust.
@@ -13,6 +16,12 @@ Design MCP servers that are easy for agents to discover, compose, and trust.
 - An existing MCP server needs better tool naming, schemas, pagination, or error handling.
 - You need a workflow for evaluating whether an MCP server is actually useful for real agent tasks.
 - You are deciding between TypeScript and Python MCP implementations.
+
+## Glossary
+
+- MCP Inspector: An interactive client for browsing registered tools, schemas, inputs, and outputs while you validate a server.
+- Structured outputs: Predictable JSON or schema-backed payloads that downstream agents can parse safely instead of scraping prose.
+- Workflow tool: A higher-level tool that coordinates several lower-level API steps into one agent-friendly operation.
 
 ## Core Workflow
 
@@ -63,6 +72,56 @@ A strong MCP server needs realistic read-only evaluations:
 - prefer realistic operator tasks over toy examples
 - store the evaluation set with the server so regressions are visible later
 
+## Shared Infrastructure Before and After
+
+### Pagination Helper
+```typescript
+// Before
+async function listTickets(page = 1) {
+  return api.get(`/tickets?page=${page}`)
+}
+
+// After
+export async function paginate<T>(fetchPage: (cursor?: string) => Promise<{ items: T[]; nextCursor?: string }>) {
+  const items: T[] = [];
+  let cursor: string | undefined;
+  do {
+    const page = await fetchPage(cursor);
+    items.push(...page.items);
+    cursor = page.nextCursor;
+  } while (cursor);
+  return items;
+}
+```
+
+### Error Formatter
+```typescript
+// Before
+throw new Error(`Request failed: ${response.status}`)
+
+// After
+throw formatToolError({
+  code: 'tickets.list_failed',
+  message: 'Unable to list tickets for the requested project.',
+  status: response.status,
+  nextAction: 'Check the project id and retry with a smaller page size.',
+})
+```
+
+### Schema Utilities
+```typescript
+// Before
+server.tool('create_ticket', { title: z.string(), priority: z.string() }, handler)
+
+// After
+const prioritySchema = z.enum(['low', 'medium', 'high']);
+const ticketInput = buildToolSchema({
+  title: z.string().min(1),
+  priority: prioritySchema.default('medium'),
+});
+server.tool('create_ticket', ticketInput, handler)
+```
+
 ## Language Guidance
 
 ### TypeScript
@@ -83,6 +142,34 @@ Primary references:
 - [Python MCP Guide](./reference/python_mcp_server.md)
 - [MCP Best Practices](./reference/mcp_best_practices.md)
 
+## Security, Observability, Auth Handling, Logging, and Versioning
+
+### Security
+
+Minimize scopes, redact secrets from errors, and keep authorization checks inside shared request middleware instead of duplicating them per tool.
+
+### Observability
+
+Log request identifiers, tool names, latency, and retry counts so agent failures can be traced without replaying everything manually.
+
+### Auth Handling
+
+Support token refresh or credential reload paths explicitly so agents get actionable failures instead of opaque 401 loops.
+
+### Logging
+
+Prefer structured logs with stable fields such as `tool`, `resource`, `status`, and `duration_ms` over free-form strings.
+
+### Versioning
+
+Treat tool names, schemas, and error contracts as public interfaces; add versions or deprecation notes before changing them in place.
+
+## Anti-Patterns
+
+- Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
+- Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
+- Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
 ## Included Assets
 
 - [MCP Best Practices](./reference/mcp_best_practices.md)
@@ -101,6 +188,7 @@ Primary references:
 - Structured outputs beat prose when downstream automation matters.
 - Evaluation quality is part of the server quality, not a separate optional step.
 
+<!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
@@ -110,17 +198,22 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
 - Gemini CLI: this repository generates a project command named `/skills:mcp-builder` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py mcp-builder` and then run `/commands reload` inside Gemini CLI.
 
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- Use the bundled reference library, local SDK documentation, and the included helper scripts even when the current host has no live MCP inspection surface.
-- If MCP Inspector or equivalent tooling is unavailable, fall back to build checks, schema review, and scripted evaluation fixtures before calling the server ready.
+- Fallback prompt: "Use the MCP Builder skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+
+<!-- MCP:END -->
 
 ## Related Skills
 
-| Skill | Relationship |
-|-------|--------------|
-| [codexer](../codexer/SKILL.md) | Useful when researching Python libraries or API clients for the server implementation |
-| [javascript-development](../javascript-development/SKILL.md) | Supports TypeScript or JavaScript MCP implementations |
-| [development-workflow](../development-workflow/SKILL.md) | Helps turn server research into an implementable plan or spec |
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.

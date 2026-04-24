@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026-04-24] - Post-Refresh Cleanup
+
+### Fixed
+- Renamed the self-check section to explicit phase-gate questions so delegation completion checks are clearer.
+
+## [2026-04-24] - Skill Refresh
+
+### Changed
+- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
+- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
+- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
+- Added a self-verification phase gate so delegated workflows explicitly confirm scope, review, and integration evidence before completion.
 ## [2026-04-24] - Catalog Audit Cleanup
 
 ### Fixed

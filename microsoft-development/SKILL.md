@@ -1,8 +1,11 @@
 ---
 name: microsoft-development
-description: Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [microsoft, cloud, architecture, operations, quality]
+description: "Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval."
 ---
+
 # Microsoft Development
 
 Use this skill when the answer should come from Microsoft documentation rather than memory or third-party summaries.
@@ -46,6 +49,38 @@ Microsoft's getting-started docs also describe installation through `npx -y @mic
 - Treat package versions, quotas, and service capabilities as time-sensitive.
 - If Learn MCP is unavailable in the current client, use the included scripts and references as local fallbacks, then browse official docs.
 
+## Anti-Patterns
+
+- Changing infrastructure before inspecting the current state: Cloud drift and hidden dependencies make blind edits risky.
+- Hardcoding credentials or environment assumptions: Rollouts stop being reproducible and secrets become harder to rotate.
+- Skipping rollback, observability, or validation planning: You only notice the missing safeguards after the deployment is already live.
+
+## Before and After Example
+
+```powershell
+# Before
+az deployment group create `
+  --resource-group app-rg `
+  --template-file main.bicep
+
+# After
+$deploymentName = "api-$(Get-Date -Format yyyyMMddHHmmss)"
+az deployment group create `
+  --name $deploymentName `
+  --resource-group app-rg `
+  --template-file main.bicep `
+  --parameters environment=prod `
+  --what-if
+```
+
+Moves from an opaque deployment command to a traceable and reviewable workflow with named deployments, explicit parameters, and a preflight diff.
+
+## Common Pitfalls
+
+- Treating vendor examples as drop-in production code: Official snippets usually prove an API, not your project’s retry, logging, or auth requirements.
+- Skipping service-specific limits and permissions review: Azure and Microsoft 365 failures often come from quotas or scopes rather than syntax.
+- Relying on memory instead of current docs: Microsoft SDK behavior and surface area change often enough that stale recall is risky.
+
 ## References & Resources
 
 ### Documentation
@@ -74,20 +109,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Microsoft Learn Docs MCP` (primary)
+Preferred MCP Server: Microsoft Learn Docs MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Microsoft Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use Microsoft Learn in a browser and local SDK or CLI documentation when the docs MCP server is unavailable.
 - Verify generated commands or samples with the native toolchain (`dotnet`, `az`, PowerShell, etc.) before shipping them.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [azure-integrations](../azure-integrations/SKILL.md) | Deploy and configure Azure resources after researching them |
-| [powerbi-modeling](../powerbi-modeling/SKILL.md) | Power BI modeling guidance backed by Microsoft docs |
-| [excel-sheet](../excel-sheet/SKILL.md) | Spreadsheet workflows in Microsoft-oriented environments |
-| [word-document](../word-document/SKILL.md) | Word automation workflows in Microsoft-oriented environments |
-| [powerpoint-ppt](../powerpoint-ppt/SKILL.md) | PowerPoint automation workflows in Microsoft-oriented environments |
+
+- [azure-integrations](../azure-integrations/SKILL.md): Use it when the workflow also needs Azure deployment and infrastructure automation.
+- [powerbi-modeling](../powerbi-modeling/SKILL.md): Use it when the workflow also needs Power BI semantic model design and DAX work.
+- [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.

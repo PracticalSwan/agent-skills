@@ -1,8 +1,11 @@
 ---
 name: documentation-verification
-description: Validate documentation before merging - check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [documentation, verification, docs, writing, quality]
+description: "Validate documentation before merging - check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation."
 ---
+
 # Documentation Verification
 
 Use this skill when a docs change needs evidence, not just a writing pass.
@@ -20,6 +23,12 @@ Use this skill when a docs change needs evidence, not just a writing pass.
 2. Check relative links and referenced files.
 3. Validate commands and snippets where feasible.
 4. Report missing coverage and stale claims explicitly.
+
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
 ## Review Checklist
 
@@ -52,16 +61,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Documentation Verification skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-quality](../documentation-quality/SKILL.md) | Quality standards to verify against |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Verify authored docs before publishing |
-| [code-examples-sync](../code-examples-sync/SKILL.md) | Validate code examples are current and working |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.

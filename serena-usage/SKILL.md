@@ -1,8 +1,11 @@
 ---
 name: serena-usage
-description: Serena MCP for project memory and code navigation. Use when managing Serena memories, navigating symbols, performing intelligent refactoring, or maintaining context/continuity across AI agent sessions.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [serena, usage, workflow, automation, guidance]
+description: "Serena MCP for project memory and code navigation. Use when managing Serena memories, navigating symbols, performing intelligent refactoring, or maintaining context/continuity across AI agent sessions."
 ---
+
 # Serena Usage
 
 Effective usage of the Serena MCP Server for project memory management, code intelligence, and maintaining continuity across AI agent sessions.
@@ -499,6 +502,12 @@ Serena provides reflection tools to maintain focus:
 
 ---
 
+## Anti-Patterns
+
+- Starting without a clear success condition: The skill becomes advice-shaped instead of workflow-shaped.
+- Skipping the bundled references or scripts: You lose the proven path the catalog is trying to preserve.
+- Claiming completion without concrete evidence: A future agent or reviewer cannot trust the result or resume the work safely.
+
 ## References & Resources
 
 ### Documentation
@@ -663,17 +672,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Serena MCP` (primary)
+Preferred MCP Server: Serena MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Serena Usage skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use `rg`, `git diff`, targeted file reads, and local Markdown memory files when Serena is unavailable.
 - Keep a lightweight Memory Bank in repo docs or notes so project continuity still survives across sessions.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [development-workflow](../development-workflow/SKILL.md) | Project lifecycle context for Serena memory |
-| [code-quality](../code-quality/SKILL.md) | Symbol-based refactoring with Serena tools |
+
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.

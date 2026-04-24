@@ -1,8 +1,11 @@
 ---
 name: development-workflow
-description: Spec-driven development lifecycle — EARS requirements, technical design docs, implementation tracking, and contribution guidelines. Use when planning features, defining requirements, or managing project lifecycle.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [workflow, quality, planning, delivery]
+description: "Spec-driven development lifecycle — EARS requirements, technical design docs, implementation tracking, and contribution guidelines. Use when planning features, defining requirements, or managing project lifecycle."
 ---
+
 # Development Workflow
 
 Structured approach to software development ensuring requirements are clearly defined, designs are meticulously planned, and implementations are thoroughly documented with proper contribution practices.
@@ -98,10 +101,18 @@ Specifying what should not happen
 - O-001: The system **may** support social login providers (Google, Facebook, GitHub).
 ```
 
-### Technical Design Documentation
+#### EARS Grammar and Parser Example
 
-```markdown
-# Design: [Feature Name]
+```ebnf
+requirement = id ":" [trigger ","] subject "shall" action "." ;
+trigger = ("When" | "If" | "While" | "Upon") condition ;
+id = ("U" | "E" | "S" | "N" | "O") "-" digit digit digit ;
+```
+
+```typescript
+const earsRequirement =
+  /^(?<id>[UESNO]-\d{3}):\s(?:(?<keyword>When|If|While|Upon)\s(?<condition>.+?),\s)?(?<subject>The system|The user)\sshall\s(?<action>.+)\.$/;
+```
 
 ## Overview
 High-level description of what this feature does and why it's needed.
@@ -240,11 +251,18 @@ Frontend → User: Show success message
 
 ## Part 2: Repository Contribution Guidelines
 
+## Anti-Patterns
+
+- Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
+- Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
+- Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
 ### Pre-Contribution Checklist
 
 Before creating any PR or making changes:
 
 ```markdown
+
 ## Pre-Submission Checklist
 
 ### Repository Understanding
@@ -624,7 +642,36 @@ Closes issue #123"
 
 ---
 
+## Dependency Management
+
+- Pin the runtime, package manager, and critical libraries in the design doc before implementation starts.
+- Record upgrade constraints, required codemods, and any package that needs special review because it changes build, auth, or persistence behavior.
+- Prefer a small scheduled update cadence over infrequent large jumps so the test surface stays understandable.
+
+## Vulnerability Scanning
+
+- Run dependency scans as part of the normal quality gate, not only before release.
+- Triage findings by exploitability and reachability instead of blindly applying every patch immediately.
+- Track accepted risks with owners and revisit dates when a fix cannot ship in the current cycle.
+
+## Accessibility Testing
+
+- Add keyboard, focus-order, semantic HTML, and screen-reader expectations to the feature definition instead of treating accessibility as a polishing pass.
+- Pair automated tooling such as axe or Playwright accessibility checks with manual review of the critical flows.
+- Keep accessibility bugs inside the same Definition of Done as functional bugs for the feature.
+
+## Internationalization Considerations
+
+- Identify translatable strings, locale-aware formatting, and right-to-left layout risks during planning.
+- Keep UI copy, date or number formatting, and fallback language behavior outside hard-coded components.
+- Verify overflow, truncation, and validation messages in at least one non-default locale before release.
+
 ## Part 5: Quality Gates
+
+### Cross-Skill Gates
+
+- Use [systematic-debugging](../systematic-debugging/SKILL.md) when a build, test, or rollout gate fails and the root cause is not yet proven.
+- Use [code-quality](../code-quality/SKILL.md) when the feature works but the gate is blocked by maintainability, readability, duplication, or review-quality concerns.
 
 ### Definition of Done
 
@@ -815,19 +862,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Development Workflow skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [devops-tooling](../devops-tooling/SKILL.md) | Git operations and CI/CD automation for the workflow |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Write specs and design docs within the workflow |
-| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Manage versioning during the release lifecycle |
-| [code-quality](../code-quality/SKILL.md) | Code review and quality gates in the workflow |
 
----
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.

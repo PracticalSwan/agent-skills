@@ -1,7 +1,11 @@
 ---
 name: agentic-eval
-description: Evaluate and improve AI-generated output with explicit rubrics, reflection loops, and stop conditions. Use when building self-critique workflows, evaluator-optimizer pipelines, or acceptance gates for code, docs, analysis, or plans.
+version: "1.0"
+last_updated: 2026-04-24
+tags: [agentic, eval, agents, delegation, workflow]
+description: "Evaluate and improve AI-generated output with explicit rubrics, reflection loops, and stop conditions. Use when building self-critique workflows, evaluator-optimizer pipelines, or acceptance gates for code, docs, analysis, or plans."
 ---
+
 # Agentic Eval
 
 Use structured evaluation loops to improve important outputs before you call them done.
@@ -106,6 +110,21 @@ Use a structure like this when reporting an evaluation:
 - Add verification evidence for ...
 ```
 
+## Self-Verification Phase-Gate Questions
+
+Before you claim the evaluation is complete, the evaluating agent must ask:
+
+- Did I define the rubric, threshold, and evidence sources explicitly enough for another agent to rerun the check?
+- Did every failing dimension produce a concrete improvement action instead of a vague critique?
+- Did I stop because the result is acceptable, or only because I ran out of patience?
+- Can I point to tests, logs, screenshots, or scorecards that support the final PASS or FAIL decision?
+
+## Anti-Patterns
+
+- Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
+- Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
+- Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
 ## Scripts And References
 
 - [Rubric Template](./references/rubric-template.json)
@@ -120,6 +139,7 @@ Use a structure like this when reporting an evaluation:
 - Pair with tests or direct verification whenever the artifact can be executed.
 - If you use an LLM judge, constrain the output format so it can be parsed and compared.
 
+<!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
@@ -129,17 +149,22 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
 - Gemini CLI: this repository generates a project command named `/skills:agentic-eval` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py agentic-eval` and then run `/commands reload` inside Gemini CLI.
 
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks structured evaluation tooling, use the bundled rubric helper, local tests, and explicit Markdown scorecards.
-- Treat direct verification evidence such as tests, logs, benchmarks, or rendered output as the fallback acceptance signal before closing the task.
+- Fallback prompt: "Use the Agentic Eval skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+
+<!-- MCP:END -->
 
 ## Related Skills
 
-| Skill | Relationship |
-|-------|--------------|
-| [test-driven-development](../test-driven-development/SKILL.md) | Provides executable evidence for code-focused evaluation loops |
-| [verification-before-completion](../verification-before-completion/SKILL.md) | Final evidence gate after the evaluation loop stabilizes |
-| [code-quality](../code-quality/SKILL.md) | Use when rubric feedback points to maintainability or readability issues |
+- [agent-task-mapping](../agent-task-mapping/SKILL.md): Use it when the workflow also needs task-to-agent routing decisions.
+- [custom-agent-usage](../custom-agent-usage/SKILL.md): Use it when the workflow also needs loading and invoking custom agent definitions safely.
+- [subagent-delegation](../subagent-delegation/SKILL.md): Use it when the workflow also needs safe, scoped delegation to helper agents.
+- [subagent-driven-development](../subagent-driven-development/SKILL.md): Use it when the workflow also needs plan-driven implementation with reviewer loops.

@@ -1,12 +1,36 @@
 ---
 name: php-development
-description: PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, and authentication. Use when building PHP backends, creating API endpoints, configuring XAMPP, or integrating PHP with databases.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [php, development, testing, quality, automation]
+description: "PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, and authentication. Use when building PHP backends, creating API endpoints, configuring XAMPP, or integrating PHP with databases."
 ---
+
 # PHP Development
 
 Expert guidance for building high-quality PHP applications with PHP 8.0+, PDO for secure database access, RESTful API design, and XAMPP environment configuration following official PHP documentation at https://php.net.
 
+## Anti-Patterns
+
+- Interpolating SQL directly: Prepared statements are the baseline for correctness and security in PHP data access.
+- Mixing request parsing, business rules, and rendering: Tightly coupled scripts are harder to test and evolve into APIs.
+- Assuming validation alone prevents XSS: Output encoding still matters when user-controlled content is rendered back to HTML.
+
+## Before and After Example
+
+```php
+<?php
+// Before
+$stmt = $pdo->query("SELECT * FROM users WHERE email = '$email'");
+$user = $stmt->fetch();
+
+// After
+$stmt = $pdo->prepare('SELECT id, email, password_hash FROM users WHERE email = :email LIMIT 1');
+$stmt->execute(['email' => $email]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+```
+
+Replaces string interpolation with a prepared statement and a narrower result shape.
 
 ## Activation Conditions
 
@@ -816,6 +840,12 @@ date.timezone = "Asia/Bangkok"
 
 ---
 
+## Common Pitfalls
+
+- Interpolating SQL directly: Prepared statements are the baseline for correctness and security in PHP data access.
+- Mixing request parsing, business rules, and rendering: Tightly coupled scripts become difficult to test or migrate into APIs.
+- Ignoring output encoding: Input validation alone does not protect against XSS when data is rendered back to users.
+
 ## References & Resources
 
 ### Documentation
@@ -860,16 +890,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the PHP Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [sql-development](../sql-development/SKILL.md) | SQL database integration with PHP/PDO |
-| [javascript-development](../javascript-development/SKILL.md) | Alternative JavaScript and TypeScript backend or frontend patterns |
-| [javascript-development](../javascript-development/SKILL.md) | Frontend JS to pair with PHP backend |
+
+- [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.

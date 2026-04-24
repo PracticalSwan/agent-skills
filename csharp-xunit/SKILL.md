@@ -1,10 +1,48 @@
 ---
 name: csharp-xunit
-description: 'xUnit testing patterns and data-driven test guidance. Use when writing or reviewing .NET unit tests.'
+version: "1.0"
+last_updated: 2026-04-24
+tags: [dotnet, testing, development, quality, automation]
+description: "xUnit testing patterns and data-driven test guidance. Use when writing or reviewing .NET unit tests."
 ---
+
 # XUnit Best Practices
 
 Your goal is to help me write effective unit tests with XUnit, covering both standard and data-driven testing approaches.
+
+## Anti-Patterns
+
+- Treating fixtures as hidden setup: Readers lose sight of the behavior under test when too much state is shared implicitly.
+- Asserting only the happy path: Unit tests miss the contract if failure and edge cases are not explicit.
+- Using vague test names: A failing test should explain the broken behavior before anyone opens the body.
+
+## Before and After Example
+
+```csharp
+// Before
+[Fact]
+public async Task SavesOrder()
+{
+    var id = await service.SaveAsync(order);
+    Assert.True(id > 0);
+}
+
+// After
+[Fact]
+public async Task SaveAsync_WhenOrderIsValid_PersistsAndReturnsId()
+{
+    // Arrange
+    var order = new Order("ORD-42", 3);
+
+    // Act
+    var id = await service.SaveAsync(order);
+
+    // Assert
+    id.Should().BeGreaterThan(0);
+}
+```
+
+Moves from a vague assertion to an explicit Arrange-Act-Assert flow with a descriptive name.
 
 ## Project Setup
 
@@ -66,6 +104,12 @@ Your goal is to help me write effective unit tests with XUnit, covering both sta
 - Consider output helpers (`ITestOutputHelper`) for test diagnostics
 - Skip tests conditionally with `Skip = "reason"` in fact/theory attributes
 
+## Common Pitfalls
+
+- Using vague test names: It becomes hard to tell which behavior failed without opening the test body.
+- Hiding setup inside fixtures: Large shared fixtures make tests brittle and obscure the actual cause of a failure.
+- Skipping async-specific assertions: Awaitable code often fails in different ways than synchronous code and needs explicit coverage.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -81,9 +125,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the XUnit Best Practices skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [dotnet-best-practices](../dotnet-best-practices/SKILL.md): Use it when the workflow also needs .NET architecture and maintainability guidance.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.

@@ -2,6 +2,13 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-04-24] - Skill Refresh
+
+### Changed
+- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
+- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
+- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
+- Added a Tech Stack Target / Version note so Notion publishing guidance is tied to the current API and template workflow.
 ## [2026-04-04] - Cross-Client Portability Refresh
 
 ### Changed

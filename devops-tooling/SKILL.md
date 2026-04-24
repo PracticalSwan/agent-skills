@@ -1,9 +1,12 @@
 ---
 name: devops-tooling
-description: Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [devops, tooling, workflow, quality, planning]
+description: "Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows."
 ---
 
+# Devops Tooling
 
 Comprehensive toolkit for Git workflows, shell scripting, and development automation.
 
@@ -1006,6 +1009,12 @@ stages:
 
 ---
 
+## Anti-Patterns
+
+- Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
+- Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
+- Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
 ## References & Resources
 
 ### Documentation
@@ -1036,20 +1045,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `GitHub MCP` (optional)
+Preferred MCP Server: GitHub MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Devops Tooling skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use standard local tools such as `git`, `gh`, CI logs, and shell automation scripts for repository and pipeline work.
 - Prefer the bundled repo scripts or direct YAML edits when the MCP host does not expose GitHub operations.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [development-workflow](../development-workflow/SKILL.md) | Project lifecycle that DevOps tooling supports |
-| [azure-integrations](../azure-integrations/SKILL.md) | Azure-specific CI/CD and deployment pipelines |
-| [documentation-automation](../documentation-automation/SKILL.md) | Pre-commit hooks and automated doc generation |
 
----
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.

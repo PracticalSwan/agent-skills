@@ -1,8 +1,14 @@
 ---
 name: powerbi-modeling
-description: Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI.
+version: "1.0"
+last_updated: 2026-04-24
+tags: [powerbi, modeling, documents, automation, productivity]
+description: "Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI."
 ---
+
 # Power BI Modeling
+
+> Tech Stack Target / Version: Power BI Desktop current release, Tabular Editor, DAX Studio, and Fabric semantic-model workflows.
 
 Use this skill when the work is inside a Power BI semantic model rather than a generic SQL schema or spreadsheet.
 
@@ -30,6 +36,12 @@ For Microsoft documentation, the Microsoft Learn MCP server is a good companion.
 
 - `microsoft_docs_search_by_product` with `power-bi`
 - `microsoft_docs_fetch` for the final page
+
+## Anti-Patterns
+
+- Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
+- Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
+- Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
 
 ## References & Resources
 
@@ -61,18 +73,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Power BI MCP` (primary)
+Preferred MCP Server: Power BI MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Power BI Modeling skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use Power BI Desktop, Tabular Editor, DAX Studio, and exported model metadata when the MCP surface is unavailable.
 - Validate measures, relationships, and performance with local model tools before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Official Microsoft docs for Power BI capabilities and limits |
-| [sql-development](../sql-development/SKILL.md) | Shape the upstream warehouse or SQL source feeding the model |
-| [excel-sheet](../excel-sheet/SKILL.md) | Excel as a data source or export target |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.
+- [pdf](../pdf/SKILL.md): Use it when the workflow also needs PDF extraction, generation, and layout-aware review.
+- [word-document](../word-document/SKILL.md): Use it when the workflow also needs Word document authoring and formatting workflows.

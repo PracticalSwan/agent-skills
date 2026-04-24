@@ -1,9 +1,12 @@
 ---
 name: stitch-design
-description: Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [stitch, design, frontend, ui, visual]
+description: "Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects."
 ---
 
+# Stitch Design
 
 Comprehensive toolkit for Google Stitch projects — combining design system documentation, React component conversion, autonomous build loops, prompt engineering, video walkthroughs, and shadcn/ui component integration. Based on [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills).
 
@@ -88,17 +91,6 @@ Convert Stitch screens into modular Vite and React component systems with AST-ba
 3. Draft components using template, replace `StitchComponent` with actual names
 4. Wire up in `App.tsx`
 5. Quality check: run validation, verify against architecture checklist
-
-### Architecture Checklist
-- Logic extracted to custom hooks
-- No monolithic files; Atomic/Composite modularity
-- Static text/URLs in mockData.ts
-- Props use `Readonly<T>` interfaces
-- Valid TypeScript (no errors)
-- Dark mode (`dark:`) applied to all color classes
-- No hardcoded hex values; use theme-mapped Tailwind classes
-
----
 
 ## Part 3: Build Loop (stitch-loop)
 
@@ -271,6 +263,12 @@ export function cn(...inputs: ClassValue[]) {
 
 ---
 
+## Anti-Patterns
+
+- Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
+- Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
+- Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
 ## References & Resources
 
 ### Documentation
@@ -300,18 +298,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Stitch MCP` (primary)
+Preferred MCP Server: Stitch MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Stitch Design skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use screenshots, HTML prototypes, Figma exports, and local design notes when Stitch MCP is not exposed by the host.
 - Treat generated React or design assets as drafts that still need local browser verification.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [react-development](../react-development/SKILL.md) | Implement Stitch screens as React code |
-| [frontend-design](../frontend-design/SKILL.md) | Design system and UI principles |
-| [canvas-design](../canvas-design/SKILL.md) | Design philosophy and visual aesthetics |
+
+- [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
+- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
+- [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
+- [canvas-design](../canvas-design/SKILL.md): Use it when the workflow also needs visual composition and presentation-ready diagram work.

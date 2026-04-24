@@ -1,10 +1,12 @@
 ---
 name: subagent-delegation
-description: Delegate routine work to subagents — boilerplate generation, data transformation, file analysis, documentation drafting. Use when splitting tasks into independent subtasks for parallel subagent execution.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [subagent, delegation, agents, workflow, automation]
+description: "Delegate routine work to subagents — boilerplate generation, data transformation, file analysis, documentation drafting. Use when splitting tasks into independent subtasks for parallel subagent execution."
 ---
-# Subagent Delegation Patterns
 
+# Subagent Delegation Patterns
 
 ## Activation Conditions
 
@@ -25,10 +27,25 @@ See [Delegation Patterns](./references/patterns.md) for detailed examples of:
 - Documentation generation from code
 - Utility function creation
 
+## Anti-Patterns
+
+- Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
+- Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
+- Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
 ## Examples & Scripts
 
 - [Delegation Pattern Examples](./examples/delegation-patterns-examples.md) — Code examples of common delegation patterns
 - [Delegation Template](./scripts/delegation-template.js) — JavaScript template for structuring delegation calls
+
+## Self-Verification Phase-Gate Questions
+
+Before you mark delegated work complete, the coordinating agent must ask:
+
+- Did the subagent receive a scoped task, owned files or responsibilities, and a clear definition of done?
+- Did I review the returned output for correctness, integration fit, and missing edge cases instead of forwarding it blindly?
+- Did I preserve the evidence trail showing what was delegated, what changed, and what still needs local ownership?
+- Are any follow-up fixes, risks, or unresolved assumptions now explicit to the next reviewer?
 
 ## Integration Workflow
 
@@ -49,13 +66,6 @@ Before integrating subagent results, verify:
 - [ ] Has appropriate comments/documentation
 - [ ] No security vulnerabilities or obvious performance issues
 - [ ] Compatible with existing codebase (imports, dependencies)
-
-## Anti-Patterns
-
-- ❌ Over-delegation: Don't delegate critical security logic or core business rules
-- ❌ Vague instructions: Always provide specific, actionable prompts
-- ❌ No integration plan: Have clear plan for using subagent output
-- ❌ Delegating planning: Never ask subagents to decide what to do
 
 ## Combining with Sequential Thinking
 
@@ -97,15 +107,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Subagent Delegation Patterns skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [agent-task-mapping](../agent-task-mapping/SKILL.md) | Map tasks to the right specialist agent |
-| [custom-agent-usage](../custom-agent-usage/SKILL.md) | Discover and invoke custom .agent.md agents |
+
+- [agent-task-mapping](../agent-task-mapping/SKILL.md): Use it when the workflow also needs task-to-agent routing decisions.
+- [custom-agent-usage](../custom-agent-usage/SKILL.md): Use it when the workflow also needs loading and invoking custom agent definitions safely.
+- [subagent-driven-development](../subagent-driven-development/SKILL.md): Use it when the workflow also needs plan-driven implementation with reviewer loops.
+- [agentic-eval](../agentic-eval/SKILL.md): Use it when the workflow also needs rubric-driven evaluation loops.

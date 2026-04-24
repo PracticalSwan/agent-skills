@@ -1,12 +1,50 @@
 ---
 name: vite-development
-description: Vite 8.0.10 build tooling — HMR, fast builds, plugins, and optimized production assets. Use when configuring Vite, setting up React/Vue projects with Vite, or optimizing frontend build performance.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [vite, development, testing, quality, automation]
+description: "Vite 8.0.10 build tooling — HMR, fast builds, plugins, and optimized production assets. Use when configuring Vite, setting up React/Vue projects with Vite, or optimizing frontend build performance."
 ---
+
 # Vite Development
+
+> Optimized for Vite 8+, React 19+, TypeScript 5.5+, Vitest 2+, and modern ESM-first frontend builds.
 
 Expert guidance for using Vite 8.0.10 as the build tool for React and other web applications with modern frontend development patterns. Documentation grounded in the official Vite docs at https://vite.dev/.
 
+## Anti-Patterns
+
+- Hard-coding environment-specific URLs: Builds become fragile as soon as the app moves between local, staging, and production.
+- Treating plugin order as incidental: Vite plugins often transform the same files, so ordering bugs are easy to create.
+- Assuming fast HMR guarantees good production output: Bundle quality and runtime behavior still need explicit review.
+
+## Before and After Example
+
+```ts
+// Before
+export default {
+  server: { proxy: { '/api': 'http://localhost:3000' } },
+};
+
+// After
+import { defineConfig, loadEnv } from 'vite';
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  return {
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_API_BASE_URL,
+          changeOrigin: true,
+        },
+      },
+    },
+  };
+});
+```
+
+Makes the proxy configuration mode-aware and driven by typed environment input instead of hard-coded URLs.
 
 ## Activation Conditions
 
@@ -247,6 +285,41 @@ export default defineConfig({
 - [ ] Enable source maps for better debugging
 - [ ] Configure clear port and open options
 
+## Common Pitfalls
+
+- Hard-coding environment-specific URLs: Builds become fragile as soon as the app moves between local, staging, and production.
+- Treating plugin order as incidental: Vite plugins can transform the same files, so ordering bugs are easy to create.
+- Ignoring bundle inspection: Fast local HMR does not guarantee the production output is well-shaped.
+
+## Modern Component and Testing Examples
+
+### Server Components
+```tsx
+export async function OrdersPanel() {
+  const orders = await getOrders();
+  return <OrdersTable orders={orders} />;
+}
+```
+
+### Error Boundaries
+```tsx
+import { ErrorBoundary } from 'react-error-boundary';
+
+<ErrorBoundary fallbackRender={() => <p>Could not load dashboard.</p>}>
+  <Dashboard />
+</ErrorBoundary>
+```
+
+### Accessibility Testing Tools
+```tsx
+import { axe } from 'jest-axe';
+
+test('dialog passes axe checks', async () => {
+  const { container } = render(<AccountDialog open />);
+  expect(await axe(container)).toHaveNoViolations();
+});
+```
+
 ## References & Resources
 
 ### Documentation
@@ -282,16 +355,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Vite Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [react-development](../react-development/SKILL.md) | React projects built with Vite |
-| [javascript-development](../javascript-development/SKILL.md) | JS/TS code that Vite bundles |
-| [frontend-design](../frontend-design/SKILL.md) | Design patterns for Vite-powered frontends |
+
+- [javascript-development](../javascript-development/SKILL.md): Use it when the workflow also needs modern JavaScript and TypeScript application code.
+- [react-development](../react-development/SKILL.md): Use it when the workflow also needs React component architecture and client or server boundaries.
+- [web-testing](../web-testing/SKILL.md): Use it when the workflow also needs browser and end-to-end testing evidence.
+- [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.

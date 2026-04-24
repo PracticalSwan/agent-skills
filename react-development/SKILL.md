@@ -1,12 +1,45 @@
 ---
 name: react-development
-description: React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [react, development, testing, quality, automation]
+description: "React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders."
 ---
+
 # React Development
+
+> Optimized for React 19+, TypeScript 5.5+, React Testing Library 16+, and modern server-first app architectures.
 
 Expert guidance for building high-quality React applications with React 19+, modern hooks, TypeScript, and best practices following official React documentation at https://react.dev.
 
+## Anti-Patterns
+
+- Fetching everything in client effects by default: Server-first data loading is usually simpler, faster, and easier to cache.
+- Adding memoization before profiling: Manual optimizations can create stale-prop bugs and hide simpler design fixes.
+- Skipping keyboard and accessible-name review: A component is not done if only pointer users can operate it reliably.
+
+## Before and After Example
+
+```tsx
+// Before
+'use client';
+
+export function Dashboard() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  useEffect(() => {
+    fetch('/api/orders').then((r) => r.json()).then(setOrders);
+  }, []);
+  return <OrdersTable orders={orders} />;
+}
+
+// After
+export async function Dashboard() {
+  const orders = await getOrders();
+  return <OrdersTable orders={orders} />;
+}
+```
+
+Lets the server boundary load data directly and keeps the client side focused on interaction, not bootstrapping.
 
 ## Activation Conditions
 
@@ -1028,6 +1061,35 @@ describe('UseFetch Hook', () => {
 
 ---
 
+## Modern Component and Testing Examples
+
+### Server Components
+```tsx
+export async function OrdersPanel() {
+  const orders = await getOrders();
+  return <OrdersTable orders={orders} />;
+}
+```
+
+### Error Boundaries
+```tsx
+import { ErrorBoundary } from 'react-error-boundary';
+
+<ErrorBoundary fallbackRender={() => <p>Could not load dashboard.</p>}>
+  <Dashboard />
+</ErrorBoundary>
+```
+
+### Accessibility Testing Tools
+```tsx
+import { axe } from 'jest-axe';
+
+test('dialog passes axe checks', async () => {
+  const { container } = render(<AccountDialog open />);
+  expect(await axe(container)).toHaveNoViolations();
+});
+```
+
 ## React Development Best Practices
 
 ### Components
@@ -1058,6 +1120,12 @@ describe('UseFetch Hook', () => {
 
 ---
 
+## Common Pitfalls
+
+- Fetching everything in client effects by default: Server-first data loading is usually simpler, faster, and easier to cache.
+- Overusing memoization without a profiler: Manual memoization adds complexity and can hide stale-prop bugs.
+- Skipping accessible names and keyboard flows: Components can appear done while still failing real user interaction paths.
+
 ## References & Resources
 
 ### Documentation
@@ -1087,18 +1155,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the React Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [frontend-design](../frontend-design/SKILL.md) | UI/UX design principles for React apps |
-| [vite-development](../vite-development/SKILL.md) | Build tooling for React projects |
-| [javascript-development](../javascript-development/SKILL.md) | Core JS patterns underlying React |
-| [stitch-design](../stitch-design/SKILL.md) | Convert Stitch screens to React components |
-| [web-testing](../web-testing/SKILL.md) | Test React apps with Playwright |
+
+- [javascript-development](../javascript-development/SKILL.md): Use it when the workflow also needs modern JavaScript and TypeScript application code.
+- [nextjs-development](../nextjs-development/SKILL.md): Use it when the workflow also needs Next.js App Router and server-first React patterns.
+- [web-testing](../web-testing/SKILL.md): Use it when the workflow also needs browser and end-to-end testing evidence.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.

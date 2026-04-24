@@ -1,8 +1,11 @@
 ---
 name: web-testing
-description: Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [web, testing, workflow, automation, guidance]
+description: "Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications."
 ---
+
 # Web Application Testing & Debugging
 
 Comprehensive toolkit for testing and debugging web applications using Playwright automation and Chrome DevTools.
@@ -434,66 +437,6 @@ if (insights.cumulativeLayoutShift > 0.1) {
 }
 ```
 
-### Workflow Examples
-
-#### Testing Login Flow
-
-```javascript
-// Snapshot-first approach
-await chrome.navigatePage('https://example.com/login');
-const snapshot = await chrome.takeSnapshot();
-
-// Find and fill email input
-const emailInput = snapshot.elements.find(el => el.attributes.id === 'email');
-await chrome.fill(emailInput.uid, 'user@example.com');
-
-// Find and fill password input
-const passwordInput = snapshot.elements.find(el => el.attributes.type === 'password');
-await chrome.fill(passwordInput.uid, 'password123');
-
-// Find and click submit button
-const submitButton = snapshot.elements.find(el => el.text === 'Sign In');
-await chrome.click(submitButton.uid);
-
-// Wait for successful login indication
-await chrome.waitFor('Dashboard');
-
-// Verify with screenshot
-await chrome.takeScreenshot('login-success.png');
-```
-
-#### Debugging API Issues
-
-```javascript
-// Navigate to page with API calls
-await chrome.navigatePage('https://example.com/data-page');
-
-// Clear and monitor network
-const apiCalls = [];
-chrome.on('networkRequest', (request) => {
-  if (request.url.includes('/api/')) {
-    apiCalls.push({
-      url: request.url,
-      method: request.method,
-    });
-  }
-});
-
-// Trigger API call
-await chrome.click(submitButtonUid);
-
-// Check what was called
-console.log('API Calls:', apiCalls);
-
-// Get detailed response from browser
-const responseData = await chrome.evaluateScript(`
-  window.lastApiResponse
-`);
-console.log('Response Data:', responseData);
-```
-
----
-
 ## Part 3: Testing Best Practices
 
 ### Test Structure
@@ -633,6 +576,12 @@ npx playwright codegen https://example.com
 
 ---
 
+## Anti-Patterns
+
+- Starting without a clear success condition: The skill becomes advice-shaped instead of workflow-shaped.
+- Skipping the bundled references or scripts: You lose the proven path the catalog is trying to preserve.
+- Claiming completion without concrete evidence: A future agent or reviewer cannot trust the result or resume the work safely.
+
 ## Testing Checklist
 
 ### Functionality
@@ -707,19 +656,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Playwright MCP` (primary)
-- `Chrome DevTools MCP (optional)` (primary)
+Preferred MCP Server: Playwright MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Web Application Testing & Debugging skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use Playwright CLI (`npx playwright test`, headed mode, or codegen) and browser devtools when MCP browser tools are unavailable.
 - Keep screenshots, console logs, and network traces as test evidence when reproducing issues manually.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [web-design-reviewer](../web-design-reviewer/SKILL.md) | Visual design review with browser tools |
-| [javascript-development](../javascript-development/SKILL.md) | JS apps being tested |
-| [react-development](../react-development/SKILL.md) | Test React components and user flows |
+
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.

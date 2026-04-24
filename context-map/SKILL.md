@@ -1,7 +1,11 @@
 ---
 name: context-map
-description: Scope the real change surface before editing. Use when planning a feature, bugfix, refactor, or review and you need a concrete map of likely touch points, dependencies, tests, and nearby risks.
+version: "1.0"
+last_updated: 2026-04-24
+tags: [context, map, agents, delegation, workflow]
+description: "Scope the real change surface before editing. Use when planning a feature, bugfix, refactor, or review and you need a concrete map of likely touch points, dependencies, tests, and nearby risks."
 ---
+
 # Context Map
 
 Build a task-focused map of the codebase before changing files.
@@ -99,11 +103,18 @@ Use this structure unless the user asked for a different format:
 - If multiple subsystems are involved, split the map by subsystem instead of producing one giant table.
 - Revise the map after discovery if the real scope is materially different from the initial request.
 
+## Anti-Patterns
+
+- Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
+- Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
+- Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
 ## Scripts And References
 
 - [Context Map Template](./references/context-map-template.md)
 - [Context Map Builder](./scripts/build-context-map.py)
 
+<!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
@@ -113,17 +124,22 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
 - Gemini CLI: this repository generates a project command named `/skills:context-map` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py context-map` and then run `/commands reload` inside Gemini CLI.
 
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks symbolic code-navigation tools, use `rg`, targeted file reads, and dependency scans from the bundled helper script.
-- Treat the generated Markdown map and a quick manual sanity check as the fallback evidence path before implementation begins.
+- Fallback prompt: "Use the Context Map skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+
+<!-- MCP:END -->
 
 ## Related Skills
 
-| Skill | Relationship |
-|-------|--------------|
-| [writing-plans](../writing-plans/SKILL.md) | Turn the mapped edit surface into an execution plan |
-| [systematic-debugging](../systematic-debugging/SKILL.md) | Use after the map when isolating regressions or unknown root causes |
-| [verification-before-completion](../verification-before-completion/SKILL.md) | Revisit the mapped verification surface before closing the task |
+- [agent-task-mapping](../agent-task-mapping/SKILL.md): Use it when the workflow also needs task-to-agent routing decisions.
+- [custom-agent-usage](../custom-agent-usage/SKILL.md): Use it when the workflow also needs loading and invoking custom agent definitions safely.
+- [subagent-delegation](../subagent-delegation/SKILL.md): Use it when the workflow also needs safe, scoped delegation to helper agents.
+- [subagent-driven-development](../subagent-driven-development/SKILL.md): Use it when the workflow also needs plan-driven implementation with reviewer loops.

@@ -1,7 +1,11 @@
 ---
 name: web-design-reviewer
-description: Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing.
+version: "1.0"
+last_updated: 2026-04-24
+tags: [web, design, reviewer, frontend, ui]
+description: "Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing."
 ---
+
 # Web Design Reviewer
 
 Use this skill for visual QA and source-level fixes after a page is already running. This is not the right skill for functional automation or regression suites.
@@ -29,6 +33,12 @@ These tool names are current in the Playwright MCP server used by Codex:
 - `browser_take_screenshot` for before and after captures
 - `browser_resize` for responsive review
 - `browser_console_messages` and `browser_network_requests` to catch front-end breakage
+
+## Anti-Patterns
+
+- Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
+- Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
+- Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
 
 ## Review Checklist
 
@@ -62,19 +72,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Playwright MCP` (primary)
-- `Chrome DevTools MCP (optional)` (primary)
+Preferred MCP Server: Playwright MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Web Design Reviewer skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use Playwright CLI, browser devtools, screenshots, and manual responsive checks when MCP browser tools are unavailable.
 - Capture console or network issues with the browser or terminal before proposing visual fixes.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [web-testing](../web-testing/SKILL.md) | Functional and automated browser testing after design fixes |
-| [frontend-design](../frontend-design/SKILL.md) | Design principles to review against |
-| [react-development](../react-development/SKILL.md) | Fix design issues in React source code |
+
+- [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
+- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
+- [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.
+- [canvas-design](../canvas-design/SKILL.md): Use it when the workflow also needs visual composition and presentation-ready diagram work.

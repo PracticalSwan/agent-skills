@@ -1,9 +1,14 @@
 ---
 name: powerpoint-ppt
-description: PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [slides, ppt, docs, writing, quality]
+description: "PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files."
 ---
+
 # PowerPoint Presentation Workflows
+
+> Tech Stack Target / Version: PowerPoint current desktop or web releases and `python-pptx` automation.
 
 Use this skill when a `.pptx` deck is the output and slide composition matters.
 
@@ -24,6 +29,12 @@ Presentation MCP tooling is host-dependent. Some clients expose Office presentat
 2. Prefer template-driven decks over manual one-off slide formatting.
 3. Keep one idea per slide and treat text density as a defect.
 4. Validate the final deck visually before calling it done.
+
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
 ## Deck Checklist
 
@@ -59,18 +70,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `PowerPoint MCP` (primary)
+Preferred MCP Server: PowerPoint MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the PowerPoint Presentation Workflows skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use `python-pptx`, PowerPoint desktop, or a scriptable slide generator when the MCP surface is unavailable.
 - Render the final deck and manually verify layout, overflow, and speaker-facing notes before delivery.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft ecosystem context and official docs |
-| [excel-sheet](../excel-sheet/SKILL.md) | Pull charts or tables from spreadsheets into slides |
-| [word-document](../word-document/SKILL.md) | Turn long-form reports into summary decks |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.

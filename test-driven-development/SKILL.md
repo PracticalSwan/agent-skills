@@ -1,8 +1,14 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature or bugfix, before writing implementation code
+version: "1.0"
+last_updated: 2026-04-24
+tags: [test, workflow, quality, planning, delivery]
+description: "Use when implementing any feature or bugfix, before writing implementation code."
 ---
+
 # Test-Driven Development (TDD)
+
+> Optimized for React 19+, Next.js 16+, Node.js 22+, TypeScript 5.5+, and Testing Library 16+.
 
 ## Overview
 
@@ -286,6 +292,43 @@ Tests-first force edge case discovery before implementing. Tests-after verify yo
 
 **All of these mean: Delete code. Start over with TDD.**
 
+## Anti-Patterns
+
+- Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
+- Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
+- Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
+## Modern Frontend Testing Examples
+
+### Server Components
+```tsx
+test('renders order details from a server component', async () => {
+  const ui = await OrderSummary({ orderId: 'ord_42' });
+  render(ui);
+  expect(screen.getByText('ord_42')).toBeInTheDocument();
+});
+```
+
+### Error Boundaries
+```tsx
+test('shows the fallback when the widget throws', () => {
+  render(
+    <ErrorBoundary fallback={<p>Retry later</p>}>
+      <BrokenWidget />
+    </ErrorBoundary>
+  );
+  expect(screen.getByText('Retry later')).toBeInTheDocument();
+});
+```
+
+### Accessibility Testing Tools
+```tsx
+test('checkout form has no obvious accessibility violations', async () => {
+  const { container } = render(<CheckoutForm />);
+  expect(await axe(container)).toHaveNoViolations();
+});
+```
+
 ## Example: Bug Fix
 
 **Bug:** Empty email accepted
@@ -384,9 +427,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Test-Driven Development (TDD) skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.

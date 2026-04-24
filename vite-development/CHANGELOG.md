@@ -2,6 +2,18 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-04-24] - Verification Follow-Up
+
+### Fixed
+- Added the missing modern examples for Server Components, Error Boundaries, and accessibility testing tools so the framework-specific requirements are fully covered.
+
+## [2026-04-24] - Skill Refresh
+
+### Changed
+- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
+- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
+- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
+- Added current-version targeting, a before-and-after example, and a Common Pitfalls section for modern Vite workflows.
 ## [2026-04-24] - Current Version Refresh
 
 ### Changed

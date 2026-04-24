@@ -1,7 +1,11 @@
 ---
 name: java-docs
-description: 'Java Javadoc best practices. Use when adding or reviewing documentation for Java types, methods, packages, and public APIs.'
+version: "1.0"
+last_updated: 2026-04-24
+tags: [java, docs, development, testing, quality]
+description: "Java Javadoc best practices. Use when adding or reviewing documentation for Java types, methods, packages, and public APIs."
 ---
+
 # Java Documentation (Javadoc) Best Practices
 
 - Public and protected members should be documented with Javadoc comments.
@@ -21,6 +25,38 @@ description: 'Java Javadoc best practices. Use when adding or reviewing document
 - Use `@author` to specify the author of the code.
 - Use `@deprecated` to mark a member as deprecated and provide an alternative.
 
+## Anti-Patterns
+
+- Repeating the method signature in prose: JavaDoc is most useful when it adds intent, constraints, and failure semantics.
+- Leaving exceptions or side effects undocumented: Callers cannot use the API safely if the contract is only visible in code.
+- Publishing examples that no longer compile: Broken snippets damage trust faster than missing snippets.
+
+## Before and After Example
+
+```java
+// Before
+/** Gets a user. */
+User getUser(String id);
+
+// After
+/**
+ * Loads a user by identifier.
+ *
+ * @param id stable user identifier from the identity provider
+ * @return persisted user record when found
+ * @throws UserNotFoundException when the identifier does not resolve
+ */
+User getUser(String id);
+```
+
+Documents inputs, outputs, and failure conditions so the API contract is clear to callers and reviewers.
+
+## Common Pitfalls
+
+- Explaining what the method name already says: JavaDoc should capture intent, constraints, and side effects, not repeat the signature.
+- Leaving exceptions undocumented: Callers cannot use the API safely if failure modes are only visible in implementation.
+- Letting examples lag behind the code: Outdated snippets make the docs look trustworthy while teaching the wrong contract.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -36,9 +72,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Java Documentation (Javadoc) Best Practices skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [java-junit](../java-junit/SKILL.md): Use it when the workflow also needs JUnit 5 testing practices in Java.
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.

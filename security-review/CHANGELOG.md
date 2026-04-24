@@ -2,6 +2,12 @@
 
 All notable changes to the `security-review` skill will be documented in this file.
 
+## [2026-04-24] - Skill Refresh
+
+### Changed
+- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
+- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
+- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
 ## [2026-04-04] - Initial Import and Portability Upgrade
 
 ### Added

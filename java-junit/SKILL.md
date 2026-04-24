@@ -1,10 +1,42 @@
 ---
 name: java-junit
-description: 'JUnit 5 testing patterns and parameterized-test guidance. Use when writing or reviewing Java unit tests.'
+version: "1.0"
+last_updated: 2026-04-24
+tags: [java, testing, development, quality, automation]
+description: "JUnit 5 testing patterns and parameterized-test guidance. Use when writing or reviewing Java unit tests."
 ---
+
 # JUnit 5+ Best Practices
 
 Your goal is to help me write effective unit tests with JUnit 5, covering both standard and data-driven testing approaches.
+
+## Anti-Patterns
+
+- Combining multiple behaviors in one test: A single failure should map cleanly to one broken contract.
+- Using sleeps for asynchronous behavior: Time-based tests stay flaky even when the implementation is correct.
+- Testing implementation details instead of behavior: Refactors become noisy because the tests are coupled to internals.
+
+## Before and After Example
+
+```java
+// Before
+@Test
+void shouldWork() {
+    assertTrue(service.create(user));
+}
+
+// After
+@Test
+void create_WhenEmailAlreadyExists_ThrowsConflictException() {
+    // Arrange
+    repository.save(existingUser);
+
+    // Act + Assert
+    assertThrows(ConflictException.class, () -> service.create(duplicateUser));
+}
+```
+
+Shifts from a vague happy-path assertion to a precise behavioral test that captures the contract.
 
 ## Project Setup
 
@@ -61,6 +93,12 @@ Your goal is to help me write effective unit tests with JUnit 5, covering both s
 - Use `@Disabled` to temporarily skip a test method or class, providing a reason.
 - Use `@Nested` to group tests in a nested inner class for better organization and structure.
 
+## Common Pitfalls
+
+- Combining multiple behaviors in one test: Failures become ambiguous and the test no longer documents a single contract.
+- Using sleeps instead of deterministic setup: Time-based tests stay flaky even when the production code is correct.
+- Asserting only that no exception occurred: A test without a meaningful assertion cannot prove the behavior is right.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -76,9 +114,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the JUnit 5+ Best Practices skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [java-docs](../java-docs/SKILL.md): Use it when the workflow also needs Java API and JavaDoc documentation guidance.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.

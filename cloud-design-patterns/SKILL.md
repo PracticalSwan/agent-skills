@@ -1,7 +1,11 @@
 ---
 name: cloud-design-patterns
-description: Choose and compare cloud design patterns for distributed systems. Use when reviewing architecture, selecting workload patterns, or mapping reliability, performance, messaging, security, and migration concerns to concrete design options.
+version: "1.0"
+last_updated: 2026-04-24
+tags: [cloud, design, patterns, architecture, operations]
+description: "Choose and compare cloud design patterns for distributed systems. Use when reviewing architecture, selecting workload patterns, or mapping reliability, performance, messaging, security, and migration concerns to concrete design options."
 ---
+
 # Cloud Design Patterns
 
 Use proven distributed-systems patterns to choose safer architectures and surface trade-offs early.
@@ -43,6 +47,12 @@ Ask these before locking in a pattern:
 - Is the pattern local to one subsystem or does it create a cross-cutting contract?
 - What simpler alternative did we reject, and why?
 
+## Anti-Patterns
+
+- Changing infrastructure before inspecting the current state: Cloud drift and hidden dependencies make blind edits risky.
+- Hardcoding credentials or environment assumptions: Rollouts stop being reproducible and secrets become harder to rotate.
+- Skipping rollback, observability, or validation planning: You only notice the missing safeguards after the deployment is already live.
+
 ## Scripts And References
 
 - [Pattern Shortlist Helper](./scripts/pattern-shortlist.py)
@@ -63,6 +73,7 @@ Ask these before locking in a pattern:
 - Technology choice comes after pattern choice, not before it.
 - If a migration is underway, keep the transitional pattern and the target steady-state pattern separate in your notes.
 
+<!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
@@ -72,17 +83,22 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
 - Gemini CLI: this repository generates a project command named `/skills:cloud-design-patterns` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py cloud-design-patterns` and then run `/commands reload` inside Gemini CLI.
 
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks architecture-specific tooling, use the bundled reference set and shortlist helper to narrow the decision.
-- Treat the resulting design doc, ADR, or pattern comparison note as the fallback evidence path for why a pattern was selected.
+- Fallback prompt: "Use the Cloud Design Patterns skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+
+<!-- MCP:END -->
 
 ## Related Skills
 
-| Skill | Relationship |
-|-------|--------------|
-| [development-workflow](../development-workflow/SKILL.md) | Turn shortlisted patterns into ADRs, specs, and implementation plans |
-| [azure-integrations](../azure-integrations/SKILL.md) | Map chosen patterns onto Azure deployment and service choices |
-| [breaking-changes-management](../breaking-changes-management/SKILL.md) | Useful when patterns imply migrations or compatibility boundaries |
+- [azure-integrations](../azure-integrations/SKILL.md): Use it when the workflow also needs Azure deployment and infrastructure automation.
+- [powerbi-modeling](../powerbi-modeling/SKILL.md): Use it when the workflow also needs Power BI semantic model design and DAX work.
+- [microsoft-development](../microsoft-development/SKILL.md): Use it when the workflow also needs microsoft development guidance.
+- [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.

@@ -1,7 +1,11 @@
 ---
 name: subagent-driven-development
-description: Use when executing implementation plans with independent tasks in the current session
+version: "1.0"
+last_updated: 2026-04-24
+tags: [subagent, agents, delegation, workflow, automation]
+description: "Use when executing implementation plans with independent tasks in the current session."
 ---
+
 # Subagent-Driven Development
 
 Execute plan by dispatching fresh subagent per task, with two-stage review after each: spec compliance review first, then code quality review.
@@ -86,6 +90,12 @@ digraph process {
 - `./implementer-prompt.md` - Dispatch implementer subagent
 - `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
 - `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
+
+## Anti-Patterns
+
+- Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
+- Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
+- Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
 ## Example Workflow
 
@@ -226,6 +236,15 @@ Done!
 - Dispatch fix subagent with specific instructions
 - Don't try to fix manually (context pollution)
 
+## Self-Verification Phase-Gate Questions
+
+Before you claim the branch is ready, the coordinating agent must ask:
+
+- Did every task pass spec-compliance review before it entered code-quality review?
+- Did the implementer fix every open reviewer issue and receive the required re-review afterward?
+- Do the Todo states, tests, and final reviewer notes all agree on what is complete versus still open?
+- Can another engineer inspect the task history and see why the branch is safe to merge without replaying the whole session?
+
 ## Integration
 
 **Required workflow skills:**
@@ -255,9 +274,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Subagent-Driven Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [agent-task-mapping](../agent-task-mapping/SKILL.md): Use it when the workflow also needs task-to-agent routing decisions.
+- [custom-agent-usage](../custom-agent-usage/SKILL.md): Use it when the workflow also needs loading and invoking custom agent definitions safely.
+- [subagent-delegation](../subagent-delegation/SKILL.md): Use it when the workflow also needs safe, scoped delegation to helper agents.
+- [agentic-eval](../agentic-eval/SKILL.md): Use it when the workflow also needs rubric-driven evaluation loops.

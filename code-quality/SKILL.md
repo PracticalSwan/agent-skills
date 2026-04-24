@@ -1,8 +1,11 @@
 ---
 name: code-quality
-description: Code review, refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [code, quality, workflow, planning, delivery]
+description: "Code review, refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."
 ---
+
 # Code Quality Management
 
 Comprehensive skill for improving code quality through code review, surgical refactoring, and self-evaluation loops.
@@ -63,36 +66,6 @@ When performing a code review, prioritize issues in this order:
 5. **Recognize good practices**: Acknowledge well-written code and smart solutions
 6. **Be pragmatic**: Not every suggestion needs immediate implementation
 7. **Group related comments**: Avoid multiple comments about the same topic
-
-### Review Checklist
-
-#### Code Quality
-- [ ] Code follows project conventions and style guide
-- [ ] Functions and classes have single responsibility
-- [ ] Proper error handling throughout
-- [ ] No code duplication (DRY principle maintained)
-- [ ] Appropriate use of design patterns
-- [ ] No obvious security vulnerabilities
-
-#### Testing
-- [ ] New functionality has tests
-- [ ] Edge cases are covered
-- [ ] Tests are meaningful and not brittle
-- [ ] Test coverage meets project requirements
-
-#### Performance
-- [ ] No obvious performance bottlenecks
-- [ ] Efficient algorithms and data structures
-- [ ] Proper database query optimization
-- [ ] Appropriate caching strategies
-
-#### Security
-- [ ] No hardcoded credentials or secrets
-- [ ] Input validation and sanitization
-- [ ] Proper authentication and authorization
-- [ ] Protection against common attacks (XSS, SQL injection, etc.)
-
----
 
 ## Part 2: Refactoring
 
@@ -318,6 +291,149 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 
 ---
 
+## Anti-Patterns
+
+- Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
+- Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
+- Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
+## Multi-Language Review Examples
+
+### Python
+```python
+# Before
+def approve(order, notifier):
+    if order.total > 1000:
+        notifier.send(order.customer_email, order.total)
+    return order.total
+
+# After
+def calculate_total(order: Order) -> int:
+    return order.total
+
+def notify_high_value_order(order: Order, notifier: Notifier) -> None:
+    if order.total > HIGH_VALUE_THRESHOLD:
+        notifier.send(order.customer_email, order.total)
+```
+
+### C#
+```csharp
+// Before
+public decimal Process(Order order)
+{
+    if (order.Total > 1000) _email.Send(order.CustomerEmail, order.Total);
+    return order.Total;
+}
+
+// After
+public decimal CalculateTotal(Order order) => order.Total;
+
+public void NotifyHighValueCustomer(Order order)
+{
+    if (order.Total > HighValueThreshold)
+    {
+        _email.Send(order.CustomerEmail, order.Total);
+    }
+}
+```
+
+### Java
+```java
+// Before
+BigDecimal process(Order order) {
+    if (order.total().compareTo(THRESHOLD) > 0) {
+        email.send(order.customerEmail(), order.total());
+    }
+    return order.total();
+}
+
+// After
+BigDecimal calculateTotal(Order order) {
+    return order.total();
+}
+
+void notifyHighValueCustomer(Order order) {
+    if (order.total().compareTo(THRESHOLD) > 0) {
+        email.send(order.customerEmail(), order.total());
+    }
+}
+```
+
+### Go
+```go
+// Before
+func Process(order Order, notifier Notifier) int {
+    if order.Total > highValueThreshold {
+        notifier.Send(order.CustomerEmail, order.Total)
+    }
+    return order.Total
+}
+
+// After
+func CalculateTotal(order Order) int {
+    return order.Total
+}
+
+func NotifyHighValueCustomer(order Order, notifier Notifier) {
+    if order.Total > highValueThreshold {
+        notifier.Send(order.CustomerEmail, order.Total)
+    }
+}
+```
+
+## AI-Generated Code Specific Checks
+
+- Hallucinated APIs or options: Verify every imported type, method, CLI flag, and config field against the real dependency version before trusting the sample.
+- Inconsistent style drift: AI often mixes naming, file structure, or error-handling styles from different codebases, so compare the output against local conventions before merging.
+- Over-engineering for a simple requirement: Generated code commonly adds abstractions, wrappers, or extension points that the current task does not need.
+- Hidden edge-case gaps: AI can produce convincing happy-path logic while skipping null handling, retries, authorization checks, or cleanup paths.
+
+## Automated Tooling Integration
+
+### ESLint and Prettier
+```json
+{
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  }
+}
+```
+
+### SonarQube Scan
+```yaml
+- name: SonarQube scan
+  run: |
+    sonar-scanner \
+      -Dsonar.projectKey=my-app \
+      -Dsonar.sources=src \
+      -Dsonar.tests=tests \
+      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+```
+
+### CI Quality Gates
+
+Use CI quality gates to enforce linting, formatting, test coverage, and static-analysis thresholds before review or merge.
+
+```yaml
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test -- --coverage
+      - run: sonar-scanner
+```
+
+Use the gate to fail fast on lint errors, formatting drift, coverage regressions, and maintainability warnings before review starts.
+
 ## Best Practices
 
 ### For Code Reviews
@@ -439,18 +555,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Code Quality Management skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [development-workflow](../development-workflow/SKILL.md) | Quality gates within the development lifecycle |
-| [documentation-quality](../documentation-quality/SKILL.md) | Consistent quality standards for code and docs |
-| [serena-usage](../serena-usage/SKILL.md) | Symbol-based refactoring via Serena code navigation |
 
----
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.

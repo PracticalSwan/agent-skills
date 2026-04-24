@@ -1,8 +1,11 @@
 ---
 name: documentation-authoring
-description: Create structured docs from scratch — PRDs, technical specs, design docs, decision records, knowledge bases. Use when drafting documentation, writing proposals, defining requirements, or planning features.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [documentation, authoring, docs, writing, quality]
+description: "Create structured docs from scratch — PRDs, technical specs, design docs, decision records, knowledge bases. Use when drafting documentation, writing proposals, defining requirements, or planning features."
 ---
+
 # Documentation Authoring Master
 
 Expert guidance for creating structured, high-quality documentation across all types of technical and business documents.
@@ -375,6 +378,12 @@ Use this format for tracking implementation work and decisions:
 
 ---
 
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
 ## Documentation Quality Checklist
 
 ### Completeness
@@ -417,6 +426,22 @@ Use this format for tracking implementation work and decisions:
 
 ---
 
+## Cross-Skill Workflow
+
+- Start in this skill when you need to draft or reshape the document itself.
+- Pull in [documentation-patterns](../documentation-patterns/SKILL.md) when the structure or template is the main decision.
+- Finish with [documentation-quality](../documentation-quality/SKILL.md) when the draft needs an explicit review against quality bars.
+
+## Agent Prompt Template
+
+```text
+Use the documentation-authoring skill to draft a [document type] for [audience].
+Goal: [decision, rollout, implementation, or explanation target].
+Required sections: [list].
+Constraints: [scope, timeline, compliance, or tooling notes].
+Include open questions, trade-offs, and next steps at the end.
+```
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -432,19 +457,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Documentation Authoring Master skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [documentation-patterns](../documentation-patterns/SKILL.md) | Apply templates when structuring new docs |
-| [documentation-quality](../documentation-quality/SKILL.md) | Enforce quality standards on authored docs |
-| [documentation-verification](../documentation-verification/SKILL.md) | Validate docs before publishing or merging |
-| [notion-docs](../notion-docs/SKILL.md) | Publish authored docs to Notion workspaces |
 
----
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.

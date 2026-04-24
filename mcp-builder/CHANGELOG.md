@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026-04-24] - Post-Refresh Cleanup
+
+### Fixed
+- Split the operational guidance into explicit Security, Observability, Auth Handling, Logging, and Versioning subsections for clearer MCP server hardening guidance.
+
+## [2026-04-24] - Skill Refresh
+
+### Changed
+- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
+- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
+- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
+- Added a glossary, before-and-after shared-infrastructure examples, and new guidance covering security, observability, auth handling, logging, and server versioning.
 ## [2026-04-24] - Upstream License Refresh
 
 ### Changed

@@ -1,9 +1,14 @@
 ---
 name: notebooklm-management
-description: NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks.
-license: MIT
+version: "1.0"
+last_updated: 2026-04-24
+tags: [research, management, documents, automation, productivity]
+description: "NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks."
 ---
+
 # NotebookLM MCP Management
+
+> Tech Stack Target / Version: NotebookLM current web release, Markdown session capture, and URL-tracked research workflows.
 
 Use this skill when research should be grounded in NotebookLM notebooks instead of a generic web search.
 
@@ -47,6 +52,12 @@ This repository already targets a real NotebookLM MCP workflow. The concrete too
 - Wrong context: `reset_session` or switch notebooks
 - Ambiguous notebook choice: search the library before creating a new one
 
+## Anti-Patterns
+
+- Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
+- Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
+- Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
+
 ## References & Resources
 
 ### Documentation
@@ -78,17 +89,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `NotebookLM MCP` (primary)
+Preferred MCP Server: NotebookLM MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the NotebookLM MCP Management skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use the NotebookLM web UI directly, capture answers in Markdown, and store session notes locally when the MCP server is unavailable.
 - Preserve notebook URLs, prompt history, and manual research notes so the workflow remains reproducible.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [notion-docs](../notion-docs/SKILL.md) | Alternative knowledge-management workflow |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Create source material that can later be stored in NotebookLM |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.
+- [pdf](../pdf/SKILL.md): Use it when the workflow also needs PDF extraction, generation, and layout-aware review.
+- [word-document](../word-document/SKILL.md): Use it when the workflow also needs Word document authoring and formatting workflows.

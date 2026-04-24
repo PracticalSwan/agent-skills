@@ -1,9 +1,14 @@
 ---
 name: excel-sheet
-description: Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [spreadsheet, sheet, documents, automation, productivity]
+description: "Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets."
 ---
+
 # Excel Spreadsheet Workflows
+
+> Tech Stack Target / Version: Excel desktop or `openpyxl`-based spreadsheet automation with current OOXML-compatible workflows.
 
 Use this skill when the deliverable is an `.xlsx` workbook or when spreadsheet structure matters.
 
@@ -24,6 +29,12 @@ Excel MCP tooling is host-dependent. In GitHub Copilot, Excel actions may appear
 2. If yes, inspect the actual tool names before assuming a wrapper exists.
 3. If no, use the local converter or author the workbook with `openpyxl`.
 4. Validate formulas and chart ranges before claiming the workbook is ready.
+
+## Anti-Patterns
+
+- Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
+- Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
+- Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
 
 ## Workbook Checklist
 
@@ -59,19 +70,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Excel MCP` (primary)
+Preferred MCP Server: Excel MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Excel Spreadsheet Workflows skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use `scripts/csv-to-xlsx.py`, `openpyxl`, or desktop Excel when the spreadsheet MCP surface is missing.
 - Re-open the generated workbook locally to verify formulas, ranges, and frozen panes.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft docs and ecosystem context |
-| [powerbi-modeling](../powerbi-modeling/SKILL.md) | Shape workbook exports for Power BI ingestion or review |
-| [word-document](../word-document/SKILL.md) | Move spreadsheet output into formal reports |
-| [powerpoint-ppt](../powerpoint-ppt/SKILL.md) | Move charts and summary data into slide decks |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [notion-docs](../notion-docs/SKILL.md): Use it when the workflow also needs Notion page and database publishing workflows.
+- [pdf](../pdf/SKILL.md): Use it when the workflow also needs PDF extraction, generation, and layout-aware review.
+- [word-document](../word-document/SKILL.md): Use it when the workflow also needs Word document authoring and formatting workflows.

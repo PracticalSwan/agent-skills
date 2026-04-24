@@ -1,8 +1,21 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
+version: "1.0"
+last_updated: 2026-04-24
+tags: [systematic, debugging, workflow, quality, planning]
+description: "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes."
 ---
+
 # Systematic Debugging
+
+## Quick Cheat Sheet
+
+| Phase | Goal | Minimum Evidence | Key Red Flags |
+|------|------|------------------|---------------|
+| 1. Root Cause | Reproduce and isolate the failure | Real error output, stable repro or repro notes, and boundary evidence | Proposing a fix before tracing inputs or recent changes |
+| 2. Pattern Analysis | Compare the broken path to a working reference | A concrete diff between working and failing behavior | Hand-waving away small differences as irrelevant |
+| 3. Hypothesis and Testing | Test one explanation at a time | One explicit hypothesis and one minimal experiment | Bundling multiple fixes into the same attempt |
+| 4. Implementation | Fix the confirmed cause and verify it stays fixed | Failing test or repro first, passing verification after | Calling it done without rerunning the evidence path |
 
 ## Overview
 
@@ -117,6 +130,17 @@ You MUST complete each phase before proceeding to the next.
    - What called this with bad value?
    - Keep tracing up until you find the source
    - Fix at source, not at symptom
+
+#### What counts as sufficient evidence
+
+Before moving out of Phase 1, you should be able to answer all of these with artifacts instead of intuition:
+
+- What exact input, event, or environment state triggers the failure?
+- Where is the first boundary that proves the system diverges from the expected path?
+- Which logs, traces, screenshots, or command outputs show the break clearly enough that another engineer could follow them?
+- What recent change, dependency drift, config difference, or data condition still remains plausible after you gathered the evidence?
+
+If you cannot point to concrete evidence for those questions yet, you are still investigating and should not be proposing fixes.
 
 ### Phase 2: Pattern Analysis
 
@@ -294,6 +318,12 @@ From debugging sessions:
 - First-time fix rate: 95% vs 40%
 - New bugs introduced: Near zero vs common
 
+## Anti-Patterns
+
+- Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
+- Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
+- Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -309,9 +339,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Systematic Debugging skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.

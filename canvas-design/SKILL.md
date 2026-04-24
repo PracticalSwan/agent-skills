@@ -1,9 +1,12 @@
 ---
 name: canvas-design
-description: Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [canvas, design, frontend, ui, visual]
+description: "Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking."
 ---
 
+# Canvas Design
 
 A two-step design workflow: first articulate a design philosophy, then create visual designs on canvas. Based on the [anthropics/skills canvas-design](https://github.com/anthropics/skills) approach.
 
@@ -44,23 +47,6 @@ What is this design trying to communicate? What feeling should it evoke?
 - [Reference 1]: What specifically resonates and why
 - [Reference 2]: The element to borrow vs. what to avoid
 
-## Anti-Patterns
-- What this design explicitly avoids and why
-```
-
-### Philosophy Examples
-
-**Minimalist App Design**:
-> "Every element must earn its place. If removing something doesn't hurt the experience, it shouldn't exist. Whitespace is not empty — it's breathing room for the content that matters."
-
-**Warm Community Platform**:
-> "Design should feel like a well-lit kitchen — inviting, warm, organized but not sterile. Rounded corners, warm neutrals, and generous spacing signal 'you belong here.'"
-
-**Technical Documentation**:
-> "Clarity is kindness. Dense information needs generous hierarchy, consistent patterns, and visual anchors. The reader should never wonder where they are."
-
----
-
 ## Step 2: Canvas Creation
 
 After establishing the philosophy, create visual designs that embody those principles.
@@ -88,6 +74,12 @@ For multi-page designs:
 - Use a master color palette derived from the philosophy
 - Create a visual rhythm — varying density to prevent monotony
 - Include breathing pages (minimal content) between dense sections
+
+## Anti-Patterns
+
+- Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
+- Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
+- Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
 
 ### Quality Checklist
 - [ ] Every element traces back to a stated principle
@@ -142,17 +134,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Canvas Design skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [frontend-design](../frontend-design/SKILL.md) | Color theory and layout principles for visual designs |
-| [excalidraw-diagram-generator](../excalidraw-diagram-generator/SKILL.md) | Diagram generation for architecture and process visuals |
 
----
+- [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
+- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
+- [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
+- [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.

@@ -1,15 +1,9 @@
 ---
 name: avoid-ai-writing
-description: Audit and rewrite content to remove AI writing patterns ("AI-isms"). Use this skill when asked to "remove AI-isms," "clean up AI writing," "edit writing for AI patterns," "audit writing for AI tells," or "make this sound less like AI." Supports a detection-only mode that flags patterns without rewriting.
-version: 3.3.1
-license: MIT
-compatibility: Any AI coding assistant that supports agentskills.io SKILL.md format (Claude Code, Cursor, VS Code Copilot, Hermes Agent, OpenHands, etc.) or OpenClaw. No external tools or APIs required.
-metadata:
-  author: Conor Bronsdon
-  tags: writing editing voice quality
-  agentskills_spec: "1.0"
-  openclaw:
-    emoji: "\u270D\uFE0F"
+version: "3.3.1"
+last_updated: 2026-04-24
+tags: [avoid, ai, writing, docs, quality]
+description: "Audit and rewrite content to remove AI writing patterns (\\\"AI-isms\\\"). Use this skill when asked to \\\"remove AI-isms,\\\" \\\"clean up AI writing,\\\" \\\"edit writing for AI patterns,\\\" \\\"audit writing for AI tells,\\\" or \\\"make this sound less like AI.\\\" Supports a detection-only mode that flags patterns without rewriting."
 ---
 
 # Avoid AI Writing — Audit & Rewrite
@@ -479,6 +473,12 @@ If the original writing is already strong, say so and make only the necessary cu
 
 The replacement table provides defaults, not mandates. If a flagged word is clearly the right choice in context, preserve it.
 
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -494,9 +494,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, paste or open the target text directly and apply the audit or rewrite workflow described above.
-- Treat the original text, the issue list, and the revised text as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Avoid AI Writing — Audit & Rewrite skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.

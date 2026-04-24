@@ -1,12 +1,37 @@
 ---
 name: sql-development
-description: T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [sql, development, testing, quality, automation]
+description: "T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features."
 ---
+
 # SQL Development
 
 Comprehensive SQL development guidelines combining SQL coding standards, stored procedure generation, and MS SQL Server DBA best practices.
 
+## Anti-Patterns
+
+- Using `SELECT *` in production queries: It hides contract drift and pulls more data than the caller needs.
+- Writing non-SARGable predicates: Functions on indexed columns turn otherwise cheap queries into table scans.
+- Ignoring transaction and lock behavior: Correct SQL needs both logical correctness and concurrency safety.
+
+## Before and After Example
+
+```sql
+-- Before
+SELECT *
+FROM Orders
+WHERE YEAR(created_at) = 2026;
+
+-- After
+SELECT order_id, customer_id, created_at, total_amount
+FROM Orders
+WHERE created_at >= '2026-01-01'
+  AND created_at < '2027-01-01';
+```
+
+Uses explicit columns and a SARGable date range so indexes can do their work.
 
 ## Activation Conditions
 
@@ -136,6 +161,12 @@ Comprehensive SQL development guidelines combining SQL coding standards, stored 
 
 ---
 
+## Common Pitfalls
+
+- Using `SELECT *` in production queries: It hides contract drift and pulls more data than the caller actually needs.
+- Writing non-SARGable predicates: Functions on indexed columns turn otherwise cheap queries into table scans.
+- Skipping transaction and lock analysis: Correct SQL needs both logical correctness and concurrency safety.
+
 ## References & Resources
 
 ### Documentation
@@ -165,17 +196,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the SQL Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [javascript-development](../javascript-development/SKILL.md) | JavaScript and TypeScript database integration patterns |
-| [php-development](../php-development/SKILL.md) | PDO/MySQL database access from PHP |
-| [mongodb-mongoose](../mongodb-mongoose/SKILL.md) | Alternative NoSQL database approach |
-| [powerbi-modeling](../powerbi-modeling/SKILL.md) | SQL sources for Power BI semantic models |
+
+- [php-development](../php-development/SKILL.md): Use it when the workflow also needs modern PHP backend implementation.
+- [powerbi-modeling](../powerbi-modeling/SKILL.md): Use it when the workflow also needs Power BI semantic model design and DAX work.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.

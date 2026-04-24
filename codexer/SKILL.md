@@ -1,8 +1,11 @@
 ---
 name: codexer
-description: Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [codexer, agents, delegation, workflow, automation]
+description: "Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7."
 ---
+
 # Codexer - Python Research Assistant
 
 Expert Python researcher with 10+ years of software development experience. Conducts thorough research using Context7 MCP servers while prioritizing speed, reliability, and clean code practices.
@@ -105,6 +108,12 @@ Expert Python researcher with 10+ years of software development experience. Cond
 3. Implement proper error handling and logging
 
 ---
+
+## Anti-Patterns
+
+- Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
+- Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
+- Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
 ## Research Templates
 
@@ -254,19 +263,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Context7 MCP` (primary)
+Preferred MCP Server: Context7 MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Codexer - Python Research Assistant skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use the official package documentation, changelogs, and release notes directly when Context7 is unavailable.
 - Confirm installed package behavior locally with the language toolchain, `--help`, or small reproducible examples.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [javascript-development](../javascript-development/SKILL.md) | Node.js patterns complement Python research |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Document research findings and library evaluations |
 
----
+- [agent-task-mapping](../agent-task-mapping/SKILL.md): Use it when the workflow also needs task-to-agent routing decisions.
+- [custom-agent-usage](../custom-agent-usage/SKILL.md): Use it when the workflow also needs loading and invoking custom agent definitions safely.
+- [subagent-delegation](../subagent-delegation/SKILL.md): Use it when the workflow also needs safe, scoped delegation to helper agents.
+- [subagent-driven-development](../subagent-driven-development/SKILL.md): Use it when the workflow also needs plan-driven implementation with reviewer loops.

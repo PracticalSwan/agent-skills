@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-04-24] - Skill Refresh
+
+### Changed
+- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
+- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
+- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
+- Added a Tech Stack Target / Version note so the workflow clearly targets the current GitHub Advanced Security and local audit tooling.
 ## [2026-04-04] - Initial Import and Catalog Upgrade
 
 ### Added

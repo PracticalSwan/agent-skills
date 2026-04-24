@@ -1,10 +1,11 @@
 ---
 name: premium-frontend-ui
-description: 'Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites.'
-metadata:
-  author: 'Utkarsh Patrikar'
-  author_url: 'https://github.com/utkarsh232005'
+version: "1.0"
+last_updated: 2026-04-24
+tags: [premium, frontend, ui, design, visual]
+description: "Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites."
 ---
+
 # Immersive Frontend UI Craftsmanship
 
 When building premium frontend experiences, your role goes beyond outputting functional HTML and CSS. You must architect **immersive digital environments**. This skill provides the blueprint for generating highly intentional, award-level web applications that prioritize aesthetic quality, deep interactivity, and flawless performance.
@@ -111,6 +112,12 @@ Whenever you receive a prompt to "Build a premium landing page," "Create an Awww
 4. Elevate the typography using fluid scales.
 5. Create an intentional, memorable aesthetic footprint.
 
+## Anti-Patterns
+
+- Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
+- Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
+- Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -126,9 +133,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Immersive Frontend UI Craftsmanship skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
+- [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
+- [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.
+- [canvas-design](../canvas-design/SKILL.md): Use it when the workflow also needs visual composition and presentation-ready diagram work.

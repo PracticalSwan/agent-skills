@@ -1,9 +1,14 @@
 ---
 name: word-document
-description: Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [docs, document, writing, quality, templates]
+description: "Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion."
 ---
+
 # Word Document Workflows
+
+> Tech Stack Target / Version: Word desktop or `python-docx` automation with current OOXML-compatible workflows.
 
 Use this skill when `.docx` layout and document structure matter, not just the raw text.
 
@@ -25,6 +30,12 @@ Microsoft publicly documents a Word MCP server in the Microsoft 365 Agents Toolk
 3. Apply styling consistently only after the structure is right.
 4. Validate comments, footnotes, and references before export.
 5. Use the local generator script when MCP access is unavailable.
+
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
 ## Document Checklist
 
@@ -60,18 +71,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Word Document MCP` (primary)
+Preferred MCP Server: Word Document MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Word Document Workflows skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use `python-docx`, Word desktop, or document export scripts when the MCP surface is unavailable.
 - Re-open or render the document locally so formatting, comments, and pagination are verified before delivery.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Microsoft ecosystem context and official docs |
-| [excel-sheet](../excel-sheet/SKILL.md) | Bring spreadsheet output into Word reports |
-| [powerpoint-ppt](../powerpoint-ppt/SKILL.md) | Convert report output into presentation-ready summaries |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.

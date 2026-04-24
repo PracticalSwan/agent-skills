@@ -1,7 +1,11 @@
 ---
 name: security-review
-description: 'AI-powered codebase security scanner that reasons about code like a security researcher — tracing data flows, understanding component interactions, and catching vulnerabilities that pattern-matching tools miss. Use this skill when asked to scan code for security vulnerabilities, find bugs, check for SQL injection, XSS, command injection, exposed API keys, hardcoded secrets, insecure dependencies, access control issues, or any request like "is my code secure?", "review for security issues", "audit this codebase", or "check for vulnerabilities". Covers injection flaws, authentication and access control bugs, secrets exposure, weak cryptography, insecure dependencies, and business logic issues across JavaScript, TypeScript, Python, Java, PHP, Go, Ruby, and Rust.'
+version: "1.0"
+last_updated: 2026-04-24
+tags: [security, review, audit, remediation, verification]
+description: "AI-powered codebase security scanner that reasons about code like a security researcher — tracing data flows, understanding component interactions, and catching vulnerabilities that pattern-matching tools miss. Use this skill when asked to scan code for security vulnerabilities, find bugs, check for SQL injection, XSS, command injection, exposed API keys, hardcoded secrets, insecure dependencies, access control issues, or any request like \\\"is my code secure?\\\", \\\"review for security issues\\\", \\\"audit this codebase\\\", or \\\"check for vulnerabilities\\\". Covers injection flaws, authentication and access control bugs, secrets exposure, weak cryptography, insecure dependencies, and business logic issues across JavaScript, TypeScript, Python, Java, PHP, Go, Ruby, and Rust."
 ---
+
 # Security Review
 
 An AI-powered security scanner that reasons about your codebase the way a human security
@@ -166,6 +170,12 @@ For detailed detection guidance, load the following reference files as needed:
 - `references/report-format.md` — Structured output template for security reports with finding cards, dependency audit, secrets scan, and patch proposal formatting
   - Search patterns: `report`, `format`, `template`, `finding`, `patch`, `summary`, `confidence`
 
+## Anti-Patterns
+
+- Acting on partial evidence: Security work needs a clear scope and proof trail before remediation choices are safe.
+- Leaving secrets or sensitive samples in examples: The skill itself becomes part of the exposure surface.
+- Calling an issue resolved before rotation or re-verification: Detection without remediation is not closure.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -181,9 +191,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the Security Review skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [secret-scanning](../secret-scanning/SKILL.md): Use it when the workflow also needs credential detection and remediation workflows.
+- [devops-tooling](../devops-tooling/SKILL.md): Use it when the workflow also needs git, CI, and automation workflows.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.

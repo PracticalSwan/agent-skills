@@ -1,9 +1,14 @@
 ---
 name: notion-docs
-description: Notion workspace management via MCP - create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [notion, docs, writing, quality, templates]
+description: "Notion workspace management via MCP - create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content."
 ---
+
 # Notion Documentation
+
+> Tech Stack Target / Version: Notion API current version, Markdown-to-Notion transforms, and local template scripts.
 
 Use this skill when Notion is the system of record for specs, runbooks, project tracking, or knowledge management.
 
@@ -36,6 +41,12 @@ Hosted mode uses OAuth. Local mode uses an internal integration token. Official 
 - Official Notion guidance currently documents an average rate limit of 20 requests per second for integrations.
 - Tool names can vary slightly by MCP host, but the supported capabilities are stable: search, fetch page content, create or update pages, create or update databases, manage comments, and read user context.
 
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
 ## References & Resources
 
 ### Documentation
@@ -64,17 +75,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Notion MCP` (primary)
+Preferred MCP Server: Notion MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Notion Documentation skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Draft content locally in Markdown or JSON, then use `scripts/notion-templates.js` and the Notion web UI for final publishing.
 - Prefer page and database templates from this skill to avoid duplicate structures when working without MCP.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [notebooklm-management](../notebooklm-management/SKILL.md) | Alternative research and knowledge workflow |
-| [documentation-authoring](../documentation-authoring/SKILL.md) | Create source docs before publishing them into Notion |
+
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
+- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
+- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.

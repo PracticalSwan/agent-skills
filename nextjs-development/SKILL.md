@@ -1,11 +1,48 @@
 ---
 name: nextjs-development
-description: Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [nextjs, development, testing, quality, automation]
+description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation."
 ---
+
 # Next.js Development
 
+> Optimized for Next.js 16+, React 19+, TypeScript 5.5+, Turbopack, and App Router-first architectures.
+
 Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.2.4**) with the App Router, TypeScript, and modern patterns. Covers project structure, Server/Client Components, data fetching, caching with the `use cache` directive, Server Actions, MCP devtools integration, and performance optimization.
+
+## Anti-Patterns
+
+- Mixing server and client responsibilities: Bundle size, caching, and auth decisions become harder to reason about.
+- Using legacy synchronous request APIs: Modern Next.js expects async request surfaces such as `params`, `headers()`, and `cookies()`.
+- Skipping route-level loading and error states: Streaming apps feel broken when only the happy path is implemented.
+
+## Before and After Example
+
+```typescript
+// Before
+export default function ProductPage({ params }: { params: { id: string } }) {
+  const [product, setProduct] = useState<Product | null>(null);
+  useEffect(() => {
+    fetch(`/api/products/${params.id}`).then((r) => r.json()).then(setProduct);
+  }, [params.id]);
+  return product ? <ProductView product={product} /> : <Spinner />;
+}
+
+// After
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params;
+  const product = await getProduct(id);
+  return <ProductView product={product} />;
+}
+```
+
+Moves data fetching into the server component and follows the async request API used in current Next.js releases.
 
 ## Activation Conditions
 
@@ -813,6 +850,43 @@ npx @next/codemod@latest next-og-import .
 
 ---
 
+## Modern Component and Testing Examples
+
+### Server Components
+```tsx
+export default async function DashboardPage() {
+  const metrics = await getDashboardMetrics();
+  return <Dashboard metrics={metrics} />;
+}
+```
+
+### Error Boundaries
+```tsx
+// app/dashboard/error.tsx
+'use client';
+
+export default function Error({ reset }: { reset: () => void }) {
+  return <button onClick={reset}>Retry dashboard</button>;
+}
+```
+
+### Accessibility Testing Tools
+```ts
+import AxeBuilder from '@axe-core/playwright';
+
+test('dashboard has no critical accessibility issues', async ({ page }) => {
+  await page.goto('/dashboard');
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+```
+
+## Common Pitfalls
+
+- Mixing server and client responsibilities: It bloats bundles and makes caching or auth decisions harder to reason about.
+- Using old synchronous request APIs: Current Next.js releases expect async `params`, `searchParams`, `cookies()`, and `headers()`.
+- Skipping error and loading states: Streaming routes feel broken when only the happy path is modeled.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -828,21 +902,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Next.js MCP` (optional)
+Preferred MCP Server: Next.js MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Next.js Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use `next dev`, `next build`, `next lint`, browser console output, and local server logs when live MCP diagnostics are unavailable.
 - Verify routing, rendering mode, and data-fetching behavior with the bundled examples and a running dev server.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Use When |
-|-------|---------|
-| `react-development` | React 19 hooks, component patterns, performance (useMemo, useCallback, Suspense) |
-| `vite-development` | Non-Next.js React apps, Vite build config, plugin setup |
-| `javascript-development` | TypeScript/JS patterns, async/await, fetch, error handling |
-| `web-testing` | Playwright E2E tests, Vitest unit tests for Next.js apps |
-| `devops-tooling` | GitHub Actions CI/CD for Next.js, git workflow |
-| `azure-integrations` | Deploying Next.js to Azure Static Web Apps or App Service |
+
+- [react-development](../react-development/SKILL.md): Use it when the workflow also needs React component architecture and client or server boundaries.
+- [javascript-development](../javascript-development/SKILL.md): Use it when the workflow also needs modern JavaScript and TypeScript application code.
+- [web-testing](../web-testing/SKILL.md): Use it when the workflow also needs browser and end-to-end testing evidence.
+- [devops-tooling](../devops-tooling/SKILL.md): Use it when the workflow also needs git, CI, and automation workflows.

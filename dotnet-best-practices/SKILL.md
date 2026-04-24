@@ -1,7 +1,11 @@
 ---
 name: dotnet-best-practices
-description: 'Ensure .NET/C# code follows maintainable, modern best practices. Use when reviewing or improving C# code, solution structure, async patterns, dependency injection, or testability.'
+version: "1.0"
+last_updated: 2026-04-24
+tags: [dotnet, development, testing, quality, automation]
+description: "Ensure .NET/C# code follows maintainable, modern best practices. Use when reviewing or improving C# code, solution structure, async patterns, dependency injection, or testability."
 ---
+
 # .NET/C# Best Practices
 
 Your task is to ensure .NET/C# code in the selected scope or current solution meets the best practices specific to this project. This includes:
@@ -83,6 +87,44 @@ Your task is to ensure .NET/C# code in the selected scope or current solution me
 - Keep methods focused and cohesive
 - Implement proper disposal patterns for resources
 
+## Anti-Patterns
+
+- Constructing infrastructure inside business code: It defeats dependency injection and makes testing or observability much harder.
+- Skipping cancellation and logging in I/O paths: Modern .NET services need both operational visibility and cooperative shutdown behavior.
+- Hiding configuration behind magic strings: Options drift across environments when the contract is not explicit.
+
+## Before and After Example
+
+```csharp
+// Before
+public sealed class WeatherService
+{
+    public async Task<string> GetAsync()
+    {
+        using var client = new HttpClient();
+        return await client.GetStringAsync("https://api.example.com/weather");
+    }
+}
+
+// After
+public sealed class WeatherService(HttpClient client, ILogger<WeatherService> logger)
+{
+    public async Task<string> GetAsync(CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Fetching weather data");
+        return await client.GetStringAsync("weather", cancellationToken);
+    }
+}
+```
+
+Uses dependency injection, logging, and cancellation instead of constructing infrastructure per call.
+
+## Common Pitfalls
+
+- Constructing infrastructure inside business code: It defeats dependency injection and makes testing or observability much harder.
+- Treating async methods like fire-and-forget work: Exceptions and cancellations disappear unless the call chain is designed for them.
+- Burying configuration in magic strings: Runtime behavior drifts across environments when options are not strongly typed.
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -98,9 +140,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the .NET/C# Best Practices skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
+
+## Related Skills
+
+- [csharp-xunit](../csharp-xunit/SKILL.md): Use it when the workflow also needs modern xUnit test design in C#.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
+- [microsoft-development](../microsoft-development/SKILL.md): Use it when the workflow also needs microsoft development guidance.

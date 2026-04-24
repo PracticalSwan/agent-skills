@@ -1,12 +1,43 @@
 ---
 name: javascript-development
-description: JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [javascript, development, testing, quality, automation]
+description: "JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools."
 ---
+
 # JavaScript Development
+
+> Optimized for ECMAScript 2024+, Node.js 22+, TypeScript 5.5+, and modern browser or server-first JavaScript runtimes.
 
 Expert guidance for writing modern JavaScript code with ES2024+ features, async programming patterns, DOM manipulation, API integration, and best practices following official JavaScript resources at https://developer.mozilla.org/en-US/docs/Web/JavaScript.
 
+## Anti-Patterns
+
+- Copying outdated browser or framework patterns: Deprecated APIs and old workarounds add complexity immediately.
+- Skipping abort, timeout, or response checks in async code: Network paths fail at the edges first, not on the happy path.
+- Treating accessibility as a final polish pass: Markup and state shape are harder to fix after the component contract is set.
+
+## Before and After Example
+
+```javascript
+// Before
+async function loadProfile() {
+  const response = await fetch('/api/profile');
+  return response.json();
+}
+
+// After
+export async function loadProfile(signal) {
+  const response = await fetch('/api/profile', { signal });
+  if (!response.ok) {
+    throw new Error(`Profile request failed: ${response.status}`);
+  }
+  return response.json();
+}
+```
+
+Adds cancellation and explicit response validation so network failures do not masquerade as parsing bugs.
 
 ## Activation Conditions
 
@@ -907,6 +938,41 @@ function truncate(text, maxLength) {
 
 ---
 
+## Modern Component and Testing Examples
+
+### Server Components
+```jsx
+export default async function ProfileCard({ userId }) {
+  const user = await getUser(userId);
+  return <section>{user.name}</section>;
+}
+```
+
+### Error Boundaries
+```jsx
+import { ErrorBoundary } from 'react-error-boundary';
+
+<ErrorBoundary fallbackRender={() => <p>Something went wrong.</p>}>
+  <ProfileDashboard />
+</ErrorBoundary>
+```
+
+### Accessibility Testing Tools
+```jsx
+import { axe } from 'jest-axe';
+
+test('search form has no obvious accessibility violations', async () => {
+  const { container } = render(<SearchForm />);
+  expect(await axe(container)).toHaveNoViolations();
+});
+```
+
+## Common Pitfalls
+
+- Copying outdated browser or framework patterns: Deprecated APIs and unnecessary workarounds add complexity immediately.
+- Skipping response and abort handling: Network code fails in edge cases first, so the happy path alone is misleading.
+- Treating accessibility as post-processing: Component structure is harder to fix later if semantics were not built in from the start.
+
 ## References & Resources
 
 ### Official Documentation
@@ -944,17 +1010,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
+Preferred MCP Server: None required
 
-- If the current host lacks an equivalent tool surface, use the bundled scripts, standard shell or editor tooling, and the manual workflow already described in this skill.
-- Treat local verification as the fallback evidence path before closing the task.
+- Fallback prompt: "Use the JavaScript Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [react-development](../react-development/SKILL.md) | React component and hook patterns |
-| [vite-development](../vite-development/SKILL.md) | Build tooling for JS projects |
-| [mongodb-mongoose](../mongodb-mongoose/SKILL.md) | MongoDB and Mongoose patterns for JavaScript backends |
-| [web-testing](../web-testing/SKILL.md) | Test JS apps with Playwright and DevTools |
+
+- [react-development](../react-development/SKILL.md): Use it when the workflow also needs React component architecture and client or server boundaries.
+- [nextjs-development](../nextjs-development/SKILL.md): Use it when the workflow also needs Next.js App Router and server-first React patterns.
+- [vite-development](../vite-development/SKILL.md): Use it when the workflow also needs Vite build and development-server configuration.
+- [web-testing](../web-testing/SKILL.md): Use it when the workflow also needs browser and end-to-end testing evidence.

@@ -1,8 +1,14 @@
 ---
 name: secret-scanning
-description: Configure GitHub secret scanning and push protection, triage secret alerts, and run local pre-commit secret audits. Use when enabling secret scanning, handling blocked pushes, defining custom patterns, or checking a repo for accidental credentials before commit.
+version: "1.0"
+last_updated: 2026-04-24
+tags: [secret, scanning, security, audit, remediation]
+description: "Configure GitHub secret scanning and push protection, triage secret alerts, and run local pre-commit secret audits. Use when enabling secret scanning, handling blocked pushes, defining custom patterns, or checking a repo for accidental credentials before commit."
 ---
+
 # Secret Scanning
+
+> Tech Stack Target / Version: GitHub Advanced Security, GitHub CLI, local Git history tooling, and pre-commit secret audit scripts.
 
 Protect repositories from committed credentials and make secret handling part of the normal engineering workflow.
 
@@ -73,6 +79,12 @@ Guidelines:
 - review exclusions and custom patterns periodically
 - treat custom patterns as production policy, not one-off experiments
 
+## Anti-Patterns
+
+- Acting on partial evidence: Security work needs a clear scope and proof trail before remediation choices are safe.
+- Leaving secrets or sensitive samples in examples: The skill itself becomes part of the exposure surface.
+- Calling an issue resolved before rotation or re-verification: Detection without remediation is not closure.
+
 ## Scripts And References
 
 - [Local Pre-Commit Secret Audit](./scripts/precommit-secret-audit.py)
@@ -87,6 +99,7 @@ Guidelines:
 - Avoid committing `.env` files, private keys, connection strings, or real tokens in examples.
 - Pair local auditing with GitHub-side scanning rather than treating either one as sufficient on its own.
 
+<!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
@@ -96,22 +109,22 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
 - Gemini CLI: this repository generates a project command named `/skills:secret-scanning` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py secret-scanning` and then run `/commands reload` inside Gemini CLI.
 
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP or plugin surfaces for this skill:
+Preferred MCP Server: GitHub Advanced Security plugin
 
-- `GitHub Advanced Security` plugin or equivalent secret-scanning tool surface (optional)
+- Fallback prompt: "Use the Secret Scanning skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- Use `secret-scanning/scripts/precommit-secret-audit.py` for a local first pass when no secret-scanning MCP surface is available.
+- Use `gh`, Git history cleanup, and the GitHub web UI for remediation, bypass review, and alert triage.
 
-If MCP or plugin support is unavailable in the current host:
-
-- Use the bundled `precommit-secret-audit.py` script for a local first pass.
-- Use `gh`, the GitHub web UI, and direct Git history edits for alert handling, bypass review, and remediation.
-- Treat credential rotation, repo diff review, and a clean local audit as the fallback evidence path before commit or push.
+<!-- MCP:END -->
 
 ## Related Skills
 
-| Skill | Relationship |
-|-------|--------------|
-| [security-review](../security-review/SKILL.md) | Broader application security review after credential risks are handled |
-| [devops-tooling](../devops-tooling/SKILL.md) | Git history cleanup, CI policy updates, and shell automation |
-| [verification-before-completion](../verification-before-completion/SKILL.md) | Final pre-close evidence gate that should include secret checks |
+- [security-review](../security-review/SKILL.md): Use it when the workflow also needs application security review and risk triage.
+- [devops-tooling](../devops-tooling/SKILL.md): Use it when the workflow also needs git, CI, and automation workflows.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.

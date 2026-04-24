@@ -1,9 +1,14 @@
 ---
 name: azure-integrations
-description: Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps.
-license: Complete terms in LICENSE.txt
+version: "1.0"
+last_updated: 2026-04-24
+tags: [azure, integrations, cloud, architecture, operations]
+description: "Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps."
 ---
 
+# Azure Integrations
+
+> Tech Stack Target / Version: Azure Static Web Apps, App Service, Bicep or ARM templates, GitHub Actions, Node.js 20+, and Azure CLI 2.60+.
 
 Deployment and integration patterns for Azure cloud services, focusing on web application hosting, CI/CD automation, and infrastructure as code.
 
@@ -18,6 +23,11 @@ Deployment and integration patterns for Azure cloud services, focusing on web ap
 - Writing Bicep or ARM templates for infrastructure as code
 - Integrating Azure Cosmos DB (MongoDB API) with applications
 
+## Anti-Patterns
+
+- Changing infrastructure before inspecting the current state: Cloud drift and hidden dependencies make blind edits risky.
+- Hardcoding credentials or environment assumptions: Rollouts stop being reproducible and secrets become harder to rotate.
+- Skipping rollback, observability, or validation planning: You only notice the missing safeguards after the deployment is already live.
 
 ## Available Deployment Scripts
 
@@ -394,21 +404,17 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 <!-- MCP:START -->
 ## MCP Availability And Fallback
 
-Preferred MCP servers for this skill:
-- `Azure MCP` (primary)
+Preferred MCP Server: Azure MCP
 
-If MCP is unavailable in the current host:
+- Fallback prompt: "Use the Azure Integrations skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - Use Azure CLI (`az`), Bicep or ARM templates, and the bundled PowerShell deployment scripts in this skill when the MCP server is unavailable.
 - Validate resources with `az` queries, deployment logs, and portal checks before closing the task.
 
 <!-- MCP:END -->
 
 ## Related Skills
-| Skill | Relationship |
-|-------|-------------|
-| [microsoft-development](../microsoft-development/SKILL.md) | Look up Azure SDK docs and code samples |
-| [devops-tooling](../devops-tooling/SKILL.md) | CI/CD pipelines and GitHub Actions for Azure deployments |
-| [vite-development](../vite-development/SKILL.md) | Build Vite apps before deploying to Azure SWA |
-| [react-development](../react-development/SKILL.md) | Build React apps for Azure deployment targets |
 
----
+- [powerbi-modeling](../powerbi-modeling/SKILL.md): Use it when the workflow also needs Power BI semantic model design and DAX work.
+- [microsoft-development](../microsoft-development/SKILL.md): Use it when the workflow also needs microsoft development guidance.
+- [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.
+- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.

@@ -6,6 +6,7 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
+- The current git-tracked catalog baseline is `version: "1.1"` with `last_updated: 2026-04-24` across all `67` tracked skill folders
 
 ## Generated Commands
 
@@ -37,6 +38,8 @@ After changing, adding, or removing skills:
 python scripts/export-gemini-skill.py --all
 ```
 
+Run that export after catalog-wide documentation refreshes too, not only after new skills or helper scripts land.
+
 Then reload commands inside Gemini CLI:
 
 ```text
@@ -58,6 +61,7 @@ That validation checks:
 - `Preferred MCP Server:` and `Fallback prompt:` lines
 - `Anti-Patterns` and `Related Skills` sections
 - `CHANGELOG.md` presence in every skill folder
+- changelog entries that use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
 - Gemini command count
 - TOML parseability of generated commands
 - obsolete Skill Paths sections, stale removed-skill links, mojibake markers, and generated Python bytecode

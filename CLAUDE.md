@@ -24,6 +24,8 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
+The tracked catalog is currently aligned on `version: "1.1"` with `last_updated: 2026-04-24` across all `67` git-tracked skill folders.
+
 ## Downstream Sync Targets
 
 Maintained skills sync to:
@@ -130,7 +132,10 @@ After meaningful changes:
 3. Re-run validation if the export changed
 4. Sync outward if the repo is in a good state
 
+For a catalog-wide documentation refresh, treat the export and sync steps as required even when the inventory counts stay the same.
+
 The validator now expects the catalog frontmatter fields plus the portability, MCP, Anti-Patterns, Related Skills, and `CHANGELOG.md` baseline.
+Changelog entries should use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section.
 
 After adding a new maintained skill:
 

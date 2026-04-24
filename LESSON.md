@@ -29,6 +29,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 - The workspace sync script should treat the repo inventory and discovered workspace targets as separate summary keys. Reusing the same key hides useful state.
 - Downstream skill folders behave like branch mirrors: make changes in this repo first, then publish them outward with the sync script.
+- After a catalog-wide doc-only refresh, still rerun Gemini export and downstream sync so the mirrors do not lag the workspace copy.
 - Keep the primary Codex root (`C:\Users\LOQ\.codex\skills`) distinct from the shared mirror (`C:\Users\LOQ\.agents\skills`) so documentation does not blur installation targets.
 - The Codex root can keep extra local skills outside this catalog, so sync verification there should compare the expected maintained set rather than only the total folder count.
 - Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` are worth syncing when the broader workspace depends on shared skills.
@@ -39,6 +40,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 - Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
 - Keep root docs aligned on supported clients. If Gemini CLI support changes, update `README.md`, `CLAUDE.md`, and `GEMINI.md` together.
+- When a catalog-wide skill refresh bumps shared metadata or structure, document the new baseline explicitly in the root docs and root changelog even if the inventory counts do not change.
 - Keep documentation ASCII-first unless Unicode materially improves clarity.
 
 ## Verification Lessons

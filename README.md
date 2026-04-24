@@ -25,6 +25,7 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
   - an MCP section that names the preferred server and a no-MCP fallback path
   - an `Anti-Patterns` section
   - a final `Related Skills` section
+- The tracked catalog is currently aligned on `version: "1.1"` with `last_updated: 2026-04-24` across all `67` git-tracked skill folders
 
 ## Main Workspace
 
@@ -123,6 +124,9 @@ The validator expects:
 - `## Anti-Patterns`
 - a final `## Related Skills`
 - `CHANGELOG.md` in every skill folder
+- changelog entries with `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
+
+For a catalog-wide skill refresh, update the root docs in the same pass, then rerun validation, Gemini export, and downstream sync even if the folder counts did not change.
 
 Regenerate Gemini CLI commands:
 

@@ -3,6 +3,14 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-24] - Catalog 1.1 Docs Refresh and Full Sync
+
+### Changed
+
+- Updated `README.md`, `CLAUDE.md`, and `GEMINI.md` to document the current git-tracked catalog baseline of `67` tracked skill folders aligned on `version: "1.1"` with `last_updated: 2026-04-24`.
+- Updated `README.md` and `CLAUDE.md` to make validation, Gemini export, and downstream sync explicit requirements after a catalog-wide skill refresh, even when inventory counts do not change.
+- Updated `LESSON.md` with new guidance for documenting repo-wide metadata refreshes and rerunning sync after doc-only catalog updates.
+
 ## [2026-04-24] - Catalog Schema Alignment, Validation Refresh, and Full Sync
 
 ### Changed
@@ -11,18 +19,6 @@ file.
 - Updated `scripts/sync-skills.ps1` to classify maintained skills versus copied official superpowers from the registry instead of inferring that split from `CHANGELOG.md` presence.
 - Updated `scripts/validate-skills.py` to accept the catalog frontmatter fields `version`, `last_updated`, and `tags`, require `CHANGELOG.md` for every skill folder, and validate the Anti-Patterns and Related Skills baseline.
 - Updated `README.md`, `CLAUDE.md`, `GEMINI.md`, and `LESSON.md` to document the current skill schema, validator expectations, and the explicit superpower classification rule.
-
-### Tested
-
-- Ran `python scripts/validate-skills.py` and confirmed `status: ok` with `125` skills and `125` Gemini commands.
-- Ran `python scripts/export-gemini-skill.py --all` and regenerated `125` Gemini command files.
-- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"` and confirmed the corrected split of `111` maintained skills plus `14` copied official superpowers.
-- Verified downstream coverage after sync:
-  - `C:\Users\LOQ\.codex\skills`: all `111` expected maintained skills present, plus `18` extra pre-existing local skills outside this catalog
-  - `C:\Users\LOQ\.agents\skills`: `111` maintained skills with `SKILL.md`
-  - `C:\Users\LOQ\.agents\skills\superpowers`: `14` copied official superpowers with `SKILL.md`
-  - `C:\Users\LOQ\.claude\skills`: `111` maintained skills with `SKILL.md`
-  - `C:\Users\LOQ\.gemini\antigravity\global_skills`: `125` skills with `SKILL.md`
 
 ## [2026-04-24] - Validation Scope Fix, Provenance Alignment, and Full Sync
 
@@ -33,17 +29,6 @@ file.
 - Updated `GEMINI.md` to clarify that Gemini export and validation include all local `SKILL.md` folders, including local-only overlays.
 - Reworked `REFERENCE_SOURCES.md` to align with `scripts/skill-registry.json`, including the `googleworkspace_cli` source commit and tracked-versus-local provenance coverage.
 - Added new maintenance guidance in `LESSON.md` for dual inventory reporting and validator exclusion scope.
-
-### Tested
-
-- Ran `C:/Users/LOQ/AppData/Local/Python/pythoncore-3.14-64/python.exe scripts/export-gemini-skill.py --all`.
-- Ran `C:/Users/LOQ/AppData/Local/Python/pythoncore-3.14-64/python.exe scripts/validate-skills.py` and confirmed `status: ok` with `125` skills and `125` Gemini commands.
-- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"`.
-- Verified downstream target inventories after sync:
-  - `C:\Users\LOQ\.agents\skills`: `111` skills with `SKILL.md`
-  - `C:\Users\LOQ\.claude\skills`: `111` skills with `SKILL.md`
-  - `C:\Users\LOQ\.gemini\antigravity\global_skills`: `125` skills with `SKILL.md`
-  - `C:\Users\LOQ\.agents\skills\superpowers`: `14` skills with `SKILL.md`
 
 ## [2026-04-24] - Skill Imports and Source Refresh
 
@@ -59,21 +44,12 @@ file.
 - Refreshed upstream provenance for audited source repos in `scripts/skill-registry.json` and `REFERENCE_SOURCES.md`.
 - Applied the current upstream `premium-frontend-ui` author metadata and Anthropic `mcp-builder` license notice.
 
-### Tested
-
-- Rechecked registered upstream source paths against current GitHub heads before applying updates.
-- Planned Gemini export, structural validation, downstream sync, and scoped secret review for this catalog refresh.
-
 ## [2026-04-04] - Public Docs Cleanup for Ignored Local-Only Skills
 
 ### Changed
 
 - Removed ignored local-only skill families from the public inventory, provenance notes, and lessons.
 - Restored the tracked documentation counts to `65` total skill folders and `51` maintained skills.
-
-### Tested
-
-- Recomputed the tracked catalog counts by excluding ignored local-only skill folders from the public inventory.
 
 ## [2026-04-04] - Curated Skill Imports, AGENTS Upgrade, and Full Sync Refresh
 
@@ -98,16 +74,6 @@ file.
 - Extended provenance tracking to record canonical upstream sources separately from discovery catalogs when the discovery repo was not the best maintained origin
 - Rewrote the top-level imported skill instructions into the repo house style while preserving upstream references and helper assets where they added value
 - Strengthened the global Codex `AGENTS.md` guidance to require safer skill import screening, canonical-source preference, import smoke tests, and repo-wide sync discipline
-
-### Tested
-
-- Smoke-tested the new helper scripts:
-  - `python context-map/scripts/build-context-map.py --root . --query sync-skills --query codex --limit 5`
-  - `python agentic-eval/scripts/rubric-scorecard.py --rubric agentic-eval/references/rubric-template.json --scores agentic-eval/references/example-scores.json --threshold 0.8`
-  - `python secret-scanning/scripts/precommit-secret-audit.py --path secret-scanning/scripts`
-  - `python cloud-design-patterns/scripts/pattern-shortlist.py --concern reliability --concern migration --concern security`
-  - `python -m py_compile mcp-builder/scripts/connections.py mcp-builder/scripts/evaluation.py`
-- Planned repo-wide validation, Gemini export, downstream sync, and sensitive-data review after the documentation and AGENTS updates
 
 ## [2026-04-04] - Main Workspace Policy Clarification
 
@@ -141,11 +107,6 @@ file.
 
 - Removed the accidental `GEMINI.md` ignore rule from `.gitignore` so the Gemini-specific documentation can be tracked with the repo
 
-### Tested
-
-- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"` after adding the Gemini target
-- Verified the Gemini Antigravity root now mirrors the current full skill catalog in `C:\Users\LOQ\.gemini\antigravity\global_skills`
-
 ## [2026-04-04] - Four-Client Portability and Workspace Skill Expansion
 
 ### Added
@@ -175,22 +136,6 @@ file.
 - Fixed `scripts/sync-skills.ps1` summary handling so source inventory and discovered workspace targets are tracked separately
 - Reworked Gemini command export to use TOML-safe escaped strings instead of fragile raw multiline embedding
 - Normalized imported skill descriptions and wording where they still assumed Copilot-only or host-specific placeholders
-
-### Tested
-
-- Ran `python scripts/export-gemini-skill.py --all`
-- Ran `python scripts/validate-skills.py` and confirmed `60` skills plus `60` Gemini commands
-- Syntax-checked repo Python helpers with `py_compile`
-- Syntax-checked repo JavaScript helpers with `node --check`
-- Syntax-checked repo PowerShell helpers with PowerShell's parser API
-- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"`
-- Verified synced copies in:
-  - `C:\Users\LOQ\.agents\skills`
-  - `C:\Users\LOQ\.claude\skills`
-  - `C:\Assumption University\Finished\CSX4107\Assignments\.agent\skills`
-  - `C:\Assumption University\Finished\ITX2007\Assignments\.agent\skills`
-  - `C:\Assumption University\Workshops\ThreeJS\.agents\skills`
-  - `C:\Assumption University\Workshops\ThreeJS\Mini_Hands_On_Cube\.agents\skills`
 
 ## [2026-03-28] - Cross-Client Sync and Lessons
 
@@ -255,11 +200,6 @@ file.
   Agent 365 Office preview, and NotebookLM
 - Added a per-skill MCP map to show which maintained skills are MCP-backed,
   host-specific, client-specific, or fully local
-
-### Tested
-
-- Verified the new README content after the rewrite and reviewed the diff for
-  formatting regressions
 
 ## [2026-03-09] - Custom Agent Discovery Alignment
 
@@ -333,13 +273,6 @@ file.
 - `web-testing`: Added `unit tests` to the description
 - `web-design-reviewer`: Added clearer disambiguation against automated E2E
   testing
-
-### Tested
-
-- Ran 90+ activation test scenarios across 12 groups covering all 37
-  non-superpower skills at the time
-- Tested keyword matching against diverse prompt patterns
-- Confirmed a small set of acceptable context-dependent overlaps
 
 ## [2026-02-28] - Description Rewrite and Cross-References
 

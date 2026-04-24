@@ -145,9 +145,6 @@ def changelog_entry(skill_name: str, registry: dict, newline: str) -> str:
             "- Added a standard portability note covering GitHub Copilot, Claude Code, Codex, and Gemini CLI.",
             f"- {second_change}",
             "",
-            "### Tested",
-            "- Validated `SKILL.md` frontmatter, portability sections, and Gemini export readiness with `python scripts/validate-skills.py`.",
-            "",
         ]
     )
 
@@ -168,9 +165,6 @@ def create_reference_changelog(skill_dir: Path, registry: dict) -> None:
             f"- Imported this skill from `{skill_meta['source_repo']}` at `{skill_meta['source_path']}`.",
             "- Added cross-client portability guidance for GitHub Copilot, Claude Code, Codex, and Gemini CLI.",
             "- Added the repo-standard MCP or no-MCP fallback guidance for this skill.",
-            "",
-            "### Tested",
-            "- Validated `SKILL.md` frontmatter and Gemini command export readiness with `python scripts/validate-skills.py`.",
             "",
         ]
     )

@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-04-24] - Link Checker Cleanup
+
+### Fixed
+- Updated the local Markdown link checker to ignore fenced code, inline code, generated Gemini output, and agent memory folders before validating local links.
+
+### Tested
+- Re-ran `python documentation-verification/scripts/doc-link-check.py .` and confirmed all checked Markdown links resolved.
+
 ## [2026-04-04] - Cross-Client Portability Refresh
 
 ### Changed

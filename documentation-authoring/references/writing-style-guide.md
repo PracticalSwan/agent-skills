@@ -246,7 +246,7 @@ Use consistent callout patterns:
 
 ### Links
 
-- Use descriptive link text: "[Configure the database](./db-setup.md)" not "[click here](./db-setup.md)"
+- Use descriptive link text: `[Configure the database](./db-setup.md)` not `[click here](./db-setup.md)`
 - Prefer relative links for internal docs
 - external links should open concepts, not duplicate content
 

@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Effective usage of the Serena MCP Server for project memory management, code intelligence, and maintaining continuity across AI agent sessions.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

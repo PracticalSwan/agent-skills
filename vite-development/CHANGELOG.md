@@ -2,6 +2,14 @@
 
 All notable changes to this skill will be documented in this file.
 
+## [2026-04-24] - Current Version Refresh
+
+### Changed
+- Updated the active Vite guidance from Vite 6+ to Vite 8.0.10 after checking the current npm package version.
+
+### Tested
+- Verified current published package versions with `npm view vite version` and `npm view @vitejs/plugin-react version`.
+
 ## [2026-04-04] - Cross-Client Portability Refresh
 
 ### Changed

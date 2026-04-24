@@ -1,5 +1,10 @@
 # Changelog
 
+## [2026-04-24] - Catalog Audit Cleanup
+
+### Fixed
+- Replaced the stale `nestjs` related-skill reference with `javascript-development` for JavaScript and TypeScript database integration patterns.
+
 All notable changes to this skill will be documented in this file.
 
 ## [2026-04-04] - Cross-Client Portability Refresh

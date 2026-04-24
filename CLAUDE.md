@@ -11,9 +11,16 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 
 ## Current Counts
 
-- `125` total skill folders
-- `111` maintained skills
-- `14` copied official superpowers
+Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
+
+- Git-tracked catalog in this repository:
+	- `67` tracked skill folders
+	- `53` tracked maintained skills
+	- `14` tracked copied official superpowers
+- Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
+	- `125` local skill folders detected
+	- `111` local maintained skills detected
+	- `14` local copied official superpowers detected
 
 ## Downstream Sync Targets
 
@@ -93,6 +100,8 @@ Every `SKILL.md` in this repo should:
 
 - use valid YAML frontmatter
 - keep the `name` aligned with the folder name
+- include the portable minimum frontmatter fields: `name` and `description`
+- use only approved extra top-level metadata fields when needed: `license`, `version`, `compatibility`, and `metadata`
 - use activation-focused descriptions
 - include the generated portability section
 - include the MCP or no-MCP fallback section

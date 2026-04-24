@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Structured approach to software development ensuring requirements are clearly defined, designs are meticulously planned, and implementations are thoroughly documented with proper contribution practices.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

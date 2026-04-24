@@ -1,6 +1,6 @@
 # Vite Configuration Examples
 
-Standard Vite 6 configurations for React apps with build optimization and development tooling.
+Standard Vite 8 configurations for React apps with build optimization and development tooling.
 
 ## React + JSX
 

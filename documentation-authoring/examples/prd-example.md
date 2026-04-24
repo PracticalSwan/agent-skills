@@ -4,7 +4,7 @@
 **Status:** Approved
 **Created:** 2026-01-15
 **Last Updated:** 2026-02-08
-**Related:** [Design Overhaul Plan](../../../Kitchen_Odyssey/plan/design-overhaul-1.md)
+**Related:** Design Overhaul Plan (example placeholder)
 
 ---
 

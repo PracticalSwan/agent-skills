@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-24] - Catalog Audit Cleanup
+
+### Fixed
+- Removed obsolete standalone Skill Paths guidance that duplicated the generated portability section.
+- Removed a stray closing code fence so the Markdown structure is balanced after cleanup.
+
 All notable changes to this skill will be documented in this file.
 
 ## [2026-04-04] - Cross-Client Portability Refresh

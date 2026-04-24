@@ -23,6 +23,8 @@ Generated command files live in:
 
 - `C:\Users\LOQ\.copilot\skills\.gemini\commands\skills`
 
+Export and validation count every local folder that contains `SKILL.md`. If this workspace includes local-only overlays (for example `gws-*` or `recipe-*`), Gemini command totals can be higher than the git-tracked catalog totals.
+
 The current shared skill folders also sync to the Gemini Antigravity global skill path:
 
 - `C:\Users\LOQ\.gemini\antigravity\global_skills`
@@ -55,6 +57,7 @@ That validation checks:
 - required portability and MCP sections
 - Gemini command count
 - TOML parseability of generated commands
+- obsolete Skill Paths sections, stale removed-skill links, mojibake markers, and generated Python bytecode
 
 For externally imported skills, normalize the workspace copy and run any local smoke tests before exporting new Gemini command files. The generated command should only mirror maintained content that already passed the repo checks.
 

@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Expert guidance for building high-quality React applications with React 19+, modern hooks, TypeScript, and best practices following official React documentation at https://react.dev.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

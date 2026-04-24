@@ -15,6 +15,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Count real skill folders by checking for `SKILL.md`, not by counting directories.
 - Derive the maintained count from folders that also contain `CHANGELOG.md`.
 - Keep copied official superpowers separate from maintained skills so counts and maintenance expectations stay honest.
+- Treat `gws-*` and `recipe-*` folders as local-only skills excluded from the public repo via `.gitignore`. Do not include them in public counts, catalogs, or GitHub-facing documentation.
+- Keep two inventory views in root docs: git-tracked catalog counts and local workspace counts. Mixing them in one number creates avoidable drift and confusion.
 
 ## Portability Lessons
 
@@ -36,8 +38,6 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 - Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
 - Keep root docs aligned on supported clients. If Gemini CLI support changes, update `README.md`, `CLAUDE.md`, and `GEMINI.md` together.
-- If a skill family is intentionally kept local-only and gitignored, exclude
-  it from public counts, public catalogs, and public provenance docs.
 - Keep documentation ASCII-first unless Unicode materially improves clarity.
 
 ## Verification Lessons
@@ -48,6 +48,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
 - Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
 - Local secret scans should ignore generated command folders and agent metadata by default or they will drown in false positives.
+- Do not commit Python bytecode or generated `__pycache__` artifacts. They are ignored and should be removed if a helper-script smoke test creates them.
+- Validation scans should ignore local environment folders such as `.venv`, `venv`, and `env` when looking for stray `*.pyc` files, or they will produce false positives from toolchain internals.
 
 ## Update Checklist
 

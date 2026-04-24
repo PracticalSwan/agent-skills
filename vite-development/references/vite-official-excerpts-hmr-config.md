@@ -1,6 +1,6 @@
 # Vite Excerpts from Official Docs
 
-Excerpted from official Vite 6 documentation at https://vite.dev/.
+Excerpted from official Vite 8 documentation at https://vite.dev/.
 
 ## server.hmr Configuration
 

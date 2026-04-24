@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Comprehensive toolkit for testing and debugging web applications using Playwright automation and Chrome DevTools.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

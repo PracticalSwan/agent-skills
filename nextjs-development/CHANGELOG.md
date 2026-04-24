@@ -2,6 +2,15 @@
 
 All notable changes to the `nextjs-development` skill will be documented in this file.
 
+## [2026-04-24] - Current Version Refresh
+
+### Changed
+- Updated the active Next.js version guidance from 16.1.6 to 16.2.4 after checking the current npm package version.
+- Removed the redundant standalone Skill Paths section; the generated portability section remains the authoritative cross-client path guidance.
+
+### Tested
+- Verified the latest published package version with `npm view next version`.
+
 ## [2026-04-04] - Gemini Path Clarification
 
 ### Changed

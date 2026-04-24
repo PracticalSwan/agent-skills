@@ -6,10 +6,6 @@ description: 'Generate .excalidraw diagrams from natural language. Use when crea
 
 A skill for generating Excalidraw-format diagrams from natural language descriptions. This skill helps create visual representations of processes, systems, relationships, and ideas without manual drawing.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

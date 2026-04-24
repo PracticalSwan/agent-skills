@@ -3,10 +3,6 @@ name: stitch-design
 description: Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects.
 license: Complete terms in LICENSE.txt
 ---
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Comprehensive toolkit for Google Stitch projects — combining design system documentation, React component conversion, autonomous build loops, prompt engineering, video walkthroughs, and shadcn/ui component integration. Based on [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills).
@@ -47,11 +43,6 @@ Analyze Stitch project screens and synthesize a semantic design system into `DES
 ### DESIGN.md Output Structure
 ```markdown
 
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 **Project ID:** [ID]
 
@@ -221,28 +212,11 @@ Expert guidance for integrating shadcn/ui components into React applications.
 ```bash
 
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
-
 npx shadcn@latest create
 
 
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
-
 npx shadcn@latest init
 
-
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 npx shadcn@latest add button card dialog
 ```

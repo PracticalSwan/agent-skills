@@ -3,6 +3,27 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-24] - Validation Scope Fix, Provenance Alignment, and Full Sync
+
+### Changed
+
+- Updated `scripts/validate-skills.py` to ignore local environment folders (`.venv`, `venv`, `env`) and cache folders when scanning for stray `*.pyc` files, preventing false positives from local toolchains.
+- Updated `README.md` and `CLAUDE.md` to show both git-tracked catalog counts and live local workspace counts, removing inventory ambiguity.
+- Updated `GEMINI.md` to clarify that Gemini export and validation include all local `SKILL.md` folders, including local-only overlays.
+- Reworked `REFERENCE_SOURCES.md` to align with `scripts/skill-registry.json`, including the `googleworkspace_cli` source commit and tracked-versus-local provenance coverage.
+- Added new maintenance guidance in `LESSON.md` for dual inventory reporting and validator exclusion scope.
+
+### Tested
+
+- Ran `C:/Users/LOQ/AppData/Local/Python/pythoncore-3.14-64/python.exe scripts/export-gemini-skill.py --all`.
+- Ran `C:/Users/LOQ/AppData/Local/Python/pythoncore-3.14-64/python.exe scripts/validate-skills.py` and confirmed `status: ok` with `125` skills and `125` Gemini commands.
+- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"`.
+- Verified downstream target inventories after sync:
+  - `C:\Users\LOQ\.agents\skills`: `111` skills with `SKILL.md`
+  - `C:\Users\LOQ\.claude\skills`: `111` skills with `SKILL.md`
+  - `C:\Users\LOQ\.gemini\antigravity\global_skills`: `125` skills with `SKILL.md`
+  - `C:\Users\LOQ\.agents\skills\superpowers`: `14` skills with `SKILL.md`
+
 ## [2026-04-24] - Skill Imports and Source Refresh
 
 ### Added

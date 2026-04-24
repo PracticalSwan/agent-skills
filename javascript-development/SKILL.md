@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Expert guidance for writing modern JavaScript code with ES2024+ features, async programming patterns, DOM manipulation, API integration, and best practices following official JavaScript resources at https://developer.mozilla.org/en-US/docs/Web/JavaScript.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -960,5 +956,5 @@ No dedicated MCP server is required for the normal workflow in this skill.
 |-------|-------------|
 | [react-development](../react-development/SKILL.md) | React component and hook patterns |
 | [vite-development](../vite-development/SKILL.md) | Build tooling for JS projects |
-| [nestjs](../nestjs/SKILL.md) | Server-side JS with NestJS framework |
+| [mongodb-mongoose](../mongodb-mongoose/SKILL.md) | MongoDB and Mongoose patterns for JavaScript backends |
 | [web-testing](../web-testing/SKILL.md) | Test JS apps with Playwright and DevTools |

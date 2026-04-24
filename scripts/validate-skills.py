@@ -9,6 +9,31 @@ from pathlib import Path
 
 
 FRONTMATTER_RE = re.compile(r"^---\r?\n(.*?)\r?\n---\r?\n?", re.DOTALL)
+ALLOWED_FRONTMATTER_KEYS = {"name", "description", "license", "metadata", "version", "compatibility"}
+SUPERPOWER_SKILLS = {
+    "brainstorming",
+    "dispatching-parallel-agents",
+    "executing-plans",
+    "finishing-a-development-branch",
+    "receiving-code-review",
+    "requesting-code-review",
+    "subagent-driven-development",
+    "systematic-debugging",
+    "test-driven-development",
+    "using-git-worktrees",
+    "using-superpowers",
+    "verification-before-completion",
+    "writing-plans",
+    "writing-skills",
+}
+SKIP_SCAN_DIRS = {".git", ".gemini", ".serena"}
+SKIP_BYTECODE_DIRS = {".git", ".gemini", ".serena", ".venv", "venv", "env", "__pycache__"}
+BAD_TEXT_MARKERS = {
+    "\u00e2\u20ac\u201d": "mojibake em dash",
+    "\u00e2\u0153\u201c": "mojibake check mark",
+    "\ufffd": "replacement character",
+}
+STALE_REFERENCES = {"../nestjs/SKILL.md": "removed nestjs skill"}
 
 
 def parse_frontmatter(skill_path: Path) -> dict[str, str]:
@@ -19,6 +44,8 @@ def parse_frontmatter(skill_path: Path) -> dict[str, str]:
 
     metadata: dict[str, str] = {}
     for line in match.group(1).splitlines():
+        if line.startswith((" ", "\t")):
+            continue
         if ":" not in line:
             continue
         key, value = line.split(":", 1)
@@ -27,6 +54,22 @@ def parse_frontmatter(skill_path: Path) -> dict[str, str]:
     if "name" not in metadata or "description" not in metadata:
         raise ValueError(f"{skill_path} must define both name and description.")
     return metadata
+
+
+def iter_source_markdown(repo_root: Path) -> list[Path]:
+    return sorted(
+        path
+        for path in repo_root.rglob("*.md")
+        if not any(part in SKIP_SCAN_DIRS for part in path.parts)
+    )
+
+
+def has_generated_bytecode(repo_root: Path) -> list[Path]:
+    return sorted(
+        path
+        for path in repo_root.rglob("*.pyc")
+        if not any(part in SKIP_BYTECODE_DIRS for part in path.parts)
+    )
 
 
 def main() -> int:
@@ -55,6 +98,9 @@ def main() -> int:
             issues.append(f"{skill_dir.name}: missing MCP Availability And Fallback section.")
         if metadata["name"] != skill_dir.name:
             issues.append(f"{skill_dir.name}: frontmatter name '{metadata['name']}' does not match folder name.")
+        unknown_keys = sorted(set(metadata) - ALLOWED_FRONTMATTER_KEYS)
+        if unknown_keys:
+            issues.append(f"{skill_dir.name}: unsupported top-level frontmatter keys: {', '.join(unknown_keys)}.")
 
         changelog_path = skill_dir / "CHANGELOG.md"
         is_reference_install = skill_dir.name in registry["reference_installs"]
@@ -62,8 +108,25 @@ def main() -> int:
             changelog = changelog_path.read_text(encoding="utf-8")
             if "### Verified" in changelog:
                 issues.append(f"{skill_dir.name}: CHANGELOG.md still uses the banned '### Verified' heading.")
+        elif skill_dir.name not in SUPERPOWER_SKILLS:
+            issues.append(f"{skill_dir.name}: maintained skill is missing CHANGELOG.md.")
         elif is_reference_install:
             issues.append(f"{skill_dir.name}: reference install is missing CHANGELOG.md.")
+
+    for markdown_file in iter_source_markdown(repo_root):
+        text = markdown_file.read_text(encoding="utf-8")
+        is_changelog = markdown_file.name == "CHANGELOG.md"
+        if not is_changelog and re.search(r"^## Skill Paths\s*$", text, re.MULTILINE):
+            issues.append(f"{markdown_file}: contains obsolete '## Skill Paths' section.")
+        for marker, label in BAD_TEXT_MARKERS.items():
+            if marker in text:
+                issues.append(f"{markdown_file}: contains {label}.")
+        for stale_ref, label in STALE_REFERENCES.items():
+            if not is_changelog and stale_ref in text:
+                issues.append(f"{markdown_file}: contains stale reference to {label}.")
+
+    for pyc_file in has_generated_bytecode(repo_root):
+        issues.append(f"{pyc_file}: generated Python bytecode should not be committed or left in the repo.")
 
     commands_root = repo_root / ".gemini" / "commands" / registry["gemini_namespace"]
     if commands_root.exists():

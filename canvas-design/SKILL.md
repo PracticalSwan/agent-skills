@@ -3,10 +3,6 @@ name: canvas-design
 description: Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking.
 license: Complete terms in LICENSE.txt
 ---
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 A two-step design workflow: first articulate a design philosophy, then create visual designs on canvas. Based on the [anthropics/skills canvas-design](https://github.com/anthropics/skills) approach.
@@ -28,12 +24,6 @@ Create a markdown document that articulates the design philosophy before any vis
 
 ### Philosophy Document Structure
 ```markdown
-
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 ## Core Intent
@@ -120,7 +110,6 @@ Design is a craft. The difference between good and great design:
 - **Details**: Transitions, hover states, focus indicators — the invisible work
 
 > "The details are not the details. They make the design." — Charles Eames
-```
 ---
 
 ## References & Resources

@@ -1,6 +1,6 @@
 # Vite Configuration Reference (2026)
 
-Vite 6 configuration options and patterns relevant to React + API apps. For details see https://vite.dev/config/.
+Vite 8.0.10 configuration options and patterns relevant to React + API apps. For details see https://vite.dev/config/.
 
 ## Core Configuration
 

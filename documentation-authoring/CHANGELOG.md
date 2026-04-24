@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-24] - Catalog Audit Cleanup
+
+### Fixed
+- Removed obsolete standalone Skill Paths guidance that duplicated the generated portability section.
+- Removed stale placeholder links from documentation examples so repo-wide Markdown link validation resolves cleanly.
+
 All notable changes to this skill will be documented in this file.
 
 ## [2026-04-04] - Cross-Client Portability Refresh

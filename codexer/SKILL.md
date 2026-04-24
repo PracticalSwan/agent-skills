@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Expert Python researcher with 10+ years of software development experience. Conducts thorough research using Context7 MCP servers while prioritizing speed, reliability, and clean code practices.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

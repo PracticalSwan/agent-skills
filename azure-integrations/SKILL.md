@@ -3,10 +3,6 @@ name: azure-integrations
 description: Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps.
 license: Complete terms in LICENSE.txt
 ---
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Deployment and integration patterns for Azure cloud services, focusing on web application hosting, CI/CD automation, and infrastructure as code.
@@ -42,11 +38,6 @@ Deployment and integration patterns for Azure cloud services, focusing on web ap
 ### Deployment Setup
 ```yaml
 
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 name: Deploy to Azure Static Web Apps
 
@@ -128,11 +119,6 @@ Automated deployment script: **[scripts/deploy-appservice.ps1](./scripts/deploy-
 ```yaml
 
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
-
 name: Deploy Next.js to App Service
 
 on:
@@ -187,11 +173,6 @@ jobs:
 ```bash
 
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
-
 az webapp config appsettings set --name <app-name> --resource-group <rg> --settings \
   AZURE_KEYVAULT_RESOURCEENDPOINT="https://<vault-name>.vault.azure.net" \
   AZURE_CLIENTID="<Managed-Identity-Client-ID>" \
@@ -202,11 +183,6 @@ az webapp config appsettings set --name <app-name> --resource-group <rg> --setti
 **Legacy Pattern (not recommended - secrets exposed in app settings):**
 ```bash
 
-
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 az webapp config appsettings set --name <app-name> --resource-group <rg> --settings \
   MONGODB_URI="mongodb+srv://..." \
@@ -385,7 +361,6 @@ jobs:
 | Bicep deployment error | Validate: `az bicep build --file main.bicep` |
 | Environment variables missing | Check App Settings in Azure Portal |
 | Cold start latency | Use Always On for App Service, or premium SWA tier |
-```
 
 ---
 
@@ -400,7 +375,6 @@ jobs:
 
 ### Examples
 - [Vite SWA Deployment Guide](./examples/vite-swa-deployment.md) — End-to-end walkthrough deploying a Vite+React app to Azure Static Web Apps
-
 
 
 ---

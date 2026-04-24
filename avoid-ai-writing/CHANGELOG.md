@@ -1,5 +1,10 @@
 # Changelog
 
+## [2026-04-24] - Catalog Audit Cleanup
+
+### Fixed
+- Repaired imported mojibake or replacement-character separators so command tables and prose render cleanly.
+
 All notable changes to the `avoid-ai-writing` skill will be documented in this file.
 
 ## [2026-04-24] - Initial Import and Portability Upgrade

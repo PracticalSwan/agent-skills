@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Expert guidance for creating structured, high-quality documentation across all types of technical and business documents.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 

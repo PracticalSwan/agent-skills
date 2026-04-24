@@ -1,16 +1,11 @@
 ---
 name: nextjs-development
-description: Next.js 15/16 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation. Latest version 16.1.6.
+description: Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation.
 license: Complete terms in LICENSE.txt
 ---
 # Next.js Development
 
-Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.1.6**) with the App Router, TypeScript, and modern patterns. Covers project structure, Server/Client Components, data fetching, caching with the `use cache` directive, Server Actions, MCP devtools integration, and performance optimization.
-
-## Skill Paths
-
-- Workspace: `.github/skills/nextjs-development/SKILL.md`
-- Global: `C:/Users/LOQ/.codex/skills/nextjs-development/SKILL.md` for Codex, `C:/Users/LOQ/.agents/skills/nextjs-development/SKILL.md` for the shared mirror, or `C:/Users/LOQ/.gemini/antigravity/global_skills/nextjs-development/SKILL.md` for the current Gemini Antigravity setup
+Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.2.4**) with the App Router, TypeScript, and modern patterns. Covers project structure, Server/Client Components, data fetching, caching with the `use cache` directive, Server Actions, MCP devtools integration, and performance optimization.
 
 ## Activation Conditions
 

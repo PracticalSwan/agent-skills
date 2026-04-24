@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Comprehensive SQL development guidelines combining SQL coding standards, stored procedure generation, and MS SQL Server DBA best practices.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -179,7 +175,7 @@ No dedicated MCP server is required for the normal workflow in this skill.
 ## Related Skills
 | Skill | Relationship |
 |-------|-------------|
-| [nestjs](../nestjs/SKILL.md) | TypeORM integration with NestJS |
+| [javascript-development](../javascript-development/SKILL.md) | JavaScript and TypeScript database integration patterns |
 | [php-development](../php-development/SKILL.md) | PDO/MySQL database access from PHP |
 | [mongodb-mongoose](../mongodb-mongoose/SKILL.md) | Alternative NoSQL database approach |
 | [powerbi-modeling](../powerbi-modeling/SKILL.md) | SQL sources for Power BI semantic models |

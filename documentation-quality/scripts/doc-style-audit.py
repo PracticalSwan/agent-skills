@@ -8,18 +8,30 @@ import re
 from pathlib import Path
 
 HEADING_RE = re.compile(r"^(#+)\s+")
+FENCE_RE = re.compile(r"^\s*(```|~~~)")
+SKIP_DIRS = {".git", ".gemini", ".serena"}
+
+
+def is_table_row(line: str) -> bool:
+    stripped = line.strip()
+    return stripped.startswith("|") and stripped.endswith("|")
 
 
 def audit(path: Path) -> list[str]:
     findings: list[str] = []
     previous_level = 0
+    in_code_fence = False
     for index, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1):
+        if FENCE_RE.match(line):
+            in_code_fence = not in_code_fence
         if "\t" in line:
             findings.append(f"{path}:{index}: contains tab characters")
         if line.rstrip() != line:
             findings.append(f"{path}:{index}: trailing whitespace")
-        if len(line) > 140:
+        if not in_code_fence and not is_table_row(line) and len(line) > 140:
             findings.append(f"{path}:{index}: line exceeds 140 characters")
+        if in_code_fence:
+            continue
         match = HEADING_RE.match(line)
         if match:
             level = len(match.group(1))
@@ -37,7 +49,11 @@ def main() -> int:
     findings: list[str] = []
     for raw in args.paths:
         path = Path(raw)
-        files = [path] if path.is_file() else sorted(path.rglob("*.md"))
+        files = [path] if path.is_file() else sorted(
+            file_path
+            for file_path in path.rglob("*.md")
+            if not any(part in SKIP_DIRS for part in file_path.parts)
+        )
         for file_path in files:
             findings.extend(audit(file_path))
 

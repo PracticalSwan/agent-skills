@@ -7,9 +7,16 @@ Install or import new maintained skills here first, then sync them outward to th
 
 ## Current Inventory
 
-- `67` tracked skill folders in this workspace
-- `53` maintained skills in this repo
-- `14` copied official Claude/Codex-style superpowers tracked locally for discovery and sync
+Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
+
+- Git-tracked catalog in this repository:
+  - `67` tracked skill folders
+  - `53` tracked maintained skills
+  - `14` tracked copied official Claude/Codex-style superpowers
+- Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
+  - `125` local skill folders detected
+  - `111` local maintained skills detected
+  - `14` local copied official superpowers detected
 - Every skill now includes:
   - a cross-client portability section
   - an MCP section that names the preferred server and a no-MCP fallback path
@@ -238,7 +245,7 @@ The registry for MCP mappings and no-MCP fallback guidance is stored in [scripts
 
 ## Reference Skill Imports
 
-The following externally sourced skills are currently maintained in this repo.
+The following externally sourced skills are currently tracked and maintained in this repo.
 
 Imported after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
 
@@ -258,7 +265,7 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `security-review`
 - `spreadsheet-formula-helper`
 
-Reference provenance, source commits, and selection reasons are documented in [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md).
+Additional local-only sourced overlays (currently `58`, primarily `gws-*` and `recipe-*`) are mapped in `scripts/skill-registry.json` and summarized in [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md).
 
 ## Repository Docs
 

@@ -2,10 +2,6 @@
 name: legacy-circuit-mockups
 description: 'Breadboard circuit mockups via HTML5 Canvas. Use when creating circuit layouts, visualizing 6502/retro electronics components, drawing breadboard diagrams, or designing vintage computer schematics with discrete parts.'
 ---
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 A skill for creating breadboard circuit mockups and visual diagrams for retro computing and electronics projects. This skill leverages HTML5 Canvas drawing mechanisms to render interactive circuit layouts featuring vintage components like the 6502 microprocessor, 555 timer ICs, EEPROMs, and 7400-series logic gates.
@@ -281,7 +277,6 @@ Detailed component specifications are available in the bundled reference files:
 
 ### Scripts
 - [Circuit Component Registry](scripts/circuit-component-registry.js) — Component registry for circuit mockups
-
 
 
 ---

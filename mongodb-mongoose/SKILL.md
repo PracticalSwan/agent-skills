@@ -3,10 +3,6 @@ name: mongodb-mongoose
 description: MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps.
 license: Complete terms in LICENSE.txt
 ---
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 
 Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and Atlas integration for Node.js/Next.js applications.
@@ -349,6 +345,5 @@ If MCP is unavailable in the current host:
 ## Related Skills
 | Skill | Relationship |
 |-------|-------------|
-| [nestjs](../nestjs/SKILL.md) | NestJS backend using Mongoose models |
 | [javascript-development](../javascript-development/SKILL.md) | JS patterns for database integration |
 | [sql-development](../sql-development/SKILL.md) | Alternative relational database approach |

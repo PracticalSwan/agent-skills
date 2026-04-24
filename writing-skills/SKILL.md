@@ -92,7 +92,9 @@ skills/
 ## SKILL.md Structure
 
 **Frontmatter (YAML):**
-- Only two fields supported: `name` and `description`
+- Portable minimum fields: `name` and `description`
+- This maintained catalog also permits bounded imported-skill metadata: `license`, `version`, `compatibility`, and `metadata`
+- For new original skills, prefer only `name` and `description` unless provenance, licensing, or upstream update tracking needs extra metadata
 - Max 1024 characters total
 - `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
 - `description`: Third-person, describes ONLY when to use (NOT what it does)
@@ -603,7 +605,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 
 **GREEN Phase - Write Minimal Skill:**
 - [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
-- [ ] YAML frontmatter with only name and description (max 1024 chars)
+- [ ] YAML frontmatter includes the portable minimum fields: name and description (max 1024 chars)
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)

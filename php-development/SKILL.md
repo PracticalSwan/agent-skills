@@ -7,10 +7,6 @@ license: Complete terms in LICENSE.txt
 
 Expert guidance for building high-quality PHP applications with PHP 8.0+, PDO for secure database access, RESTful API design, and XAMPP environment configuration following official PHP documentation at https://php.net.
 
-## Skill Paths
-
-- Workspace skills: `.github/skills/`
-- Global skills: `C:/Users/LOQ/.codex/skills/` for Codex or `C:/Users/LOQ/.agents/skills/` for the shared mirror
 
 ## Activation Conditions
 
@@ -875,5 +871,5 @@ No dedicated MCP server is required for the normal workflow in this skill.
 | Skill | Relationship |
 |-------|-------------|
 | [sql-development](../sql-development/SKILL.md) | SQL database integration with PHP/PDO |
-| [nestjs](../nestjs/SKILL.md) | Alternative Node.js backend framework |
+| [javascript-development](../javascript-development/SKILL.md) | Alternative JavaScript and TypeScript backend or frontend patterns |
 | [javascript-development](../javascript-development/SKILL.md) | Frontend JS to pair with PHP backend |

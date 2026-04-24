@@ -2,7 +2,9 @@
 .gemini/
 # Exclude Serena memories
 .serena
-# Exclude Google Workspace skills
+# Exclude generated Python bytecode
+__pycache__/
+*.pyc
+# Exclude Google Workspace CLI skills (local-only, not for public repo)
 gws-*/
-# Exclude Google Workspace recipes
 recipe-*/

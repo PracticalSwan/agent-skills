@@ -22,6 +22,8 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
 	- `111` local maintained skills detected
 	- `14` local copied official superpowers detected
 
+Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
+
 ## Downstream Sync Targets
 
 Maintained skills sync to:
@@ -77,9 +79,9 @@ To skip workspace-local targets and sync only the personal global roots, run:
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -SkipWorkspaceRoots
 ```
 
-## Maintained Skill Expectations
+## Catalog Skill Expectations
 
-Every maintained skill should have:
+Every skill folder in this catalog should have:
 
 - `SKILL.md`
 - `CHANGELOG.md`
@@ -100,11 +102,13 @@ Every `SKILL.md` in this repo should:
 
 - use valid YAML frontmatter
 - keep the `name` aligned with the folder name
-- include the portable minimum frontmatter fields: `name` and `description`
-- use only approved extra top-level metadata fields when needed: `license`, `version`, `compatibility`, and `metadata`
+- include the catalog frontmatter fields: `name`, `version`, `last_updated`, `tags`, and `description`
+- use only approved extra top-level metadata fields when needed: `license`, `compatibility`, and `metadata`
 - use activation-focused descriptions
 - include the generated portability section
 - include the MCP or no-MCP fallback section
+- include `## Anti-Patterns`
+- end with `## Related Skills`
 
 ## MCP Rules
 
@@ -125,6 +129,8 @@ After meaningful changes:
 2. Run `python scripts/export-gemini-skill.py --all`
 3. Re-run validation if the export changed
 4. Sync outward if the repo is in a good state
+
+The validator now expects the catalog frontmatter fields plus the portability, MCP, Anti-Patterns, Related Skills, and `CHANGELOG.md` baseline.
 
 After adding a new maintained skill:
 
@@ -150,6 +156,7 @@ When repo behavior, counts, sync flow, portability, or supported clients change:
 - Treat `C:\Users\LOQ\.codex\skills` as the primary Codex install root.
 - Treat `C:\Users\LOQ\.agents\skills` as a shared mirror that other local workflows can reuse.
 - Do not describe the shared mirror as the only Codex path in repo docs or skill guidance.
+- The Codex install root can contain extra local skills outside this catalog, so verify sync by checking the expected maintained set rather than raw folder totals alone.
 
 ## Related Repo Files
 

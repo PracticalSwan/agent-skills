@@ -53,8 +53,11 @@ python scripts/validate-skills.py
 
 That validation checks:
 
-- `SKILL.md` frontmatter
+- catalog `SKILL.md` frontmatter (`name`, `version`, `last_updated`, `tags`, `description`)
 - required portability and MCP sections
+- `Preferred MCP Server:` and `Fallback prompt:` lines
+- `Anti-Patterns` and `Related Skills` sections
+- `CHANGELOG.md` presence in every skill folder
 - Gemini command count
 - TOML parseability of generated commands
 - obsolete Skill Paths sections, stale removed-skill links, mojibake markers, and generated Python bytecode

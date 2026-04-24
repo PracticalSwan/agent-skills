@@ -13,7 +13,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 ## Inventory Lessons
 
 - Count real skill folders by checking for `SKILL.md`, not by counting directories.
-- Derive the maintained count from folders that also contain `CHANGELOG.md`.
+- Derive the maintained count by excluding the explicit copied official superpower list in `scripts/skill-registry.json`, not by whether a folder has `CHANGELOG.md`.
 - Keep copied official superpowers separate from maintained skills so counts and maintenance expectations stay honest.
 - Treat `gws-*` and `recipe-*` folders as local-only skills excluded from the public repo via `.gitignore`. Do not include them in public counts, catalogs, or GitHub-facing documentation.
 - Keep two inventory views in root docs: git-tracked catalog counts and local workspace counts. Mixing them in one number creates avoidable drift and confusion.
@@ -30,6 +30,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - The workspace sync script should treat the repo inventory and discovered workspace targets as separate summary keys. Reusing the same key hides useful state.
 - Downstream skill folders behave like branch mirrors: make changes in this repo first, then publish them outward with the sync script.
 - Keep the primary Codex root (`C:\Users\LOQ\.codex\skills`) distinct from the shared mirror (`C:\Users\LOQ\.agents\skills`) so documentation does not blur installation targets.
+- The Codex root can keep extra local skills outside this catalog, so sync verification there should compare the expected maintained set rather than only the total folder count.
 - Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` are worth syncing when the broader workspace depends on shared skills.
 - Gemini Antigravity can consume the full current skill catalog from `C:\Users\LOQ\.gemini\antigravity\global_skills`, so it should be treated as a first-class sync target rather than a manual copy.
 - Mirror copies should replace stale skill folders entirely so old `SKILL.md.bak` files or removed support files do not linger.
@@ -43,6 +44,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 ## Verification Lessons
 
 - Structural validation is not enough for Gemini support; export and parse the generated TOML files too.
+- When the catalog frontmatter or required section schema changes, update the validator before relying on the next export or sync pass.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
 - Record source repo and commit metadata for imported skills so later updates can be traced safely.
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
@@ -55,7 +57,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 1. Edit the workspace copy.
 2. If the change is a new skill, install or import it into this repo before touching downstream targets.
-3. Update per-skill `CHANGELOG.md` files for touched maintained skills.
+3. Update per-skill `CHANGELOG.md` files for every touched skill folder.
 4. Update root docs if counts, support matrix, sync behavior, or client guidance changed.
 5. Run `python scripts/validate-skills.py`.
 6. Run `python scripts/export-gemini-skill.py --all`.

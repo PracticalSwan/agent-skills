@@ -3,6 +3,27 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-24] - Catalog Schema Alignment, Validation Refresh, and Full Sync
+
+### Changed
+
+- Updated `scripts/skill-registry.json` to track the copied official superpower list explicitly.
+- Updated `scripts/sync-skills.ps1` to classify maintained skills versus copied official superpowers from the registry instead of inferring that split from `CHANGELOG.md` presence.
+- Updated `scripts/validate-skills.py` to accept the catalog frontmatter fields `version`, `last_updated`, and `tags`, require `CHANGELOG.md` for every skill folder, and validate the Anti-Patterns and Related Skills baseline.
+- Updated `README.md`, `CLAUDE.md`, `GEMINI.md`, and `LESSON.md` to document the current skill schema, validator expectations, and the explicit superpower classification rule.
+
+### Tested
+
+- Ran `python scripts/validate-skills.py` and confirmed `status: ok` with `125` skills and `125` Gemini commands.
+- Ran `python scripts/export-gemini-skill.py --all` and regenerated `125` Gemini command files.
+- Ran `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"` and confirmed the corrected split of `111` maintained skills plus `14` copied official superpowers.
+- Verified downstream coverage after sync:
+  - `C:\Users\LOQ\.codex\skills`: all `111` expected maintained skills present, plus `18` extra pre-existing local skills outside this catalog
+  - `C:\Users\LOQ\.agents\skills`: `111` maintained skills with `SKILL.md`
+  - `C:\Users\LOQ\.agents\skills\superpowers`: `14` copied official superpowers with `SKILL.md`
+  - `C:\Users\LOQ\.claude\skills`: `111` maintained skills with `SKILL.md`
+  - `C:\Users\LOQ\.gemini\antigravity\global_skills`: `125` skills with `SKILL.md`
+
 ## [2026-04-24] - Validation Scope Fix, Provenance Alignment, and Full Sync
 
 ### Changed

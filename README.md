@@ -17,9 +17,14 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
   - `125` local skill folders detected
   - `111` local maintained skills detected
   - `14` local copied official superpowers detected
+- Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - Every skill now includes:
+  - catalog frontmatter with `name`, `version`, `last_updated`, `tags`, and `description`
+  - a per-skill `CHANGELOG.md`
   - a cross-client portability section
   - an MCP section that names the preferred server and a no-MCP fallback path
+  - an `Anti-Patterns` section
+  - a final `Related Skills` section
 
 ## Main Workspace
 
@@ -53,6 +58,7 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
 - Keep `C:\Users\LOQ\.agents\skills` as a shared mirror for cross-client reuse and fallback lookups
 - Sync copied official superpowers to `C:\Users\LOQ\.agents\skills\superpowers`
 - Do not install new maintained skills directly into those target roots; install them in this repo first
+- The Codex root can contain extra local skills beyond this catalog, so verify sync by checking that the expected maintained set is present instead of relying only on raw folder totals
 
 ### Gemini CLI
 
@@ -108,6 +114,15 @@ Validate all skills and generated Gemini commands:
 ```powershell
 python scripts/validate-skills.py
 ```
+
+The validator expects:
+
+- catalog frontmatter with `name`, `version`, `last_updated`, `tags`, and `description`
+- the portability and MCP sections
+- `Preferred MCP Server:` and `Fallback prompt:` inside the MCP section
+- `## Anti-Patterns`
+- a final `## Related Skills`
+- `CHANGELOG.md` in every skill folder
 
 Regenerate Gemini CLI commands:
 

@@ -45,7 +45,9 @@ function Assert-WithinRoot {
 function Get-SkillSet {
     param(
         [Parameter(Mandatory = $true)]
-        [string]$RootPath
+        [string]$RootPath,
+        [Parameter(Mandatory = $true)]
+        [string[]]$CopiedOfficialNames
     )
 
     $skillDirs = Get-ChildItem -LiteralPath $RootPath -Directory | Where-Object {
@@ -53,8 +55,8 @@ function Get-SkillSet {
     }
 
     return [pscustomobject]@{
-        Maintained = @($skillDirs | Where-Object { Test-Path (Join-Path $_.FullName "CHANGELOG.md") } | Sort-Object Name)
-        CopiedOfficial = @($skillDirs | Where-Object { -not (Test-Path (Join-Path $_.FullName "CHANGELOG.md")) } | Sort-Object Name)
+        Maintained = @($skillDirs | Where-Object { $CopiedOfficialNames -notcontains $_.Name } | Sort-Object Name)
+        CopiedOfficial = @($skillDirs | Where-Object { $CopiedOfficialNames -contains $_.Name } | Sort-Object Name)
     }
 }
 
@@ -139,7 +141,18 @@ if (-not (Test-Path -LiteralPath $sharedSuperpowersRoot)) {
     throw "Shared superpowers root '$sharedSuperpowersRoot' does not exist."
 }
 
-$skillSet = Get-SkillSet -RootPath $workspaceRoot
+$registryPath = Join-Path $workspaceRoot "scripts\skill-registry.json"
+if (-not (Test-Path -LiteralPath $registryPath)) {
+    throw "Skill registry '$registryPath' does not exist."
+}
+
+$registry = Get-Content -LiteralPath $registryPath -Raw | ConvertFrom-Json
+$copiedOfficialNames = @($registry.copied_official_superpowers)
+if ($copiedOfficialNames.Count -eq 0) {
+    throw "Skill registry '$registryPath' does not define copied_official_superpowers."
+}
+
+$skillSet = Get-SkillSet -RootPath $workspaceRoot -CopiedOfficialNames $copiedOfficialNames
 
 $summary = [ordered]@{
     source = [ordered]@{

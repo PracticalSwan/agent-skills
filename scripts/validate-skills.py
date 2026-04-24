@@ -9,23 +9,17 @@ from pathlib import Path
 
 
 FRONTMATTER_RE = re.compile(r"^---\r?\n(.*?)\r?\n---\r?\n?", re.DOTALL)
-ALLOWED_FRONTMATTER_KEYS = {"name", "description", "license", "metadata", "version", "compatibility"}
-SUPERPOWER_SKILLS = {
-    "brainstorming",
-    "dispatching-parallel-agents",
-    "executing-plans",
-    "finishing-a-development-branch",
-    "receiving-code-review",
-    "requesting-code-review",
-    "subagent-driven-development",
-    "systematic-debugging",
-    "test-driven-development",
-    "using-git-worktrees",
-    "using-superpowers",
-    "verification-before-completion",
-    "writing-plans",
-    "writing-skills",
+ALLOWED_FRONTMATTER_KEYS = {
+    "name",
+    "description",
+    "version",
+    "last_updated",
+    "tags",
+    "license",
+    "metadata",
+    "compatibility",
 }
+REQUIRED_FRONTMATTER_KEYS = {"name", "description", "version", "last_updated", "tags"}
 SKIP_SCAN_DIRS = {".git", ".gemini", ".serena"}
 SKIP_BYTECODE_DIRS = {".git", ".gemini", ".serena", ".venv", "venv", "env", "__pycache__"}
 BAD_TEXT_MARKERS = {
@@ -51,8 +45,11 @@ def parse_frontmatter(skill_path: Path) -> dict[str, str]:
         key, value = line.split(":", 1)
         metadata[key.strip()] = value.strip().strip("'").strip('"')
 
-    if "name" not in metadata or "description" not in metadata:
-        raise ValueError(f"{skill_path} must define both name and description.")
+    missing_required = sorted(REQUIRED_FRONTMATTER_KEYS - set(metadata))
+    if missing_required:
+        raise ValueError(
+            f"{skill_path} is missing required frontmatter keys: {', '.join(missing_required)}."
+        )
     return metadata
 
 
@@ -75,6 +72,7 @@ def has_generated_bytecode(repo_root: Path) -> list[Path]:
 def main() -> int:
     repo_root = Path(__file__).resolve().parents[1]
     registry = json.loads((repo_root / "scripts" / "skill-registry.json").read_text(encoding="utf-8"))
+    superpower_skills = set(registry["copied_official_superpowers"])
     skill_dirs = sorted(
         skill_dir
         for skill_dir in repo_root.iterdir()
@@ -96,6 +94,14 @@ def main() -> int:
             issues.append(f"{skill_dir.name}: missing Cross-Client Portability section.")
         if "## MCP Availability And Fallback" not in body:
             issues.append(f"{skill_dir.name}: missing MCP Availability And Fallback section.")
+        if "## Anti-Patterns" not in body:
+            issues.append(f"{skill_dir.name}: missing Anti-Patterns section.")
+        if "## Related Skills" not in body:
+            issues.append(f"{skill_dir.name}: missing Related Skills section.")
+        if "Preferred MCP Server:" not in body:
+            issues.append(f"{skill_dir.name}: MCP section is missing the Preferred MCP Server line.")
+        if "Fallback prompt:" not in body:
+            issues.append(f"{skill_dir.name}: MCP section is missing the fallback prompt line.")
         if metadata["name"] != skill_dir.name:
             issues.append(f"{skill_dir.name}: frontmatter name '{metadata['name']}' does not match folder name.")
         unknown_keys = sorted(set(metadata) - ALLOWED_FRONTMATTER_KEYS)
@@ -103,15 +109,17 @@ def main() -> int:
             issues.append(f"{skill_dir.name}: unsupported top-level frontmatter keys: {', '.join(unknown_keys)}.")
 
         changelog_path = skill_dir / "CHANGELOG.md"
-        is_reference_install = skill_dir.name in registry["reference_installs"]
         if changelog_path.exists():
             changelog = changelog_path.read_text(encoding="utf-8")
             if "### Verified" in changelog:
                 issues.append(f"{skill_dir.name}: CHANGELOG.md still uses the banned '### Verified' heading.")
-        elif skill_dir.name not in SUPERPOWER_SKILLS:
-            issues.append(f"{skill_dir.name}: maintained skill is missing CHANGELOG.md.")
-        elif is_reference_install:
-            issues.append(f"{skill_dir.name}: reference install is missing CHANGELOG.md.")
+        else:
+            issues.append(f"{skill_dir.name}: skill folder is missing CHANGELOG.md.")
+
+        if skill_dir.name in superpower_skills and skill_dir.name in registry["reference_installs"]:
+            issues.append(
+                f"{skill_dir.name}: copied official superpower should not also be listed under reference_installs."
+            )
 
     for markdown_file in iter_source_markdown(repo_root):
         text = markdown_file.read_text(encoding="utf-8")

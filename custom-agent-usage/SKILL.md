@@ -1,6 +1,6 @@
 ---
 name: custom-agent-usage
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [custom, usage, agents, delegation, workflow]
 description: "Discover, validate, and invoke .agent.md custom agents. Use when finding agent files in the local Claude or VS Code Insiders directories, checking frontmatter, verifying disable-model-invocation, or determining agentName for runSubagent calls."

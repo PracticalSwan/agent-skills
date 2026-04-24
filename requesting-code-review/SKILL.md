@@ -1,6 +1,6 @@
 ---
 name: requesting-code-review
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [requesting, code, review, agents, delegation]
 description: "Use when completing tasks, implementing major features, or before merging to verify work meets requirements."

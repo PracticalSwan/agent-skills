@@ -1,6 +1,6 @@
 ---
 name: breaking-changes-management
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [breaking, changes, management, workflow, quality]
 description: "Manage breaking API changes, migration guides, deprecation notices, and semver versioning. Use when introducing breaking changes, writing migration paths, updating changelogs, or releasing major versions."

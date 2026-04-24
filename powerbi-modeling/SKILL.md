@@ -1,6 +1,6 @@
 ---
 name: powerbi-modeling
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [powerbi, modeling, documents, automation, productivity]
 description: "Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI."

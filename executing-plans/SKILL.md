@@ -1,6 +1,6 @@
 ---
 name: executing-plans
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [executing, plans, agents, delegation, workflow]
 description: "Use when you have a written implementation plan to execute in a separate session with review checkpoints."

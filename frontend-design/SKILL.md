@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [frontend, design, ui, visual]
 description: "UI/UX design — color theory (60-30-10 rule), responsive layouts, WCAG accessibility, CSS/Tailwind patterns, wireframes, and visual review. Use when designing interfaces, choosing palettes, writing CSS, or fixing layout/accessibility issues."

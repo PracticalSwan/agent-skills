@@ -1,12 +1,14 @@
 ---
 name: sql-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [sql, development, testing, quality, automation]
 description: "T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features."
 ---
 
 # SQL Development
+
+> Optimized for current PostgreSQL, MySQL, and SQL Server releases plus migration-first database workflows.
 
 Comprehensive SQL development guidelines combining SQL coding standards, stored procedure generation, and MS SQL Server DBA best practices.
 

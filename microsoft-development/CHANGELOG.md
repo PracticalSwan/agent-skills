@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-24] - Version 1.1 Refresh
+
+### Changed
+- Updated the SKILL frontmatter version to `1.1` for the 2026-04-24 catalog refresh.
+- Added an "Optimized for ..." note at the top so the guidance is anchored to current platform versions.
+
 All notable changes to this skill will be documented in this file.
 
 ## [2026-04-24] - Verification Follow-Up

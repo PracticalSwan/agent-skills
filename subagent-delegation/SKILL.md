@@ -1,6 +1,6 @@
 ---
 name: subagent-delegation
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [subagent, delegation, agents, workflow, automation]
 description: "Delegate routine work to subagents — boilerplate generation, data transformation, file analysis, documentation drafting. Use when splitting tasks into independent subtasks for parallel subagent execution."

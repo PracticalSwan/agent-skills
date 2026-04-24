@@ -1,12 +1,14 @@
 ---
 name: csharp-xunit
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [dotnet, testing, development, quality, automation]
 description: "xUnit testing patterns and data-driven test guidance. Use when writing or reviewing .NET unit tests."
 ---
 
 # XUnit Best Practices
+
+> Optimized for current .NET SDK releases, C# 12+, xUnit 2.x, and FluentAssertions 6+.
 
 Your goal is to help me write effective unit tests with XUnit, covering both standard and data-driven testing approaches.
 

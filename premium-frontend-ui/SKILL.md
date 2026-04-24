@@ -1,6 +1,6 @@
 ---
 name: premium-frontend-ui
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [premium, frontend, ui, design, visual]
 description: "Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites."

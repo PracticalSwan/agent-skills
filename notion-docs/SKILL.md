@@ -1,6 +1,6 @@
 ---
 name: notion-docs
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [notion, docs, writing, quality, templates]
 description: "Notion workspace management via MCP - create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content."

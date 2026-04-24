@@ -1,6 +1,6 @@
 ---
 name: documentation-quality
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [documentation, quality, docs, writing, templates]
 description: "Documentation quality standards and writing principles. Use when establishing formatting rules, reviewing doc quality metrics, creating writing guidelines, or enforcing consistent documentation style across a project."

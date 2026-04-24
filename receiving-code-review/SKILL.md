@@ -1,6 +1,6 @@
 ---
 name: receiving-code-review
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [receiving, code, review, agents, delegation]
 description: "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation."

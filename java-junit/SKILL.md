@@ -1,12 +1,14 @@
 ---
 name: java-junit
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [java, testing, development, quality, automation]
 description: "JUnit 5 testing patterns and parameterized-test guidance. Use when writing or reviewing Java unit tests."
 ---
 
 # JUnit 5+ Best Practices
+
+> Optimized for current Java LTS releases, JUnit 5.x, Mockito 5.x, and modern Maven or Gradle builds.
 
 Your goal is to help me write effective unit tests with JUnit 5, covering both standard and data-driven testing approaches.
 

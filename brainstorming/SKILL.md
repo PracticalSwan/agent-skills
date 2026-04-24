@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [brainstorming, agents, delegation, workflow, automation]
 description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."

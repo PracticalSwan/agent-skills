@@ -1,12 +1,14 @@
 ---
 name: php-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [php, development, testing, quality, automation]
 description: "PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, and authentication. Use when building PHP backends, creating API endpoints, configuring XAMPP, or integrating PHP with databases."
 ---
 
 # PHP Development
+
+> Optimized for current PHP 8.x releases, PHPUnit 11+, Composer 2.x, and PDO-backed MySQL or MariaDB apps.
 
 Expert guidance for building high-quality PHP applications with PHP 8.0+, PDO for secure database access, RESTful API design, and XAMPP environment configuration following official PHP documentation at https://php.net.
 

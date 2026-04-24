@@ -1,6 +1,6 @@
 ---
 name: avoid-ai-writing
-version: "3.3.1"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [avoid, ai, writing, docs, quality]
 description: "Audit and rewrite content to remove AI writing patterns (\\\"AI-isms\\\"). Use this skill when asked to \\\"remove AI-isms,\\\" \\\"clean up AI writing,\\\" \\\"edit writing for AI patterns,\\\" \\\"audit writing for AI tells,\\\" or \\\"make this sound less like AI.\\\" Supports a detection-only mode that flags patterns without rewriting."

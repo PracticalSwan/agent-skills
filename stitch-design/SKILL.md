@@ -1,6 +1,6 @@
 ---
 name: stitch-design
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [stitch, design, frontend, ui, visual]
 description: "Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects."

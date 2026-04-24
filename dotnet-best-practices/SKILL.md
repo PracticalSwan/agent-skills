@@ -1,12 +1,14 @@
 ---
 name: dotnet-best-practices
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [dotnet, development, testing, quality, automation]
 description: "Ensure .NET/C# code follows maintainable, modern best practices. Use when reviewing or improving C# code, solution structure, async patterns, dependency injection, or testability."
 ---
 
 # .NET/C# Best Practices
+
+> Optimized for current .NET SDK-style projects, C# 12+, ASP.NET Core LTS, and current xUnit, NUnit, or MSTest workflows.
 
 Your task is to ensure .NET/C# code in the selected scope or current solution meets the best practices specific to this project. This includes:
 

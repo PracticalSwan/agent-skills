@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [superpowers, agents, delegation, workflow, automation]
 description: "Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions."

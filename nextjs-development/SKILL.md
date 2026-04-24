@@ -1,6 +1,6 @@
 ---
 name: nextjs-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [nextjs, development, testing, quality, automation]
 description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation."

@@ -1,6 +1,6 @@
 ---
 name: writing-skills
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [writing, skills, docs, quality, templates]
 description: "Use when creating new skills, editing existing skills, or verifying skills work before deployment."

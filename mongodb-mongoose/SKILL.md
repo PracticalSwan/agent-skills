@@ -1,12 +1,14 @@
 ---
 name: mongodb-mongoose
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [mongodb, mongoose, development, testing, quality]
 description: "MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps."
 ---
 
 # Mongodb Mongoose
+
+> Optimized for current MongoDB server releases, Mongoose 8.x+, Node.js 22+, and TypeScript 5.5+.
 
 Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and Atlas integration for Node.js/Next.js applications.
 

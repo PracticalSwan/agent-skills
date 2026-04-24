@@ -1,6 +1,6 @@
 ---
 name: documentation-automation
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [documentation, automation, docs, writing, quality]
 description: "Automate doc generation with JSDoc/TSDoc, linters, and pre-commit hooks. Use when setting up markdownlint, configuring doc linting pipelines, integrating JSDoc/TSDoc, or building automated documentation workflows."

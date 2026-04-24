@@ -1,6 +1,6 @@
 ---
 name: agentic-eval
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [agentic, eval, agents, delegation, workflow]
 description: "Evaluate and improve AI-generated output with explicit rubrics, reflection loops, and stop conditions. Use when building self-critique workflows, evaluator-optimizer pipelines, or acceptance gates for code, docs, analysis, or plans."

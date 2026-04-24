@@ -1,6 +1,6 @@
 ---
 name: react-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [react, development, testing, quality, automation]
 description: "React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders."

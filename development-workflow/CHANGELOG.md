@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-24] - Version 1.1 Refresh
+
+### Changed
+- Updated the SKILL frontmatter version to `1.1` for the 2026-04-24 catalog refresh.
+- Renamed the internationalization section to explicitly call out i18n considerations.
+
 ## [2026-04-24] - Post-Refresh Cleanup
 
 ### Fixed

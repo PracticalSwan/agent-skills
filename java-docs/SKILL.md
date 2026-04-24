@@ -1,12 +1,14 @@
 ---
 name: java-docs
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [java, docs, development, testing, quality]
 description: "Java Javadoc best practices. Use when adding or reviewing documentation for Java types, methods, packages, and public APIs."
 ---
 
 # Java Documentation (Javadoc) Best Practices
+
+> Optimized for current Java LTS releases, JavaDoc doclint, Maven or Gradle builds, and module-aware API documentation.
 
 - Public and protected members should be documented with Javadoc comments.
 - It is encouraged to document package-private and private members as well, especially if they are complex or not self-explanatory.

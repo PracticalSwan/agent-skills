@@ -1,6 +1,6 @@
 ---
 name: systematic-debugging
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [systematic, debugging, workflow, quality, planning]
 description: "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes."

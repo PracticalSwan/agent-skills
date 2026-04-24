@@ -1,6 +1,6 @@
 ---
 name: dispatching-parallel-agents
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [dispatching, parallel, agents, delegation, workflow]
 description: "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies."

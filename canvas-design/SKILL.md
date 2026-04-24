@@ -1,6 +1,6 @@
 ---
 name: canvas-design
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [canvas, design, frontend, ui, visual]
 description: "Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking."

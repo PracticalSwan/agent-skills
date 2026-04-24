@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [writing, plans, agents, delegation, workflow]
 description: "Use when you have a spec or requirements for a multi-step task, before touching code."

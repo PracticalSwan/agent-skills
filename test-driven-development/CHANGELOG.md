@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-04-24] - Version 1.1 Refresh
+
+### Changed
+- Updated the SKILL frontmatter version to `1.1` for the 2026-04-24 catalog refresh.
+- Added a modern before/after example to make the implementation-first versus test-first contrast explicit.
+
 All notable changes to this skill will be documented in this file.
 
 ## [2026-04-24] - Skill Refresh

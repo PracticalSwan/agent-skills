@@ -1,6 +1,6 @@
 ---
 name: word-document
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [docs, document, writing, quality, templates]
 description: "Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion."

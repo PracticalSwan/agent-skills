@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [test, workflow, quality, planning, delivery]
 description: "Use when implementing any feature or bugfix, before writing implementation code."
@@ -297,6 +297,23 @@ Tests-first force edge case discovery before implementing. Tests-after verify yo
 - Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
 - Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
+## Modern Before and After Example
+
+```tsx
+// Before
+export async function updateOrderStatus(orderId: string) {
+  await db.order.update({ where: { id: orderId }, data: { status: 'paid' } });
+}
+
+// After
+test('updateOrderStatus marks the order as paid', async () => {
+  await updateOrderStatus('ord_42');
+  await expect(getOrder('ord_42')).resolves.toMatchObject({ status: 'paid' });
+});
+```
+
+The contrast should stay obvious: implementation-first code can look finished, while the test-first version proves the behavior you actually needed before the production change lands.
 
 ## Modern Frontend Testing Examples
 

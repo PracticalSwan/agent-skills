@@ -1,6 +1,6 @@
 ---
 name: spreadsheet-formula-helper
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [spreadsheet, formula, helper, documents, automation]
 description: "Write and debug spreadsheet formulas (Excel/Google Sheets), pivot tables, and array formulas; translate between dialects; use when users need working formulas with examples and edge-case checks."

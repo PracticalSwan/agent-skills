@@ -1,6 +1,6 @@
 ---
 name: mcp-builder
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [mcp, builder, workflow, quality, planning]
 description: "Build high-quality MCP servers with strong tool design, structured outputs, clear error handling, and realistic evaluations. Use when creating or improving MCP servers in TypeScript or Python for external APIs, services, or internal platforms."

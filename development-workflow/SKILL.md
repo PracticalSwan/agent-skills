@@ -1,6 +1,6 @@
 ---
 name: development-workflow
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [workflow, quality, planning, delivery]
 description: "Spec-driven development lifecycle — EARS requirements, technical design docs, implementation tracking, and contribution guidelines. Use when planning features, defining requirements, or managing project lifecycle."
@@ -660,7 +660,7 @@ Closes issue #123"
 - Pair automated tooling such as axe or Playwright accessibility checks with manual review of the critical flows.
 - Keep accessibility bugs inside the same Definition of Done as functional bugs for the feature.
 
-## Internationalization Considerations
+## Internationalization (i18n) Considerations
 
 - Identify translatable strings, locale-aware formatting, and right-to-left layout risks during planning.
 - Keep UI copy, date or number formatting, and fallback language behavior outside hard-coded components.

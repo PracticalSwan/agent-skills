@@ -1,6 +1,6 @@
 ---
 name: finishing-a-development-branch
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [finishing, a, branch, workflow, quality]
 description: "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup."

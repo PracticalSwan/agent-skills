@@ -1,6 +1,6 @@
 ---
 name: vite-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [vite, development, testing, quality, automation]
 description: "Vite 8.0.10 build tooling — HMR, fast builds, plugins, and optimized production assets. Use when configuring Vite, setting up React/Vue projects with Vite, or optimizing frontend build performance."

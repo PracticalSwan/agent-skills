@@ -1,12 +1,14 @@
 ---
 name: microsoft-development
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [microsoft, cloud, architecture, operations, quality]
 description: "Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval."
 ---
 
 # Microsoft Development
+
+> Optimized for current Microsoft Graph, Entra ID, PowerShell 7.x, and Microsoft 365 integration workflows.
 
 Use this skill when the answer should come from Microsoft documentation rather than memory or third-party summaries.
 

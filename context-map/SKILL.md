@@ -1,6 +1,6 @@
 ---
 name: context-map
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [context, map, agents, delegation, workflow]
 description: "Scope the real change surface before editing. Use when planning a feature, bugfix, refactor, or review and you need a concrete map of likely touch points, dependencies, tests, and nearby risks."

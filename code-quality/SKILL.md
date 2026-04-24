@@ -1,6 +1,6 @@
 ---
 name: code-quality
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [code, quality, workflow, planning, delivery]
 description: "Code review, refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."

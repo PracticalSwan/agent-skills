@@ -1,6 +1,6 @@
 ---
 name: excel-sheet
-version: "1.0"
+version: "1.1"
 last_updated: 2026-04-24
 tags: [spreadsheet, sheet, documents, automation, productivity]
 description: "Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets."

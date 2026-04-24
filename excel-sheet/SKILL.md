@@ -1,7 +1,7 @@
 ---
 name: excel-sheet
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [spreadsheet, sheet, documents, automation, productivity]
 description: "Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets."
 ---
@@ -12,11 +12,16 @@ description: "Excel (.xlsx) manipulation via MCP server. Use for creating workbo
 
 Use this skill when the deliverable is an `.xlsx` workbook or when spreadsheet structure matters.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Current MCP Reality
 
 Excel MCP tooling is host-dependent. In GitHub Copilot, Excel actions may appear as grouped Office tools. In Codex or Claude, those tools may be absent entirely. Treat the included Python script as the reliable fallback.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Creating or updating workbooks
 - Converting CSV data into structured Excel output
@@ -30,11 +35,26 @@ Excel MCP tooling is host-dependent. In GitHub Copilot, Excel actions may appear
 3. If no, use the local converter or author the workbook with `openpyxl`.
 4. Validate formulas and chart ranges before claiming the workbook is ready.
 
+## MCP Fallback – Native Automation
+
+When MCP is unavailable, use native automation: `openpyxl` for `.xlsx`, CSV export for flat data, and manual formula inspection for high-risk calculations. Preserve formulas, number formats, sheet names, hidden sheets, and workbook metadata, then reopen or parse the workbook before claiming success.
+
 ## Anti-Patterns
 
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
 - Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
 - Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Excel Sheet artifact type, target format, and required output fidelity are stated before editing.
+2. Pass/fail: MCP availability is checked and the native automation fallback path is named when MCP is absent.
+3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
+4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
+5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
+
 
 ## Workbook Checklist
 

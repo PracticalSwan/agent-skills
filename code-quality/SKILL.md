@@ -1,20 +1,25 @@
 ---
 name: code-quality
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [code, quality, workflow, planning, delivery]
-description: "Code review, refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."
+description: "two-stage review (spec compliance first, then code quality), refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."
 ---
 
 # Code Quality Management
 
-Comprehensive skill for improving code quality through code review, surgical refactoring, and self-evaluation loops.
+Comprehensive skill for improving code quality through two-stage review (spec compliance first, then code quality), surgical refactoring, and self-evaluation loops.
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 
 ## Activation Conditions
 
-**Code Review:**
-- Performing code reviews, analyzing pull requests
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
+
+**two-stage review (spec compliance first, then code quality):**
+- Performing two-stage reviews (spec compliance first, then code quality), analyzing pull requests
 - Checking code quality, security auditing, performance reviews
 - Examining code for bugs, vulnerabilities, best practices violations
 - "Review code", "check for issues", "audit code", "analyze PR"
@@ -33,11 +38,11 @@ Comprehensive skill for improving code quality through code review, surgical ref
 - Adding iterative improvement to agent outputs (code, reports, analysis)
 - Measuring and improving agent response quality
 
-## Part 1: Code Review
+## Part 1: two-stage review (spec compliance first, then code quality)
 
 ### Review Priorities
 
-When performing a code review, prioritize issues in this order:
+When performing a two-stage review (spec compliance first, then code quality), prioritize issues in this order:
 
 #### 🔴 CRITICAL (Block merge)
 - **Security**: Vulnerabilities, exposed secrets, authentication/authorization issues
@@ -297,6 +302,17 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 - Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Code Quality workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
+
 ## Multi-Language Review Examples
 
 ### Python
@@ -436,7 +452,7 @@ Use the gate to fail fast on lint errors, formatting drift, coverage regressions
 
 ## Best Practices
 
-### For Code Reviews
+### For two-stage reviews (spec compliance first, then code quality)
 - Focus on code behavior, not personal style preferences
 - Provide actionable feedback with examples
 - Balance critique with recognition of good work
@@ -459,9 +475,9 @@ Use the gate to fail fast on lint errors, formatting drift, coverage regressions
 
 ## Quality Improvement Checklist
 
-### Code Review Checklist
+### two-stage review (spec compliance first, then code quality) Checklist
 ```markdown
-## Code Review Assessment
+## two-stage review (spec compliance first, then code quality) Assessment
 
 ### Functionality
 - [ ] Logic is correct and achieves intended purpose

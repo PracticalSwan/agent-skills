@@ -1,7 +1,7 @@
 ---
 name: writing-plans
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [writing, plans, agents, delegation, workflow]
 description: "Use when you have a spec or requirements for a multi-step task, before touching code."
 ---
@@ -19,6 +19,8 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Context:** This should be run in a dedicated worktree (created by brainstorming skill).
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
 
 ## Bite-Sized Task Granularity
 
@@ -112,7 +114,7 @@ After saving the plan, offer execution choice:
 **If Subagent-Driven chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
 - Stay in this session
-- Fresh subagent per task + code review
+- Fresh subagent per task + two-stage review (spec compliance first, then code quality)
 
 **If Parallel Session chosen:**
 - Guide them to open new session in worktree
@@ -125,6 +127,18 @@ After saving the plan, offer execution choice:
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Writing Plans output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

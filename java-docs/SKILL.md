@@ -1,7 +1,7 @@
 ---
 name: java-docs
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [java, docs, development, testing, quality]
 description: "Java Javadoc best practices. Use when adding or reviewing documentation for Java types, methods, packages, and public APIs."
 ---
@@ -27,11 +27,29 @@ description: "Java Javadoc best practices. Use when adding or reviewing document
 - Use `@author` to specify the author of the code.
 - Use `@deprecated` to mark a member as deprecated and provide an alternative.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
+## Documentation Stack Reference
+
+Inherit the shared stack from [documentation-patterns](../documentation-patterns/SKILL.md#shared-documentation-stack): source-of-truth discovery, audience framing, structure selection, verification, and freshness checks. Keep this skill focused on Java API documentation specifics instead of restating the full stack.
+
 ## Anti-Patterns
 
 - Repeating the method signature in prose: JavaDoc is most useful when it adds intent, constraints, and failure semantics.
 - Leaving exceptions or side effects undocumented: Callers cannot use the API safely if the contract is only visible in code.
 - Publishing examples that no longer compile: Broken snippets damage trust faster than missing snippets.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Java Docs output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
 
 ## Before and After Example
 
@@ -87,4 +105,4 @@ Preferred MCP Server: None required
 - [java-junit](../java-junit/SKILL.md): Use it when the workflow also needs JUnit 5 testing practices in Java.
 - [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
 - [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.

@@ -1,7 +1,7 @@
 ---
 name: mcp-builder
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [mcp, builder, workflow, quality, planning]
 description: "Build high-quality MCP servers with strong tool design, structured outputs, clear error handling, and realistic evaluations. Use when creating or improving MCP servers in TypeScript or Python for external APIs, services, or internal platforms."
 ---
@@ -10,7 +10,12 @@ description: "Build high-quality MCP servers with strong tool design, structured
 
 Design MCP servers that are easy for agents to discover, compose, and trust.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - You are creating a new MCP server around an external API or internal platform.
 - An existing MCP server needs better tool naming, schemas, pagination, or error handling.
@@ -170,6 +175,17 @@ Treat tool names, schemas, and error contracts as public interfaces; add version
 - Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Mcp Builder workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
+
 ## Included Assets
 
 - [MCP Best Practices](./reference/mcp_best_practices.md)
@@ -214,6 +230,6 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
 - [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.

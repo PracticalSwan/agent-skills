@@ -1,7 +1,7 @@
 ---
 name: documentation-authoring
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [documentation, authoring, docs, writing, quality]
 description: "Create structured docs from scratch — PRDs, technical specs, design docs, decision records, knowledge bases. Use when drafting documentation, writing proposals, defining requirements, or planning features."
 ---
@@ -10,8 +10,13 @@ description: "Create structured docs from scratch — PRDs, technical specs, des
 
 Expert guidance for creating structured, high-quality documentation across all types of technical and business documents.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Trigger Conditions:**
 - User mentions writing documentation: "write a doc", "draft a proposal", "create a spec", "write up"
@@ -378,11 +383,26 @@ Use this format for tracking implementation work and decisions:
 
 ---
 
+## Documentation Stack Reference
+
+Inherit the shared stack from [documentation-patterns](../documentation-patterns/SKILL.md#shared-documentation-stack): source-of-truth discovery, audience framing, structure selection, verification, and freshness checks. Keep this skill focused on drafting and refinement instead of restating the full stack.
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Documentation Authoring output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
 
 ## Documentation Quality Checklist
 

@@ -1,7 +1,7 @@
 ---
 name: notion-docs
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [notion, docs, writing, quality, templates]
 description: "Notion workspace management via MCP - create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content."
 ---
@@ -11,6 +11,9 @@ description: "Notion workspace management via MCP - create databases, pages, com
 > Tech Stack Target / Version: Notion API current version, Markdown-to-Notion transforms, and local template scripts.
 
 Use this skill when Notion is the system of record for specs, runbooks, project tracking, or knowledge management.
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 ## Current MCP Reality
 
@@ -22,6 +25,8 @@ As of March 2026, Notion documents two supported ways to use its MCP server:
 Hosted mode uses OAuth. Local mode uses an internal integration token. Official docs also list supported tools for searching content, reading pages, comments, users, and working with pages and databases.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Creating or updating Notion pages
 - Building project trackers or engineering knowledge bases
@@ -41,11 +46,26 @@ Hosted mode uses OAuth. Local mode uses an internal integration token. Official 
 - Official Notion guidance currently documents an average rate limit of 20 requests per second for integrations.
 - Tool names can vary slightly by MCP host, but the supported capabilities are stable: search, fetch page content, create or update pages, create or update databases, manage comments, and read user context.
 
+## Documentation Stack Reference
+
+Inherit the shared stack from [documentation-patterns](../documentation-patterns/SKILL.md#shared-documentation-stack): source-of-truth discovery, audience framing, structure selection, verification, and freshness checks. Keep this skill focused on Notion conversion and workspace behavior instead of restating the full stack.
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Notion Docs output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
 
 ## References & Resources
 

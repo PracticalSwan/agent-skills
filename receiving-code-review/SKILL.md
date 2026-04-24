@@ -1,23 +1,25 @@
 ---
 name: receiving-code-review
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [receiving, code, review, agents, delegation]
-description: "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation."
+description: "Use when receiving two-stage review (spec compliance first, then code quality) feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation."
 ---
 
-# Code Review Reception
+# two-stage review (spec compliance first, then code quality) Reception
 
 ## Overview
 
-Code review requires technical evaluation, not emotional performance.
+two-stage review (spec compliance first, then code quality) requires technical evaluation, not emotional performance.
 
 **Core principle:** Verify before implementing. Ask before assuming. Technical correctness over social comfort.
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
 
 ## The Response Pattern
 
 ```
-WHEN receiving code review feedback:
+WHEN receiving two-stage review (spec compliance first, then code quality) feedback:
 
 1. READ: Complete feedback without reacting
 2. UNDERSTAND: Restate requirement in own words (or ask)
@@ -182,6 +184,17 @@ State the correction factually and move on.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The receiving two-stage review trigger is matched to a concrete user symptom or artifact.
+2. Pass/fail: The core receiving two-stage review workflow is applied without skipping required inputs, outputs, or guardrails.
+3. Pass/fail: Evidence is captured from the relevant file, command, rendered artifact, or external source before claiming success.
+4. Pressure-test scenario: Apply the skill to an ambiguous request with one missing input and one tempting shortcut.
+5. Success metric: Zero rationalizations; unknowns stay explicit until verified.
+
+
 ## Real Examples
 
 **Performative Agreement (Bad):**
@@ -238,7 +251,7 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the Code Review Reception skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- Fallback prompt: "Use the two-stage review (spec compliance first, then code quality) Reception skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
 - Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 

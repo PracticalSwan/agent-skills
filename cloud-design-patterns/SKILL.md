@@ -1,7 +1,7 @@
 ---
 name: cloud-design-patterns
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [cloud, design, patterns, architecture, operations]
 description: "Choose and compare cloud design patterns for distributed systems. Use when reviewing architecture, selecting workload patterns, or mapping reliability, performance, messaging, security, and migration concerns to concrete design options."
 ---
@@ -10,7 +10,12 @@ description: "Choose and compare cloud design patterns for distributed systems. 
 
 Use proven distributed-systems patterns to choose safer architectures and surface trade-offs early.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - You are designing or reviewing a cloud or distributed-system architecture.
 - A workload has reliability, latency, scaling, messaging, migration, or security concerns.
@@ -52,6 +57,17 @@ Ask these before locking in a pattern:
 - Changing infrastructure before inspecting the current state: Cloud drift and hidden dependencies make blind edits risky.
 - Hardcoding credentials or environment assumptions: Rollouts stop being reproducible and secrets become harder to rotate.
 - Skipping rollback, observability, or validation planning: You only notice the missing safeguards after the deployment is already live.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Cloud Design Patterns workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
 
 ## Scripts And References
 

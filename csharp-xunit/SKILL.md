@@ -1,7 +1,7 @@
 ---
 name: csharp-xunit
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [dotnet, testing, development, quality, automation]
 description: "xUnit testing patterns and data-driven test guidance. Use when writing or reviewing .NET unit tests."
 ---
@@ -12,11 +12,25 @@ description: "xUnit testing patterns and data-driven test guidance. Use when wri
 
 Your goal is to help me write effective unit tests with XUnit, covering both standard and data-driven testing approaches.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Anti-Patterns
 
 - Treating fixtures as hidden setup: Readers lose sight of the behavior under test when too much state is shared implicitly.
 - Asserting only the happy path: Unit tests miss the contract if failure and edge cases are not explicit.
 - Using vague test names: A failing test should explain the broken behavior before anyone opens the body.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Csharp Xunit implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Before and After Example
 
@@ -139,5 +153,5 @@ Preferred MCP Server: None required
 
 - [dotnet-best-practices](../dotnet-best-practices/SKILL.md): Use it when the workflow also needs .NET architecture and maintainability guidance.
 - [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.

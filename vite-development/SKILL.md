@@ -1,7 +1,7 @@
 ---
 name: vite-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [vite, development, testing, quality, automation]
 description: "Vite 8.0.10 build tooling — HMR, fast builds, plugins, and optimized production assets. Use when configuring Vite, setting up React/Vue projects with Vite, or optimizing frontend build performance."
 ---
@@ -12,11 +12,29 @@ description: "Vite 8.0.10 build tooling — HMR, fast builds, plugins, and optim
 
 Expert guidance for using Vite 8.0.10 as the build tool for React and other web applications with modern frontend development patterns. Documentation grounded in the official Vite docs at https://vite.dev/.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
+## Component Review Rubric Reference
+
+Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component-review-rubric) before approving Vite components, then run the Vite-specific checks below.
+
 ## Anti-Patterns
 
 - Hard-coding environment-specific URLs: Builds become fragile as soon as the app moves between local, staging, and production.
 - Treating plugin order as incidental: Vite plugins often transform the same files, so ordering bugs are easy to create.
 - Assuming fast HMR guarantees good production output: Bundle quality and runtime behavior still need explicit review.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Vite Development guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
 
 ## Before and After Example
 
@@ -47,6 +65,8 @@ export default defineConfig(({ mode }) => {
 Makes the proxy configuration mode-aware and driven by typed environment input instead of hard-coded URLs.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Project Setup & Configuration:**
 - Initializing new Vite projects

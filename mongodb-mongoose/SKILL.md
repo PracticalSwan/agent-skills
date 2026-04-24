@@ -1,7 +1,7 @@
 ---
 name: mongodb-mongoose
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [mongodb, mongoose, development, testing, quality]
 description: "MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps."
 ---
@@ -12,7 +12,12 @@ description: "MongoDB with Mongoose — schemas, models, aggregation pipelines, 
 
 Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and Atlas integration for Node.js/Next.js applications.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use This Skill
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Designing MongoDB schemas and data models
 - Building Mongoose models with validation and middleware
@@ -30,6 +35,17 @@ Comprehensive guidance for MongoDB database design, Mongoose ODM patterns, and A
 - Modeling documents like normalized tables by default: MongoDB performance depends on query-driven shape, not relational purity.
 - Returning full hydrated documents for every request: Over-fetching and hydration overhead accumulate quickly in API paths.
 - Adding middleware without write-path tests: Hooks can silently change create, update, and migration behavior.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Mongodb Mongoose implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Before and After Example
 
@@ -378,4 +394,4 @@ Preferred MCP Server: MongoDB MCP
 - [javascript-development](../javascript-development/SKILL.md): Use it when the workflow also needs modern JavaScript and TypeScript application code.
 - [nextjs-development](../nextjs-development/SKILL.md): Use it when the workflow also needs Next.js App Router and server-first React patterns.
 - [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.

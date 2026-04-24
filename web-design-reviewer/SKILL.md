@@ -1,7 +1,7 @@
 ---
 name: web-design-reviewer
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [web, design, reviewer, frontend, ui]
 description: "Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing."
 ---
@@ -10,7 +10,12 @@ description: "Visual inspection of live websites to find and fix design issues. 
 
 Use this skill for visual QA and source-level fixes after a page is already running. This is not the right skill for functional automation or regression suites.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Reviewing a live page for layout or spacing defects
 - Checking responsive behavior at a few critical widths
@@ -39,6 +44,17 @@ These tool names are current in the Playwright MCP server used by Codex:
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Web Design Reviewer guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
 
 ## Review Checklist
 

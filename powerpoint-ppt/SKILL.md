@@ -1,7 +1,7 @@
 ---
 name: powerpoint-ppt
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [slides, ppt, docs, writing, quality]
 description: "PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files."
 ---
@@ -12,11 +12,16 @@ description: "PowerPoint (.pptx) manipulation via MCP server. Use for creating s
 
 Use this skill when a `.pptx` deck is the output and slide composition matters.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Current MCP Reality
 
 Presentation MCP tooling is host-dependent. Some clients expose Office presentation tools directly, while others do not. Do not assume stable public tool names. If the current client lacks those tools, use the included local automation script or generate the content structure first and import it into PowerPoint.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Creating a deck from structured content
 - Applying templates, branding, and slide layouts
@@ -30,11 +35,26 @@ Presentation MCP tooling is host-dependent. Some clients expose Office presentat
 3. Keep one idea per slide and treat text density as a defect.
 4. Validate the final deck visually before calling it done.
 
+## MCP Fallback – Native Automation
+
+When MCP is unavailable, use native automation: `python-pptx` for `.pptx`, image export or screenshot checks for visual validation, and manual review for animations or speaker notes. Preserve slide order, layouts, theme fonts, media, notes, and aspect ratio, then reopen or render the deck before claiming success.
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Powerpoint Ppt artifact type, target format, and required output fidelity are stated before editing.
+2. Pass/fail: MCP availability is checked and the native automation fallback path is named when MCP is absent.
+3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
+4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
+5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
+
 
 ## Deck Checklist
 

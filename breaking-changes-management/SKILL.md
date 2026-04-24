@@ -1,7 +1,7 @@
 ---
 name: breaking-changes-management
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [breaking, changes, management, workflow, quality]
 description: "Manage breaking API changes, migration guides, deprecation notices, and semver versioning. Use when introducing breaking changes, writing migration paths, updating changelogs, or releasing major versions."
 ---
@@ -10,7 +10,12 @@ description: "Manage breaking API changes, migration guides, deprecation notices
 
 Use this skill when behavior, interfaces, configuration, or compatibility contracts change in a way that can break consumers.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Releasing a major version
 - Renaming or removing public APIs
@@ -38,6 +43,17 @@ Use this skill when behavior, interfaces, configuration, or compatibility contra
 - Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
 - Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Breaking Changes Management workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
 
 ## Migration Checklist
 
@@ -82,6 +98,6 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
 - [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.

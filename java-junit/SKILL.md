@@ -1,7 +1,7 @@
 ---
 name: java-junit
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [java, testing, development, quality, automation]
 description: "JUnit 5 testing patterns and parameterized-test guidance. Use when writing or reviewing Java unit tests."
 ---
@@ -12,11 +12,25 @@ description: "JUnit 5 testing patterns and parameterized-test guidance. Use when
 
 Your goal is to help me write effective unit tests with JUnit 5, covering both standard and data-driven testing approaches.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Anti-Patterns
 
 - Combining multiple behaviors in one test: A single failure should map cleanly to one broken contract.
 - Using sleeps for asynchronous behavior: Time-based tests stay flaky even when the implementation is correct.
 - Testing implementation details instead of behavior: Refactors become noisy because the tests are coupled to internals.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Java Junit implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Before and After Example
 
@@ -128,5 +142,5 @@ Preferred MCP Server: None required
 
 - [java-docs](../java-docs/SKILL.md): Use it when the workflow also needs Java API and JavaDoc documentation guidance.
 - [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.

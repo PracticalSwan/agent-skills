@@ -1,14 +1,19 @@
 ---
 name: custom-agent-usage
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [custom, usage, agents, delegation, workflow]
 description: "Discover, validate, and invoke .agent.md custom agents. Use when finding agent files in the local Claude or VS Code Insiders directories, checking frontmatter, verifying disable-model-invocation, or determining agentName for runSubagent calls."
 ---
 
 # Custom Agent Usage
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 Activate this skill when:
 - Discovering available custom agents from the local Claude or VS Code Insiders agent directories
@@ -100,6 +105,17 @@ runSubagent({
 - Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Custom Agent Usage workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## Workflow Example
 

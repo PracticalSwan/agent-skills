@@ -1,7 +1,7 @@
 ---
 name: web-testing
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [web, testing, workflow, automation, guidance]
 description: "Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications."
 ---
@@ -10,8 +10,13 @@ description: "Playwright automation, Chrome DevTools debugging, and browser inte
 
 Comprehensive toolkit for testing and debugging web applications using Playwright automation and Chrome DevTools.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Playwright Testing:**
 - Testing frontend functionality in a real browser
@@ -582,6 +587,17 @@ npx playwright codegen https://example.com
 - Skipping the bundled references or scripts: You lose the proven path the catalog is trying to preserve.
 - Claiming completion without concrete evidence: A future agent or reviewer cannot trust the result or resume the work safely.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Web Testing implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
+
 ## Testing Checklist
 
 ### Functionality
@@ -669,4 +685,4 @@ Preferred MCP Server: Playwright MCP
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
 - [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.

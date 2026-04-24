@@ -1,7 +1,7 @@
 ---
 name: subagent-driven-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [subagent, agents, delegation, workflow, automation]
 description: "Use when executing implementation plans with independent tasks in the current session."
 ---
@@ -12,7 +12,12 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 **Core principle:** Fresh subagent per task + two-stage review (spec then quality) = high quality, fast iteration
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 ```dot
 digraph when_to_use {
@@ -61,7 +66,7 @@ digraph process {
 
     "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Dispatch final code reviewer subagent for entire implementation" [shape=box];
+    "Dispatch final quality reviewer subagent for entire implementation" [shape=box];
     "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Read plan, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
@@ -80,22 +85,36 @@ digraph process {
     "Code quality reviewer subagent approves?" -> "Mark task complete in TodoWrite" [label="yes"];
     "Mark task complete in TodoWrite" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Dispatch final code reviewer subagent for entire implementation" [label="no"];
-    "Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:finishing-a-development-branch";
+    "More tasks remain?" -> "Dispatch final quality reviewer subagent for entire implementation" [label="no"];
+    "Dispatch final quality reviewer subagent for entire implementation" -> "Use superpowers:finishing-a-development-branch";
 }
 ```
 
 ## Prompt Templates
 
-- `./implementer-prompt.md` - Dispatch implementer subagent
-- `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
-- `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
+- [implementer-prompt.md](./implementer-prompt.md) - Dispatch implementer subagent
+- [spec-reviewer-prompt.md](./spec-reviewer-prompt.md) - Dispatch spec compliance reviewer subagent
+- [code-quality-reviewer-prompt.md](./code-quality-reviewer-prompt.md) - Dispatch code quality reviewer subagent
+
+**Prompt Evolution:** When review loops reveal recurring misses, update the smallest affected prompt template first, then rerun the same task pressure scenario before changing the main workflow.
 
 ## Anti-Patterns
 
 - Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+- Context leakage across tasks: Reusing prior task assumptions makes independent subagents silently inherit stale constraints.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Subagent Driven Development workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## Example Workflow
 
@@ -175,6 +194,10 @@ Done!
 
 ## Advantages
 
+| Comparison | Manual sequential execution | Subagent-driven execution |
+|------------|-----------------------------|---------------------------|
+| Review coverage per task | Usually 0-1 self-checks | 2 explicit gates: spec compliance, then code quality |
+
 **vs. Manual execution:**
 - Subagents follow TDD naturally
 - Fresh context per task (no confusion)
@@ -250,7 +273,7 @@ Before you claim the branch is ready, the coordinating agent must ask:
 **Required workflow skills:**
 - **superpowers:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
 - **superpowers:writing-plans** - Creates the plan this skill executes
-- **superpowers:requesting-code-review** - Code review template for reviewer subagents
+- **superpowers:requesting-code-review** - two-stage review (spec compliance first, then code quality) template for reviewer subagents
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks
 
 **Subagents should use:**

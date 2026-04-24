@@ -1,7 +1,7 @@
 ---
 name: notebooklm-management
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [research, management, documents, automation, productivity]
 description: "NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks."
 ---
@@ -11,6 +11,9 @@ description: "NotebookLM MCP server management - query notebooks, add from share
 > Tech Stack Target / Version: NotebookLM current web release, Markdown session capture, and URL-tracked research workflows.
 
 Use this skill when research should be grounded in NotebookLM notebooks instead of a generic web search.
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 ## Current MCP Reality
 
@@ -24,6 +27,8 @@ This repository already targets a real NotebookLM MCP workflow. The concrete too
 - `setup_auth`, `re_auth`, `cleanup_data`
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Querying a specific NotebookLM notebook
 - Adding a notebook from a share URL
@@ -57,6 +62,17 @@ This repository already targets a real NotebookLM MCP workflow. The concrete too
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
 - Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
 - Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Notebooklm Management workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## References & Resources
 

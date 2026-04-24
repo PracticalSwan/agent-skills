@@ -1,7 +1,7 @@
 ---
 name: php-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [php, development, testing, quality, automation]
 description: "PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, and authentication. Use when building PHP backends, creating API endpoints, configuring XAMPP, or integrating PHP with databases."
 ---
@@ -12,11 +12,25 @@ description: "PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, a
 
 Expert guidance for building high-quality PHP applications with PHP 8.0+, PDO for secure database access, RESTful API design, and XAMPP environment configuration following official PHP documentation at https://php.net.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Anti-Patterns
 
 - Interpolating SQL directly: Prepared statements are the baseline for correctness and security in PHP data access.
 - Mixing request parsing, business rules, and rendering: Tightly coupled scripts are harder to test and evolve into APIs.
 - Assuming validation alone prevents XSS: Output encoding still matters when user-controlled content is rendered back to HTML.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The PHP Development implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Before and After Example
 
@@ -35,6 +49,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 Replaces string interpolation with a prepared statement and a narrower result shape.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Core PHP Development:**
 - Building PHP RESTful APIs with proper HTTP methods
@@ -903,6 +919,6 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [sql-development](../sql-development/SKILL.md): Use it when the workflow also needs SQL query, schema, and performance tuning work.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.

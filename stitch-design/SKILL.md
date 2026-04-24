@@ -1,7 +1,7 @@
 ---
 name: stitch-design
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [stitch, design, frontend, ui, visual]
 description: "Google Stitch design toolkit — DESIGN.md generation, screen-to-React conversion, shadcn/ui integration, prompt enhancement, and Remotion walkthroughs. Use when working with Stitch MCP design projects."
 ---
@@ -10,7 +10,12 @@ description: "Google Stitch design toolkit — DESIGN.md generation, screen-to-R
 
 Comprehensive toolkit for Google Stitch projects — combining design system documentation, React component conversion, autonomous build loops, prompt engineering, video walkthroughs, and shadcn/ui component integration. Based on [google-labs-code/stitch-skills](https://github.com/google-labs-code/stitch-skills).
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use This Skill
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Analyzing Stitch projects and generating DESIGN.md files
 - Converting Stitch screens to modular React/TypeScript components
@@ -268,6 +273,17 @@ export function cn(...inputs: ClassValue[]) {
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Stitch Design guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
 
 ## References & Resources
 

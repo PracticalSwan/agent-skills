@@ -1,7 +1,7 @@
 ---
 name: azure-integrations
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [azure, integrations, cloud, architecture, operations]
 description: "Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps."
 ---
@@ -12,7 +12,12 @@ description: "Azure deployment for web apps — Static Web Apps, App Service, Bl
 
 Deployment and integration patterns for Azure cloud services, focusing on web application hosting, CI/CD automation, and infrastructure as code.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use This Skill
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Deploying Next.js or Vite/React apps to Azure
 - Setting up CI/CD workflows with GitHub Actions
@@ -28,6 +33,17 @@ Deployment and integration patterns for Azure cloud services, focusing on web ap
 - Changing infrastructure before inspecting the current state: Cloud drift and hidden dependencies make blind edits risky.
 - Hardcoding credentials or environment assumptions: Rollouts stop being reproducible and secrets become harder to rotate.
 - Skipping rollback, observability, or validation planning: You only notice the missing safeguards after the deployment is already live.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Azure Integrations implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Available Deployment Scripts
 

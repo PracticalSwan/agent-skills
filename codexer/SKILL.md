@@ -1,7 +1,7 @@
 ---
 name: codexer
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [codexer, agents, delegation, workflow, automation]
 description: "Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7."
 ---
@@ -10,8 +10,13 @@ description: "Python research assistant with Context7 MCP. Use for Python librar
 
 Expert Python researcher with 10+ years of software development experience. Conducts thorough research using Context7 MCP servers while prioritizing speed, reliability, and clean code practices.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Conducting library research and evaluation for Python projects
 - Fetching documentation via Context7 MCP tools
@@ -114,6 +119,17 @@ Expert Python researcher with 10+ years of software development experience. Cond
 - Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Codexer workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## Research Templates
 

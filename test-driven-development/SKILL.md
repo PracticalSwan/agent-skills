@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [test, workflow, quality, planning, delivery]
 description: "Use when implementing any feature or bugfix, before writing implementation code."
 ---
@@ -18,7 +18,11 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 **Violating the letter of the rules is violating the spirit of the rules.**
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Always:**
 - New features
@@ -38,6 +42,9 @@ Thinking "skip TDD just this once"? Stop. That's rationalization.
 ```
 NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 ```
+
+
+Increment patch on wording/clarity fixes. Increment minor when adding a new verification step, example, or anti-pattern. Major only on breaking changes to core workflow.
 
 Write code before the test? Delete it. Start over.
 
@@ -298,6 +305,17 @@ Tests-first force edge case discovery before implementing. Tests-after verify yo
 - Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Test Driven Development workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
+
 ## Modern Before and After Example
 
 ```tsx
@@ -455,6 +473,6 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.

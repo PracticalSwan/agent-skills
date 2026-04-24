@@ -1,7 +1,7 @@
 ---
 name: sql-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [sql, development, testing, quality, automation]
 description: "T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features."
 ---
@@ -12,11 +12,25 @@ description: "T-SQL, stored procedures, and MS SQL Server DBA practices. Use whe
 
 Comprehensive SQL development guidelines combining SQL coding standards, stored procedure generation, and MS SQL Server DBA best practices.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Anti-Patterns
 
 - Using `SELECT *` in production queries: It hides contract drift and pulls more data than the caller needs.
 - Writing non-SARGable predicates: Functions on indexed columns turn otherwise cheap queries into table scans.
 - Ignoring transaction and lock behavior: Correct SQL needs both logical correctness and concurrency safety.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The SQL Development implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Before and After Example
 
@@ -36,6 +50,8 @@ WHERE created_at >= '2026-01-01'
 Uses explicit columns and a SARGable date range so indexes can do their work.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Writing SQL queries and stored procedures
 - Designing database schemas and table structures
@@ -210,5 +226,5 @@ Preferred MCP Server: None required
 
 - [php-development](../php-development/SKILL.md): Use it when the workflow also needs modern PHP backend implementation.
 - [powerbi-modeling](../powerbi-modeling/SKILL.md): Use it when the workflow also needs Power BI semantic model design and DAX work.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.

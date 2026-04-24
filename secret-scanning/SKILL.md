@@ -1,7 +1,7 @@
 ---
 name: secret-scanning
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [secret, scanning, security, audit, remediation]
 description: "Configure GitHub secret scanning and push protection, triage secret alerts, and run local pre-commit secret audits. Use when enabling secret scanning, handling blocked pushes, defining custom patterns, or checking a repo for accidental credentials before commit."
 ---
@@ -12,7 +12,12 @@ description: "Configure GitHub secret scanning and push protection, triage secre
 
 Protect repositories from committed credentials and make secret handling part of the normal engineering workflow.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - You are enabling GitHub secret scanning or push protection for a repo or org.
 - A push was blocked because a secret was detected.
@@ -79,11 +84,29 @@ Guidelines:
 - review exclusions and custom patterns periodically
 - treat custom patterns as production policy, not one-off experiments
 
+## Zero-Trust Verification
+
+- [ ] Treat every matched token, filename, commit, and scanner result as untrusted until validated.
+- [ ] Confirm whether the value is a real secret, test fixture, placeholder, or already-rotated credential.
+- [ ] Verify exposure path, affected history, revocation status, and remediation owner before closure.
+- [ ] Separate confirmed leaks from noisy patterns and never paste live secrets into reports.
+
 ## Anti-Patterns
 
 - Acting on partial evidence: Security work needs a clear scope and proof trail before remediation choices are safe.
 - Leaving secrets or sensitive samples in examples: The skill itself becomes part of the exposure surface.
 - Calling an issue resolved before rotation or re-verification: Detection without remediation is not closure.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The reviewed scope, assets, trust boundaries, and attacker assumptions are explicitly named.
+2. Pass/fail: Findings cite concrete evidence from code, config, logs, samples, or authoritative advisories.
+3. Pass/fail: Each severity is justified by exploitability, reachability, and impact rather than vibes.
+4. Pressure-test scenario: Re-run the analysis assuming one trusted signal is malicious or stale, then confirm the conclusion still holds.
+5. Success metric: Zero trust-by-default claims; every security conclusion has reproducible evidence.
+
 
 ## Scripts And References
 

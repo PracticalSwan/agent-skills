@@ -1,7 +1,7 @@
 ---
 name: verification-before-completion
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [verification, completion, workflow, quality, planning]
 description: "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always."
 ---
@@ -16,11 +16,16 @@ Claiming work is complete without verification is dishonesty, not efficiency.
 
 **Violating the letter of this rule is violating the spirit of this rule.**
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 ## The Iron Law
 
 ```
 NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
 ```
+
+
+Increment patch on wording/clarity fixes. Increment minor when adding a new verification step, example, or anti-pattern. Major only on breaking changes to core workflow.
 
 If you haven't run the verification command in this message, you cannot claim it passes.
 
@@ -119,6 +124,8 @@ From 24 failure memories:
 
 ## When To Apply
 
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
+
 **ALWAYS before:**
 - ANY variation of success/completion claims
 - ANY expression of satisfaction
@@ -148,6 +155,18 @@ This is non-negotiable.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Verification Before Completion workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
@@ -173,6 +192,6 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
 - [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.

@@ -1,7 +1,7 @@
 ---
 name: excalidraw-diagram-generator
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [excalidraw, diagram, generator, design, frontend]
 description: "Generate .excalidraw diagrams from natural language. Use when creating flowcharts, mind maps, system architecture diagrams, sequence diagrams, ER diagrams, network diagrams, or any visual process visualization."
 ---
@@ -10,8 +10,13 @@ description: "Generate .excalidraw diagrams from natural language. Use when crea
 
 A skill for generating Excalidraw-format diagrams from natural language descriptions. This skill helps create visual representations of processes, systems, relationships, and ideas without manual drawing.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 Use this skill when users request:
 
@@ -215,6 +220,17 @@ Would you like me to start with the high-level view?"
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Excalidraw Diagram Generator implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Example Prompts and Responses
 

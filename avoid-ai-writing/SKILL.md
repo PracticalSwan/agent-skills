@@ -1,7 +1,7 @@
 ---
 name: avoid-ai-writing
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [avoid, ai, writing, docs, quality]
 description: "Audit and rewrite content to remove AI writing patterns (\\\"AI-isms\\\"). Use this skill when asked to \\\"remove AI-isms,\\\" \\\"clean up AI writing,\\\" \\\"edit writing for AI patterns,\\\" \\\"audit writing for AI tells,\\\" or \\\"make this sound less like AI.\\\" Supports a detection-only mode that flags patterns without rewriting."
 ---
@@ -9,6 +9,9 @@ description: "Audit and rewrite content to remove AI writing patterns (\\\"AI-is
 # Avoid AI Writing — Audit & Rewrite
 
 You are editing content to remove AI writing patterns ("AI-isms") that make text sound machine-generated.
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 ## Modes
 
@@ -480,6 +483,18 @@ The replacement table provides defaults, not mandates. If a flagged word is clea
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Avoid Ai Writing output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

@@ -1,7 +1,7 @@
 ---
 name: documentation-automation
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [documentation, automation, docs, writing, quality]
 description: "Automate doc generation with JSDoc/TSDoc, linters, and pre-commit hooks. Use when setting up markdownlint, configuring doc linting pipelines, integrating JSDoc/TSDoc, or building automated documentation workflows."
 ---
@@ -10,7 +10,12 @@ description: "Automate doc generation with JSDoc/TSDoc, linters, and pre-commit 
 
 Use this skill when documentation quality should be enforced by scripts, CI, or local hooks instead of manual review alone.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Adding `docs:*` scripts to a project
 - Setting up markdownlint, cspell, lychee, or remark-lint
@@ -33,11 +38,26 @@ Use this skill when documentation quality should be enforced by scripts, CI, or 
 3. Keep failure output actionable and fast.
 4. Prefer incremental checks in pre-commit and fuller checks in CI.
 
+## Documentation Stack Reference
+
+Inherit the shared stack from [documentation-patterns](../documentation-patterns/SKILL.md#shared-documentation-stack): source-of-truth discovery, audience framing, structure selection, verification, and freshness checks. Keep this skill focused on automation pipelines instead of restating the full stack.
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Documentation Automation output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
 
 ## References & Resources
 

@@ -1,7 +1,7 @@
 ---
 name: canvas-design
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [canvas, design, frontend, ui, visual]
 description: "Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking."
 ---
@@ -10,7 +10,12 @@ description: "Design philosophy docs and canvas-based visual creation. Use when 
 
 A two-step design workflow: first articulate a design philosophy, then create visual designs on canvas. Based on the [anthropics/skills canvas-design](https://github.com/anthropics/skills) approach.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use This Skill
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Creating design philosophy documents (.md)
 - Generating visual canvas designs (.png/.pdf)
@@ -80,6 +85,17 @@ For multi-page designs:
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Canvas Design implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ### Quality Checklist
 - [ ] Every element traces back to a stated principle

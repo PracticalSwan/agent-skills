@@ -1,7 +1,7 @@
 ---
 name: powerbi-modeling
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [powerbi, modeling, documents, automation, productivity]
 description: "Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI."
 ---
@@ -12,7 +12,12 @@ description: "Power BI semantic models - DAX measures, star schemas, relationshi
 
 Use this skill when the work is inside a Power BI semantic model rather than a generic SQL schema or spreadsheet.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Designing or cleaning up a star schema
 - Creating or reviewing DAX measures
@@ -42,6 +47,17 @@ For Microsoft documentation, the Microsoft Learn MCP server is a good companion.
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
 - Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
 - Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Powerbi Modeling implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## References & Resources
 

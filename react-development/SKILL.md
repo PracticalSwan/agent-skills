@@ -1,7 +1,7 @@
 ---
 name: react-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [react, development, testing, quality, automation]
 description: "React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders."
 ---
@@ -12,11 +12,29 @@ description: "React 19+ with TypeScript — hooks, custom hooks, state managemen
 
 Expert guidance for building high-quality React applications with React 19+, modern hooks, TypeScript, and best practices following official React documentation at https://react.dev.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
+## Component Review Rubric Reference
+
+Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component-review-rubric) before approving React components, then run the React-specific checks below.
+
 ## Anti-Patterns
 
 - Fetching everything in client effects by default: Server-first data loading is usually simpler, faster, and easier to cache.
 - Adding memoization before profiling: Manual optimizations can create stale-prop bugs and hide simpler design fixes.
 - Skipping keyboard and accessible-name review: A component is not done if only pointer users can operate it reliably.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The React Development guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
 
 ## Before and After Example
 
@@ -42,6 +60,8 @@ export async function Dashboard() {
 Lets the server boundary load data directly and keeps the client side focused on interaction, not bootstrapping.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Core React Development:**
 - Building React components with hooks and TypeScript
@@ -1168,4 +1188,4 @@ Preferred MCP Server: None required
 - [javascript-development](../javascript-development/SKILL.md): Use it when the workflow also needs modern JavaScript and TypeScript application code.
 - [nextjs-development](../nextjs-development/SKILL.md): Use it when the workflow also needs Next.js App Router and server-first React patterns.
 - [web-testing](../web-testing/SKILL.md): Use it when the workflow also needs browser and end-to-end testing evidence.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.

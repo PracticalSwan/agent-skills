@@ -1,7 +1,7 @@
 ---
 name: development-workflow
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [workflow, quality, planning, delivery]
 description: "Spec-driven development lifecycle — EARS requirements, technical design docs, implementation tracking, and contribution guidelines. Use when planning features, defining requirements, or managing project lifecycle."
 ---
@@ -10,8 +10,13 @@ description: "Spec-driven development lifecycle — EARS requirements, technical
 
 Structured approach to software development ensuring requirements are clearly defined, designs are meticulously planned, and implementations are thoroughly documented with proper contribution practices.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Project Planning & Requirements:**
 - Starting new features or phases of work
@@ -28,7 +33,7 @@ Structured approach to software development ensuring requirements are clearly de
 - Following project-specific contribution guidelines
 
 **Quality Assurance:**
-- Ensuring code review standards are met
+- Ensuring two-stage review (spec compliance first, then code quality) standards are met
 - Validating tests and requirements before implementation
 - Managing project decisions and trade-offs documentation
 - Tracking progress and blockers
@@ -76,6 +81,11 @@ Specifying what should not happen
 - "The system **shall not** store passwords in plain text."
 - "The application **shall not** allow simultaneous sessions from different locations unless configured."
 
+**6. AI-Agent Requirements**
+Specifying agent-visible constraints, handoff evidence, and autonomous execution limits
+- "The agent **shall** run the documented verification command before claiming completion."
+- "The agent **shall not** modify files outside the task scope without explicit approval."
+
 #### Complete EARS Example
 
 ```markdown
@@ -99,6 +109,9 @@ Specifying what should not happen
 
 ## Optional Features
 - O-001: The system **may** support social login providers (Google, Facebook, GitHub).
+
+## AI-Agent Requirements
+- A-001: The agent **shall** report changed files, commands run, and unresolved risks before handoff.
 ```
 
 #### EARS Grammar and Parser Example
@@ -106,12 +119,12 @@ Specifying what should not happen
 ```ebnf
 requirement = id ":" [trigger ","] subject "shall" action "." ;
 trigger = ("When" | "If" | "While" | "Upon") condition ;
-id = ("U" | "E" | "S" | "N" | "O") "-" digit digit digit ;
+id = ("U" | "E" | "S" | "N" | "O" | "A") "-" digit digit digit ;
 ```
 
 ```typescript
 const earsRequirement =
-  /^(?<id>[UESNO]-\d{3}):\s(?:(?<keyword>When|If|While|Upon)\s(?<condition>.+?),\s)?(?<subject>The system|The user)\sshall\s(?<action>.+)\.$/;
+  /^(?<id>[UESNOA]-\d{3}):\s(?:(?<keyword>When|If|While|Upon)\s(?<condition>.+?),\s)?(?<subject>The system|The user|The agent)\sshall\s(?<action>.+)\.$/;
 ```
 
 ## Overview
@@ -198,6 +211,12 @@ Frontend → User: Show success message
 - Database indexing requirements
 - CDN for static assets
 
+## Agentic Considerations
+- Files or directories agents may modify
+- Commands agents must run before completion
+- Decisions that require human approval
+- Handoff evidence required for review
+
 ## Implementation Phases
 1. Phase 1: Core CRUD operations
 2. Phase 2: Validation and error handling
@@ -211,40 +230,25 @@ Frontend → User: Show success message
 # Tasks: [Feature Name] Implementation
 
 ## Phase 1: Foundation
-- [ ] Setup project structure and dependencies
-- [ ] Create base data models
-- [ ] Configure database schema
-- [ ] Setup API endpoints scaffolding
+- [ ] Confirm scope, dependencies, and agent boundaries
+- [ ] Create data model and migration scaffold
 
 ## Phase 2: Core Functionality
-- [ ] Implement feature creation endpoint
-- [ ] Implement feature retrieval endpoint
-- [ ] Implement feature update endpoint
-- [ ] Implement feature deletion endpoint
+- [ ] Implement core API or service path
+- [ ] Add validation, errors, and persistence
 
 ## Phase 3: Frontend Integration
 - [ ] Build main component
-- [ ] Integrate with API
-- [ ] Add loading and error states
-- [ ] Implement user feedback messages
+- [ ] Cover loading, empty, error, and success states
 
-## Phase 4: Testing
-- [ ] Unit tests for service layer
-- [ ] Integration tests for API
-- [ ] Component tests for UI
-- [ ] End-to-end tests with Playwright
+## Phase 4: Verification
+- [ ] Add unit/integration/component tests for changed paths
+- [ ] Run required verification commands and record evidence
 
-## Phase 5: Deployment
-- [ ] Create migration scripts
-- [ ] Setup CI/CD pipeline
-- [ ] Deploy to staging environment
-- [ ] Conduct QA review
-- [ ] Deploy to production
+## Phase 5: Release Notes
+- [ ] Document behavior, migration, and user-facing changes
 
-## Phase 6: Documentation
-- [ ] Update API documentation
-- [ ] Write user documentation
-- [ ] Update changelog
+Full scaffold reference: `examples/feature-spec-example.md` or `scripts/create-spec-scaffold.ps1`.
 ```
 
 ---
@@ -256,6 +260,17 @@ Frontend → User: Show success message
 - Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
 - Treating verification as optional cleanup: The last mile is where regressions and missing updates are usually hiding.
 - Mixing planning, implementation, and release work in one jump: You lose the causal chain that explains why a change is safe.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Development Workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
 
 ### Pre-Contribution Checklist
 
@@ -538,12 +553,12 @@ Closes issue #123"
 - [ ] Changes do not break existing functionality
 ```
 
-### Code Review Guidelines
+### two-stage review (spec compliance first, then code quality) Guidelines
 
 #### For Reviewers
 
 ```markdown
-## Code Review Principles
+## two-stage review (spec compliance first, then code quality) Principles
 
 ### Be Constructive
 - Focus on improving code, not criticizing it
@@ -698,7 +713,7 @@ Closes issue #123"
 - [ ] Code comments added/updated
 - [ ] User documentation updated if needed
 
-### Code Review
+### two-stage review (spec compliance first, then code quality)
 - [ ] Pull request created
 - [ ] At least one approval received
 - [ ] All review comments addressed
@@ -777,7 +792,7 @@ Closes issue #123"
 - Set up feature branches
 - Implement core functionality
 - Write tests alongside code
-- Code review and iteration
+- two-stage review (spec compliance first, then code quality) and iteration
 
 ### Phase 3: Testing & QA
 - Run automated tests
@@ -819,7 +834,7 @@ Closes issue #123"
 
 ### Before Release
 - [ ] All tests passing
-- [ ] Code review completed
+- [ ] two-stage review (spec compliance first, then code quality) completed
 - [ ] Documentation updated
 - [ ] Security review (if needed)
 - [ ] Release notes prepared
@@ -872,7 +887,7 @@ Preferred MCP Server: None required
 
 ## Related Skills
 
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [systematic-debugging](../systematic-debugging/SKILL.md): Use it when the workflow also needs root-cause debugging before proposing fixes.
 - [test-driven-development](../test-driven-development/SKILL.md): Use it when the workflow also needs test-first implementation and regression safety.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.

@@ -1,7 +1,7 @@
 ---
 name: serena-usage
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [serena, usage, workflow, automation, guidance]
 description: "Serena MCP for project memory and code navigation. Use when managing Serena memories, navigating symbols, performing intelligent refactoring, or maintaining context/continuity across AI agent sessions."
 ---
@@ -10,8 +10,13 @@ description: "Serena MCP for project memory and code navigation. Use when managi
 
 Effective usage of the Serena MCP Server for project memory management, code intelligence, and maintaining continuity across AI agent sessions.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **MUST activate when:**
 - Serena is available for the project
@@ -508,6 +513,17 @@ Serena provides reflection tools to maintain focus:
 - Skipping the bundled references or scripts: You lose the proven path the catalog is trying to preserve.
 - Claiming completion without concrete evidence: A future agent or reviewer cannot trust the result or resume the work safely.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Serena Usage workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
+
 ## References & Resources
 
 ### Documentation
@@ -685,4 +701,4 @@ Preferred MCP Server: Serena MCP
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
 - [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the workflow also needs final evidence checks before claiming completion.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.

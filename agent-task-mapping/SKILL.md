@@ -1,14 +1,19 @@
 ---
 name: agent-task-mapping
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [task, mapping, agents, delegation, workflow]
 description: "Map tasks to specialist agents. Use when choosing which agent for a job, comparing agent capabilities, or routing to React/Next.js/Playwright/docs/code-quality experts. Keywords: which agent, best agent for this, delegate to expert, agent capability mapping."
 ---
 
 # Agent Task Mapping
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 Use this skill when:
 - Determining which specialized agent to delegate a task to
@@ -28,6 +33,17 @@ See [Agent Details](./references/agent-details.md) for comprehensive information
 - Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Agent Task Mapping workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## Examples & Scripts
 
@@ -54,7 +70,7 @@ See [Agent Details](./references/agent-details.md) for comprehensive information
 
 When choosing an agent for delegation:
 
-1. **Identify task type**: Is it documentation, testing, code review, or development?
+1. **Identify task type**: Is it documentation, testing, two-stage review (spec compliance first, then code quality), or development?
 2. **Match to specialization**: Find agent whose description aligns with task
 3. **Check availability**: Verify agent exists and has proper frontmatter configuration
 4. **Use specific agentName**: Delegate using exact name from agent's frontmatter

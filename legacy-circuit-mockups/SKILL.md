@@ -1,7 +1,7 @@
 ---
 name: legacy-circuit-mockups
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [legacy, circuit, mockups, design, frontend]
 description: "Breadboard circuit mockups via HTML5 Canvas. Use when creating circuit layouts, visualizing 6502/retro electronics components, drawing breadboard diagrams, or designing vintage computer schematics with discrete parts."
 ---
@@ -10,7 +10,12 @@ description: "Breadboard circuit mockups via HTML5 Canvas. Use when creating cir
 
 A skill for creating breadboard circuit mockups and visual diagrams for retro computing and electronics projects. This skill leverages HTML5 Canvas drawing mechanisms to render interactive circuit layouts featuring vintage components like the 6502 microprocessor, 555 timer ICs, EEPROMs, and 7400-series logic gates.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use This Skill
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - User asks to create a breadboard layout or circuit mockup
 - User wants visualized component placement for legacy electronics
@@ -218,6 +223,17 @@ const cellY = Math.floor(y / gridSize) * gridSize;
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Legacy Circuit Mockups implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Build Examples
 

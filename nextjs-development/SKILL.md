@@ -1,7 +1,7 @@
 ---
 name: nextjs-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [nextjs, development, testing, quality, automation]
 description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation."
 ---
@@ -12,11 +12,29 @@ description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, 
 
 Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.2.4**) with the App Router, TypeScript, and modern patterns. Covers project structure, Server/Client Components, data fetching, caching with the `use cache` directive, Server Actions, MCP devtools integration, and performance optimization.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
+## Component Review Rubric Reference
+
+Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component-review-rubric) before approving Next.js components, then run the Next.js-specific checks below.
+
 ## Anti-Patterns
 
 - Mixing server and client responsibilities: Bundle size, caching, and auth decisions become harder to reason about.
 - Using legacy synchronous request APIs: Modern Next.js expects async request surfaces such as `params`, `headers()`, and `cookies()`.
 - Skipping route-level loading and error states: Streaming apps feel broken when only the happy path is implemented.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Nextjs Development guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
 
 ## Before and After Example
 
@@ -45,6 +63,8 @@ export default async function ProductPage({
 Moves data fetching into the server component and follows the async request API used in current Next.js releases.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 ### App Router & Routing
 - Creating or modifying `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`, `not-found.tsx`

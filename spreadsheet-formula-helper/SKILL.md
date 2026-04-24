@@ -1,7 +1,7 @@
 ---
 name: spreadsheet-formula-helper
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [spreadsheet, formula, helper, documents, automation]
 description: "Write and debug spreadsheet formulas (Excel/Google Sheets), pivot tables, and array formulas; translate between dialects; use when users need working formulas with examples and edge-case checks."
 ---
@@ -9,6 +9,9 @@ description: "Write and debug spreadsheet formulas (Excel/Google Sheets), pivot 
 # Spreadsheet Formula Helper
 
 Produce reliable spreadsheet formulas with explanations.
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 ## Inputs to gather
 - Platform (Excel/Sheets), locale (comma vs. semicolon separators), sample data layout (headers, ranges), expected outputs, and constraints (volatile functions allowed?).
@@ -25,6 +28,10 @@ Produce reliable spreadsheet formulas with explanations.
 - Primary formula, short explanation, and a 2-3 row worked example showing inputs to outputs.
 - Optional: quick troubleshooting checklist for common errors.
 
+## MCP Fallback – Native Automation
+
+When MCP is unavailable, use native automation: local spreadsheet formulas, `openpyxl` for workbook inspection, CSV fixtures for examples, and manual recalculation notes for functions the local engine cannot evaluate. Preserve locale separators, absolute references, dynamic arrays, and Excel-vs-Sheets differences before claiming success.
+
 ## Anti-Patterns
 
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
@@ -32,6 +39,18 @@ Produce reliable spreadsheet formulas with explanations.
 - Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Spreadsheet Formula Helper artifact type, target format, and required output fidelity are stated before editing.
+2. Pass/fail: MCP availability is checked and the native automation fallback path is named when MCP is absent.
+3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
+4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
+5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

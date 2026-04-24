@@ -1,7 +1,7 @@
 ---
 name: context-map
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [context, map, agents, delegation, workflow]
 description: "Scope the real change surface before editing. Use when planning a feature, bugfix, refactor, or review and you need a concrete map of likely touch points, dependencies, tests, and nearby risks."
 ---
@@ -10,7 +10,12 @@ description: "Scope the real change surface before editing. Use when planning a 
 
 Build a task-focused map of the codebase before changing files.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - A request spans more than one file and the impact is not obvious yet.
 - You need to identify the minimum safe edit set before implementation.
@@ -108,6 +113,17 @@ Use this structure unless the user asked for a different format:
 - Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Context Map workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## Scripts And References
 

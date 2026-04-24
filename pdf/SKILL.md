@@ -1,7 +1,7 @@
 ---
 name: pdf
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [pdf, docs, writing, quality, templates]
 description: "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
 ---
@@ -10,7 +10,12 @@ description: "Use when tasks involve reading, creating, or reviewing PDF files w
 
 > Tech Stack Target / Version: PDF extraction, OCR-capable tooling, conversion scripts, and Acrobat-compatible review workflows.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to use
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
+
 - Read or review PDF content where layout and visuals matter.
 - Create PDFs programmatically with reliable formatting.
 - Validate final rendering before delivery.
@@ -77,6 +82,18 @@ pdftoppm -png $INPUT_PDF $OUTPUT_PREFIX
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The PDF artifact type, target format, and required output fidelity are stated before editing.
+2. Pass/fail: MCP availability is checked and the native automation fallback path is named when MCP is absent.
+3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
+4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
+5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

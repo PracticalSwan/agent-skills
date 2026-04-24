@@ -1,7 +1,7 @@
 ---
 name: writing-skills
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [writing, skills, docs, quality, templates]
 description: "Use when creating new skills, editing existing skills, or verifying skills work before deployment."
 ---
@@ -22,6 +22,8 @@ You write test cases (pressure scenarios with subagents), watch them fail (basel
 
 **Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 ## What is a Skill?
 
 A **skill** is a reference guide for proven techniques, patterns, or tools. Skills help future Claude instances find and apply effective approaches.
@@ -31,6 +33,9 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 **Skills are NOT:** Narratives about how you solved a problem once
 
 ## TDD Mapping for Skills
+
+
+Increment patch on wording/clarity fixes. Increment minor when adding a new verification step, example, or anti-pattern. Major only on breaking changes to core workflow.
 
 | TDD Concept | Skill Creation |
 |-------------|----------------|
@@ -63,14 +68,15 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 
 ## Skill Types
 
-### Technique
-Concrete method with steps to follow (condition-based-waiting, root-cause-tracing)
+| Type | Use For | Token Budget Target |
+|------|---------|---------------------|
+| Technique | Concrete method with steps to follow (condition-based-waiting, root-cause-tracing) | 300-700 words |
+| Pattern | Way of thinking about problems (flatten-with-flags, test-invariants) | 250-600 words |
+| Reference | API docs, syntax guides, tool documentation (office docs) | 150-350 words in SKILL.md; move details to references |
 
-### Pattern
-Way of thinking about problems (flatten-with-flags, test-invariants)
+### Skill Deprecation & Sunset
 
-### Reference
-API docs, syntax guides, tool documentation (office docs)
+Deprecate a skill when the workflow is obsolete, fully covered by a narrower maintained skill, or no longer passes pressure scenarios. Mark the replacement path in frontmatter description or Related Skills, preserve provenance briefly, and remove only after downstream clients no longer depend on the old trigger.
 
 ## Directory Structure
 
@@ -119,6 +125,8 @@ description: Use when [specific triggering conditions and symptoms]
 What is this? Core principle in 1-2 sentences.
 
 ## When to Use
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
+
 [Small inline flowchart IF decision non-obvious]
 
 Bullet list with SYMPTOMS and use cases
@@ -156,7 +164,7 @@ Concrete results
 
 The description should ONLY describe triggering conditions. Do NOT summarize the skill's process or workflow in the description.
 
-**Why this matters:** Testing revealed that when a description summarizes the skill's workflow, Claude may follow the description instead of reading the full skill content. A description saying "code review between tasks" caused Claude to do ONE review, even though the skill's flowchart clearly showed TWO reviews (spec compliance then code quality).
+**Why this matters:** Testing revealed that when a description summarizes the skill's workflow, Claude may follow the description instead of reading the full skill content. A description saying "two-stage review (spec compliance first, then code quality) between tasks" caused Claude to do ONE review, even though the skill's flowchart clearly showed TWO reviews (spec compliance then code quality).
 
 When the description was changed to just "Use when executing implementation plans with independent tasks" (no workflow summary), Claude correctly read the flowchart and followed the two-stage review process.
 
@@ -164,7 +172,7 @@ When the description was changed to just "Use when executing implementation plan
 
 ```yaml
 # ❌ BAD: Summarizes workflow - Claude may follow this instead of reading skill
-description: Use when executing plans - dispatches subagent per task with code review between tasks
+description: Use when executing plans - dispatches subagent per task with two-stage review (spec compliance first, then code quality) between tasks
 
 # ❌ BAD: Too much process detail
 description: Use for TDD - write test first, watch it fail, write minimal code, refactor
@@ -332,6 +340,17 @@ See @graphviz-conventions.dot for graphviz style rules.
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Writing Skills output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
+
 ## Code Examples
 
 **One excellent example beats many mediocre ones**
@@ -464,6 +483,8 @@ Different skill types need different test approaches:
 | "I'm confident it's good" | Overconfidence guarantees issues. Test anyway. |
 | "Academic review is enough" | Reading ≠ using. Test application scenarios. |
 | "No time to test" | Deploying untested skill wastes more time fixing it later. |
+| "Frontier models already know this" | Capability does not prove behavior under pressure. Test the actual agent path. |
+| "The system prompt already covers it" | Global rules need local triggers and examples. Test that this skill adds needed specificity. |
 
 **All of these mean: Test before deploying. No exceptions.**
 

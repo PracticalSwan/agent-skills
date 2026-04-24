@@ -1,7 +1,7 @@
 ---
 name: frontend-design
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [frontend, design, ui, visual]
 description: "UI/UX design — color theory (60-30-10 rule), responsive layouts, WCAG accessibility, CSS/Tailwind patterns, wireframes, and visual review. Use when designing interfaces, choosing palettes, writing CSS, or fixing layout/accessibility issues."
 ---
@@ -10,8 +10,13 @@ description: "UI/UX design — color theory (60-30-10 rule), responsive layouts,
 
 Expert guidance for creating beautiful, accessible, and responsive frontend designs using modern UI principles, color theory, and React+Tailwind CSS patterns.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Color & Design:**
 - Choosing color palettes for applications
@@ -539,11 +544,32 @@ export function FormField({
 
 ---
 
+## Component Review Rubric
+
+Use this shared rubric for React, Next.js, Vite, and premium UI work.
+
+1. Contract: props, state, events, errors, and data ownership are explicit.
+2. States: loading, empty, error, success, disabled, and responsive states are represented.
+3. Accessibility: semantics, keyboard path, focus order, contrast, and reduced-motion behavior pass inspection.
+4. Craft: spacing, hierarchy, typography, motion, and visual density feel intentional rather than default.
+5. Performance: rendering, bundle impact, image strategy, and hydration boundaries match the framework.
+
 ## Anti-Patterns
 
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Frontend Design guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
 
 ## Part 5: Design Review Checklist
 

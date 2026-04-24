@@ -1,7 +1,7 @@
 ---
 name: agentic-eval
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [agentic, eval, agents, delegation, workflow]
 description: "Evaluate and improve AI-generated output with explicit rubrics, reflection loops, and stop conditions. Use when building self-critique workflows, evaluator-optimizer pipelines, or acceptance gates for code, docs, analysis, or plans."
 ---
@@ -10,7 +10,12 @@ description: "Evaluate and improve AI-generated output with explicit rubrics, re
 
 Use structured evaluation loops to improve important outputs before you call them done.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - A task is quality-critical and a single pass is too risky.
 - You need repeatable acceptance criteria for code, docs, analysis, or plans.
@@ -124,6 +129,17 @@ Before you claim the evaluation is complete, the evaluating agent must ask:
 - Delegating or evaluating without a scoped success condition: The output becomes hard to review and easy to overbuild.
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Agentic Eval workflow names the agent boundary, delegated scope, and expected return artifact.
+2. Pass/fail: Context passed to helpers is minimal, task-local, and free of hidden expected answers.
+3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
+4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
+5. Success metric: Zero context leakage; every delegated output is independently reviewable.
+
 
 ## Scripts And References
 

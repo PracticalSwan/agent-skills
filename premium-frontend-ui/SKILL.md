@@ -1,7 +1,7 @@
 ---
 name: premium-frontend-ui
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [premium, frontend, ui, design, visual]
 description: "Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites."
 ---
@@ -13,6 +13,9 @@ When building premium frontend experiences, your role goes beyond outputting fun
 When a user requests a high-end landing page, an interactive portfolio, or a specialized component that requires top-tier visual polish, apply the following rigorous standards to every line of code you generate.
 
 ---
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 ## 1. Establishing the Creative Foundation
 
@@ -112,6 +115,10 @@ Whenever you receive a prompt to "Build a premium landing page," "Create an Awww
 4. Elevate the typography using fluid scales.
 5. Create an intentional, memorable aesthetic footprint.
 
+## Component Review Rubric Reference
+
+Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component-review-rubric) before approving premium UI components, then apply this skill's visual craft bar.
+
 ## Anti-Patterns
 
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
@@ -119,6 +126,18 @@ Whenever you receive a prompt to "Build a premium landing page," "Create an Awww
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Premium Frontend Ui guidance is tied to a concrete route, component, screen, or design artifact.
+2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
+3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
+4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
+5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

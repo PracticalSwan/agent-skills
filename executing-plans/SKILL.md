@@ -1,7 +1,7 @@
 ---
 name: executing-plans
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [executing, plans, agents, delegation, workflow]
 description: "Use when you have a written implementation plan to execute in a separate session with review checkpoints."
 ---
@@ -15,6 +15,8 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 **Core principle:** Batch execution with checkpoints for architect review.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
 
 ## The Process
 
@@ -93,6 +95,18 @@ After all tasks complete and verified:
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Executing Plans workflow starts from explicit success criteria, constraints, and stop conditions.
+2. Pass/fail: Required evidence is collected before any completion, approval, or readiness claim.
+3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
+4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
+5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

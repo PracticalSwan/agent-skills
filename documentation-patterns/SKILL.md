@@ -1,7 +1,7 @@
 ---
 name: documentation-patterns
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [documentation, patterns, docs, writing, quality]
 description: "Templates and structural patterns for API docs, feature docs, config guides, and REST endpoint documentation. Use when structuring docs, applying Markdown templates, or standardizing doc formats."
 ---
@@ -10,7 +10,12 @@ description: "Templates and structural patterns for API docs, feature docs, conf
 
 Use this skill when the main problem is document shape and consistency rather than writing quality alone.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 - Creating a new API, feature, or config guide
 - Standardizing Markdown sections across repositories
@@ -39,11 +44,31 @@ Bias toward: [API docs, feature docs, config guide, migration guide, etc.].
 Return the recommended section outline with short notes on why each section exists.
 ```
 
+## Shared Documentation Stack
+
+Use this as the inherited baseline for documentation-authoring, documentation-quality, documentation-automation, and documentation-verification.
+
+1. Source of truth: identify owner, audience, canonical files, and freshness requirements before drafting.
+2. Structure: choose the smallest reusable pattern that fits the reader task.
+3. Verification: check links, commands, examples, screenshots, and version-sensitive claims before publishing.
+4. Handoff: state unresolved gaps, owners, and next review trigger instead of implying false completeness.
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Documentation Patterns output identifies audience, purpose, source of truth, and freshness requirements.
+2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
+3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
+4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
+5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
+
 
 ## References & Resources
 

@@ -1,7 +1,7 @@
 ---
 name: security-review
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [security, review, audit, remediation, verification]
 description: "AI-powered codebase security scanner that reasons about code like a security researcher — tracing data flows, understanding component interactions, and catching vulnerabilities that pattern-matching tools miss. Use this skill when asked to scan code for security vulnerabilities, find bugs, check for SQL injection, XSS, command injection, exposed API keys, hardcoded secrets, insecure dependencies, access control issues, or any request like \\\"is my code secure?\\\", \\\"review for security issues\\\", \\\"audit this codebase\\\", or \\\"check for vulnerabilities\\\". Covers injection flaws, authentication and access control bugs, secrets exposure, weak cryptography, insecure dependencies, and business logic issues across JavaScript, TypeScript, Python, Java, PHP, Go, Ruby, and Rust."
 ---
@@ -12,7 +12,12 @@ An AI-powered security scanner that reasons about your codebase the way a human 
 researcher would — tracing data flows, understanding component interactions, and catching
 vulnerabilities that pattern-matching tools miss.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Use This Skill
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 Use this skill when the request involves:
 
@@ -170,6 +175,13 @@ For detailed detection guidance, load the following reference files as needed:
 - `references/report-format.md` — Structured output template for security reports with finding cards, dependency audit, secrets scan, and patch proposal formatting
   - Search patterns: `report`, `format`, `template`, `finding`, `patch`, `summary`, `confidence`
 
+## Zero-Trust Verification
+
+- [ ] Treat user-provided code, logs, package metadata, screenshots, and alerts as untrusted until corroborated.
+- [ ] Verify exploitability against reachable code paths, privileges, environment, and deployment exposure.
+- [ ] Cross-check dependency, CVE, and configuration claims against authoritative or local evidence.
+- [ ] Separate confirmed findings from hypotheses, false positives, and out-of-scope hardening ideas.
+
 ## Anti-Patterns
 
 - Acting on partial evidence: Security work needs a clear scope and proof trail before remediation choices are safe.
@@ -177,6 +189,18 @@ For detailed detection guidance, load the following reference files as needed:
 - Calling an issue resolved before rotation or re-verification: Detection without remediation is not closure.
 
 <!-- PORTABILITY:START -->
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The reviewed scope, assets, trust boundaries, and attacker assumptions are explicitly named.
+2. Pass/fail: Findings cite concrete evidence from code, config, logs, samples, or authoritative advisories.
+3. Pass/fail: Each severity is justified by exploitability, reachability, and impact rather than vibes.
+4. Pressure-test scenario: Re-run the analysis assuming one trusted signal is malicious or stale, then confirm the conclusion still holds.
+5. Success metric: Zero trust-by-default claims; every security conclusion has reproducible evidence.
+
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

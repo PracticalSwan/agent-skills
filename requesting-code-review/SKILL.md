@@ -1,18 +1,23 @@
 ---
 name: requesting-code-review
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [requesting, code, review, agents, delegation]
 description: "Use when completing tasks, implementing major features, or before merging to verify work meets requirements."
 ---
 
-# Requesting Code Review
+# Requesting two-stage review (spec compliance first, then code quality)
 
 Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
 
 **Core principle:** Review early, review often.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## When to Request Review
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Mandatory:**
 - After each task in subagent-driven development
@@ -55,12 +60,23 @@ Use Task tool with superpowers:code-reviewer type, fill template at `code-review
 - Skipping the evidence step: A workflow that cannot be re-checked quickly is not ready for handoff.
 - Bundling unrelated subtasks together: It creates noisy prompts, weaker ownership, and avoidable integration risk.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The requesting two-stage review trigger is matched to a concrete user symptom or artifact.
+2. Pass/fail: The core requesting two-stage review workflow is applied without skipping required inputs, outputs, or guardrails.
+3. Pass/fail: Evidence is captured from the relevant file, command, rendered artifact, or external source before claiming success.
+4. Pressure-test scenario: Apply the skill to an ambiguous request with one missing input and one tempting shortcut.
+5. Success metric: Zero rationalizations; unknowns stay explicit until verified.
+
+
 ## Example
 
 ```
 [Just completed Task 2: Add verification function]
 
-You: Let me request code review before proceeding.
+You: Let me request two-stage review (spec compliance first, then code quality) before proceeding.
 
 BASE_SHA=$(git log --oneline | grep "Task 1" | head -1 | awk '{print $1}')
 HEAD_SHA=$(git rev-parse HEAD)
@@ -130,7 +146,7 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, 
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the Requesting Code Review skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- Fallback prompt: "Use the Requesting two-stage review (spec compliance first, then code quality) skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
 - If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
 - Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
 

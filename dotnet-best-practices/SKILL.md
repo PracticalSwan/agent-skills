@@ -1,7 +1,7 @@
 ---
 name: dotnet-best-practices
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [dotnet, development, testing, quality, automation]
 description: "Ensure .NET/C# code follows maintainable, modern best practices. Use when reviewing or improving C# code, solution structure, async patterns, dependency injection, or testability."
 ---
@@ -11,6 +11,9 @@ description: "Ensure .NET/C# code follows maintainable, modern best practices. U
 > Optimized for current .NET SDK-style projects, C# 12+, ASP.NET Core LTS, and current xUnit, NUnit, or MSTest workflows.
 
 Your task is to ensure .NET/C# code in the selected scope or current solution meets the best practices specific to this project. This includes:
+
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
 
 ## Documentation & Structure
 
@@ -95,6 +98,17 @@ Your task is to ensure .NET/C# code in the selected scope or current solution me
 - Skipping cancellation and logging in I/O paths: Modern .NET services need both operational visibility and cooperative shutdown behavior.
 - Hiding configuration behind magic strings: Options drift across environments when the contract is not explicit.
 
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Dotnet Best Practices implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
+
 ## Before and After Example
 
 ```csharp
@@ -153,6 +167,6 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [csharp-xunit](../csharp-xunit/SKILL.md): Use it when the workflow also needs modern xUnit test design in C#.
-- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs code review, maintainability, and refactoring guidance.
+- [code-quality](../code-quality/SKILL.md): Use it when the workflow also needs two-stage review (spec compliance first, then code quality), maintainability, and refactoring guidance.
 - [development-workflow](../development-workflow/SKILL.md): Use it when the workflow also needs planning, quality gates, and delivery tracking.
 - [microsoft-development](../microsoft-development/SKILL.md): Use it when the workflow also needs microsoft development guidance.

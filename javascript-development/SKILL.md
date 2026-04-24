@@ -1,7 +1,7 @@
 ---
 name: javascript-development
-version: "1.1"
-last_updated: 2026-04-24
+version: "1.2"
+last_updated: 2026-04-25
 tags: [javascript, development, testing, quality, automation]
 description: "JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools."
 ---
@@ -12,11 +12,25 @@ description: "JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node
 
 Expert guidance for writing modern JavaScript code with ES2024+ features, async programming patterns, DOM manipulation, API integration, and best practices following official JavaScript resources at https://developer.mozilla.org/en-US/docs/Web/JavaScript.
 
+- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+
 ## Anti-Patterns
 
 - Copying outdated browser or framework patterns: Deprecated APIs and old workarounds add complexity immediately.
 - Skipping abort, timeout, or response checks in async code: Network paths fail at the edges first, not on the happy path.
 - Treating accessibility as a final polish pass: Markup and state shape are harder to fix after the component contract is set.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The Javascript Development implementation names the target runtime, framework version, and affected files.
+2. Pass/fail: Build, lint, test, or equivalent local validation is run for the changed surface.
+3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
+4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
+5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
+
 
 ## Before and After Example
 
@@ -40,6 +54,8 @@ export async function loadProfile(signal) {
 Adds cancellation and explicit response validation so network failures do not masquerade as parsing bugs.
 
 ## Activation Conditions
+
+Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
 
 **Core JavaScript Development:**
 - Writing modern JavaScript with ES2024+ features

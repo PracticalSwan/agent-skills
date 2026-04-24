@@ -45,6 +45,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Structural validation is not enough for Gemini support; export and parse the generated TOML files too.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
 - Record source repo and commit metadata for imported skills so later updates can be traced safely.
+- When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
 - Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
 - Local secret scans should ignore generated command folders and agent metadata by default or they will drown in false positives.
 

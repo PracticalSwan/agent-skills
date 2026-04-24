@@ -1,6 +1,9 @@
 ---
 name: premium-frontend-ui
 description: 'Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites.'
+metadata:
+  author: 'Utkarsh Patrikar'
+  author_url: 'https://github.com/utkarsh232005'
 ---
 # Immersive Frontend UI Craftsmanship
 

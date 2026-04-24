@@ -7,22 +7,28 @@ Reference catalogs used for discovery and selection during the 2026-04-04 worksp
 - `https://github.com/travisvn/awesome-claude-skills`
 - `https://github.com/ComposioHQ/awesome-codex-skills`
 - `https://github.com/anthropics/skills`
+- `https://github.com/conorbronsdon/avoid-ai-writing`
+- `https://github.com/zarazhangrui/codebase-to-course`
 
 ## Source Commits
 
 | Source | Commit |
 |--------|--------|
-| `awesome-copilot` | `0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f` |
+| `awesome-copilot` | `63d08d51f792d53feec8c1c06897cee870e83c18` |
 | `awesome-claude-skills` | `b05169af5448a3d8961aa0ed12c2934f94bfe52e` |
-| `anthropics/skills` | `98669c11ca63e9c81c11501e1437e5c47b556621` |
-| `awesome-codex-skills` | `ccf6204f6a594fde4bf9e29119f5bdad7935a793` |
+| `anthropics/skills` | `5128e1865d670f5d6c9cef000e6dfc4e951fb5b9` |
+| `awesome-codex-skills` | `711ee69d724457093d52f685d729917f5389c686` |
+| `avoid-ai-writing` | `cbf885e087e8ec1168bc58dc603606a6e4bfacbd` |
+| `codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` |
 
 ## Installed Skills
 
 | Skill | Source | Reason |
 |-------|--------|--------|
+| `avoid-ai-writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | Portable writing cleanup skill for auditing and rewriting AI-generated phrasing. |
 | `agentic-eval` | `awesome-copilot` | Reusable evaluator-optimizer and rubric workflows improve code, docs, and planning quality across many projects. |
 | `cloud-design-patterns` | `awesome-copilot` | Distributed-system and cloud architecture trade-offs come up often enough to justify a portable shortlist skill. |
+| `codebase-to-course` | `https://github.com/zarazhangrui/codebase-to-course` | Converts local or GitHub codebases into interactive course-style walkthroughs for onboarding and project understanding. |
 | `context-map` | `awesome-copilot` | A dedicated pre-edit scoping skill is useful for safer multi-file changes and bug investigations across clients. |
 | `csharp-xunit` | `awesome-copilot` | The workspace contains a top-level Visual Studio solution and .NET work. |
 | `dotnet-best-practices` | `awesome-copilot` | The workspace contains a top-level Visual Studio solution and .NET work. |
@@ -46,3 +52,4 @@ Reference catalogs used for discovery and selection during the 2026-04-04 worksp
 - MCP-aware skills are required to include a no-MCP fallback path before being treated as valid maintained skills.
 - New helper scripts are smoke-tested locally before the repo-wide validation and sync pass.
 - Unsafe, offensive, credential-heavy, or low-signal skills discovered during research are intentionally excluded from this maintained catalog.
+- On 2026-04-24, source paths recorded in `scripts/skill-registry.json` were rechecked against current upstream heads. `premium-frontend-ui` received upstream author metadata, `mcp-builder` received the current upstream license notice, and unchanged audited paths had provenance bumped to the verified current source commit.

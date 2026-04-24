@@ -2,6 +2,14 @@
 
 All notable changes to the `premium-frontend-ui` skill will be documented in this file.
 
+## [2026-04-24] - Upstream Metadata Refresh
+
+### Changed
+- Added upstream author metadata from `https://github.com/github/awesome-copilot` commit `63d08d51f792d53feec8c1c06897cee870e83c18`.
+
+### Tested
+- Confirmed the current upstream change for this skill is limited to `SKILL.md` frontmatter metadata.
+
 ## [2026-04-04] - Initial Import and Portability Upgrade
 
 ### Added

@@ -7,8 +7,8 @@ Install or import new maintained skills here first, then sync them outward to th
 
 ## Current Inventory
 
-- `65` tracked skill folders in this workspace
-- `51` maintained skills in this repo
+- `67` tracked skill folders in this workspace
+- `53` maintained skills in this repo
 - `14` copied official Claude/Codex-style superpowers tracked locally for discovery and sync
 - Every skill now includes:
   - a cross-client portability section
@@ -197,7 +197,9 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 ### Agent and Research
 
 - `agent-task-mapping`
+- `avoid-ai-writing`
 - `codexer`
+- `codebase-to-course`
 - `custom-agent-usage`
 - `notebooklm-management`
 - `notion-docs`
@@ -241,7 +243,9 @@ The following externally sourced skills are currently maintained in this repo.
 Imported after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
 
 - `agentic-eval`
+- `avoid-ai-writing`
 - `cloud-design-patterns`
+- `codebase-to-course`
 - `context-map`
 - `csharp-xunit`
 - `dotnet-best-practices`

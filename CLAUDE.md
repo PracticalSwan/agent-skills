@@ -11,8 +11,8 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 
 ## Current Counts
 
-- `123` total skill folders
-- `109` maintained skills
+- `125` total skill folders
+- `111` maintained skills
 - `14` copied official superpowers
 
 ## Downstream Sync Targets

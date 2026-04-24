@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026-04-24] - Upstream License Refresh
+
+### Changed
+
+- Updated `LICENSE.txt` from the official Anthropic source at commit `5128e1865d670f5d6c9cef000e6dfc4e951fb5b9` to include the current copyright holder.
+
+### Tested
+
+- Confirmed the current upstream change for `skills/mcp-builder` is limited to `LICENSE.txt`.
+
 ## [2026-04-04] - Initial Import and Catalog Upgrade
 
 ### Added

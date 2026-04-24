@@ -3,6 +3,25 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-24] - Skill Imports and Source Refresh
+
+### Added
+
+- Imported `avoid-ai-writing` from `https://github.com/conorbronsdon/avoid-ai-writing`.
+- Imported `codebase-to-course` from `https://github.com/zarazhangrui/codebase-to-course` with its course-generation reference assets.
+- Added provenance records and per-skill changelogs for both new maintained skills.
+
+### Changed
+
+- Updated public inventory counts to `67` tracked skill folders and `53` maintained skills.
+- Refreshed upstream provenance for audited source repos in `scripts/skill-registry.json` and `REFERENCE_SOURCES.md`.
+- Applied the current upstream `premium-frontend-ui` author metadata and Anthropic `mcp-builder` license notice.
+
+### Tested
+
+- Rechecked registered upstream source paths against current GitHub heads before applying updates.
+- Planned Gemini export, structural validation, downstream sync, and scoped secret review for this catalog refresh.
+
 ## [2026-04-04] - Public Docs Cleanup for Ignored Local-Only Skills
 
 ### Changed

@@ -3,7 +3,7 @@
   "source_commits": {
     "awesome_copilot": {
       "repo": "https://github.com/github/awesome-copilot",
-      "commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f"
+      "commit": "63d08d51f792d53feec8c1c06897cee870e83c18"
     },
     "awesome_claude_skills": {
       "repo": "https://github.com/travisvn/awesome-claude-skills",
@@ -11,15 +11,23 @@
     },
     "anthropic_skills": {
       "repo": "https://github.com/anthropics/skills",
-      "commit": "98669c11ca63e9c81c11501e1437e5c47b556621"
+      "commit": "5128e1865d670f5d6c9cef000e6dfc4e951fb5b9"
     },
     "awesome_codex_skills": {
       "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
-      "commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793"
+      "commit": "711ee69d724457093d52f685d729917f5389c686"
     },
     "googleworkspace_cli": {
       "repo": "https://github.com/googleworkspace/cli",
       "commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"
+    },
+    "avoid_ai_writing": {
+      "repo": "https://github.com/conorbronsdon/avoid-ai-writing",
+      "commit": "cbf885e087e8ec1168bc58dc603606a6e4bfacbd"
+    },
+    "codebase_to_course": {
+      "repo": "https://github.com/zarazhangrui/codebase-to-course",
+      "commit": "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"
     }
   },
   "mcp_skills": {
@@ -197,51 +205,63 @@
     }
   },
   "reference_installs": {
+    "avoid-ai-writing": {
+      "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
+      "source_commit": "cbf885e087e8ec1168bc58dc603606a6e4bfacbd",
+      "source_path": ".",
+      "reason": "Portable writing cleanup skill for auditing and rewriting content that has obvious AI-generated phrasing."
+    },
     "agentic-eval": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/agentic-eval",
       "reason": "Evaluator-optimizer and rubric workflows are broadly useful across code, documentation, and planning tasks."
     },
     "cloud-design-patterns": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/cloud-design-patterns",
       "reason": "Distributed-system and cloud architecture trade-offs are common enough to justify a reusable shortlist skill."
     },
+    "codebase-to-course": {
+      "source_repo": "https://github.com/zarazhangrui/codebase-to-course",
+      "source_commit": "ff8837ecf8e9f6ce9874ffa42e42633394a52a00",
+      "source_path": ".",
+      "reason": "Turns local or GitHub codebases into interactive educational walkthroughs, useful for onboarding and project understanding."
+    },
     "context-map": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/context-map",
       "reason": "A dedicated pre-edit scoping skill is useful for safer multi-file changes and bug investigations."
     },
     "csharp-xunit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/csharp-xunit",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "dotnet-best-practices": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/dotnet-best-practices",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "java-docs": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/java-docs",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java documentation guidance."
     },
     "java-junit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/java-junit",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java testing guidance."
     },
     "mcp-builder": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "98669c11ca63e9c81c11501e1437e5c47b556621",
+      "source_commit": "5128e1865d670f5d6c9cef000e6dfc4e951fb5b9",
       "source_path": "skills/mcp-builder",
       "discovery_repo": "https://github.com/travisvn/awesome-claude-skills",
       "discovery_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
@@ -256,25 +276,25 @@
     },
     "premium-frontend-ui": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/premium-frontend-ui",
       "reason": "The workspace includes several React, Vite, Next.js, and Three.js frontends where higher-quality UI direction is useful."
     },
     "secret-scanning": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/secret-scanning",
       "reason": "Local pre-commit secret hygiene and GitHub alert workflows are broadly useful and safe to ship in a shared catalog."
     },
     "security-review": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "0c3c5bbbfb2a7d57d36473a83fdbef1becc5053f",
+      "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/security-review",
       "reason": "The workspace includes multiple web apps and APIs that benefit from repeatable security review guidance."
     },
     "spreadsheet-formula-helper": {
       "source_repo": "https://github.com/ComposioHQ/awesome-codex-skills",
-      "source_commit": "ccf6204f6a594fde4bf9e29119f5bdad7935a793",
+      "source_commit": "711ee69d724457093d52f685d729917f5389c686",
       "source_path": "spreadsheet-formula-helper",
       "reason": "The workspace contains spreadsheet-heavy coursework and XLSX files where formula debugging is a recurring need."
     },

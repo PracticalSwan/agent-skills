@@ -1,5 +1,6 @@
 # Exclude Agent files
 .gemini/
+AGENTS.md
 # Exclude Serena memories
 .serena
 # Exclude generated Python bytecode
@@ -8,3 +9,5 @@ __pycache__/
 # Exclude Google Workspace CLI skills (local-only, not for public repo)
 gws-*/
 recipe-*/
+# Exclude vscode settings and workspace files
+.vscode/

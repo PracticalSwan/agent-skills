@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-04-25] - Version 1.2 Verification Protocol Refresh
+
+### Added
+- Added a `Verification Protocol` section with skill-specific pass/fail checks, one pressure-test scenario, and a measurable success metric.
+- Added guidance to leverage native parallel subagent dispatch and 200k+ context windows where available.
+- Added `Skill Deprecation & Sunset` guidance under Skill Types.
+- Added `Token Budget Target` guidance to the Skill Types table.
+- Added rationalization counters for frontier-model excuses and system-prompt coverage excuses.
+
+### Changed
+- Updated `SKILL.md` frontmatter to `version: "1.2"` and `last_updated: 2026-04-25`.
+- Reframed activation guidance toward symptom -> action triggers and standardized two-stage review wording where applicable.
+
+### Fixed
+- Replaced remaining directly related legacy review wording with two-stage review wording in support documentation.
+
 ## [2026-04-24] - Version 1.1 Refresh
 
 ### Changed

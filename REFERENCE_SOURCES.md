@@ -3,7 +3,7 @@
 This document summarizes external source provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-04-24)
+## Snapshot (2026-04-25)
 
 - `73` skills have external source mappings.
 - `15` source-mapped skills are git-tracked in this repository.

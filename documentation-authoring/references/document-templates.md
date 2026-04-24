@@ -201,7 +201,7 @@ What is the change that we're proposing and/or doing?
 
 **Purpose:** Provide implementation-level detail for a feature or system so that any engineer can build it without ambiguity.
 
-**Audience:** Implementing engineers, code reviewers, QA.
+**Audience:** Implementing engineers, two-stage reviewers (spec compliance first, then code quality), QA.
 
 **Tips:**
 - Include sequence diagrams for multi-component flows

@@ -41,6 +41,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
 - Keep root docs aligned on supported clients. If Gemini CLI support changes, update `README.md`, `CLAUDE.md`, and `GEMINI.md` together.
 - When a catalog-wide skill refresh bumps shared metadata or structure, document the new baseline explicitly in the root docs and root changelog even if the inventory counts do not change.
+- When a catalog-wide skill refresh adds a required section such as `Verification Protocol`, update root docs, per-skill changelogs, Gemini guidance, and sync mirrors in the same pass.
 - Keep documentation ASCII-first unless Unicode materially improves clarity.
 
 ## Verification Lessons

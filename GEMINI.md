@@ -6,7 +6,7 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
-- The current git-tracked catalog baseline is `version: "1.1"` with `last_updated: 2026-04-24` across all `67` tracked skill folders
+- The current git-tracked catalog baseline is `version: "1.2"` with `last_updated: 2026-04-25` across all `67` tracked skill folders
 
 ## Generated Commands
 
@@ -61,10 +61,12 @@ That validation checks:
 - `Preferred MCP Server:` and `Fallback prompt:` lines
 - `Anti-Patterns` and `Related Skills` sections
 - `CHANGELOG.md` presence in every skill folder
-- changelog entries that use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
+- new changelog entries that use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
 - Gemini command count
 - TOML parseability of generated commands
 - obsolete Skill Paths sections, stale removed-skill links, mojibake markers, and generated Python bytecode
+
+Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
 
 For externally imported skills, normalize the workspace copy and run any local smoke tests before exporting new Gemini command files. The generated command should only mirror maintained content that already passed the repo checks.
 

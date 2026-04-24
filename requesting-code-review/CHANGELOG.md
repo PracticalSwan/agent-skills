@@ -1,5 +1,16 @@
 # Changelog
 
+## [2026-04-25] - Version 1.2 Verification Protocol Refresh
+
+### Added
+- Added a `Verification Protocol` section with skill-specific pass/fail checks, one pressure-test scenario, and a measurable success metric.
+- Added guidance to leverage native parallel subagent dispatch and 200k+ context windows where available.
+
+### Changed
+- Updated `SKILL.md` frontmatter to `version: "1.2"` and `last_updated: 2026-04-25`.
+- Reframed activation guidance toward symptom -> action triggers and standardized two-stage review wording where applicable.
+- Updated the review agent prompt title to use two-stage review terminology.
+
 ## [2026-04-24] - Version 1.1 Refresh
 
 ### Changed

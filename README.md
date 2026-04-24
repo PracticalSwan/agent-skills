@@ -7,7 +7,7 @@ Install or import new maintained skills here first, then sync them outward to th
 
 ## Current Inventory
 
-Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
+Snapshot date: `2026-04-25`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `67` tracked skill folders
@@ -24,8 +24,9 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
   - a cross-client portability section
   - an MCP section that names the preferred server and a no-MCP fallback path
   - an `Anti-Patterns` section
+  - a `Verification Protocol` section
   - a final `Related Skills` section
-- The tracked catalog is currently aligned on `version: "1.1"` with `last_updated: 2026-04-24` across all `67` git-tracked skill folders
+- The tracked catalog is currently aligned on `version: "1.2"` with `last_updated: 2026-04-25` across all `67` git-tracked skill folders
 
 ## Main Workspace
 
@@ -124,7 +125,9 @@ The validator expects:
 - `## Anti-Patterns`
 - a final `## Related Skills`
 - `CHANGELOG.md` in every skill folder
-- changelog entries with `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
+- new changelog entries with `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
+
+Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
 
 For a catalog-wide skill refresh, update the root docs in the same pass, then rerun validation, Gemini export, and downstream sync even if the folder counts did not change.
 

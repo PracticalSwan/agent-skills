@@ -11,7 +11,7 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 
 ## Current Counts
 
-Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
+Snapshot date: `2026-04-25`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
 	- `67` tracked skill folders
@@ -24,7 +24,7 @@ Snapshot date: `2026-04-24`. Local overlay totals can differ by machine.
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-The tracked catalog is currently aligned on `version: "1.1"` with `last_updated: 2026-04-24` across all `67` git-tracked skill folders.
+The tracked catalog is currently aligned on `version: "1.2"` with `last_updated: 2026-04-25` across all `67` git-tracked skill folders.
 
 ## Downstream Sync Targets
 
@@ -110,6 +110,7 @@ Every `SKILL.md` in this repo should:
 - include the generated portability section
 - include the MCP or no-MCP fallback section
 - include `## Anti-Patterns`
+- include `## Verification Protocol`
 - end with `## Related Skills`
 
 ## MCP Rules
@@ -135,7 +136,8 @@ After meaningful changes:
 For a catalog-wide documentation refresh, treat the export and sync steps as required even when the inventory counts stay the same.
 
 The validator now expects the catalog frontmatter fields plus the portability, MCP, Anti-Patterns, Related Skills, and `CHANGELOG.md` baseline.
-Changelog entries should use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section.
+Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
+New changelog entries should use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section.
 
 After adding a new maintained skill:
 

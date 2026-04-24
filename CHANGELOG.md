@@ -3,6 +3,21 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-04-25] - Catalog 1.2 Verification Protocol Refresh and Full Sync
+
+### Added
+
+- Added per-skill changelog entries for the `version: "1.2"` verification protocol refresh across all `67` tracked skill folders.
+
+### Changed
+
+- Updated `README.md`, `CLAUDE.md`, `GEMINI.md`, `REFERENCE_SOURCES.md`, and `LESSON.md` to document the current `version: "1.2"` / `last_updated: 2026-04-25` catalog baseline.
+- Documented `Verification Protocol` as part of the required skill structure while keeping validator descriptions aligned with the current script behavior.
+
+### Fixed
+
+- Replaced remaining directly related legacy review wording in skill support documentation with `two-stage review (spec compliance first, then code quality)`.
+
 ## [2026-04-24] - Catalog 1.1 Docs Refresh and Full Sync
 
 ### Changed

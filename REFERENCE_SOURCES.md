@@ -3,11 +3,12 @@
 This document summarizes external source provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-04-25)
+## Snapshot (2026-05-05)
 
 - `73` skills have external source mappings.
 - `15` source-mapped skills are git-tracked in this repository.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*` families).
+- `4` tracked imports are currently present without finalized source mappings (`docx`, `jupyter-notebook`, `pptx`, `xlsx`).
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
 
@@ -64,6 +65,17 @@ These source-mapped overlays are intentionally local-only in this workspace and 
 - `recipe-*`: `32` skills sourced from `https://github.com/googleworkspace/cli`.
 
 Use `scripts/skill-registry.json` for the exact per-skill `source_path`, `source_commit`, and rationale entries.
+
+## Tracked Imports Pending Provenance
+
+These tracked skill folders are present in this repository but do not yet have finalized provenance records in `scripts/skill-registry.json`:
+
+- `docx`
+- `jupyter-notebook`
+- `pptx`
+- `xlsx`
+
+They were synced in from the local Codex install root and still need canonical upstream matching before they should be treated as fully source-mapped maintained imports.
 
 ## Selection Notes
 

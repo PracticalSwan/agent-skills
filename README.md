@@ -7,18 +7,18 @@ Install or import new maintained skills here first, then sync them outward to th
 
 ## Current Inventory
 
-Snapshot date: `2026-04-25`. Local overlay totals can differ by machine.
+Snapshot date: `2026-05-05`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `67` tracked skill folders
-  - `53` tracked maintained skills
+  - `71` tracked skill folders
+  - `57` tracked maintained skills
   - `14` tracked copied official Claude/Codex-style superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `125` local skill folders detected
-  - `111` local maintained skills detected
+  - `129` local skill folders detected
+  - `115` local maintained skills detected
   - `14` local copied official superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
-- Every skill now includes:
+- The normalized catalog baseline includes:
   - catalog frontmatter with `name`, `version`, `last_updated`, `tags`, and `description`
   - a per-skill `CHANGELOG.md`
   - a cross-client portability section
@@ -26,7 +26,8 @@ Snapshot date: `2026-04-25`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- The tracked catalog is currently aligned on `version: "1.2"` with `last_updated: 2026-04-25` across all `67` git-tracked skill folders
+- Most tracked maintained skills are currently aligned on `version: "1.2"` with `last_updated: 2026-04-25`
+- The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are present in git but still need catalog normalization before they match the full maintained-skill baseline
 
 ## Main Workspace
 
@@ -129,6 +130,8 @@ The validator expects:
 
 Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
 
+The tracked raw imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are the current known exceptions to that full schema baseline until they are modernized in this repo.
+
 For a catalog-wide skill refresh, update the root docs in the same pass, then rerun validation, Gemini export, and downstream sync even if the folder counts did not change.
 
 Regenerate Gemini CLI commands:
@@ -208,6 +211,7 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `java-docs`
 - `java-junit`
 - `javascript-development`
+- `jupyter-notebook`
 - `mongodb-mongoose`
 - `php-development`
 - `powerbi-modeling`
@@ -216,12 +220,15 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 ### Microsoft, Documents, and Office
 
 - `azure-integrations`
+- `docx`
 - `excel-sheet`
 - `microsoft-development`
 - `pdf`
 - `powerpoint-ppt`
+- `pptx`
 - `spreadsheet-formula-helper`
 - `word-document`
+- `xlsx`
 
 ### Agent and Research
 
@@ -286,6 +293,13 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `secret-scanning`
 - `security-review`
 - `spreadsheet-formula-helper`
+
+Tracked imports currently in git but still pending schema normalization and finalized provenance:
+
+- `docx`
+- `jupyter-notebook`
+- `pptx`
+- `xlsx`
 
 Additional local-only sourced overlays (currently `58`, primarily `gws-*` and `recipe-*`) are mapped in `scripts/skill-registry.json` and summarized in [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md).
 

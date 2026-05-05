@@ -3,6 +3,22 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-05-05] - Documentation Refresh for Tracked Document Skill Imports
+
+### Added
+
+- Documented the tracked imported skills `docx`, `jupyter-notebook`, `pptx`, and `xlsx` in the maintained catalog and provenance notes.
+
+### Changed
+
+- Updated `README.md`, `CLAUDE.md`, and `GEMINI.md` to reflect the current `71` tracked skill folders, `57` tracked maintained skills, `129` local skill folders, and `115` local maintained skills.
+- Clarified in the root docs that `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are tracked imports that still need catalog normalization before they match the repo's full `version: "1.2"` maintained-skill schema.
+- Updated `REFERENCE_SOURCES.md` and `LESSON.md` to record the current pending-provenance and pending-normalization state for those tracked imports.
+
+### Fixed
+
+- Corrected stale inventory and baseline claims that still described the pre-import catalog state.
+
 ## [2026-04-25] - Catalog 1.2 Verification Protocol Refresh and Full Sync
 
 ### Added

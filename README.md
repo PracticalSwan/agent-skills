@@ -265,6 +265,7 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `infostealer-malware-detector`
 - `secret-scanning`
 - `security-review`
+- `x-twitter-scraper`
 
 ## MCP-Aware Skills
 
@@ -284,6 +285,7 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `secret-scanning`
 - `serena-usage`
 - `stitch-design`
+- `x-twitter-scraper`
 - `web-design-reviewer`
 - `web-testing`
 - `word-document`

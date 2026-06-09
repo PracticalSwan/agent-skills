@@ -2,6 +2,12 @@
 
 This repository contains shared skills for GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 
+## Required Session Start Rule
+
+- Every new session in this workspace must begin by reading `LESSON.md`.
+- Treat `LESSON.md` as required startup context before analysis, planning, edits, validation, reviews, or advisory work.
+- If `LESSON.md` is missing or unreadable, stop and report that blocker before continuing.
+
 ## Repository Role
 
 - Main branch: `C:\Users\LOQ\.copilot\skills`
@@ -155,6 +161,7 @@ After adding a new maintained skill:
 When repo behavior, counts, sync flow, portability, or supported clients change:
 
 - update `README.md`
+- update `AGENTS.md`
 - update `CHANGELOG.md`
 - update `CLAUDE.md`
 - update `LESSON.md`

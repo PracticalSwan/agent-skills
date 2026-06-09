@@ -3,6 +3,17 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-06-09] - Workspace Startup Rule for LESSON.md
+
+### Added
+
+- Added a tracked root `AGENTS.md` with workspace-specific guidance for shared-skill maintenance across GitHub Copilot, Claude Code, Codex, Gemini CLI, and Antigravity.
+
+### Changed
+
+- Updated `README.md`, `CLAUDE.md`, `GEMINI.md`, and `LESSON.md` to document the shared startup rule that requires reading `LESSON.md` at the start of each new session.
+- Updated `.gitignore` so `AGENTS.md` is tracked as a real workspace instruction file instead of being silently ignored.
+
 ## [2026-06-09] - NVIDIA Imports, Upstream Audit Refresh, and Catalog Validation Recovery
 
 ### Added

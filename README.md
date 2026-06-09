@@ -5,6 +5,14 @@ Shared skill catalog for GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 This workspace is the main branch for maintained skills, cross-client portability guidance, Gemini command generation, and MCP fallback rules.
 Install or import new maintained skills here first, then sync them outward to the downstream targets.
 
+## Session Start Rule
+
+Every AI agent working in this workspace, including Codex, Claude Code,
+Antigravity or Gemini CLI, and GitHub Copilot, must read
+[`LESSON.md`](c:\Users\LOQ\.copilot\skills\LESSON.md) at the start of each new
+session before analysis, planning, edits, validation, reviews, or advisory
+work.
+
 ## Current Inventory
 
 Snapshot date: `2026-06-09`. Local overlay totals can differ by machine.

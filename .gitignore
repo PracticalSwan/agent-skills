@@ -1,6 +1,5 @@
 # Exclude Agent files
 .gemini/
-AGENTS.md
 # Exclude Serena memories
 .serena
 # Exclude generated Python bytecode

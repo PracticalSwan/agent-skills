@@ -39,6 +39,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 ## Documentation Lessons
 
+- Every new agent session in this workspace should begin by reading `LESSON.md` before any other task work so prior mistakes stay visible.
 - Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
 - Keep root docs aligned on supported clients. If Gemini CLI support changes, update `README.md`, `CLAUDE.md`, and `GEMINI.md` together.
 - When a catalog-wide skill refresh bumps shared metadata or structure, document the new baseline explicitly in the root docs and root changelog even if the inventory counts do not change.
@@ -64,7 +65,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 1. Edit the workspace copy.
 2. If the change is a new skill, install or import it into this repo before touching downstream targets.
 3. Update per-skill `CHANGELOG.md` files for every touched skill folder.
-4. Update root docs if counts, support matrix, sync behavior, or client guidance changed.
+4. Update root docs if counts, support matrix, sync behavior, client guidance, or startup rules changed.
 5. Run `python scripts/validate-skills.py`.
 6. Run `python scripts/export-gemini-skill.py --all`.
 7. Sync outward with `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`.

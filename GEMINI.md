@@ -2,6 +2,12 @@
 
 This repository exposes its skills to Gemini CLI through generated project commands.
 
+## Required Session Start Rule
+
+- Every new session in this workspace must begin by reading `LESSON.md`.
+- Treat `LESSON.md` as required startup context before analysis, planning, edits, validation, reviews, or advisory work.
+- If `LESSON.md` is missing or unreadable, stop and report that blocker before continuing.
+
 ## Source of Truth
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`

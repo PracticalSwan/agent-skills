@@ -19,19 +19,19 @@
   "source_commits": {
     "awesome_copilot": {
       "repo": "https://github.com/github/awesome-copilot",
-      "commit": "63d08d51f792d53feec8c1c06897cee870e83c18"
+      "commit": "8b1792d493d9f8f0a88d594eb23bb9196639ec3d"
     },
     "awesome_claude_skills": {
       "repo": "https://github.com/travisvn/awesome-claude-skills",
-      "commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e"
+      "commit": "1da55aa810f206d3fe2005e7e3989b15a275d942"
     },
     "anthropic_skills": {
       "repo": "https://github.com/anthropics/skills",
-      "commit": "5128e1865d670f5d6c9cef000e6dfc4e951fb5b9"
+      "commit": "c30d329f5814647c1e2f071020c1e8c1c9893ef1"
     },
     "awesome_codex_skills": {
       "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
-      "commit": "711ee69d724457093d52f685d729917f5389c686"
+      "commit": "9c9da64cf1bbea611d43dd14a10788d55369b353"
     },
     "googleworkspace_cli": {
       "repo": "https://github.com/googleworkspace/cli",
@@ -39,11 +39,15 @@
     },
     "avoid_ai_writing": {
       "repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "commit": "cbf885e087e8ec1168bc58dc603606a6e4bfacbd"
+      "commit": "4331560d02b2c86ffd1d889d4f688da699d360d9"
     },
     "codebase_to_course": {
       "repo": "https://github.com/zarazhangrui/codebase-to-course",
       "commit": "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"
+    },
+    "nvidia_skills": {
+      "repo": "https://github.com/NVIDIA/skills",
+      "commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
     }
   },
   "mcp_skills": {
@@ -223,7 +227,7 @@
   "reference_installs": {
     "avoid-ai-writing": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "cbf885e087e8ec1168bc58dc603606a6e4bfacbd",
+      "source_commit": "4331560d02b2c86ffd1d889d4f688da699d360d9",
       "source_path": ".",
       "reason": "Portable writing cleanup skill for auditing and rewriting content that has obvious AI-generated phrasing."
     },
@@ -238,6 +242,12 @@
       "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/cloud-design-patterns",
       "reason": "Distributed-system and cloud architecture trade-offs are common enough to justify a reusable shortlist skill."
+    },
+    "accelerated-computing-cudf": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/accelerated-computing-cudf",
+      "reason": "The active Assumption University workspace includes pandas, scikit-learn, and PyTorch coursework where GPU dataframe guidance is a realistic next step."
     },
     "codebase-to-course": {
       "source_repo": "https://github.com/zarazhangrui/codebase-to-course",
@@ -263,6 +273,18 @@
       "source_path": "skills/dotnet-best-practices",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
+    "deepstream-dev": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/deepstream-dev",
+      "reason": "The active Computer Vision coursework already uses OpenCV, making DeepStream pipeline guidance a relevant next-stage NVIDIA workflow."
+    },
+    "deepstream-import-vision-model": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/deepstream-import-vision-model",
+      "reason": "The active Computer Vision coursework can grow from OpenCV demos into real detector deployment, export, and TensorRT integration work."
+    },
     "java-docs": {
       "source_repo": "https://github.com/github/awesome-copilot",
       "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
@@ -283,6 +305,12 @@
       "discovery_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
       "reason": "MCP server creation is a durable cross-client workflow and the official Anthropic skill is stronger than the discovery index copy."
     },
+    "nemo-retriever": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/nemo-retriever",
+      "reason": "The IBM RAG and Agentic AI workshop repo makes local retriever setup and corpus-grounded QA workflows directly relevant."
+    },
     "pdf": {
       "source_repo": "https://github.com/travisvn/awesome-claude-skills",
       "source_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
@@ -295,6 +323,24 @@
       "source_commit": "63d08d51f792d53feec8c1c06897cee870e83c18",
       "source_path": "skills/premium-frontend-ui",
       "reason": "The workspace includes several React, Vite, Next.js, and Three.js frontends where higher-quality UI direction is useful."
+    },
+    "rag-blueprint": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/rag-blueprint",
+      "reason": "The IBM RAG and Agentic AI workshop repo makes end-to-end RAG deployment and configuration guidance directly relevant."
+    },
+    "rag-eval": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/rag-eval",
+      "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable evaluation workflow for retrieval and answer quality checks."
+    },
+    "rag-perf": {
+      "source_repo": "https://github.com/NVIDIA/skills",
+      "source_commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422",
+      "source_path": "skills/rag-perf",
+      "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable latency and throughput tuning workflow once the stack is running."
     },
     "secret-scanning": {
       "source_repo": "https://github.com/github/awesome-copilot",

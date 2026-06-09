@@ -1,9 +1,11 @@
 ---
 name: avoid-ai-writing
 version: "1.2"
-last_updated: 2026-04-25
+last_updated: 2026-06-09
 tags: [avoid, ai, writing, docs, quality]
-description: "Audit and rewrite content to remove AI writing patterns (\\\"AI-isms\\\"). Use this skill when asked to \\\"remove AI-isms,\\\" \\\"clean up AI writing,\\\" \\\"edit writing for AI patterns,\\\" \\\"audit writing for AI tells,\\\" or \\\"make this sound less like AI.\\\" Supports a detection-only mode that flags patterns without rewriting."
+description: 'Audit and rewrite content to remove AI writing patterns ("AI-isms"). Supports detect-only audits, edit-in-place file cleanup, voice and context profiles, and an iterate-to-convergence pass.'
+license: MIT
+compatibility: "Shared catalog copy for GitHub Copilot, Claude Code, Codex, and Gemini CLI; assumes equivalent file-edit tooling for edit mode."
 ---
 
 # Avoid AI Writing — Audit & Rewrite
@@ -12,10 +14,17 @@ You are editing content to remove AI writing patterns ("AI-isms") that make text
 
 - Leverage native parallel subagent dispatch and 200k+ context windows where available.
 
+## What this skill is and isn't
+
+This is a **writing-quality tool**, not a verdict. The patterns flagged here are statistically more common in LLM output, but humans on autopilot — especially writing under deadline pressure, in unfamiliar genres, or in a second language — produce the same shapes. Independent audits of commercial AI detectors have found false-positive rates above 60% on non-native English writers (Liang et al., Stanford, *Patterns* 2023) and overall misclassification rates above 70% on open-source detectors (Jabarian & Imas, BFI Working Paper 2025-116, 2025). Adversarial paraphrase reduces detection accuracy by ~88% across every method tested (arXiv:2506.07001, 2025).
+
+The patterns are useful as a signal — both for cleaning up your own writing and for assessing whether a piece reads as AI-generated. Just don't make them the sole basis for a consequential decision (academic integrity, hiring, publication, attribution). Several rules here also fire on second-language writing, deadline-pressed humans, and technical genres that compress vocabulary by design. Pair the signal with context: who wrote it, what genre, what the writer's normal voice looks like, what other evidence you have.
+
+In short: signals, not proof. Worth acting on; not worth ruining someone's day over.
 
 ## Modes
 
-This skill operates in one of two modes:
+This skill operates in one of three modes:
 
 **`rewrite`** (default) — Flag AI-isms and rewrite the text to fix them.
 
@@ -25,7 +34,13 @@ This skill operates in one of two modes:
 - You're auditing text you don't want altered (published content, someone else's writing, reference material)
 - You want a quick scan without waiting for a full rewrite
 
-Trigger detect mode when the user says "detect," "flag only," "audit only," "just flag," "scan," "what AI patterns are in this," or similar. Default to rewrite mode if not specified.
+**`edit`** — Edit a file in place rather than returning rewritten text. Use this when the writer points you at a file ("clean up `draft.md`", "fix the AI-isms in this file directly") and wants the file changed, not a copy to paste back. Make **minimal, targeted edits** with the Edit tool — change the flagged spans, not the whole document. **Preserve passages that are already human**: if a paragraph has no tells, leave it untouched. **Don't edit quoted material, code blocks, or text attributed to someone else** — flag those instead of rewriting them. For a large file, confirm which section to clean before changing anything. After editing, re-read the file and confirm the flagged patterns are resolved.
+
+Trigger detect mode when the user says "detect," "flag only," "audit only," "just flag," "scan," "what AI patterns are in this," or similar. Trigger edit mode when the user names a file and asks you to fix or clean it in place. Default to rewrite mode if not specified.
+
+**Invocation.** Natural language is enough ("rewrite this in a blunt voice for LinkedIn," "edit `post.md` in place," "scan this, don't rewrite"). Power users can also pass explicit options, which map to the sections below: `[--mode rewrite|detect|edit]`, `[--voice casual|professional|technical|warm|blunt]`, `[--context linkedin|blog|technical-blog|investor-email|docs|casual]`, `[--file PATH]`, `[--iterate N]` (max 2).
+
+**Iterate to convergence (optional).** Rewrite mode already runs one corrective second pass (see Output format) — that built-in pass *is* pass 2, so `--iterate` does not stack on top of it. When the writer asks to "iterate," "keep going until it's clean," or passes `--iterate N`, repeat the audit→rewrite cycle until no patterns remain or **N passes** are reached. Cap **N at 2**: a rewrite plus one corrective pass clears the flagged patterns, and a third pass costs a full regeneration while rarely finding more. Report how many passes it took ("converged in 2 passes").
 
 ---
 
@@ -40,6 +55,12 @@ In **detect** mode, your job is to:
 1. **Audit it**: identify every AI-ism present, citing the specific text
 2. **Assess it**: note which flags are clear problems vs. patterns that may be intentional or effective in context
 
+In **edit** mode, your job is to:
+
+1. **Read** the file the writer named
+2. **Edit in place**: apply minimal, targeted fixes to the flagged spans with the Edit tool, leaving already-human passages untouched
+3. **Verify**: re-read the file and confirm the flagged patterns are resolved; report what you changed
+
 ---
 
 ## What to remove or fix
@@ -49,6 +70,7 @@ In **detect** mode, your job is to:
 - **Bold overuse**: Strip bold from most phrases. One bolded phrase per major section at most, or none. If something's important enough to bold, restructure the sentence to lead with it instead.
 - **Emoji in headers**: Remove entirely. No `## 🚀 What This Means`. Exception: social posts may use one or two emoji sparingly — at the end of a line, never mid-sentence.
 - **Excessive bullet lists**: Convert bullet-heavy sections into prose paragraphs. Bullets only for genuinely list-like content (feature comparisons, step-by-step instructions, API parameters).
+- **Curly quotation marks (“ ” ‘ ’) and apostrophes**: Curly quotes and apostrophes (U+201C/U+201D, U+2018/U+2019) are a *weak* paste-from-chat signal — meaningful mainly in plain-text contexts like code comments, commit messages, or plaintext drafts, where nothing auto-curls. Treat as corroborating, never conclusive: Word, Google Docs, macOS, and iOS curl quotes by default, so most human prose contains them too. Don't flag curly apostrophes (U+2019) on their own. Replace with straight quotes in plain-text/code; leave them in finished publications and locale-correct punctuation (French « », German „ “).
 
 ### Sentence structure
 - **"It's not X — it's Y" / "This isn't about X, it's about Y"**: Rewrite as a direct positive statement. Max one per piece, and only if it serves the argument.
@@ -192,6 +214,23 @@ These are normal words. Only flag them when the text is saturated with them — 
 | instrumental | Say what role it played |
 | world-class / state-of-the-art / best-in-class | Cite a benchmark or comparison |
 
+#### Tier 3 phrases — Flag at density or in clusters
+
+Multi-word boilerplate that's individually unobjectionable but stacks heavily in AI-generated content (crypto, web3, DePIN, AI/infra reviews are the worst offenders). Flag at **2+ uses of the same phrase** (the per-phrase rule — lower threshold than single-word Tier 3 because a two-word match repeated twice is already stronger evidence than re-using "significant"), *plus* a **cluster rule**: three or more *distinct* phrases from this table in one piece is a strong signal even when each phrase only appears once — that's the shape LLMs take when they vary their own boilerplate to seem less repetitive.
+
+| Phrase | What to do |
+|---|---|
+| emerging sector / emerging space / emerging category | Name the actual sector or what's emerging about it |
+| the integration of (X with Y) | Describe what's being integrated and what changes for the user |
+| the intersection of (X and Y) | Pick the specific overlap that matters or cut the framing |
+| community-driven | Name what the community does. "Community-driven" alone is filler |
+| long-term sustainability | Cite the time horizon and the constraint. "Long-term" is hand-waving |
+| user engagement | Name the action. "Engagement" is a wrapper around clicks/comments/retention |
+| decentralized compute | Specify the architecture or cut. The phrase has become a category label, not a claim |
+| (sustainable) reward emissions | Cite the emission schedule and the sink |
+| tokenized incentive structures | Describe the actual mechanism (vesting, gauge, bonded LP, etc.) |
+| designed for long-term [X] | Cut "designed for" — either it is or it isn't. Then state the property |
+
 ### Template phrases (avoid)
 
 These slot-fill constructions signal that a sentence was generated, not written. If a phrase has a blank where a noun or adjective could go and still sound the same, it's too generic.
@@ -219,6 +258,32 @@ These slot-fill constructions signal that a sentence was generated, not written.
 ### Significance inflation
 - Phrases like "marking a pivotal moment in the evolution of..." or "a watershed moment for the industry" inflate routine events into history-making ones. State what happened and let the reader judge significance.
 - If the sentence still works after you delete the inflation clause, delete it.
+
+### Generic future-narrative closers
+- "May become one of the most important narratives of the next market cycle," "could become the defining trend of the coming decade," "is poised to become the next major chapter in [X]." AI defaults to this shape when it needs to land a closing thought without committing to a falsifiable claim. The closer is grammatically a prediction but contains no testable content.
+- Pattern: modal (may / could / will / is poised to) + "become" + (one of) the most [adjective] + (narrative / story / trend / theme / chapter / movement / force).
+- Fix: pick the falsifiable version. "DePIN compute may exceed AWS spot pricing for embarrassingly parallel workloads by 2027" is a prediction. "The intersection of AI and DePIN may become one of the most important narratives of the next market cycle" is not.
+
+### Hedge-stacked predictions
+- Stacking a modal with a hedge adverb: "could potentially create," "may eventually unlock," "might ultimately transform." Either word alone is acceptable; the stack is the tell. Each hedge cancels the next, leaving a sentence that asserts nothing while sounding cautious and thoughtful.
+- Fix: pick one. If you mean "could create," say that. If you mean "potentially creates," say that. Both together is filler.
+
+### "Real/actual" adjective inflation
+- "Real on-chain tokenomics," "actual reward sustainability," "genuine utility," "true product-market fit." Using `real` / `actual` / `genuine` / `true` as an empty intensifier on an abstract noun implies the rest of the field is fake or superficial — without naming what makes this instance the real one. Common in crypto/AI/web3 content where the writer wants to signal sophistication.
+- Distinct from the existing "hollow intensifiers" rule (genuine / truly / quite frankly as sentence-level hedges). This is the noun-modifier form, where the intensifier latches onto an abstract noun to manufacture a contrast that goes unsaid.
+- **Carve-out — named contrast:** if the sentence explicitly names what the fake/superficial version is, leave it. "Real on-chain settlement, not bridged IOUs" or "actual revenue from paying customers, not grants" is honest contrastive writing. The AI tell is the unsaid contrast.
+- Fix when no contrast is named: drop the adjective and add the specific claim. "Reward sustainability" → "rewards funded from $X/mo in fees rather than emissions."
+
+### Hashtag stuffing
+- Long trailing hashtag blocks (6+ hashtags on a single short post) are near-universal in LLM-generated social content and rare in thoughtful human posts. The block usually mixes a project-specific tag with broad category tags (#AI #Crypto #Web3 #Innovation #FutureTech #Technology) — the categorical ones do nothing for discoverability and read as bot output.
+- **Why 6?** Empirical floor. LinkedIn and X organic engagement plateaus or declines past 3-5 tags; human posts that exceed 5 are usually launch posts trading reach for engagement, while LLM-generated posts default to 10-15. Six is the threshold where false positives on legitimate human use start dropping below false negatives on AI output. The detector treats 6+ as a hard flag; the spec treats 5+ as a soft tell worth a second look on `linkedin` and `investor-email` profiles.
+- Fix: 2-3 specific tags max, or none. If a hashtag wouldn't help a reader find related work, it's filler.
+
+### Bullet lists of bare noun phrases
+- A list of 5+ consecutive bullet items where each item is a short (≤6 word) adjective-plus-noun phrase with no verb. "Stable mining efficiency / Reliable pool connectivity / Optimized RandomX performance / Low failed share rates / Effective hardware utilization / Consistent thermal stability." Reads as a marketing one-pager because that's the shape LLMs default to when asked to summarize features.
+- The tell is the *symmetry*: every item is the same grammatical shape, every item is parallel in length, none of them assert anything checkable. A genuine list of observations would have varying length, occasional verbs, and at least one item that doesn't fit the pattern.
+- Fix: convert to prose paragraph, or rewrite items as full claims ("Failed shares stayed under 1% across a 12-hour run" beats "Low failed share rates"). If the list is genuinely the right form, vary the items so each carries a different shape of information.
+- This rule does *not* apply to genuine list content (changelog entries, todo lists, parameter docs, ingredient lists) where bare noun phrases are the correct form. The detector keys on absence of finite verbs to separate the two — but in prose audits, ask whether the bullets are summarizing claims (rewrite) or enumerating items (leave).
 
 ### Copula avoidance
 - AI text avoids "is" and "has" by substituting fancier verbs: "serves as," "features," "boasts," "presents," "represents." These sound like a press release.
@@ -253,6 +318,7 @@ These slot-fill constructions signal that a sentence was generated, not written.
 
 ### Superficial -ing analyses
 - Strings of present participles used as pseudo-analysis: "symbolizing the region's commitment to progress, reflecting decades of investment, and showcasing a new era of collaboration." These say nothing. Replace with specific facts or cut entirely.
+- The same move shows up without the -ing: declarative "meaning-telling" that glosses a mundane subject as if it were profound — "this represents a broader shift," "the decision symbolizes a commitment to excellence," "it speaks to a larger trend in the industry." If the significance is real, show it with a specific consequence; otherwise cut. Adapted from `Aboudjem/humanizer-skill` P40.
 
 ### Promotional language
 - AI defaults to tourism-brochure prose: "nestled within the breathtaking foothills," "a vibrant hub of innovation," "a thriving ecosystem." Replace with plain description: "is a town in the Gonder region," "has 12 startups." If you wouldn't say it in conversation, cut it.
@@ -269,8 +335,27 @@ These slot-fill constructions signal that a sentence was generated, not written.
 ### Title case headings
 - AI over-capitalizes headings: "Strategic Negotiations And Key Partnerships" instead of "Strategic negotiations and key partnerships." Use sentence case for subheadings. Title case only for the piece's main title, if at all.
 
+### Hyphenated-pair overuse
+- AI stacks compound modifiers: "a high-quality, well-architected, future-proof solution." Two distinct problems. First, density — strings of hyphenated adjectives piled on one noun; cut to the modifier that actually matters. Second, the attributive/predicate error: a compound is hyphenated *before* the noun ("a high-quality report") but not *after* a linking verb ("the report is high quality," no hyphen). AI frequently hyphenates the predicate form; fix it to two words. Adapted from `blader/humanizer` P26.
+
 ### Cutoff disclaimers
 - "While specific details are limited based on available information," "As of my last update," "I don't have access to real-time data." These are model limitations leaking into prose. Either find the information or remove the hedge. Never publish a sentence that admits the writer didn't look something up.
+
+### Speculative gap-filling
+- When the model lacks a fact, it fills the gap with hedged speculation dressed up as background: "maintains a relatively low public profile," "is believed to have," "likely began his career in," "appears to have studied." These are guesses formatted as statements. Distinct from cutoff disclaimers, which *admit* the gap — this one hides it behind plausible-sounding filler, which is worse because the reader can't tell what's known from what's invented. Cut the speculation, or replace it with a sourced fact. Adapted from `blader/humanizer` P21.
+
+### Unfilled placeholders
+- Bracketed slot-fillers that were meant to be replaced before publishing: `[Your Name]`, `[INSERT SOURCE URL]`, `[Describe the specific section]`, `2025-XX-XX`, `<!-- Add citation if available -->`. These are near-definitive evidence that AI-generated boilerplate was pasted without editing. Humans use placeholders in templates too, but rarely ship them. Treat any visible placeholder as a publishing bug: fill it in with real content or delete the sentence entirely.
+- Catch the obvious shapes: `\[(?:Your|Insert|Add|Enter|Describe|Specify|Choose)[^\]]+\]`, `\b\d{4}-XX-XX\b`, HTML/Markdown comments with placeholder verbs (`add`, `fill in`, `todo`, `insert`).
+
+### Chatbot citation markup leaks
+- Internal citation tokens that leak through when text is copy-pasted from chat UIs: `citeturn0search0`, `contentReference[oaicite:0]{index=0}`, `oai_citation`, `[attached_file:1]`, `grok_card`. These are not patterns — they are fingerprints. Their presence is essentially proof the text was generated by a specific chat tool and pasted without cleanup.
+- The fix is mechanical: strip every markup token. If a citation was meaningful, replace it with a real reference. Don't try to humanize the markup — delete it.
+- Adapted from `Aboudjem/humanizer-skill` P34. Worth catching even when nothing else in the text reads as AI — the token itself is enough.
+
+### AI-tool URL parameters
+- Tracking parameters that AI tools auto-append to URLs they generate, surviving copy-paste into published content: `utm_source=chatgpt.com`, `utm_source=copilot.com`, `utm_source=openai`, `utm_source=claude.ai`, `utm_source=perplexity.ai`, `referrer=grok.com`. Same logic as citation markup leaks — the presence of the parameter is the signature, regardless of what the surrounding text reads like.
+- The fix: strip the parameter from every URL. Keep the URL itself if the link is meaningful; lose the parameter entirely. Adapted from `Aboudjem/humanizer-skill` P35.
 
 ### Novelty inflation
 - AI text treats established concepts as if the speaker invented or discovered them: "He introduced a term," "She coined the phrase," "a concept nobody's naming," "a failure mode nobody talks about." In reality, most ideas in a conversation are applications of existing concepts, not inventions.
@@ -278,8 +363,18 @@ These slot-fill constructions signal that a sentence was generated, not written.
 - The fix: describe what the person *did with* the concept, not that they discovered it. "Michel walked through how context poisoning works in practice" instead of "Michel introduced a term I hadn't heard before: context poisoning." If you're unsure whether something is novel, assume it isn't and frame accordingly.
 - Related patterns to flag: "the failure mode nobody's naming," "a problem nobody talks about," "the insight everyone's missing," "what nobody tells you about." These are engagement-bait framings that claim scarcity of knowledge where none exists.
 
+### Infomercial engagement hooks
+- Punchy fragment-hooks that tee up a reveal: "The catch?", "The kicker?", "Here's the thing.", "But here's the kicker:", "The best part?", "Plot twist:", "The result?". AI uses these to fake momentum and manufacture suspense around ordinary information — the prose equivalent of a late-night infomercial.
+- Distinct from rhetorical-question openers (which stall before a point) and chatbot artifacts (which perform helpfulness): these are mid-flow teasers that pad the rhythm. The fix is to delete the hook and state the thing. "The catch? It only works on weekends." becomes "It only works on weekends." Adapted from `Aboudjem/humanizer-skill` P41.
+
+### Social endorsement closers
+- The curatorial sign-off LLMs append to LinkedIn and X posts that share or recommend something — usually a colon teeing up a link: "This one is worth your time:", "This one's a must-read:", "I highly recommend giving this a read.", "Do yourself a favor and read this.", "You won't want to miss this one.", "Save this for later.", "Bookmark this.", "Don't sleep on this one.", "Trust me, you'll want to read this.", "Thank me later."
+- Why it's a tell: it performs a recommendation without giving the reader a reason to click. The endorsement is generic and demonstrative-anchored ("THIS one is worth your time") — it could sit under any link, which is exactly why an LLM reaches for it to close a share post.
+- Distinct from the bare "worth [verb]ing" word-table entry (a single weak word inside a sentence) and from infomercial engagement hooks (mid-flow teasers like "The catch?"): this is the whole closing line of a social post.
+- The fix: say *what* the thing is and *who* it's for, then drop the CTA. "This one is worth your time:" becomes "Sarah's breakdown of why context windows leak — the clearest explanation I've found for anyone debugging RAG pipelines." If you can't name a specific reason, the share doesn't need a sign-off at all; let the link stand on its own.
+
 ### Emotional flatline
-- AI claims emotions as a structural crutch without conveying them through the writing: "What surprised me most," "I was fascinated to discover," "What struck me was," "I was excited to learn," "The most interesting part."
+- AI claims emotions as a structural crutch without conveying them through the writing: "What surprised me most," "I was fascinated to discover," "What struck me was," "I was excited to learn," "The most interesting part," and the bare section-header variant: "Interesting part of the project:" / "Interesting thing here:" / "Interesting aspect:". The header form drops "the most" but does the same job — pre-announcing significance the writing hasn't earned.
 - Two problems. First, it's tell-don't-show: if the thing is genuinely surprising, the reader should feel that from the content, not from the writer announcing it. Second, these phrases are massively overused as list introductions and transitions. They're filler wearing an emotion costume.
 - This pattern isn't always AI. It's also a sign of lazy human writing on autopilot. Flag it either way.
 - The fix isn't "never say surprised." It's: if you claim an emotion, the writing around it should earn it. Otherwise cut the claim and present the thing directly.
@@ -313,6 +408,15 @@ These slot-fill constructions signal that a sentence was generated, not written.
 - "It's worth noting that," "Interestingly," "Surprisingly," "Importantly," "Significantly," "Notably," "Certainly," "Undoubtedly," "Without a doubt" — AI uses these to signal how the reader should feel about a fact instead of letting the fact speak for itself.
 - "Here's what's interesting," "Here's the interesting part," "Here are the parts I found interesting" — reader-steering cue that pre-interprets importance. Works when followed by genuinely surprising data; fails when it introduces a restatement of something obvious (which is the AI default).
 - One "notably" in a 2,000-word piece is fine. Three in 500 words is AI-style emphasis stacking. Flag by density.
+- Related — **persuasive-authority tropes**: "the real question is," "at its core," "fundamentally," "make no mistake," "the truth is." Same move as the calibration phrases above, but they assert depth or stakes instead of feeling: they announce that what follows is important rather than showing it. Cut the trope and lead with the substance. Adapted from `blader/humanizer` P27.
+
+### Self-labeling significance
+- After listing or describing several items, the writer points back at one and labels it as contrarian / clever / surprising / counterintuitive / key: "That last move is the contrarian one," "This is the interesting part," "That third bullet is the real story," "Here's where it gets clever," "The last bit is the counterintuitive one."
+- The label does the work the content was supposed to do. If a move is genuinely contrarian, the reader recognizes it from the description; if it isn't recognizable without the label, the label is unearned. The pattern reads as the writer auditing their own list to flag which item should matter, instead of writing the list so the right item carries the weight on its own.
+- Distinct from confidence calibration ("Notably," "Interestingly") which front-loads the cue, and from emotional flatline ("What surprised me most," "The most interesting part") which prefaces a single claim. This pattern back-points after the fact, usually as "[that / this / the Xth / the last] [noun] is the [adjective] one."
+- Significance-adjectives that signal the pattern: contrarian, clever, surprising, counterintuitive, interesting, key, important, unusual, smart, brilliant, real, actual.
+- Fix: cut the labeling sentence and let the explanation that follows do the work directly. Or restructure so the item you wanted to highlight is positioned first or expanded with specifics, making the label redundant.
+- Example. Before: "→ Two separate indexes for tiered storage. That last move is the contrarian one. Co-locating related data usually helps cache locality." After: "→ Two separate indexes for tiered storage. Co-locating related data usually helps cache locality, but splitting the indexes is what makes the hot path cheap." The contrast carries itself; the label is gone.
 
 ### Excessive structure
 - Too many headers in short text: more than 3 headings in under 300 words is almost always AI trying to look organized. Merge sections or use prose transitions instead.
@@ -332,6 +436,22 @@ These aren't individual word or phrase problems — they're patterns in how the 
 - **Missing first-person perspective**: Where appropriate, the writer should have opinions, preferences, and reactions. AI is relentlessly neutral. If the piece is supposed to have a voice, the absence of "I think," "in my experience," or a stated preference is itself an AI tell.
 - **Over-polishing**: Aggressively editing out every irregularity can push human writing *toward* AI statistical profiles. Natural disfluency, idiosyncratic word choices, and uneven pacing are what keep text out of the "AI-generated" classification. Don't sand away all personality in pursuit of clean prose. This skill should make writing sound more human, not less — if you apply every rule at maximum strictness, you risk creating the very uniformity you're trying to avoid.
 
+### Vocabulary diversity (stylometric)
+
+In longer pieces (200+ words), look at how much vocabulary the text actually uses. The type-token ratio (TTR) — distinct word types divided by total tokens — is a classical stylometric signal that's easy to read by eye. Human prose at this length usually lands somewhere around 0.50–0.65 in English. AI text trends flatter, sometimes drifting under 0.40 when the model gets locked on a small vocabulary loop.
+
+A very low TTR is not by itself proof of AI authorship — narrow topics, technical reference material, and second-language writing all legitimately compress vocabulary. But on general prose where you'd expect range (essays, articles, social content over ~200 words), a TTR below 0.40 is worth a second look. The fix is rarely to thesaurus the text; it's to broaden the *what* — name specific things, cite specific cases, replace a re-used abstract noun with the concrete instance behind it.
+
+This is the first of four stylometric signals on the roadmap. The others (sentence-length burstiness as a continuous measure, function-word z-scores against a human-prose reference, POS-bigram log-odds) require either a POS tagger or a reference distribution and aren't implemented as detector categories yet.
+
+### Paragraph-reshuffle immunity (structure test)
+- A writer-side diagnostic, not a regex: can you swap two body paragraphs without breaking the piece? If the order doesn't matter, you've written a list of points, not an argument that builds. AI prose often fails this — each paragraph is a self-contained module with no load-bearing connection to its neighbors.
+- The fix is structural, not lexical: establish a through-line where each paragraph depends on the one before it. If the paragraphs are genuinely independent, decide whether the piece should be an explicit list, or whether it's missing a thesis. Adapted from `Aboudjem/humanizer-skill` P38.
+
+### Treadmill effect / low information density (content test)
+- Another writer-side test: read each paragraph and ask "what's actually new here?" AI prose frequently restates the premise in fresh words instead of advancing it — lots of motion, no distance covered. The tell is that you could cut 40-60% and lose no information.
+- The fix: for each paragraph, name the one fact, claim, or turn it contributes. If there isn't one, cut it. If there is, lead with it and drop the throat-clearing. Adapted from `Aboudjem/humanizer-skill` P43.
+
 ### When to rewrite from scratch vs. patch
 
 If the text has 5+ flagged vocabulary hits across multiple categories, 3+ distinct pattern categories triggered, and uniform sentence/paragraph length, patching individual phrases won't fix it — the structure itself is AI-generated. Advise a full rewrite: state the core point in one sentence, then rebuild from there.
@@ -342,13 +462,14 @@ If the text has 5+ flagged vocabulary hits across multiple categories, 3+ distin
 
 Not all AI-isms are equal. When doing a quick pass or triaging a large document, prioritize by tier:
 
-### P0 - Credibility killers (fix immediately)
+### P0 — Credibility killers (fix immediately)
 - Cutoff disclaimers ("As of my last update")
 - Chatbot artifacts ("I hope this helps!", "Great question!")
 - Vague attributions without sources ("Experts believe")
 - Significance inflation on routine events
+- Hashtag stuffing on `linkedin` and `investor-email` posts (severity varies by profile — same rule, lower priority on `blog`/`technical-blog` where a launch post may legitimately stack tags; see the context-profile table below)
 
-### P1 - Obvious AI smell (fix before publishing)
+### P1 — Obvious AI smell (fix before publishing)
 - Word-list violations (delve, leverage, harness, robust, etc.)
 - Template phrases and slot-fill constructions
 - "Let's" transition openers
@@ -356,13 +477,21 @@ Not all AI-isms are equal. When doing a quick pass or triaging a large document,
 - Formulaic openings ("In the rapidly evolving world of...")
 - Bold overuse
 - Em dash frequency (above 1 per 1,000 words)
+- Generic future-narrative closers ("may become one of the most important narratives…")
+- Social endorsement closers ("This one is worth your time:", "thank me later")
+- Hedge-stacked predictions ("could potentially," "may eventually")
+- Real/actual adjective inflation ("real on-chain tokenomics")
+- Bullet lists of bare noun phrases (5+ short adj+noun items, no verbs)
+- Tier 3 phrase clustering (≥3 distinct boilerplate phrases in one piece)
 
-### P2 - Stylistic polish (fix when time allows)
+### P2 — Stylistic polish (fix when time allows)
 - Generic conclusions ("The future looks bright")
 - Compulsive rule of three
 - Uniform paragraph length
 - Copula avoidance (serves as, features, boasts)
 - Transition phrases (Moreover, Furthermore, Additionally)
+- Hashtag stuffing (`blog`/`technical-blog` profiles)
+- Tier 3 phrase repetition (single phrase ≥2× — fine in isolation, suspect in stacks)
 
 Use P0+P1 for quick passes. Full audit covers all three tiers.
 
@@ -407,6 +536,13 @@ Rules not listed in the table apply at full strength across all profiles.
 | Rhetorical questions | relaxed (1 as hook OK) | strict | strict | strict | strict | skip |
 | Transition phrases | skip (short-form) | strict | strict | strict | relaxed | skip |
 | Generic conclusions | skip | strict | strict | **extra strict** | skip | skip |
+| Hashtag stuffing | strict | strict | strict | **extra strict** | skip (no hashtags in docs) | skip |
+| Bullet-NP lists | strict | strict | relaxed (technical option lists OK) | strict | relaxed (parameter lists OK) | skip |
+| Tier 3 phrase clustering | strict | strict | strict | **extra strict** | relaxed | skip |
+| Future-narrative closers | strict | strict | strict | **extra strict** | skip | skip |
+| Social endorsement closers | strict (the LinkedIn share-post tell) | strict | strict | strict | skip | relaxed (1 OK in a DM) |
+| Hedge-stacked predictions | strict | strict | relaxed ("could" is hedged accuracy) | **extra strict** | relaxed | skip |
+| Real/actual inflation | strict | strict | strict | **extra strict** | relaxed | skip |
 
 **Technical-blog word table exceptions:** These terms have legitimate technical meaning and should not be flagged in technical context: `robust`, `comprehensive`, `seamless`, `ecosystem`, `leverage` (when discussing actual platform leverage/APIs), `facilitate`, `underpin`, `streamline`. Still flag: `delve`, `tapestry`, `beacon`, `embark`, `testament to`, `game-changer`, `harness`.
 
@@ -430,6 +566,28 @@ If auto-detection feels wrong, say which profile you're using and why. The user 
 
 ---
 
+
+## Voice profiles
+
+Context profiles (above) set *how strict* to be for an audience. Voice profiles set *how the prose should sound* — the persona. They're independent axes: you can write blunt for a blog or warm for docs. Voice is **optional** — if the writer doesn't name one, infer it from the input's existing register and don't impose a persona on text that already has one.
+
+Each profile is a set of concrete targets, not a vibe:
+
+**`casual`** — Contractions throughout; their absence reads stiff. Short sentences (aim for ≤14 words on average); fragments allowed. At least one first-person or concrete-anecdote touch. Near-zero jargon. Keep warm hedges ("honestly," "I think") but cut corporate ones ("it's worth noting"). *Blog posts, social, community.*
+
+**`professional`** — Active voice for most sentences. Vary sentence length; avoid three in a row within a few words of each other. One concrete claim per paragraph (a number, a name, a date), never "experts say." Make the ask explicit. Low tolerance for hedging. *LinkedIn, investor email, sponsor pitches.*
+
+**`technical`** — Prefer plain copulatives ("X is Y") over inflated substitutes ("serves as," "stands as a testament to"). One idea per sentence; imperative mood for instructions. Jargon is fine, but define it on first use. Tables and lists only where the content is genuinely list-shaped, not for decoration. *Docs, technical blog.*
+
+**`warm`** — Address the reader directly ("you") and acknowledge them at least once. Cut intensifiers ("very," "truly," "incredibly") in favor of stronger verbs. No performative-empathy openers ("I completely understand how you feel"). Medium sentences (15–20 words) for an unhurried cadence. *Mentorship, onboarding, thank-yous.*
+
+**`blunt`** — Lead with the claim; cut "It's important to note that" windups. Em-dashes are rare here; use periods for emphasis. No padding to hit a rule of three. Near-zero hedging; flag "may / could / potentially" stacks. Short declaratives, with the occasional long sentence for contrast. *Decision memos, thought leadership, hard feedback.*
+
+**Calibrate to a sample (optional).** If the writer gives you a sample of their own writing ("match my voice — here's a post"), analyze its sentence-length pattern, contraction rate, paragraph openings, and recurring word choices, then match those instead of a named profile. Don't "upgrade" their vocabulary: if they write "stuff" and "things," keep that register.
+
+**How voice composes with context.** Voice sets the target; context sets how hard to enforce it. A voice *target* always applies, even where a context profile would skip that category — `technical` voice still prefers plain copulatives in a `casual` context that otherwise ignores copula avoidance. Where both axes govern the same rule and agree, they reinforce: `blunt` voice wants near-zero em-dashes and a `blog` context is already strict on them, so it stays a hard edit. Where they disagree, resolve toward the **stricter** of the two — a `warm` voice on `docs` still doesn't get decorative tables. Sensible default pairings: casual↔casual, professional↔linkedin/investor-email, technical↔docs/technical-blog.
+
+---
 
 ## Output format
 
@@ -458,6 +616,16 @@ A bulleted list of every AI-ism identified, with the offending text quoted. Grou
 
 **2. Assessment**
 For each flag, note whether it's a clear problem or a judgment call. Some AI-associated patterns are effective writing techniques — uniform paragraph length is a problem, but a well-placed "however" isn't. Call out which flags the writer should definitely fix vs. which ones are worth a second look but might be fine in context. If the text is clean, say so.
+
+### Edit mode
+
+After editing the file in place, return a short report — not the full file:
+
+**1. Edits made**
+A bulleted list of the changes, each with the file location and the before → after. Only the spans you touched.
+
+**2. Verification**
+Confirm you re-read the file and the flagged patterns are resolved. Note anything you deliberately left alone because it was already human or intentional.
 
 ---
 

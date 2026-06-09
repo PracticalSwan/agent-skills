@@ -3,6 +3,24 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-06-09] - NVIDIA Imports, Upstream Audit Refresh, and Catalog Validation Recovery
+
+### Added
+
+- Imported the NVIDIA skills `accelerated-computing-cudf`, `deepstream-dev`, `deepstream-import-vision-model`, `nemo-retriever`, `rag-blueprint`, `rag-eval`, and `rag-perf`, including their provenance sidecars and per-skill changelogs.
+- Added repo-standard metadata, required validation sections, and new per-skill changelogs for the previously raw tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx`.
+
+### Changed
+
+- Updated `README.md`, `CLAUDE.md`, `GEMINI.md`, `REFERENCE_SOURCES.md`, `LESSON.md`, and `scripts/skill-registry.json` to document the expanded catalog, current upstream audit commits, and the fact that the tracked document imports now match the maintained schema while still awaiting finalized provenance mapping.
+- Refreshed the vendored `avoid-ai-writing` skill to upstream commit `4331560d02b2c86ffd1d889d4f688da699d360d9` while preserving the catalog's verification, portability, and no-MCP sections.
+- Regenerated Gemini command exports for all `136` local skills after the catalog refresh.
+
+### Fixed
+
+- Updated `scripts/validate-skills.py` so Gemini command validation works on Python 3.10 hosts that do not provide `tomllib`.
+- Removed validation blockers from legacy skill folders, including the banned `### Tested` changelog heading and replacement-character separators in `avoid-ai-writing`.
+
 ## [2026-05-05] - Documentation Refresh for Tracked Document Skill Imports
 
 ### Added

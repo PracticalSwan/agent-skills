@@ -1,6 +1,9 @@
 ---
 name: xlsx
-description: "Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .csv, or .tsv file (e.g., adding columns, computing formulas, formatting, charting, cleaning messy data); create a new spreadsheet from scratch or from other data sources; or convert between tabular file formats. Trigger especially when the user references a spreadsheet file by name or path — even casually (like \"the xlsx in my downloads\") — and wants something done to it or produced from it. Also trigger for cleaning or restructuring messy tabular data files (malformed rows, misplaced headers, junk data) into proper spreadsheets. The deliverable must be a spreadsheet file. Do NOT trigger when the primary deliverable is a Word document, HTML report, standalone Python script, database pipeline, or Google Sheets API integration, even if tabular data is involved."
+version: "1.2"
+last_updated: 2026-06-09
+tags: [xlsx, spreadsheet, excel, data, formulas]
+description: "Use this skill any time a spreadsheet file is the primary input or output. Covers reading, editing, cleaning, modeling, formula repair, workbook generation, and converting tabular data into validated spreadsheet deliverables."
 license: Proprietary. LICENSE.txt has complete terms
 ---
 
@@ -290,3 +293,38 @@ The script returns JSON with error details:
 - Add comments to cells with complex formulas or important assumptions
 - Document data sources for hardcoded values
 - Include notes for key calculations and model sections
+
+## Anti-Patterns
+
+- Shipping an Excel workbook with unresolved formula errors, broken references, or unverified recalculation results.
+- Overwriting an established workbook template with generic formatting instead of preserving the user's existing conventions.
+- Treating a spreadsheet request as a plain CSV transform when the real deliverable depends on workbook structure, formulas, sheets, or formatting.
+
+## Verification Protocol
+
+1. Pass/fail: the workbook opens successfully and the requested sheets, formulas, formatting, and output tables are present.
+2. Pressure test: run the recalculation or formula-check workflow after meaningful spreadsheet edits, especially when formulas or cross-sheet references changed.
+3. Success metric: zero reported formula errors plus at least one spot-check on representative calculated cells or workbook tabs.
+
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or mirror the workflow in repository instructions when folder-based skills are unavailable.
+- Claude Code: keep the folder in a local skills directory and preserve any bundled scripts or references the workflow depends on.
+- Codex: sync the folder into `$CODEX_HOME/skills/xlsx` from this maintained catalog instead of editing downstream copies directly.
+- Gemini CLI: regenerate the matching `/skills:xlsx` command with `python scripts/export-gemini-skill.py xlsx` after meaningful updates.
+
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+Preferred MCP Server: None required
+Fallback prompt: Use `openpyxl`, `pandas`, the bundled Excel helper scripts, and a local workbook reopen or recalculation pass when no spreadsheet MCP surface is available.
+
+## Related Skills
+
+- `excel-sheet`
+- `spreadsheet-formula-helper`
+- `powerbi-modeling`
+- `docx`

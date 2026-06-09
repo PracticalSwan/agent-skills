@@ -6,9 +6,9 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
-- The repo currently tracks `71` skill folders
-- Most tracked maintained skills are aligned on `version: "1.2"` with `last_updated: 2026-04-25`
-- The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` still need catalog normalization before they match that baseline
+- The repo currently tracks `78` skill folders
+- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported NVIDIA skills and the refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are also normalized to `version: "1.2"` with `last_updated: 2026-06-09`
+- The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match that baseline, but they still need finalized provenance mapping in `scripts/skill-registry.json`
 
 ## Generated Commands
 
@@ -69,7 +69,7 @@ That validation checks:
 - obsolete Skill Paths sections, stale removed-skill links, mojibake markers, and generated Python bytecode
 
 Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
-The tracked raw imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are the current known schema exceptions until they are modernized in this repo.
+The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared schema baseline. Their remaining gap is canonical upstream matching and finalized provenance metadata.
 
 For externally imported skills, normalize the workspace copy and run any local smoke tests before exporting new Gemini command files. The generated command should only mirror maintained content that already passed the repo checks.
 

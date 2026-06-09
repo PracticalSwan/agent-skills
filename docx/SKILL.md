@@ -1,6 +1,9 @@
 ---
 name: docx
-description: "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Triggers include: any mention of 'Word doc', 'word document', '.docx', or requests to produce professional documents with formatting like tables of contents, headings, page numbers, or letterheads. Also use when extracting or reorganizing content from .docx files, inserting or replacing images in documents, performing find-and-replace in Word files, working with tracked changes or comments, or converting content into a polished Word document. If the user asks for a 'report', 'memo', 'letter', 'template', or similar deliverable as a Word or .docx file, use this skill. Do NOT use for PDFs, spreadsheets, Google Docs, or general coding tasks unrelated to document generation."
+version: "1.2"
+last_updated: 2026-06-09
+tags: [docx, word, documents, office, formatting]
+description: "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Covers polished document output, tracked changes, comments, image updates, XML-level repairs, and safe conversion workflows."
 license: Proprietary. LICENSE.txt has complete terms
 ---
 
@@ -588,3 +591,38 @@ After running `comment.py` (see Step 2), add markers to document.xml. For replie
 - **docx**: `npm install -g docx` (new documents)
 - **LibreOffice**: PDF conversion (auto-configured for sandboxed environments via `scripts/office/soffice.py`)
 - **Poppler**: `pdftoppm` for images
+
+## Anti-Patterns
+
+- Treating a `.docx` file like plain text when the request depends on document structure, relationships, tracked changes, or comments.
+- Declaring the document done without reopening, rendering, or validating it after XML-level edits.
+- Using PDF or HTML output as a substitute when the user explicitly needs a working `.docx` deliverable.
+
+## Verification Protocol
+
+1. Pass/fail: the output document opens cleanly and the requested edits, comments, or tracked changes appear in the intended locations.
+2. Pressure test: run at least one representative unpack-edit-repack or validation loop when the task touches document XML, comments, or media relationships.
+3. Success metric: zero document-structure errors from the referenced validation workflow plus one manual or rendered spot-check when layout matters.
+
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or mirror the workflow in repository instructions when folder-based skills are unavailable.
+- Claude Code: keep the folder in a local skills directory and preserve any bundled scripts or references the workflow depends on.
+- Codex: sync the folder into `$CODEX_HOME/skills/docx` from this maintained catalog instead of editing downstream copies directly.
+- Gemini CLI: regenerate the matching `/skills:docx` command with `python scripts/export-gemini-skill.py docx` after meaningful updates.
+
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+Preferred MCP Server: None required
+Fallback prompt: Use the bundled Office scripts, unpack/validate workflows, and a local reopen or render pass to confirm the final `.docx` behavior when no dedicated MCP surface exists.
+
+## Related Skills
+
+- `pdf`
+- `word-document`
+- `pptx`
+- `xlsx`

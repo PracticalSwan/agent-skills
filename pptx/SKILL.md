@@ -1,6 +1,9 @@
 ---
 name: pptx
-description: "Use this skill any time a .pptx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx file (even if the extracted content will be used elsewhere, like in an email or summary); editing, modifying, or updating existing presentations; combining or splitting slide files; working with templates, layouts, speaker notes, or comments. Trigger whenever the user mentions \"deck,\" \"slides,\" \"presentation,\" or references a .pptx filename, regardless of what they plan to do with the content afterward. If a .pptx file needs to be opened, created, or touched, use this skill."
+version: "1.2"
+last_updated: 2026-06-09
+tags: [pptx, presentations, slides, office, design]
+description: "Use this skill any time a `.pptx` file is involved as input, output, or both. Covers reading decks, editing existing presentations, creating slides from scratch, visual QA, notes, layouts, and presentation-safe file transforms."
 license: Proprietary. LICENSE.txt has complete terms
 ---
 
@@ -230,3 +233,38 @@ pdftoppm -jpeg -r 150 -f N -l N output.pdf slide-fixed
 - `npm install -g pptxgenjs` - creating from scratch
 - LibreOffice (`soffice`) - PDF conversion (auto-configured for sandboxed environments via `scripts/office/soffice.py`)
 - Poppler (`pdftoppm`) - PDF to images
+
+## Anti-Patterns
+
+- Declaring presentation work complete from text extraction alone when slide layout, overlap, or visual balance are part of the request.
+- Updating a deck without checking for leftover placeholder content, broken slide order, or layout regressions after edits.
+- Defaulting to generic bullet-heavy slides when the request calls for a polished or persuasive presentation artifact.
+
+## Verification Protocol
+
+1. Pass/fail: the `.pptx` opens correctly and the requested slide content, notes, and ordering match the target outcome.
+2. Pressure test: render slides to images and review at least the affected slides for overlap, overflow, margin, and placeholder issues.
+3. Success metric: zero obvious visual defects in the reviewed slide renders and no broken extraction or thumbnail steps for the updated deck.
+
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or mirror the workflow in repository instructions when folder-based skills are unavailable.
+- Claude Code: keep the folder in a local skills directory and preserve any bundled scripts or references the workflow depends on.
+- Codex: sync the folder into `$CODEX_HOME/skills/pptx` from this maintained catalog instead of editing downstream copies directly.
+- Gemini CLI: regenerate the matching `/skills:pptx` command with `python scripts/export-gemini-skill.py pptx` after meaningful updates.
+
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+Preferred MCP Server: None required
+Fallback prompt: Use the bundled PowerPoint, LibreOffice, and thumbnail scripts together with rendered slide images when no dedicated MCP presentation surface is available.
+
+## Related Skills
+
+- `powerpoint-ppt`
+- `docx`
+- `xlsx`
+- `pdf`

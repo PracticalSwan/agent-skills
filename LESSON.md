@@ -51,6 +51,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - When the catalog frontmatter or required section schema changes, update the validator before relying on the next export or sync pass.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
 - Record source repo and commit metadata for imported skills so later updates can be traced safely.
+- Keep official provenance sidecars from trusted imports when they add value. NVIDIA skill imports, for example, ship `skill-card.md`, `skill.oms.sig`, and benchmark evidence that should stay with the vendored copy unless removal is deliberate and documented.
 - If an imported tracked skill is still missing catalog sections or `CHANGELOG.md`, document that exception plainly until the modernization pass is done.
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
 - Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.

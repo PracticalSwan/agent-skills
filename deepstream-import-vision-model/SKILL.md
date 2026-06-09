@@ -1,0 +1,226 @@
+---
+name: deepstream-import-vision-model
+version: "1.2"
+last_updated: 2026-06-09
+tags: [nvidia, deepstream, vision, model-import, tensorrt, onnx]
+description: "NVIDIA DeepStream model-import guidance for bringing vision models from Hugging Face or NVIDIA NGC into DeepStream pipelines with export, TensorRT build, and benchmark steps."
+license: CC-BY-4.0 AND Apache-2.0
+compatibility: "Guidance imported from the NVIDIA DeepStream model-import skill for ONNX export, TensorRT conversion, and benchmark workflows."
+metadata:
+  author: "NVIDIA"
+  source_repo: "https://github.com/NVIDIA/skills"
+  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
+  source_path: "skills/deepstream-import-vision-model"
+---
+
+# DeepStream Import Vision Model
+
+When this skill is active, **read the relevant reference document before starting each phase**. Do not rely on memory — reference documents contain exact script paths, bash variable conventions, log filename contracts, and critical parsing rules.
+
+**Current scope:** Object detection models only. Fail fast on classification, segmentation, or other architectures detected in `config.json`.
+
+## Pipeline Overview
+
+| Step | Phase | Reference | What it does |
+|------|-------|-----------|--------------|
+| 1–3 | Model Acquire | [references/model-acquire.md](references/model-acquire.md) | Browse HF/NGC, detect format, download ONNX or export SafeTensors |
+| 4–5 | Engine Build  | [references/engine-build.md](references/engine-build.md) | Build dynamic TRT engine, run trtexec BS=1 and BS=MAX_BS |
+| 6–7 | DS Pipeline   | [references/pipeline-run.md](references/pipeline-run.md) | Custom bbox parser, nvinfer config, single-stream + multi-stream benchmarks |
+| 8   | Report        | [references/report-generation.md](references/report-generation.md) | 5 charts, HTML, PDF benchmark report |
+
+Run the full pipeline autonomously without pausing for confirmation at each step.
+
+## Pre-flight Checks
+
+Run before starting:
+
+```bash
+# 1. GPU and drivers
+nvidia-smi
+
+# 2. TensorRT version match (must match between builder and DS runtime)
+trtexec 2>&1 | head -3
+dpkg -l | grep libnvinfer-bin
+
+# 3. Shared Python venv — create once, reuse across all models
+mkdir -p build
+VENV=build/.venv_optimum
+if [ ! -x "$VENV/bin/python3" ]; then
+  python3 -m venv "$VENV"
+  "$VENV/bin/pip" install --upgrade pip -q
+  "$VENV/bin/pip" install "optimum[exporters]>=1.20,<2.0" "torch<2.12" \
+    transformers onnxruntime matplotlib numpy markdown -q
+fi
+
+# 4. System tools
+which wkhtmltopdf || apt-get install -y wkhtmltopdf
+which mediainfo    || apt-get install -y mediainfo
+which deepstream-app  # required for KITTI dump (Step 6g) and benchmark perf-measurement (Step 7c); shipped with DeepStream SDK
+
+# 5. Sample video — only check default path when user has not provided a custom DS_VIDEO
+if [ -z "$DS_VIDEO" ]; then
+  [ -f /opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4 ] || \
+    echo "WARNING: sample_720p.mp4 not found. Install DeepStream samples or set DS_VIDEO=/path/to/your.mp4"
+fi
+```
+
+## Mandatory Output Structure
+
+Create once `MODEL_NAME` is known (Step 1). Never dump files flat.
+
+```
+models/{model_name}/
+  model/           <- ONNX file(s)
+  parser/          <- .cpp, Makefile, .so
+  config/          <- nvinfer config, ds-app config, labels.txt
+  scripts/         <- run helper scripts
+  benchmarks/
+    engines/       <- _dynamic_b{MAX_BS}.engine, timing.cache, build logs
+    b1/            <- trtexec BS=1 log
+    b{MAX_BS}/     <- trtexec BS=MAX_BS log
+    ds/            <- DS benchmark logs
+  reports/         <- benchmark_report.md, .html, .pdf, benchmark_data.json
+    charts/        <- chart_*.png (5 charts)
+  samples/         <- output .mp4 or .ogv (theoraenc fallback), test frames
+    kitti_output/  <- KITTI detection .txt files
+```
+
+```bash
+mkdir -p models/$MODEL_NAME/{model,parser,config,scripts,benchmarks/engines,benchmarks/ds,reports/charts,samples/kitti_output}
+```
+
+## Critical Rules
+
+1. **Engine naming** — always `{model}_dynamic_b{MAX_BS}.engine`. Never bare `model_dynamic.engine`.
+2. **batch_size == num_streams** — in DS runs, `batch-size` and stream count are always equal.
+3. **Log filenames are fixed** — `trtexec_b1.log`, `trtexec_b${MAX_BS}.log`, `ds_s${N}_run1.log`, `ds_s${N}_run2.log`. No timestamps. Report generation reads exact paths.
+4. **Parser zero-init** — always `NvDsInferObjectDetectionInfo obj = {};`. Required for DS 9.0 OBB support; bare `obj;` leaves `rotation_angle` uninitialized, causing tilted bounding boxes.
+5. **KITTI validation gate** — do NOT proceed to Step 7 if KITTI frame count is zero or detection rate < 90%.
+6. **Shared venv** — `build/.venv_optimum` reused across all models. Never create per-model venvs.
+7. **trtexec `--noDataTransfers`** — GPU-only compute matches DeepStream's GPU-to-GPU data flow.
+8. **Report HTML+PDF** — always use `skills/deepstream-import-vision-model/scripts/report/md-to-html-pdf.py`. Never write a custom HTML generator or call `wkhtmltopdf` directly.
+9. **Object detection only** — reject non-detection architectures from `config.json` before building anything.
+10. **Encoder fallback (MANDATORY)** — `x264enc` and `openh264enc` are **prohibited**. On NVENC-unavailable systems, use `theoraenc + oggmux` (LGPL; ships in gst-plugins-base; output is `.ogv`). If `theoraenc`/`oggmux` are absent, skip video creation (`DS_SINGLE_STREAM_MODE=skipped`). Report which mode was used: `nvv4l2h264enc` / `theoraenc-fallback` / `skipped`.
+11. **Video source (MANDATORY)** — default is always `sample_720p.mp4` (1280×720). Never autonomously substitute `sample_1080p_h264.mp4` or any other file. Only use a different video when the user explicitly provides a path (via `DS_VIDEO` env var or script argument).
+
+## Pipeline Timing
+
+Wrap every step:
+
+```bash
+STEP_START=$(date +%s.%N)
+# ... step commands ...
+STEP_END=$(date +%s.%N)
+STEP_DURATION=$(echo "$STEP_END - $STEP_START" | bc)
+echo "[Step N] completed in ${STEP_DURATION}s"
+```
+
+Track `PIPELINE_START` (before Step 1) and `PIPELINE_END` (after Step 8). Report all durations in the benchmark report.
+
+## Report Output (MANDATORY — all 3 formats)
+
+1. `benchmark_report.md` — markdown source (12 mandatory sections)
+2. `benchmark_report.html` — styled HTML (charts base64-inlined, no local file access)
+3. `benchmark_report_{model_name}.pdf` — via `md-to-html-pdf.py`; verify charts are embedded by counting `data:image/png` occurrences in the HTML output: `grep -o 'data:image/png' benchmark_report.html | wc -l` should equal 5
+
+Run charts and report scripts with the shared venv active: `source build/.venv_optimum/bin/activate`.
+
+## Reference Documents
+
+**IMPORTANT**: Read the relevant reference before starting each phase. Do NOT generate code from memory.
+
+| Document | Use When |
+|----------|----------|
+| [references/model-acquire.md](references/model-acquire.md) | Steps 1–3: HF/NGC URL parsing, format detection, ONNX download, SafeTensors export, label extraction |
+| [references/engine-build.md](references/engine-build.md) | Steps 4–5: trtexec engine build, benchmarks, PEAK_GPU_STREAMS derivation, iterative scaling |
+| [references/pipeline-run.md](references/pipeline-run.md) | Steps 6–7: custom bbox parser, nvinfer config, single-stream validation, KITTI dump, multi-stream benchmark |
+| [references/report-generation.md](references/report-generation.md) | Step 8: benchmark_data.json, 5 charts, 12-section markdown report, HTML + PDF |
+
+## Scripts
+
+Located in `scripts/`.
+
+| Script | Phase | Purpose |
+|--------|-------|---------|
+| `model/hf-list-files.sh` | 1–3 | List HuggingFace repo files |
+| `model/hf-download-config.sh` | 1–3 | Download config.json from HF |
+| `model/ngc-list-files.sh` | 1–3 | List NGC model files |
+| `model/ngc-download.sh` | 1–3 | Download NGC model archive |
+| `model/safetensors-to-onnx.sh` | 1–3 | Export SafeTensors → ONNX via optimum-cli |
+| `model/inspect-onnx.py` | 1–5 | Inspect ONNX input/output shapes |
+| `model/make-static-batch-onnx.py` | 4–5 | Bake batch dim into ONNX |
+| `model/cleanup.sh` | Any | Remove staging dirs, preserve shared venv |
+| `engine/benchmark-trtexec.sh` | 4–5 | Run trtexec with standard flags |
+| `deepstream/ds-single-stream.sh` | 6–7 | Single-stream visual validation (NVENC primary; theoraenc+oggmux fallback; skip if neither) |
+| `deepstream/ds-sweep.sh` | 6–7 | 2-phase batch size sweep |
+| `deepstream/benchmark-ds.sh` | 6–7 | Fixed-stream DS benchmark |
+| `deepstream/ds-kitti-dump.sh` | 6–7 | KITTI detection dump via deepstream-app |
+| `deepstream/ds-perf-run.sh` | 7 | Step 7c two-run benchmark — wraps `deepstream-app` with `enable-perf-measurement=1`, writes fixed-name log for the report parser |
+| `deepstream/extract-frame.sh` | 6–7 | Extract sample frames from output video (`.mp4` NVENC path or `.ogv` theoraenc fallback) |
+| `report/generate-benchmark-charts.py` | 8 | Generate 5 benchmark PNG charts |
+| `report/md-to-html-pdf.py` | 8 | Markdown → styled HTML → PDF (canonical benchmark report path) |
+| `report/md-to-pdf.sh` | Any | Markdown → PDF via pandoc/pdflatex — for design docs and references only, NOT for benchmark reports (use md-to-html-pdf.py for those) |
+| `report/report-style.css` | 8 | CSS for HTML report |
+| `report/render-mermaid-for-pdf.py` | 8 | Mermaid diagram → PNG |
+| `report/mermaid-puppeteer.json` | 8 | Vetted Puppeteer config for Mermaid (sandboxed; non-root) |
+| `report/mermaid-puppeteer-root.json` | 8 | Vetted Puppeteer config for Mermaid (used when running as root) |
+
+## Quick Error Reference
+
+| Error | Fix |
+|-------|-----|
+| Tilted/diagonal bounding boxes | Parser struct not zero-initialized — use `NvDsInferObjectDetectionInfo obj = {};` |
+| Zero KITTI files | `gie-kitti-output-dir` not read by nvinfer — use `ds-kitti-dump.sh` (wraps `deepstream-app`) |
+| Engine rebuilds every DS run | `model-engine-file` path wrong — check relative path from `config/` dir |
+| `setDimensions` negative dims | Add `infer-dims=3;H;W` to nvinfer config for dynamic ONNX models |
+| `--memPoolSize` workspace 0.03 MiB | Use `M` suffix not `MiB` — e.g. `--memPoolSize=workspace:32768M` |
+| ForeignNode build failure (DETR) | Use dynamo export path or run `onnxsim` — see references/engine-build.md |
+| Zero detections | Wrong `net-scale-factor` — check model family table in references/pipeline-run.md |
+| `No module named 'pyservicemaker'` | Install into venv: `pip install /opt/nvidia/deepstream/.../pyservicemaker*.whl` |
+
+<!-- Signing refresh marker.  -->
+
+## Anti-Patterns
+
+- Assuming every vision checkpoint can drop into DeepStream unchanged: Export format, parser behavior, and label mapping often need explicit work.
+- Skipping intermediate validation between model export, TensorRT engine build, and pipeline integration: It makes failures much harder to localize.
+- Using a single happy-path stream as the only benchmark: Multi-stream behavior and parser correctness can fail later.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The workflow identifies the source model format, conversion path, parser needs, and target DeepStream integration point before build steps begin.
+2. Pass/fail: Each stage (export, engine build, pipeline integration, benchmark) has a distinct validation checkpoint instead of one end-only test.
+3. Pass/fail: The answer preserves label, bbox, and multi-stream assumptions so production behavior is not guessed from a demo run.
+4. Pressure-test scenario: Apply the workflow to a Hugging Face detector that exports to ONNX cleanly but mislabels boxes once inside DeepStream.
+5. Success metric: The user gets a model-import path with stage-by-stage evidence, not just a final engine artifact.
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
+- Gemini CLI: this repository generates a project command named `/skills:deepstream-import-vision-model` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py deepstream-import-vision-model` and then run `/commands reload` inside Gemini CLI.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP Server: None required
+
+- Fallback prompt: "Use the deepstream-import-vision-model skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
+- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
+- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+
+<!-- MCP:END -->
+
+## Related Skills
+
+- [development-workflow](../development-workflow/SKILL.md): Use it when the import project also needs a scoped implementation plan and explicit validation gates.
+- [devops-tooling](../devops-tooling/SKILL.md): Use it when the workflow also needs containers, automation, or artifact-publishing steps.
+- [cloud-design-patterns](../cloud-design-patterns/SKILL.md): Use it when the imported model must scale beyond a single demo pipeline.

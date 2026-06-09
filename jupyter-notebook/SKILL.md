@@ -1,8 +1,10 @@
 ---
 name: "jupyter-notebook"
-description: "Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tutorials; prefer the bundled templates and run the helper script `new_notebook.py` to generate a clean starting notebook."
+version: "1.2"
+last_updated: 2026-06-09
+tags: [jupyter, notebook, python, experiments, tutorials]
+description: "Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tutorials; prefer the bundled templates and helper script for reproducible notebook structure and safer editing."
 ---
-
 
 # Jupyter Notebook Skill
 
@@ -105,3 +107,38 @@ No required environment variables.
 - `references/tutorial-patterns.md`: tutorial structure and teaching flow.
 - `references/notebook-structure.md`: notebook JSON shape and safe editing rules.
 - `references/quality-checklist.md`: final validation checklist.
+
+## Anti-Patterns
+
+- Hand-authoring raw notebook JSON when the bundled scaffold or a targeted cell edit would avoid avoidable formatting mistakes.
+- Packing large exploratory leaps into one noisy cell instead of building small, runnable notebook steps with short narrative bridges.
+- Presenting a notebook as validated when it has not been run top-to-bottom or the execution limitation has not been disclosed.
+
+## Verification Protocol
+
+1. Pass/fail: the notebook opens successfully and the structure, title, and requested sections match the chosen experiment or tutorial pattern.
+2. Pressure test: execute the notebook top-to-bottom when the environment allows, or validate the JSON plus template structure and call out any runtime gap explicitly.
+3. Success metric: no malformed notebook JSON and a clear top-to-bottom flow with runnable or clearly marked cells.
+
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or mirror the workflow in repository instructions when folder-based skills are unavailable.
+- Claude Code: keep the folder in a local skills directory and preserve any bundled scripts or references the workflow depends on.
+- Codex: sync the folder into `$CODEX_HOME/skills/jupyter-notebook` from this maintained catalog instead of editing downstream copies directly.
+- Gemini CLI: regenerate the matching `/skills:jupyter-notebook` command with `python scripts/export-gemini-skill.py jupyter-notebook` after meaningful updates.
+
+## MCP Availability And Fallback
+
+No dedicated MCP server is required for the normal workflow in this skill.
+
+Preferred MCP Server: None required
+Fallback prompt: Use the bundled `new_notebook.py` scaffold, local Jupyter tooling, and notebook execution logs as the fallback evidence path when no notebook-aware MCP surface is available.
+
+## Related Skills
+
+- `codebase-to-course`
+- `notebooklm-management`
+- `excel-sheet`
+- `documentation-authoring`

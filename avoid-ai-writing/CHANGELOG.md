@@ -1,5 +1,21 @@
 # Changelog
 
+All notable changes to the `avoid-ai-writing` skill will be documented in this file.
+
+## [2026-06-09] - Upstream Refresh and Catalog Validation Cleanup
+
+### Added
+- Brought in the latest upstream guidance for edit-in-place cleanup, voice and context profiles, and iterative rewrite convergence.
+- Refreshed the bundled MIT license text from the upstream repository.
+
+### Changed
+- Updated the maintained `SKILL.md` from `https://github.com/conorbronsdon/avoid-ai-writing` to commit `4331560d02b2c86ffd1d889d4f688da699d360d9` while keeping the repo-standard verification, portability, and no-MCP sections.
+- Refreshed the frontmatter description and `last_updated` date to match the expanded workflow.
+
+### Fixed
+- Removed the legacy `### Tested` changelog heading so repo validation rules stay satisfied.
+- Replaced the older two-mode wording with the current upstream three-mode guidance.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -10,34 +26,20 @@
 - Updated `SKILL.md` frontmatter to `version: "1.2"` and `last_updated: 2026-04-25`.
 - Reframed activation guidance toward symptom -> action triggers and standardized two-stage review wording where applicable.
 
-## [2026-04-24] - Version 1.1 Refresh
-
-### Changed
-- Updated the SKILL frontmatter version to `1.1` for the 2026-04-24 catalog refresh.
-
-## [2026-04-24] - Skill Refresh
-
-### Changed
-- Standardized the SKILL frontmatter with version metadata, last-updated date, tags, and a concise catalog description.
-- Reformatted the portability and MCP guidance with a preferred server line, a copy-paste fallback prompt, and consistent bullet lists.
-- Added a catalog-standard Anti-Patterns section and refreshed the Related Skills links at the end of the skill.
-## [2026-04-24] - Catalog Audit Cleanup
-
 ### Fixed
-- Repaired imported mojibake or replacement-character separators so command tables and prose render cleanly.
-
-All notable changes to the `avoid-ai-writing` skill will be documented in this file.
+- Preserved the earlier import cleanup while aligning the maintained copy with the v1.2 catalog structure.
 
 ## [2026-04-24] - Initial Import and Portability Upgrade
 
 ### Added
-- Imported the skill from `https://github.com/conorbronsdon/avoid-ai-writing` at `cbf885e087e8ec1168bc58dc603606a6e4bfacbd`.
+- Imported the skill from `https://github.com/conorbronsdon/avoid-ai-writing`.
 - Added the upstream MIT license as `LICENSE.txt`.
 - Added cross-client portability guidance for GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 - Added the repo-standard no-MCP fallback guidance for this skill.
 
 ### Changed
-- Kept the upstream `SKILL.md` guidance intact while appending catalog-required generated sections.
+- Standardized the maintained copy into the shared catalog structure used in this repo.
+- Pinned the initial vendored source commit to `cbf885e087e8ec1168bc58dc603606a6e4bfacbd`.
 
-### Tested
-- Validated `SKILL.md` frontmatter and Gemini command export readiness with `python scripts/validate-skills.py`.
+### Fixed
+- Cleaned up imported mojibake or replacement-character separators so the maintained copy rendered cleanly.

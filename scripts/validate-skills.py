@@ -4,8 +4,12 @@ from __future__ import annotations
 import json
 import re
 import sys
-import tomllib
 from pathlib import Path
+
+try:
+    import tomllib  # type: ignore[attr-defined]
+except ModuleNotFoundError:
+    tomllib = None
 
 
 FRONTMATTER_RE = re.compile(r"^---\r?\n(.*?)\r?\n---\r?\n?", re.DOTALL)
@@ -67,6 +71,22 @@ def has_generated_bytecode(repo_root: Path) -> list[Path]:
         for path in repo_root.rglob("*.pyc")
         if not any(part in SKIP_BYTECODE_DIRS for part in path.parts)
     )
+
+
+def parse_command_toml(text: str) -> dict[str, str]:
+    if tomllib is not None:
+        return tomllib.loads(text)
+
+    parsed: dict[str, str] = {}
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in line:
+            raise ValueError(f"Unsupported TOML line without '=': {raw_line}")
+        key, value = line.split("=", 1)
+        parsed[key.strip()] = json.loads(value.strip())
+    return parsed
 
 
 def main() -> int:
@@ -145,8 +165,8 @@ def main() -> int:
             )
         for command_file in command_files:
             try:
-                data = tomllib.loads(command_file.read_text(encoding="utf-8"))
-            except tomllib.TOMLDecodeError as exc:
+                data = parse_command_toml(command_file.read_text(encoding="utf-8"))
+            except (ValueError, json.JSONDecodeError) as exc:
                 issues.append(f"{command_file}: invalid TOML ({exc}).")
                 continue
             if "description" not in data or "prompt" not in data:

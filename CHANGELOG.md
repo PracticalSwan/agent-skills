@@ -3,6 +3,26 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-06-15] - Stitch Skills Import, Overlap Consolidation, and Publish Rule
+
+### Added
+
+- Imported all `14` Google Stitch skills from `google-labs-code/stitch-skills` at commit `1544aa4a3be93e7515b0c27d32722f7ca5a2f691`, preserving relevant support assets and adding per-skill changelogs.
+- Added `scripts/import-stitch-skills.py` to repeat the normalized Stitch import from an upstream clone.
+- Added a Stitch skill overlap audit documenting the safe consolidation and the lossy merge candidates that were intentionally left separate.
+- Added the required completion, sync, and publish rule to `AGENTS.md`, `CLAUDE.md`, `README.md`, `GEMINI.md`, and `LESSON.md`.
+
+### Changed
+
+- Converted `stitch-design` from a broad monolithic skill into a router that points to the narrower imported Stitch workflows.
+- Updated `README.md`, `REFERENCE_SOURCES.md`, `GEMINI.md`, `AGENTS.md`, `CLAUDE.md`, `LESSON.md`, and `scripts/skill-registry.json` for the new `92` tracked skill folders and `150` local skill folders.
+- Updated Stitch MCP guidance to name the verified design-system tools and treat screen lookup, generation, editing, and variant tools as optional host-specific capabilities.
+
+### Fixed
+
+- Replaced stale Stitch support references that claimed unavailable MCP screen tools were generally available.
+- Removed the obsolete `### Tested` heading from the `stitch-design` changelog history.
+
 ## [2026-06-09] - Workspace Startup Rule for LESSON.md
 
 ### Added

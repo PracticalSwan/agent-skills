@@ -12,8 +12,8 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
-- The repo currently tracks `78` skill folders
-- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported NVIDIA skills and the refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are also normalized to `version: "1.2"` with `last_updated: 2026-06-09`
+- The repo currently tracks `92` skill folders
+- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported Stitch skills are normalized to `version: "1.2"` with `last_updated: 2026-06-15`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
 - The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match that baseline, but they still need finalized provenance mapping in `scripts/skill-registry.json`
 
 ## Generated Commands
@@ -53,6 +53,10 @@ Then reload commands inside Gemini CLI:
 ```text
 /commands reload
 ```
+
+For mutation tasks in this workspace, follow the shared completion rule from
+`AGENTS.md` and `CLAUDE.md`: after the task is complete, validate, export, sync
+the skill folders, then commit and push when the result is satisfactory.
 
 ## Validation
 

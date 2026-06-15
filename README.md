@@ -13,17 +13,31 @@ Antigravity or Gemini CLI, and GitHub Copilot, must read
 session before analysis, planning, edits, validation, reviews, or advisory
 work.
 
+## Completion, Sync, and Publish Rule
+
+For every user-requested mutation task in this workspace, finish the requested
+work in `C:\Users\LOQ\.copilot\skills` first, then validate, export Gemini
+commands, sync outward to the skill folders, and commit and push to GitHub when
+the result is satisfactory.
+
+Treat the work as satisfactory only when validation/export pass, sync completes,
+no requested step was skipped, no required command was rejected, no unresolved
+secret/security/privacy issue remains, and the final diff matches the user's
+request. Escalate to the user instead of committing or pushing when those
+conditions are not met. For read-only or advisory tasks with no file changes,
+do not create empty sync, commit, or push churn.
+
 ## Current Inventory
 
-Snapshot date: `2026-06-09`. Local overlay totals can differ by machine.
+Snapshot date: `2026-06-15`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `78` tracked skill folders
-  - `64` tracked maintained skills
+  - `92` tracked skill folders
+  - `78` tracked maintained skills
   - `14` tracked copied official Claude/Codex-style superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `136` local skill folders detected
-  - `122` local maintained skills detected
+  - `150` local skill folders detected
+  - `136` local maintained skills detected
   - `14` local copied official superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -34,7 +48,7 @@ Snapshot date: `2026-06-09`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported NVIDIA skills and the refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` are also normalized to `version: "1.2"` with `last_updated: 2026-06-09`
+- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported Stitch skills are normalized to `version: "1.2"` with `last_updated: 2026-06-15`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
 - The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match the maintained-skill schema, but they still need finalized provenance mapping in `scripts/skill-registry.json`
 
 ## Main Workspace
@@ -208,6 +222,20 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `premium-frontend-ui`
 - `react-development`
 - `stitch-design`
+- `stitch-code-to-design`
+- `stitch-design-md`
+- `stitch-enhance-prompt`
+- `stitch-extract-design-md`
+- `stitch-extract-static-html`
+- `stitch-generate-design`
+- `stitch-loop`
+- `stitch-manage-design-system`
+- `stitch-react-components`
+- `stitch-react-native`
+- `stitch-remotion`
+- `stitch-shadcn-ui`
+- `stitch-taste-design`
+- `stitch-upload-to-stitch`
 - `vite-development`
 - `web-design-reviewer`
 - `web-testing`
@@ -283,7 +311,21 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `powerpoint-ppt`
 - `secret-scanning`
 - `serena-usage`
+- `stitch-code-to-design`
 - `stitch-design`
+- `stitch-design-md`
+- `stitch-enhance-prompt`
+- `stitch-extract-design-md`
+- `stitch-extract-static-html`
+- `stitch-generate-design`
+- `stitch-loop`
+- `stitch-manage-design-system`
+- `stitch-react-components`
+- `stitch-react-native`
+- `stitch-remotion`
+- `stitch-shadcn-ui`
+- `stitch-taste-design`
+- `stitch-upload-to-stitch`
 - `web-design-reviewer`
 - `web-testing`
 - `word-document`
@@ -317,6 +359,21 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `rag-perf`
 - `secret-scanning`
 - `security-review`
+- `stitch-code-to-design`
+- `stitch-design`
+- `stitch-design-md`
+- `stitch-enhance-prompt`
+- `stitch-extract-design-md`
+- `stitch-extract-static-html`
+- `stitch-generate-design`
+- `stitch-loop`
+- `stitch-manage-design-system`
+- `stitch-react-components`
+- `stitch-react-native`
+- `stitch-remotion`
+- `stitch-shadcn-ui`
+- `stitch-taste-design`
+- `stitch-upload-to-stitch`
 - `spreadsheet-formula-helper`
 
 Tracked imports currently in git but still pending schema normalization and finalized provenance:

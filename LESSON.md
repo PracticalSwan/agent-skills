@@ -36,6 +36,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` are worth syncing when the broader workspace depends on shared skills.
 - Gemini Antigravity can consume the full current skill catalog from `C:\Users\LOQ\.gemini\antigravity\global_skills`, so it should be treated as a first-class sync target rather than a manual copy.
 - Mirror copies should replace stale skill folders entirely so old `SKILL.md.bak` files or removed support files do not linger.
+- After a user-requested mutation task in this workspace is complete and satisfactory, sync outward every time, then commit and push without asking for extra confirmation. Escalate before commit or push only when work is incomplete, validation/export/sync failed, a required command was rejected, security or privacy risk remains, or staging is unsafe.
 
 ## Documentation Lessons
 
@@ -56,6 +57,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - If an imported tracked skill is still missing catalog sections or `CHANGELOG.md`, document that exception plainly until the modernization pass is done.
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
 - Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
+- The verified Stitch MCP surface in this workspace is design-system oriented: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim screen lookup, screen generation, screen editing, or variant tools exist unless the active host exposes them.
 - Local secret scans should ignore generated command folders and agent metadata by default or they will drown in false positives.
 - Do not commit Python bytecode or generated `__pycache__` artifacts. They are ignored and should be removed if a helper-script smoke test creates them.
 - Validation scans should ignore local environment folders such as `.venv`, `venv`, and `env` when looking for stray `*.pyc` files, or they will produce false positives from toolchain internals.
@@ -69,4 +71,5 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 5. Run `python scripts/validate-skills.py`.
 6. Run `python scripts/export-gemini-skill.py --all`.
 7. Sync outward with `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`.
-8. Record any new gotchas here before closing the task.
+8. If the work is satisfactory, commit and push to GitHub.
+9. Record any new gotchas here before closing the task.

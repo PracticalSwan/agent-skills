@@ -48,6 +48,10 @@
     "nvidia_skills": {
       "repo": "https://github.com/NVIDIA/skills",
       "commit": "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
+    },
+    "stitch_skills": {
+      "repo": "https://github.com/google-labs-code/stitch-skills",
+      "commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691"
     }
   },
   "mcp_skills": {
@@ -187,8 +191,8 @@
         "Stitch MCP"
       ],
       "fallback": [
-        "Use screenshots, HTML prototypes, Figma exports, and local design notes when Stitch MCP is not exposed by the host.",
-        "Treat generated React or design assets as drafts that still need local browser verification."
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
       ]
     },
     "web-design-reviewer": {
@@ -221,6 +225,146 @@
       "fallback": [
         "Use `python-docx`, Word desktop, or document export scripts when the MCP surface is unavailable.",
         "Re-open or render the document locally so formatting, comments, and pagination are verified before delivery."
+      ]
+    },
+    "stitch-code-to-design": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-generate-design": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-manage-design-system": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-extract-design-md": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-extract-static-html": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-upload-to-stitch": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-react-components": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-react-native": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-remotion": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-shadcn-ui": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-design-md": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-enhance-prompt": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-loop": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
+    },
+    "stitch-taste-design": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
       ]
     }
   },
@@ -707,6 +851,96 @@
       "source_commit": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
       "source_path": "skills/recipe-share-folder-with-team",
       "reason": "Share a Drive folder with teammates using only the locally enabled Drive service."
+    },
+    "stitch-design": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "local router for plugins/stitch-design, plugins/stitch-build, and plugins/stitch-utilities",
+      "reason": "Entry point for routing Google Stitch work to the dedicated imported Stitch skills while preserving verified MCP boundaries."
+    },
+    "stitch-code-to-design": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-design/skills/code-to-design",
+      "reason": "Orchestrates the end-to-end path from an existing frontend to a Stitch project while keeping each step separately verifiable."
+    },
+    "stitch-generate-design": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-design/skills/generate-design",
+      "reason": "Keeps generation and editing prompt work separate from upload and code-conversion workflows while correcting unsupported MCP assumptions."
+    },
+    "stitch-manage-design-system": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-design/skills/manage-design-system",
+      "reason": "Provides the verified MCP-backed core of the Stitch import and replaces unsupported upstream lookup calls with actual design-system tools."
+    },
+    "stitch-extract-design-md": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-design/skills/extract-design-md",
+      "reason": "Keeps source-code design extraction distinct from rendered Stitch project analysis."
+    },
+    "stitch-extract-static-html": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-design/skills/extract-static-html",
+      "reason": "Splits static capture from upload so local browser evidence is available before external Stitch side effects."
+    },
+    "stitch-upload-to-stitch": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-design/skills/upload-to-stitch",
+      "reason": "Centralizes upload safety, credential handling, and token-limit workarounds."
+    },
+    "stitch-react-components": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-build/skills/react-components",
+      "reason": "Narrows old Stitch-to-React guidance into a dedicated React implementation skill."
+    },
+    "stitch-react-native": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-build/skills/react-native",
+      "reason": "Keeps mobile conversion separate from web React conversion because platform constraints differ."
+    },
+    "stitch-remotion": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-build/skills/remotion",
+      "reason": "Preserves the media-generation workflow as its own skill."
+    },
+    "stitch-shadcn-ui": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-build/skills/shadcn-ui",
+      "reason": "Keeps shadcn integration separate from general React conversion because it has its own CLI and ownership model."
+    },
+    "stitch-design-md": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-utilities/skills/design-md",
+      "reason": "Keeps rendered/project-based DESIGN.md synthesis distinct from source-code extraction."
+    },
+    "stitch-enhance-prompt": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-utilities/skills/enhance-prompt",
+      "reason": "Prompt enhancement is reusable across generation, editing, and loop workflows without depending on external tools."
+    },
+    "stitch-loop": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-utilities/skills/stitch-loop",
+      "reason": "Keeps autonomous multi-page iteration separate from one-off screen generation and local code conversion."
+    },
+    "stitch-taste-design": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "1544aa4a3be93e7515b0c27d32722f7ca5a2f691",
+      "source_path": "plugins/stitch-utilities/skills/taste-design",
+      "reason": "Preserves the opinionated design-quality role as distinct from extraction and prompt-polishing skills."
     }
   }
 }

@@ -1,5 +1,20 @@
 # Changelog
 
+## [2026-06-15] - Stitch Skill Router Consolidation
+
+### Added
+
+- Added route selection for the dedicated Stitch skills imported from `https://github.com/google-labs-code/stitch-skills`.
+
+### Changed
+
+- Converted the old monolithic Stitch Design skill into a lightweight router so detailed workflow guidance lives in narrower `stitch-*` skills.
+- Updated the Stitch MCP guidance to name the verified design-system tools and avoid claiming unavailable screen-generation tools.
+
+### Fixed
+
+- Removed duplicated long-form guidance for design-md, React conversion, stitch-loop, prompt enhancement, Remotion, and shadcn/ui from the entrypoint skill.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -34,7 +49,7 @@ All notable changes to this skill will be documented in this file.
 - Added a standard portability note covering GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 - Documented the preferred MCP server surface for this skill and a local no-MCP fallback workflow.
 
-### Tested
+### Changed
 - Validated `SKILL.md` frontmatter, portability sections, and Gemini export readiness with `python scripts/validate-skills.py`.
 ## [2026-03-09] - Workspace Modernization
 

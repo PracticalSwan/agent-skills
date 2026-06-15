@@ -3,10 +3,10 @@
 This document summarizes external source provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-06-09)
+## Snapshot (2026-06-15)
 
-- `80` skills have external source mappings.
-- `22` source-mapped skills are git-tracked in this repository.
+- `95` skills have external source mappings.
+- `37` source-mapped skills are git-tracked in this repository.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*` families).
 - `4` tracked imports are currently present without finalized source mappings (`docx`, `jupyter-notebook`, `pptx`, `xlsx`).
 - `0` source mappings point to missing local skill folders.
@@ -23,6 +23,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/conorbronsdon/avoid-ai-writing`
 - `https://github.com/zarazhangrui/codebase-to-course`
 - `https://github.com/NVIDIA/skills`
+- `https://github.com/google-labs-code/stitch-skills`
 
 ## Source Commits
 
@@ -36,6 +37,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 | `avoid_ai_writing` | `4331560d02b2c86ffd1d889d4f688da699d360d9` |
 | `codebase_to_course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` |
 | `nvidia_skills` | `129a1087a1853f32a950e2f7bbc0fd7d57b9d422` |
+| `stitch_skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` |
 
 ## Tracked Reference Installs
 
@@ -64,6 +66,21 @@ These source-mapped skills are currently tracked in git in this repository.
 | `rag-perf` | `https://github.com/NVIDIA/skills` | `129a1087a1853f32a950e2f7bbc0fd7d57b9d422` | `skills/rag-perf` |
 | `secret-scanning` | `https://github.com/github/awesome-copilot` | `63d08d51f792d53feec8c1c06897cee870e83c18` | `skills/secret-scanning` |
 | `security-review` | `https://github.com/github/awesome-copilot` | `63d08d51f792d53feec8c1c06897cee870e83c18` | `skills/security-review` |
+| `stitch-code-to-design` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/code-to-design` |
+| `stitch-design` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `local router for plugins/stitch-design, plugins/stitch-build, and plugins/stitch-utilities` |
+| `stitch-design-md` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-utilities/skills/design-md` |
+| `stitch-enhance-prompt` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-utilities/skills/enhance-prompt` |
+| `stitch-extract-design-md` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/extract-design-md` |
+| `stitch-extract-static-html` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/extract-static-html` |
+| `stitch-generate-design` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/generate-design` |
+| `stitch-loop` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-utilities/skills/stitch-loop` |
+| `stitch-manage-design-system` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/manage-design-system` |
+| `stitch-react-components` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-build/skills/react-components` |
+| `stitch-react-native` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-build/skills/react-native` |
+| `stitch-remotion` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-build/skills/remotion` |
+| `stitch-shadcn-ui` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-build/skills/shadcn-ui` |
+| `stitch-taste-design` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-utilities/skills/taste-design` |
+| `stitch-upload-to-stitch` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/upload-to-stitch` |
 | `spreadsheet-formula-helper` | `https://github.com/ComposioHQ/awesome-codex-skills` | `711ee69d724457093d52f685d729917f5389c686` | `spreadsheet-formula-helper` |
 
 ## Local-Only Overlay Reference Installs
@@ -97,4 +114,6 @@ They were synced in from the local Codex install root and still need canonical u
 - Official signed NVIDIA imports keep their upstream `skill-card.md`, `skill.oms.sig`, and benchmark sidecars unless a later cleanup has a documented reason to strip them.
 - MCP-aware skills are required to include a no-MCP fallback path before being treated as valid maintained skills.
 - New helper scripts are smoke-tested locally before the repo-wide validation and sync pass.
+- The Stitch imports are normalized from plugin-native upstream skills into folder-safe `stitch-*` maintained skills. The local `stitch-design` skill is now a router, and each detailed workflow lives in a narrower skill.
+- The verified Stitch MCP surface in this workspace is limited to project/design-system operations: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Broader screen lookup, generation, editing, or variant tools must be treated as optional host-specific capabilities.
 - Unsafe, offensive, credential-heavy, or low-signal skills discovered during research are intentionally excluded from the tracked catalog.

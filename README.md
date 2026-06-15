@@ -376,6 +376,16 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `stitch-upload-to-stitch`
 - `spreadsheet-formula-helper`
 
+The Stitch import keeps `stitch-design` as a router for discoverability and
+keeps `stitch-code-to-design` as an end-to-end orchestrator over narrower
+extraction, design-system, and upload skills. Do not merge or delete the
+following overlapping Stitch workflows without explicit user approval, because
+each pair has different inputs, outputs, validation paths, or activation
+boundaries: `stitch-design-md` and `stitch-extract-design-md`,
+`stitch-generate-design` and `stitch-loop`, `stitch-react-components` and
+`stitch-react-native`, `stitch-shadcn-ui` and general React/frontend skills,
+and `stitch-taste-design` and general premium UI guidance.
+
 Tracked imports currently in git but still pending schema normalization and finalized provenance:
 
 - `docx`

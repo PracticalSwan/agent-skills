@@ -3,6 +3,22 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-06-24] - Xquik Skill Import, GitHub Guidelines, and PR Conflict Resolution
+
+### Added
+
+- Added the normalized `x-twitter-scraper` maintained skill and provenance mapping from `Xquik-dev/x-twitter-scraper` at commit `800893485c490eafeadec76624dcb6575d7a70d8`.
+- Added `CONTRIBUTING.md` and `SECURITY.md` so GitHub contributors have explicit workflow and disclosure guidance.
+
+### Changed
+
+- Resolved PR `#2` against the current Stitch-expanded catalog by carrying the `x-twitter-scraper` README entries forward on top of the newer `main` layout.
+- Updated `README.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `LESSON.md`, `REFERENCE_SOURCES.md`, and `scripts/skill-registry.json` for the new `93` tracked skill folders, `79` tracked maintained skills, `151` local skill folders, and `137` local maintained skills.
+
+### Fixed
+
+- Hardened the normalized Xquik skill against prompt-injection from X-authored content and clarified API-key-only credential handling and approval gates.
+
 ## [2026-06-15] - Stitch Skills Import, Overlap Consolidation, and Publish Rule
 
 ### Added

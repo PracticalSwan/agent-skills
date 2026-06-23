@@ -29,15 +29,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-06-15`. Local overlay totals can differ by machine.
+Snapshot date: `2026-06-24`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `92` tracked skill folders
-  - `78` tracked maintained skills
+  - `93` tracked skill folders
+  - `79` tracked maintained skills
   - `14` tracked copied official Claude/Codex-style superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `150` local skill folders detected
-  - `136` local maintained skills detected
+  - `151` local skill folders detected
+  - `137` local maintained skills detected
   - `14` local copied official superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -48,7 +48,7 @@ Snapshot date: `2026-06-15`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported Stitch skills are normalized to `version: "1.2"` with `last_updated: 2026-06-15`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
+- Most tracked maintained skills remain aligned on `version: "1.2"`; the imported Stitch skills remain normalized to `version: "1.2"` with `last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to `version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
 - The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match the maintained-skill schema, but they still need finalized provenance mapping in `scripts/skill-registry.json`
 
 ## Main Workspace
@@ -293,6 +293,7 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `infostealer-malware-detector`
 - `secret-scanning`
 - `security-review`
+- `x-twitter-scraper`
 
 ## MCP-Aware Skills
 
@@ -326,6 +327,7 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `stitch-shadcn-ui`
 - `stitch-taste-design`
 - `stitch-upload-to-stitch`
+- `x-twitter-scraper`
 - `web-design-reviewer`
 - `web-testing`
 - `word-document`
@@ -359,6 +361,7 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `rag-perf`
 - `secret-scanning`
 - `security-review`
+- `x-twitter-scraper`
 - `stitch-code-to-design`
 - `stitch-design`
 - `stitch-design-md`
@@ -399,5 +402,7 @@ Additional local-only sourced overlays (currently `58`, primarily `gws-*` and `r
 
 - [CHANGELOG.md](c:\Users\LOQ\.copilot\skills\CHANGELOG.md): repo-wide history
 - [CLAUDE.md](c:\Users\LOQ\.copilot\skills\CLAUDE.md): maintenance guidance for Claude-style workflows
+- [CONTRIBUTING.md](c:\Users\LOQ\.copilot\skills\CONTRIBUTING.md): contribution workflow, validation, and sync expectations
 - [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md): Gemini CLI command guidance
 - [LESSON.md](c:\Users\LOQ\.copilot\skills\LESSON.md): maintenance lessons and gotchas
+- [SECURITY.md](c:\Users\LOQ\.copilot\skills\SECURITY.md): vulnerability reporting and sensitive-disclosure guidance

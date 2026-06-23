@@ -3,10 +3,10 @@
 This document summarizes external source provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-06-15)
+## Snapshot (2026-06-24)
 
-- `95` skills have external source mappings.
-- `37` source-mapped skills are git-tracked in this repository.
+- `96` skills have external source mappings.
+- `38` source-mapped skills are git-tracked in this repository.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*` families).
 - `4` tracked imports are currently present without finalized source mappings (`docx`, `jupyter-notebook`, `pptx`, `xlsx`).
 - `0` source mappings point to missing local skill folders.
@@ -24,6 +24,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/zarazhangrui/codebase-to-course`
 - `https://github.com/NVIDIA/skills`
 - `https://github.com/google-labs-code/stitch-skills`
+- `https://github.com/Xquik-dev/x-twitter-scraper`
 
 ## Source Commits
 
@@ -38,6 +39,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 | `codebase_to_course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` |
 | `nvidia_skills` | `129a1087a1853f32a950e2f7bbc0fd7d57b9d422` |
 | `stitch_skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` |
+| `xquik_x_twitter_scraper` | `800893485c490eafeadec76624dcb6575d7a70d8` |
 
 ## Tracked Reference Installs
 
@@ -82,6 +84,7 @@ These source-mapped skills are currently tracked in git in this repository.
 | `stitch-taste-design` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-utilities/skills/taste-design` |
 | `stitch-upload-to-stitch` | `https://github.com/google-labs-code/stitch-skills` | `1544aa4a3be93e7515b0c27d32722f7ca5a2f691` | `plugins/stitch-design/skills/upload-to-stitch` |
 | `spreadsheet-formula-helper` | `https://github.com/ComposioHQ/awesome-codex-skills` | `711ee69d724457093d52f685d729917f5389c686` | `spreadsheet-formula-helper` |
+| `x-twitter-scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `800893485c490eafeadec76624dcb6575d7a70d8` | `skills/x-twitter-scraper` |
 
 ## Local-Only Overlay Reference Installs
 
@@ -119,4 +122,5 @@ They were synced in from the local Codex install root and still need canonical u
 - The safe Stitch consolidation already applied is non-lossy: `stitch-design` routes to the narrower imported skills, while `stitch-code-to-design` remains an orchestrator over extraction, design-system creation, and upload steps.
 - Keep the following Stitch skills separate unless the user explicitly approves a lossy merge: `stitch-design-md` vs. `stitch-extract-design-md`, `stitch-generate-design` vs. `stitch-loop`, `stitch-react-components` vs. `stitch-react-native`, `stitch-shadcn-ui` vs. general React/frontend skills, and `stitch-taste-design` vs. general premium UI guidance.
 - Keep `stitch-design` as a router for discoverability; deleting it would break existing prompts that activate that entrypoint.
+- Imported skills that broker third-party content need explicit prompt-injection and credential-handling guardrails in the normalized `SKILL.md`; do not assume upstream marketing copy preserves those boundaries.
 - Unsafe, offensive, credential-heavy, or low-signal skills discovered during research are intentionally excluded from the tracked catalog.

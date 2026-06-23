@@ -58,6 +58,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
 - Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
 - The verified Stitch MCP surface in this workspace is design-system oriented: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim screen lookup, screen generation, screen editing, or variant tools exist unless the active host exposes them.
+- Imported skills that broker third-party content need explicit prompt-injection boundaries and credential-collection limits in the normalized `SKILL.md`; do not assume upstream README safety notes survive a catalog rewrite.
 - Local secret scans should ignore generated command folders and agent metadata by default or they will drown in false positives.
 - Do not commit Python bytecode or generated `__pycache__` artifacts. They are ignored and should be removed if a helper-script smoke test creates them.
 - Validation scans should ignore local environment folders such as `.venv`, `venv`, and `env` when looking for stray `*.pyc` files, or they will produce false positives from toolchain internals.

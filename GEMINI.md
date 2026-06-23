@@ -12,8 +12,8 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
-- The repo currently tracks `92` skill folders
-- Most tracked maintained skills remain aligned on `version: "1.2"`; the newly imported Stitch skills are normalized to `version: "1.2"` with `last_updated: 2026-06-15`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
+- The repo currently tracks `93` skill folders
+- Most tracked maintained skills remain aligned on `version: "1.2"`; the imported Stitch skills remain normalized to `version: "1.2"` with `last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to `version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
 - The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match that baseline, but they still need finalized provenance mapping in `scripts/skill-registry.json`
 
 ## Generated Commands
@@ -27,6 +27,7 @@ Examples:
 - `/skills:java-junit`
 - `/skills:pdf`
 - `/skills:security-review`
+- `/skills:x-twitter-scraper`
 
 Generated command files live in:
 

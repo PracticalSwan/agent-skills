@@ -42,27 +42,28 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-06-15`. Local overlay totals can differ by machine.
+Snapshot date: `2026-06-24`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `92` tracked skill folders
-  - `78` tracked maintained skills
+  - `93` tracked skill folders
+  - `79` tracked maintained skills
   - `14` tracked copied official superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `150` local skill folders detected
-  - `136` local maintained skills detected
+  - `151` local skill folders detected
+  - `137` local maintained skills detected
   - `14` local copied official superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-Most tracked maintained skills remain aligned on `version: "1.2"`. The newly
-imported Stitch skills are normalized to `version: "1.2"` with
-`last_updated: 2026-06-15`, and the NVIDIA skills plus refreshed tracked
-imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to
-`version: "1.2"`.
+Most tracked maintained skills remain aligned on `version: "1.2"`. The
+imported Stitch skills remain normalized to `version: "1.2"` with
+`last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to
+`version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus
+refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx`
+remain normalized to `version: "1.2"`.
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match
 that schema baseline, but they still need finalized provenance mapping in
@@ -229,5 +230,7 @@ workspace startup rules change:
 - `README.md`: catalog and maintenance commands
 - `CHANGELOG.md`: repo-wide change history
 - `CLAUDE.md`: Claude Code usage guidance
+- `CONTRIBUTING.md`: contribution workflow and repo validation expectations
 - `GEMINI.md`: Gemini CLI usage guidance
 - `LESSON.md`: maintenance lessons and gotchas
+- `SECURITY.md`: vulnerability reporting and sensitive-disclosure guidance

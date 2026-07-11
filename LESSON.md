@@ -6,7 +6,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 - Edit skills in `C:\Users\LOQ\.copilot\skills` first.
 - Install or import new maintained skills in `C:\Users\LOQ\.copilot\skills` first.
-- Treat `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.claude\skills`, and workspace-local skill roots as deployment targets.
+- Treat only the five approved personal-global roots as deployment targets: `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.claude\skills`, `C:\Users\LOQ\.gemini\antigravity\global_skills`, and `C:\Users\LOQ\.gemini\antigravity-cli\skills`. Workspace-local skill roots are upstream promotion sources only.
 - Rebuild Gemini commands after changing `SKILL.md` content.
 - Keep `GEMINI.md` tracked in the repo; only the generated `.gemini/` directory should stay ignored.
 
@@ -35,8 +35,9 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - After a catalog-wide doc-only refresh, still rerun Gemini export and downstream sync so the mirrors do not lag the workspace copy.
 - Keep the primary Codex root (`C:\Users\LOQ\.codex\skills`) distinct from the shared mirror (`C:\Users\LOQ\.agents\skills`) so documentation does not blur installation targets.
 - The Codex root can keep extra local skills outside this catalog, so sync verification there should compare the expected maintained set rather than only the total folder count.
-- Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` are worth syncing when the broader workspace depends on shared skills.
-- Gemini Antigravity can consume the full current skill catalog from `C:\Users\LOQ\.gemini\antigravity\global_skills`, so it should be treated as a first-class sync target rather than a manual copy.
+- Downstream sync is locked to five personal-global roots: `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.claude\skills`, `C:\Users\LOQ\.gemini\antigravity\global_skills`, and `C:\Users\LOQ\.gemini\antigravity-cli\skills`. The sync script enforces this allowlist and refuses to write anywhere else.
+- Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` (for example inside `C:\Assumption University`) are upstream promotion sources only. Pull skills from them with `scripts/promote-child-skills.py`; never sync back down to them.
+- Gemini Antigravity and Antigravity CLI each consume the full current skill catalog, from `C:\Users\LOQ\.gemini\antigravity\global_skills` and `C:\Users\LOQ\.gemini\antigravity-cli\skills` respectively, so both are first-class sync targets rather than manual copies.
 - Mirror copies should replace stale skill folders entirely so old `SKILL.md.bak` files or removed support files do not linger.
 - When refreshing copied official skills from a newly categorized upstream, replace stale support files in the parent while preserving catalog changelog history. Promote extracted support documents that became standalone skills instead of keeping duplicate embedded copies.
 - After a user-requested mutation task in this workspace is complete and satisfactory, sync outward every time, then commit and push without asking for extra confirmation. Escalate before commit or push only when work is incomplete, validation/export/sync failed, a required command was rejected, security or privacy risk remains, or staging is unsafe.

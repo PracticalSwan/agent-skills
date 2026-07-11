@@ -56,14 +56,13 @@ Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
 ## Main Workspace
 
 - Author, import, and maintain new skills in `C:\Users\LOQ\.copilot\skills`
-- Treat the following paths as downstream sync targets or branch mirrors, not authoring roots:
+- The only approved downstream sync targets are these five personal-global roots (no other path receives downstream sync):
   - `C:\Users\LOQ\.codex\skills`
   - `C:\Users\LOQ\.agents\skills`
   - `C:\Users\LOQ\.claude\skills`
-- Sync the full current skill catalog to:
   - `C:\Users\LOQ\.gemini\antigravity\global_skills`
-- Sync copied official superpowers only to:
-  - `C:\Users\LOQ\.agents\skills\superpowers`
+  - `C:\Users\LOQ\.gemini\antigravity-cli\skills`
+- Maintained skills sync to the Codex, shared mirror, and Claude roots; copied official superpowers sync only to the `superpowers` subfolder of the shared mirror (`C:\Users\LOQ\.agents\skills\superpowers`, inside the approved `.agents\skills` root); the full current skill catalog syncs to both Gemini roots
 - Leave host-provided or plugin-managed skills outside this repo unless you intentionally choose to vendor and maintain them here
 - Generated Gemini CLI commands live under:
   - [`.gemini/commands/skills`](c:\Users\LOQ\.copilot\skills\.gemini\commands\skills)
@@ -89,7 +88,7 @@ Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
 
 ### Gemini CLI
 
-- Sync the full current skill catalog to `C:\Users\LOQ\.gemini\antigravity\global_skills`
+- Sync the full current skill catalog to `C:\Users\LOQ\.gemini\antigravity\global_skills` and `C:\Users\LOQ\.gemini\antigravity-cli\skills`
 - Use the generated `/skills:<skill-name>` commands from [`.gemini/commands/skills`](c:\Users\LOQ\.copilot\skills\.gemini\commands\skills)
 - Rebuild them with `python scripts/export-gemini-skill.py --all`
 - Reload them in Gemini CLI with `/commands reload`
@@ -185,27 +184,19 @@ Refresh source commits, provenance mappings, copied-official classification, and
 python scripts/update-skill-registry.py
 ```
 
-Sync maintained skills to Codex, the shared mirror, and Claude, sync the full catalog to Gemini Antigravity, and sync maintained skills to discovered workspace-local roots:
+Sync maintained skills to Codex, the shared mirror, and Claude; sync copied official superpowers to the shared mirror `superpowers` subfolder; and sync the full catalog to both Gemini roots (Antigravity and Antigravity CLI):
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
 
-Sync only the personal global targets and skip workspace-local roots:
+The script refuses to write anywhere outside the five approved downstream roots.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -SkipWorkspaceRoots
-```
+## Upstream-Only Skill Sources
 
-## Workspace-Aware Sync
+Workspace-local skill roots (`.agent\skills`, `.agents\skills`, and `.claude\skills` under project trees such as `C:\Assumption University`) are upstream sources only, never downstream sync destinations. The sync script no longer writes to them.
 
-The sync script can now discover and update local project skill folders under a workspace root when they live under:
-
-- `.agent\skills`
-- `.agents\skills`
-- `.claude\skills`
-
-That allows one pass from this repo into your Codex root, shared mirror root, and project-local skill roots inside `C:\Assumption University`.
+To bring a skill from such a root into this parent catalog, promote it upstream with `scripts/promote-child-skills.py`, then refresh provenance with `scripts/update-skill-registry.py`.
 
 ## Maintained Skill Catalog
 

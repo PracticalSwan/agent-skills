@@ -36,9 +36,10 @@ Generated command files live in:
 
 Export and validation count every local folder that contains `SKILL.md`. If this workspace includes local-only overlays (for example `gws-*` or `recipe-*`), Gemini command totals can be higher than the git-tracked catalog totals.
 
-The current shared skill folders also sync to the Gemini Antigravity global skill path:
+The current shared skill folders also sync to the Gemini Antigravity global skill path and the Antigravity CLI skill path:
 
 - `C:\Users\LOQ\.gemini\antigravity\global_skills`
+- `C:\Users\LOQ\.gemini\antigravity-cli\skills`
 
 ## Refresh Workflow
 

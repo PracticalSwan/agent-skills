@@ -44,24 +44,24 @@ The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have fina
 
 ## Downstream Sync Targets
 
-Maintained skills sync to:
+The only approved downstream sync destinations are these five personal-global roots:
 
-- `C:\Users\LOQ\.codex\skills`
 - `C:\Users\LOQ\.agents\skills`
+- `C:\Users\LOQ\.codex\skills`
 - `C:\Users\LOQ\.claude\skills`
+- `C:\Users\LOQ\.gemini\antigravity\global_skills`
+- `C:\Users\LOQ\.gemini\antigravity-cli\skills`
+
+There must be no downstream sync to any other path. The sync script enforces this list and refuses to write anywhere else.
+
+Per-target routing:
+
+- Maintained skills sync to `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and `C:\Users\LOQ\.claude\skills`.
+- Copied official superpowers sync only to the `superpowers` subfolder of the shared mirror: `C:\Users\LOQ\.agents\skills\superpowers` (this is inside the approved `.agents\skills` root, not a separate destination).
+- The full current skill catalog (maintained plus copied official superpowers) syncs to both Gemini roots: `C:\Users\LOQ\.gemini\antigravity\global_skills` and `C:\Users\LOQ\.gemini\antigravity-cli\skills`.
 
 Treat those paths as synced mirrors or branch targets, not as the place to author new maintained skills.
 Host-provided or plugin-managed skills that are not part of this maintained catalog should stay external unless you intentionally vendor them into this repo.
-
-Use `python scripts/promote-child-skills.py --map <source> <name>` for an explicit child skill or `--discover <root>` to flatten a categorized skill tree. Normalize invalid underscore or title-style names to lowercase hyphen-case, record provenance, then run `python scripts/update-skill-registry.py`.
-
-The full current skill catalog syncs to:
-
-- `C:\Users\LOQ\.gemini\antigravity\global_skills`
-
-Copied official superpowers sync only to:
-
-- `C:\Users\LOQ\.agents\skills\superpowers`
 
 Do not mirror copied official superpowers into `C:\Users\LOQ\.claude\skills` unless you explicitly want local overrides over Claude's plugin-managed copies.
 
@@ -71,6 +71,7 @@ Gemini CLI uses generated command files from:
 
 - `C:\Users\LOQ\.copilot\skills\.gemini\commands\skills`
 - `C:\Users\LOQ\.gemini\antigravity\global_skills`
+- `C:\Users\LOQ\.gemini\antigravity-cli\skills`
 
 After editing skills:
 
@@ -79,24 +80,19 @@ After editing skills:
 
 `SKILL.md` remains the source of truth. The Gemini command files are generated artifacts.
 
-## Workspace-Aware Sync
+## Upstream-Only Skill Sources
 
-The sync script can also discover workspace-local skill roots under a search root when they live inside:
+Workspace-local skill roots (`.agent\skills`, `.agents\skills`, and `.claude\skills` under project trees such as `C:\Assumption University`) are upstream sources only, never downstream sync destinations. The sync script no longer writes to them.
 
-- `.agent\skills`
-- `.agents\skills`
-- `.claude\skills`
+To pull a skill from such a root into this parent catalog, promote it upstream and record provenance:
 
-Use:
+- Use `python scripts/promote-child-skills.py --map <source> <name>` for an explicit child skill or `--discover <root>` to flatten a categorized skill tree. Normalize invalid underscore or title-style names to lowercase hyphen-case.
+- Then run `python scripts/update-skill-registry.py` to refresh provenance, copied-official classification, and `REFERENCE_SOURCES.md`.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -WorkspaceSearchRoot "C:\Assumption University"
-```
-
-To skip workspace-local targets and sync only the personal global roots, run:
+The only downstream sync call is to the five approved personal-global roots:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1 -SkipWorkspaceRoots
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
 
 ## Catalog Skill Expectations

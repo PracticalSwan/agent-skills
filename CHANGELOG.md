@@ -3,6 +3,15 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-07-11] - Sync Path Policy: Locked Downstream Targets and Antigravity CLI
+
+### Changed
+
+- Locked downstream sync to exactly five personal-global roots: `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.claude\skills`, `C:\Users\LOQ\.gemini\antigravity\global_skills`, and the newly added `C:\Users\LOQ\.gemini\antigravity-cli\skills`.
+- Removed workspace-local downstream sync from `scripts/sync-skills.ps1`, including the `-WorkspaceSearchRoot` and `-SkipWorkspaceRoots` parameters and the workspace target discovery. Workspace-local skill roots (`.agent\skills`, `.agents\skills`, `.claude\skills` under project trees) are now upstream promotion sources only.
+- Added an allowlist guard to `scripts/sync-skills.ps1` that refuses to write to any path outside the five approved roots.
+- Updated `README.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and `LESSON.md` to document the locked sync targets, the new Antigravity CLI destination, and the upstream-only role of workspace-local roots.
+
 ## [2026-07-11] - Full Catalog Maintenance, Child Promotion, and Source Refresh
 
 ### Added

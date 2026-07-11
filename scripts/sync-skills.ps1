@@ -5,16 +5,28 @@ param(
     [string]$SharedRoot = "C:\Users\LOQ\.agents\skills",
     [string]$ClaudeRoot = "C:\Users\LOQ\.claude\skills",
     [string]$GeminiRoot = "C:\Users\LOQ\.gemini\antigravity\global_skills",
-    [string]$WorkspaceSearchRoot = "",
+    [string]$GeminiCliRoot = "C:\Users\LOQ\.gemini\antigravity-cli\skills",
     [switch]$SkipCodex,
     [switch]$SkipShared,
     [switch]$SkipClaude,
     [switch]$SkipGemini,
-    [switch]$SkipWorkspaceRoots
+    [switch]$SkipGeminiCli
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+
+# Downstream sync is locked to these five personal-global targets. Any other
+# skill folder path (including workspace-local roots such as .agent\skills,
+# .agents\skills, or .claude\skills under a project tree) is an upstream
+# promotion source only, never a downstream sync destination.
+$script:allowedDownstreamRoots = @(
+    'C:\Users\LOQ\.agents\skills',
+    'C:\Users\LOQ\.codex\skills',
+    'C:\Users\LOQ\.claude\skills',
+    'C:\Users\LOQ\.gemini\antigravity\global_skills',
+    'C:\Users\LOQ\.gemini\antigravity-cli\skills'
+)
 
 function Get-NormalizedPath {
     param(
@@ -23,6 +35,25 @@ function Get-NormalizedPath {
     )
 
     return [System.IO.Path]::GetFullPath($Path)
+}
+
+function Assert-ApprovedDownstreamRoot {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$TargetRoot
+    )
+
+    $normalizedTarget = (Get-NormalizedPath $TargetRoot).TrimEnd("\")
+
+    foreach ($allowedRoot in $script:allowedDownstreamRoots) {
+        $normalizedAllowed = (Get-NormalizedPath $allowedRoot).TrimEnd("\")
+        if ($normalizedTarget -eq $normalizedAllowed -or
+            $normalizedTarget.StartsWith("$normalizedAllowed\", [System.StringComparison]::OrdinalIgnoreCase)) {
+            return
+        }
+    }
+
+    throw "Refusing to sync to '$TargetRoot' because it is not inside any of the approved downstream targets: $([string]::Join(', ', $script:allowedDownstreamRoots))."
 }
 
 function Assert-WithinRoot {
@@ -70,6 +101,8 @@ function Sync-SkillFolders {
         [string]$Label
     )
 
+    Assert-ApprovedDownstreamRoot -TargetRoot $TargetRoot
+
     if (-not (Test-Path -LiteralPath $TargetRoot)) {
         throw "Target root '$TargetRoot' does not exist."
     }
@@ -96,31 +129,6 @@ function Sync-SkillFolders {
     return $synced
 }
 
-function Get-WorkspaceSkillRoots {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$WorkspaceRoot
-    )
-
-    if (-not (Test-Path -LiteralPath $WorkspaceRoot)) {
-        throw "Workspace root '$WorkspaceRoot' does not exist."
-    }
-
-    $skipPattern = [regex]'\\(node_modules|dist|build|vendor|coverage|tmp|temp|\.git|\.pnpm|\.next|out|bin|obj)\\'
-
-    return @(
-        Get-ChildItem -LiteralPath $WorkspaceRoot -Directory -Recurse -Force -Filter skills | Where-Object {
-            $fullPath = $_.FullName
-            if ($skipPattern.IsMatch($fullPath)) {
-                return $false
-            }
-
-            $parentName = Split-Path -Leaf (Split-Path -Parent $fullPath)
-            return $parentName -in @(".agent", ".agents", ".claude")
-        } | Sort-Object FullName -Unique
-    )
-}
-
 $defaultSourceRoot = Join-Path (Split-Path -Parent $PSCommandPath) ".."
 if ([string]::IsNullOrWhiteSpace($SourceRoot)) {
     $SourceRoot = $defaultSourceRoot
@@ -131,12 +139,15 @@ $codexRootPath = Get-NormalizedPath $CodexRoot
 $sharedRootPath = Get-NormalizedPath $SharedRoot
 $claudeRootPath = Get-NormalizedPath $ClaudeRoot
 $geminiRootPath = Get-NormalizedPath $GeminiRoot
+$geminiCliRootPath = Get-NormalizedPath $GeminiCliRoot
 $sharedSuperpowersRoot = Join-Path $sharedRootPath "superpowers"
 
 if (-not (Test-Path -LiteralPath $workspaceRoot)) {
     throw "Source root '$workspaceRoot' does not exist."
 }
 
+# The shared superpowers folder is a subfolder of the approved .agents\skills
+# root, so it inherits that approval rather than being its own downstream target.
 if (-not (Test-Path -LiteralPath $sharedSuperpowersRoot)) {
     throw "Shared superpowers root '$sharedSuperpowersRoot' does not exist."
 }
@@ -153,6 +164,7 @@ if ($copiedOfficialNames.Count -eq 0) {
 }
 
 $skillSet = Get-SkillSet -RootPath $workspaceRoot -CopiedOfficialNames $copiedOfficialNames
+$allSkills = @($skillSet.Maintained + $skillSet.CopiedOfficial) | Sort-Object Name
 
 $summary = [ordered]@{
     source = [ordered]@{
@@ -178,9 +190,9 @@ $summary = [ordered]@{
         root = $geminiRootPath
         synced_all = @()
     }
-    workspace_targets = [ordered]@{
-        root = if ([string]::IsNullOrWhiteSpace($WorkspaceSearchRoot)) { $null } else { (Get-NormalizedPath $WorkspaceSearchRoot) }
-        synced_maintained = @()
+    gemini_cli = [ordered]@{
+        root = $geminiCliRootPath
+        synced_all = @()
     }
 }
 
@@ -206,28 +218,15 @@ if (-not $SkipClaude) {
 }
 
 if (-not $SkipGemini) {
-    $allSkills = @($skillSet.Maintained + $skillSet.CopiedOfficial) | Sort-Object Name
     $summary.gemini.synced_all = @(
         Sync-SkillFolders -SkillDirs $allSkills -TargetRoot $geminiRootPath -Label "Gemini skill"
     )
 }
 
-if (-not $SkipWorkspaceRoots -and -not [string]::IsNullOrWhiteSpace($WorkspaceSearchRoot)) {
-    $workspaceRoots = Get-WorkspaceSkillRoots -WorkspaceRoot $WorkspaceSearchRoot
-    $workspaceSummary = @()
-
-    foreach ($workspaceSkillRoot in $workspaceRoots) {
-        $synced = @(
-            Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $workspaceSkillRoot.FullName -Label "Workspace maintained"
-        )
-
-        $workspaceSummary += [pscustomobject]@{
-            root = $workspaceSkillRoot.FullName
-            synced_maintained = $synced
-        }
-    }
-
-    $summary.workspace_targets.synced_maintained = $workspaceSummary
+if (-not $SkipGeminiCli) {
+    $summary.gemini_cli.synced_all = @(
+        Sync-SkillFolders -SkillDirs $allSkills -TargetRoot $geminiCliRootPath -Label "Gemini CLI skill"
+    )
 }
 
 $summary | ConvertTo-Json -Depth 5

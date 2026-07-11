@@ -1,11 +1,10 @@
 ---
 name: premium-frontend-ui
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [premium, frontend, ui, design, visual]
 description: "Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites."
 ---
-
 # Immersive Frontend UI Craftsmanship
 
 When building premium frontend experiences, your role goes beyond outputting functional HTML and CSS. You must architect **immersive digital environments**. This skill provides the blueprint for generating highly intentional, award-level web applications that prioritize aesthetic quality, deep interactivity, and flawless performance.
@@ -136,7 +135,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
 4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
 5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
-
 
 ## Cross-Client Portability
 

@@ -1,11 +1,10 @@
 ---
 name: mcp-builder
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [mcp, builder, workflow, quality, planning]
 description: "Build high-quality MCP servers with strong tool design, structured outputs, clear error handling, and realistic evaluations. Use when creating or improving MCP servers in TypeScript or Python for external APIs, services, or internal platforms."
 ---
-
 # MCP Builder
 
 Design MCP servers that are easy for agents to discover, compose, and trust.
@@ -184,7 +183,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
 4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
 5. Success metric: Zero context leakage; every delegated output is independently reviewable.
-
 
 ## Included Assets
 

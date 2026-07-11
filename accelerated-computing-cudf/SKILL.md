@@ -1,19 +1,12 @@
 ---
 name: accelerated-computing-cudf
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, cudf, rapids, pandas, gpu, etl]
 description: "Official NVIDIA-authored guidance for NVIDIA cuDF GPU DataFrames, pandas acceleration, dask-cuDF, ETL, joins, groupby, CSV/Parquet I/O, nullable semantics, and multi-GPU DataFrame workloads."
-license: CC-BY-4.0 AND Apache-2.0
+license: "CC-BY-4.0 AND Apache-2.0"
 compatibility: "Guidance imported from NVIDIA cuDF 26.04 skill content for CUDA-capable NVIDIA GPU data workflows."
-metadata:
-  author: "NVIDIA"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/accelerated-computing-cudf"
-  upstream_release: "26.04"
 ---
-
 # cuDF & dask-cuDF Implementer's Guide
 
 ## Compatibility
@@ -221,6 +214,7 @@ Before claiming "skill applied successfully":
 5. Success metric: The user gets a runnable GPU dataframe plan with explicit correctness and performance evidence paths.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

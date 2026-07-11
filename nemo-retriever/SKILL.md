@@ -1,18 +1,12 @@
 ---
 name: nemo-retriever
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, nemo, retriever, rag, indexing, qa]
 description: "NVIDIA NeMo Retriever deployment and usage guidance for local retrieval services, corpus ingestion, and grounded question-answering workflows."
-license: CC-BY-4.0 AND Apache-2.0
+license: "CC-BY-4.0 AND Apache-2.0"
 compatibility: "Guidance imported from the NVIDIA NeMo Retriever skill for local retriever deployment and corpus-backed QA workflows."
-metadata:
-  author: "NVIDIA"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/nemo-retriever"
 ---
-
 # nemo-retriever
 
 The `retriever` CLI indexes a folder of PDFs into LanceDB (`retriever ingest`) and serves vector search over it (`retriever query`). For any task about searching/answering questions across a folder of PDFs, use this CLI — do not write a custom RAG.
@@ -61,6 +55,7 @@ Before claiming "skill applied successfully":
 5. Success metric: The user gets a reproducible retriever setup or debugging path with live retrieval evidence.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

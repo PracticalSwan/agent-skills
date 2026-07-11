@@ -1,18 +1,15 @@
 ---
 name: avoid-ai-writing
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [avoid, ai, writing, docs, quality]
-description: 'Audit and rewrite content to remove AI writing patterns ("AI-isms"). Supports detect-only audits, edit-in-place file cleanup, voice and context profiles, and an iterate-to-convergence pass.'
-license: MIT
+description: "Audit and rewrite content to remove AI writing patterns (\"AI-isms\"). Supports detect-only audits, edit-in-place file cleanup, voice and context profiles, and an iterate-to-convergence pass."
+license: "MIT"
 compatibility: "Shared catalog copy for GitHub Copilot, Claude Code, Codex, and Gemini CLI; assumes equivalent file-edit tooling for edit mode."
 ---
-
 # Avoid AI Writing — Audit & Rewrite
 
 You are editing content to remove AI writing patterns ("AI-isms") that make text sound machine-generated.
-
-- Leverage native parallel subagent dispatch and 200k+ context windows where available.
 
 ## What this skill is and isn't
 
@@ -71,10 +68,11 @@ In **edit** mode, your job is to:
 - **Emoji in headers**: Remove entirely. No `## 🚀 What This Means`. Exception: social posts may use one or two emoji sparingly — at the end of a line, never mid-sentence.
 - **Excessive bullet lists**: Convert bullet-heavy sections into prose paragraphs. Bullets only for genuinely list-like content (feature comparisons, step-by-step instructions, API parameters).
 - **Curly quotation marks (“ ” ‘ ’) and apostrophes**: Curly quotes and apostrophes (U+201C/U+201D, U+2018/U+2019) are a *weak* paste-from-chat signal — meaningful mainly in plain-text contexts like code comments, commit messages, or plaintext drafts, where nothing auto-curls. Treat as corroborating, never conclusive: Word, Google Docs, macOS, and iOS curl quotes by default, so most human prose contains them too. Don't flag curly apostrophes (U+2019) on their own. Replace with straight quotes in plain-text/code; leave them in finished publications and locale-correct punctuation (French « », German „ “).
+- **Immaculate typography in casual registers**: Same tier as curly quotes — a *weak*, register-scoped signal, never conclusive alone. Perfect spacing, punctuation, and capitalization in a context where humans type fast (issue/PR comments, chat, DMs) is corroborating evidence, not proof: a careful human can type a flawless comment, and a rushed one can type a sloppy one. Judge it alongside other signals. Inverse case worth flagging the other direction: when editing a human's casual text (a Slack message, a quick reply), preserve their typos, contractions, and idiosyncratic capitalization rather than correcting them — smoothing away the rough edges erases the fingerprint that marks the text as theirs.
 
 ### Sentence structure
-- **"It's not X — it's Y" / "This isn't about X, it's about Y"**: Rewrite as a direct positive statement. Max one per piece, and only if it serves the argument.
-- **Hollow intensifiers**: Cut `genuine`, `real` (as in "a real improvement"), `truly`, `quite frankly`, `to be honest`, `let's be clear`, `it's worth noting that`. Just state the fact.
+- **"It's not X — it's Y" / "This isn't about X, it's about Y"**: Rewrite as a direct positive statement. Max one per piece, and only if it serves the argument. This includes the **split-sentence form**, where the negation and the correction fall in two separate sentences rather than pivoting on a single dash or comma: "The headline isn't the speed. The real story is Y." Read on its own, each sentence looks like an innocent declarative, which is exactly why the split version slips past a check tuned to the joined phrasing — flag it the same way. AI also stacks the negation across several options before the reveal ("It's not the price. It's not the features. It's the trust."). The multi-negation countdown is the same move inflated; flag it and cut straight to the positive claim.
+- **Hollow intensifiers**: Cut `genuine` / `genuinely`, `real` (as in "a real improvement"), `truly`, `quite frankly`, `to be honest`, `let's be clear`, `it's worth noting that`. Just state the fact.
 - **Vague endorsement ("worth [verb]ing")**: Cut or replace `worth reading`, `worth paying attention to`, `worth a look`, `worth exploring`, `worth checking out`, `worth your time`. These substitute a generic thumbs-up for a specific reason. Say *why* something matters instead.
 - **Hedging**: Cut `perhaps`, `could potentially`, `it's important to note that`, `to be clear`. Make the point directly.
 - **Missing bridge sentences**: Each paragraph should connect to the last. If paragraphs could be rearranged without the reader noticing, add connective tissue.
@@ -87,6 +85,8 @@ Words are organized into three tiers based on how reliably they signal AI-genera
 - **Tier 1 — Always flag.** These words appear 5–20x more often in AI text than human text. Replace on sight.
 - **Tier 2 — Flag in clusters.** Individually fine, but two or more in the same paragraph is a strong AI signal. Flag when they appear together.
 - **Tier 3 — Flag by density.** Common words that AI simply overuses. Only flag when they make up a noticeable fraction of the text (roughly 3%+ of total words).
+
+**Match inflected forms.** Each entry below covers the listed word *and its morphological variants* — adverb (`-ly`), gerund/participle (`-ing`), plural, comparative/superlative, and verb conjugations — unless a variant carries a distinct, legitimate meaning. So `genuine` also flags `genuinely`, `leverage` also flags `leveraging` / `leveraged`, `delve` covers `delving`, and `meticulous` covers `meticulously`. When a variant has a separate honest sense (e.g. `real` meaning factual, not the intensifier in "a real improvement"), judge by context rather than matching blindly.
 
 #### Tier 1 — Always replace
 
@@ -147,6 +147,7 @@ Words are organized into three tiers based on how reliably they signal AI-genera
 | ascertain | find out, determine, learn |
 | endeavor | effort, attempt, try |
 | keen (as intensifier) | interested, eager, enthusiastic (or cut — just state the interest) |
+| genuinely / genuine (as intensifier) | (cut — just state the fact) |
 | symphony (metaphor) | (describe the actual coordination or combination) |
 | embrace (metaphor) | adopt, accept, use, switch to |
 
@@ -193,6 +194,8 @@ These words are legitimate on their own. When two or more show up together, the 
 | nascent | new, early-stage, emerging |
 | quintessential | typical, classic, defining |
 | overarching | main, central, broad |
+| quietly | cut, or name the concrete contrast |
+| deeply *(significance collocations only — "deeply integrated," "deeply committed," "deeply rooted"; literal uses like "deeply nested" or "cares deeply" never count toward a cluster)* | cut, or name what specifically runs deep |
 | underpinning / underpinnings | basis, foundation, what supports |
 
 #### Tier 3 — Flag only at high density
@@ -315,6 +318,13 @@ These slot-fill constructions signal that a sentence was generated, not written.
 
 ### Notability name-dropping
 - AI text piles on prestigious citations to manufacture credibility: "cited in The New York Times, BBC, Financial Times, and The Hindu." If a source matters, use it with context: "In a 2024 NYT interview, she argued..." One specific reference beats four name-drops.
+- Related — **historical analogy stacking**: rapid-fire lists of past technologies or companies to borrow their weight ("like the printing press, the telegraph, and the internet before it"). The montage substitutes for the argument. Name the one parallel that does analytical work and say what it explains, or cut. Source: tropes.fyi (Historical Analogy Stacking).
+
+### Vague third-party validation
+- AI manufactures credibility by pointing at an **unnamed** external authority, usually paired with a generic superlative: "an outside party measuring the same models everyone runs and putting us on top," "independent testing confirms," "third-party benchmarks show we lead," "analysts agree," "studies consistently show." The authority is faceless and the claim unfalsifiable — the reader can't tell who measured what, against whom, or go check.
+- Fix: name the source, the test, and the result so a reader can verify it. "An outside party put us on top" becomes "On Stanford's HELM leaderboard (April 2026 run), we ranked first on reasoning latency." If you can't name it, cut the claim rather than dress it up as validation.
+- Carve-out: specifically attributed, checkable validation is legitimate and stays unflagged — a named benchmark, a linked report, a dated audit ("SOC 2 Type II, audited by Prescient Assurance"). The tell is the *vagueness*, not the act of citing outside proof.
+- Distinct from **Notability name-dropping**: that flags piling on *specific* prestigious names to borrow their weight; this is the inverse move — the authority is deliberately *unnamed*, which is both harder to check and easier to invent. A passage can run both at once (a vague authority plus a superlative); judge each on its own terms. Raised in #39.
 
 ### Superficial -ing analyses
 - Strings of present participles used as pseudo-analysis: "symbolizing the region's commitment to progress, reflecting decades of investment, and showcasing a new era of collaboration." These say nothing. Replace with specific facts or cut entirely.
@@ -326,11 +336,19 @@ These slot-fill constructions signal that a sentence was generated, not written.
 ### Formulaic challenges
 - "Despite challenges, [subject] continues to thrive" or "While facing headwinds, the organization remains resilient." This is a non-statement. Name the actual challenge and the actual response, or cut the sentence.
 
+### Speculative scenario openers
+- "Imagine a world where…", "Picture a future in which…", "Envision a world where…" AI opens an argument with a hypothetical that lists desirable outcomes instead of making a claim. The scenario does the persuading; no evidence is offered.
+- Fix: cut the hypothetical and state the real claim. "Imagine a world where every deploy is instant" becomes "Instant deploys would cut our release cycle from a day to minutes."
+- Carve-out: fiction, a thought experiment with a stated payoff, and instructional "imagine you have a sorted array" (a teaching device pointing at a concrete example, not a speculative world) are fine. Flag only the world/future-scenario opener that stands in for an argument. Source: tropes.fyi (Imagine a World Where).
+
 ### False ranges
 - AI creates false breadth by pairing unrelated extremes: "from the Big Bang to dark matter," "from ancient civilizations to modern startups." These sound sweeping but say nothing. List the actual topics or pick the one that matters.
 
 ### Inline-header lists
 - Bullet lists where each item starts with a bold header that repeats itself: "**Performance:** Performance improved by..." Strip the bold header and write the point directly. If the list items need headers, they should probably be paragraphs.
+
+### List-label periods
+- In bulleted lists where each item leads with a short label, LLMs end the label with a period and then run the explanation as a separate sentence. A person writing the same list almost always uses a colon instead. Strongest form: bold labels (`**Intros.**`, `**Content distribution.**`, `**Developer GTM.**` where a human writes `**Intros:**`). Weaker but still a tell: the same shape without bold (`- Intros. Years of conferences and operator network.`) — a short noun-phrase label terminated with a period at the start of a bullet, followed by a gloss. The colon reads as "here's what this label means"; the period reads as a sentence that the following clause then contradicts by continuing. Example tell: `- **Intros.** Years of conferences and operator network.` becomes `- **Intros:** years of conferences and operator network.` Fix the period to a colon and lowercase the start of the gloss, or drop the label and write the point as a plain sentence. Carve-outs: when the label span is a full sentence on its own (not a label introducing a gloss), the period is correct; and for the unbolded form, only flag when the leading fragment is clearly a label (a 1-4 word noun phrase, no verb) — a short complete sentence opening a bullet is fine.
 
 ### Title case headings
 - AI over-capitalizes headings: "Strategic Negotiations And Key Partnerships" instead of "Strategic negotiations and key partnerships." Use sentence case for subheadings. Title case only for the piece's main title, if at all.
@@ -362,6 +380,7 @@ These slot-fill constructions signal that a sentence was generated, not written.
 - Two problems. First, it's factually risky: if the concept already has a Wikipedia page or conference talks from last year, claiming novelty makes the writer look uninformed. Second, it flatters the subject in a way that reads as promotional rather than analytical.
 - The fix: describe what the person *did with* the concept, not that they discovered it. "Michel walked through how context poisoning works in practice" instead of "Michel introduced a term I hadn't heard before: context poisoning." If you're unsure whether something is novel, assume it isn't and frame accordingly.
 - Related patterns to flag: "the failure mode nobody's naming," "a problem nobody talks about," "the insight everyone's missing," "what nobody tells you about." These are engagement-bait framings that claim scarcity of knowledge where none exists.
+- Also flag invented labels: pseudo-analytical compound terms coined mid-sentence and never defined ("the supervision paradox," "the context-collapse problem," "a coordination tax"). Naming a concept is not explaining it. Define the term on first use or describe the mechanism instead of branding it. Source: tropes.fyi (Invented Labels).
 
 ### Infomercial engagement hooks
 - Punchy fragment-hooks that tee up a reveal: "The catch?", "The kicker?", "Here's the thing.", "But here's the kicker:", "The best part?", "Plot twist:", "The result?". AI uses these to fake momentum and manufacture suspense around ordinary information — the prose equivalent of a late-night infomercial.
@@ -384,13 +403,13 @@ These slot-fill constructions signal that a sentence was generated, not written.
 - "While X is impressive, Y remains a challenge" or "Although X has made strides, Y is still an open question." AI uses this to sound balanced without actually weighing anything. Both halves are vague. Either make the concession specific (name what's impressive, name the actual challenge) or pick a side and argue it.
 
 ### Rhetorical question openers
-- "But what does this mean for developers?" / "So why should you care?" / "What's next?" - AI uses rhetorical questions to stall before the actual point. If you know the answer, just say it. Rhetorical questions are earned by strong setup, not dropped as section transitions.
+- "But what does this mean for developers?" / "So why should you care?" / "What's next?" — AI uses rhetorical questions to stall before the actual point. If you know the answer, just say it. Rhetorical questions are earned by strong setup, not dropped as section transitions.
 
 ### Parenthetical hedging
-- "(and, increasingly, Z)" / "(or, more precisely, Y)" / "(and perhaps more importantly, W)" - AI inserts parenthetical asides to sound nuanced without committing. If the aside matters, give it its own sentence. If it doesn't, cut it.
+- "(and, increasingly, Z)" / "(or, more precisely, Y)" / "(and perhaps more importantly, W)" — AI inserts parenthetical asides to sound nuanced without committing. If the aside matters, give it its own sentence. If it doesn't, cut it.
 
 ### Numbered list inflation
-- "Three key takeaways" / "Five things to know" / "Here are the top seven" - AI defaults to numbered lists because they're structurally safe. Only use numbered lists when the content genuinely has that many discrete, parallel items. If you're padding to hit a number, the list shouldn't exist.
+- "Three key takeaways" / "Five things to know" / "Here are the top seven" — AI defaults to numbered lists because they're structurally safe. Only use numbered lists when the content genuinely has that many discrete, parallel items. If you're padding to hit a number, the list shouldn't exist.
 
 ### Reasoning chain artifacts
 - "Let me think step by step," "Breaking this down," "To approach this systematically," "Step 1:," "Here's my thought process," "First, let's consider," "Working through this logically" — these are artifacts of chain-of-thought reasoning leaking into published prose. The reader doesn't need to see the scaffolding. State the conclusion, then the evidence.
@@ -417,6 +436,20 @@ These slot-fill constructions signal that a sentence was generated, not written.
 - Significance-adjectives that signal the pattern: contrarian, clever, surprising, counterintuitive, interesting, key, important, unusual, smart, brilliant, real, actual.
 - Fix: cut the labeling sentence and let the explanation that follows do the work directly. Or restructure so the item you wanted to highlight is positioned first or expanded with specifics, making the label redundant.
 - Example. Before: "→ Two separate indexes for tiered storage. That last move is the contrarian one. Co-locating related data usually helps cache locality." After: "→ Two separate indexes for tiered storage. Co-locating related data usually helps cache locality, but splitting the indexes is what makes the hot path cheap." The contrast carries itself; the label is gone.
+
+### Wall-of-text replies (missing line breaks)
+- In conversational registers — issue and PR comments, chat, DMs, casual email — humans break a reply at thought boundaries: one idea, then a break, then the next. LLMs default to a single dense block regardless of length. The tell: a reply-length text (roughly under 150 words) with four or more sentences delivered as one unbroken paragraph, no line break anywhere in it.
+- Fix: break at thought boundaries. One idea per line-group, the way a person actually types a reply.
+- Observed in the wild: a maintainer on a GitHub issue called out an assisted-sounding reply with "I prefer to talk human to human" — the dense block-paragraph shape was the tell, not any single word in it.
+- Distinct from paragraph-length uniformity (which is about long-form prose where every paragraph is the same size): this rule is about short, reply-length text having *zero* breaks at all, not uneven ones.
+- Carve-out: a single dense paragraph is the *correct* shape in formal, long-form registers — a blog intro, a docs paragraph, a deliberately tight one-paragraph email. This rule fires only in conversational reply registers; never flag continuous long-form prose just because it lacks internal breaks. That false-positive class is exactly why the structural detector was reverted (see `detector/CATEGORIES.md` §C), and why the tolerance matrix below is the wrong home for it: a plain issue comment auto-detects to the `blog` profile, so the scoping has to live in this rule's judgment, not in a per-profile strictness cell.
+
+### Recap-flattery opener
+- Replying to a person by summarizing their own work back at them with praise before getting to the point: "Thanks for all the legwork here — the migration script and the rollback plan you worked through are what made this possible." The reader already knows what they did; the recap performs appreciation instead of conveying information.
+- Distinct from a genuine thank-you, which is short and moves on. The tell is the *recap* — restating specifics the other person already knows, dressed as gratitude, ahead of the actual point.
+- Distinct also from two nearby conversational tells: **Sycophantic tone** (generic validation of the reader — "Great question!") and **Acknowledgment loops** (restating the prompt or the prior section). Those echo the *question or context*; recap-flattery echoes the other person's *own work* back at them, dressed as praise.
+- Fix: substance first. If thanks is warranted, one plain clause without the recap: "Thanks for the legwork — this looks right to me, one comment below."
+- Observed in the wild: the same exchange that surfaced the wall-of-text tell above — an assisted-sounding reply opened by recapping the maintainer's own prior work back at them before answering the actual question.
 
 ### Excessive structure
 - Too many headers in short text: more than 3 headings in under 300 words is almost always AI trying to look organized. Merge sections or use prose transitions instead.
@@ -509,12 +542,12 @@ Pass an optional context hint to adjust rule strictness. If no context is specif
 
 ### Profile definitions
 
-**`linkedin`** - Short-form social. Punchy fragments, visual formatting matter.
-**`blog`** - Default. Standard long-form prose. All rules apply at full strength.
-**`technical-blog`** - Long-form with code, architecture, APIs. Technical terms get a pass.
-**`investor-email`** - High-trust audience. Tighten everything; promotional language is the biggest risk.
-**`docs`** - Documentation, READMEs, guides. Clarity over voice.
-**`casual`** - Slack messages, internal notes, quick replies. Only catch the worst offenders.
+**`linkedin`** — Short-form social. Punchy fragments, visual formatting matter.
+**`blog`** — Default. Standard long-form prose. All rules apply at full strength.
+**`technical-blog`** — Long-form with code, architecture, APIs. Technical terms get a pass.
+**`investor-email`** — High-trust audience. Tighten everything; promotional language is the biggest risk.
+**`docs`** — Documentation, READMEs, guides. Clarity over voice.
+**`casual`** — Slack messages, internal notes, quick replies. Only catch the worst offenders.
 
 ### Tolerance matrix
 
@@ -560,7 +593,7 @@ When no context is specified, infer from these signals:
 | Code blocks, API references, or technical architecture | `technical-blog` |
 | Salutation ("Hi [name]", "Dear") + investor/fundraising language | `investor-email` |
 | Step-by-step instructions, parameter docs, README structure | `docs` |
-| No strong signals | `blog` (safest default - all rules apply) |
+| No strong signals | `blog` (safest default — all rules apply) |
 
 If auto-detection feels wrong, say which profile you're using and why. The user can override.
 
@@ -661,7 +694,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
 4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
 5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Cross-Client Portability
 

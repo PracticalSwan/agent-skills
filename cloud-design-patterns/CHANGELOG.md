@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -29,7 +45,6 @@
 - Rewrote the skill into the repo house style with a clearer concern-to-pattern mapping and selection workflow
 - Added `scripts/pattern-shortlist.py` to quickly turn workload concerns into reference-backed pattern shortlists
 
-### Tested
-
+### Changed
 - Ran `python cloud-design-patterns/scripts/pattern-shortlist.py --concern reliability --concern migration --concern security`
 - Planned validation through `python scripts/validate-skills.py`

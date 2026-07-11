@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -33,8 +49,7 @@
 
 - Updated `LICENSE.txt` from the official Anthropic source at commit `5128e1865d670f5d6c9cef000e6dfc4e951fb5b9` to include the current copyright holder.
 
-### Tested
-
+### Changed
 - Confirmed the current upstream change for `skills/mcp-builder` is limited to `LICENSE.txt`.
 
 ## [2026-04-04] - Initial Import and Catalog Upgrade
@@ -45,7 +60,6 @@
 - Rewrote the top-level skill into the repo house style while preserving the upstream reference library and helper scripts
 - Added a maintained `CHANGELOG.md` so the skill is tracked like the rest of the editable catalog
 
-### Tested
-
+### Changed
 - Ran `python -m py_compile mcp-builder/scripts/connections.py mcp-builder/scripts/evaluation.py`
 - Planned validation through `python scripts/validate-skills.py`

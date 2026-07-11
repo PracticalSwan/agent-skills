@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -35,7 +51,6 @@
 - Reframed the skill around repeatable rubric design, evidence-based evaluation, and stop conditions
 - Added `references/rubric-template.json`, `references/example-scores.json`, and `scripts/rubric-scorecard.py` so the workflow can be exercised locally across clients
 
-### Tested
-
+### Changed
 - Ran `python agentic-eval/scripts/rubric-scorecard.py --rubric agentic-eval/references/rubric-template.json --scores agentic-eval/references/example-scores.json --threshold 0.8`
 - Planned validation through `python scripts/validate-skills.py`

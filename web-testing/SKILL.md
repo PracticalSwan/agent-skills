@@ -1,11 +1,10 @@
 ---
 name: web-testing
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [web, testing, workflow, automation, guidance]
 description: "Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications."
 ---
-
 # Web Application Testing & Debugging
 
 Comprehensive toolkit for testing and debugging web applications using Playwright automation and Chrome DevTools.
@@ -596,7 +595,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Testing Checklist
 

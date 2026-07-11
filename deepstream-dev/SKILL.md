@@ -1,21 +1,12 @@
 ---
 name: deepstream-dev
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, deepstream, gstreamer, tensorrt, video, vision]
 description: "NVIDIA DeepStream SDK development guidance for Python pyservicemaker pipelines, video analytics, TensorRT integration, and streaming inference workflows."
-license: CC-BY-4.0 AND Apache-2.0
+license: "CC-BY-4.0 AND Apache-2.0"
 compatibility: "Guidance imported from the NVIDIA DeepStream 9.0 development skill for GStreamer and TensorRT video pipelines."
-metadata:
-  author: "NVIDIA CORPORATION"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/deepstream-dev"
-  service: "deepstream"
-  upstream_version: "1.1.0"
-  upstream_reviewed: "2026-04-24"
 ---
-
 # DeepStream Development Skill
 
 When this skill is active, **ALWAYS read the relevant reference documents** before generating code. Do NOT rely on memory - the reference documents contain critical details about exact property names, correct API usage, and common pitfalls.
@@ -204,6 +195,7 @@ Before claiming "skill applied successfully":
 5. Success metric: The user gets a minimal DeepStream pipeline that is reproducible and debuggable on the intended platform.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

@@ -1,11 +1,10 @@
 ---
 name: php-development
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [php, development, testing, quality, automation]
 description: "PHP 8.0+ development — XAMPP, RESTful APIs, PDO/MySQL/MariaDB, and authentication. Use when building PHP backends, creating API endpoints, configuring XAMPP, or integrating PHP with databases."
 ---
-
 # PHP Development
 
 > Optimized for current PHP 8.x releases, PHPUnit 11+, Composer 2.x, and PDO-backed MySQL or MariaDB apps.
@@ -30,7 +29,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Before and After Example
 

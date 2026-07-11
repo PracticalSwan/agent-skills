@@ -1,15 +1,14 @@
 ---
 name: stitch-design
-version: "1.2"
-last_updated: 2026-06-15
+version: "1.3"
+last_updated: 2026-07-11
 tags: [stitch, design, frontend, ui, mcp]
 description: "Route Google Stitch tasks to the correct imported Stitch skill, with verified MCP tool boundaries, upload safety, and cross-client fallback guidance."
-license: Apache-2.0
+license: "Apache-2.0"
 ---
-
 # Stitch Design
 
-Use this as the entrypoint for Google Stitch work. The old local monolithic Stitch guidance has been consolidated into narrower skills imported from `https://github.com/google-labs-code/stitch-skills` at commit `1544aa4a3be93e7515b0c27d32722f7ca5a2f691`. This file now routes tasks and carries shared safety rules; detailed workflows live in the dedicated `stitch-*` skills.
+Use this as the entrypoint for Google Stitch work. The old local monolithic Stitch guidance has been consolidated into narrower skills imported from `https://github.com/google-labs-code/stitch-skills` at commit `3f64079d75d025bc5890c73669f27c26a2d80b31`. This file now routes tasks and carries shared safety rules; detailed workflows live in the dedicated `stitch-*` skills.
 
 ## When to Use This Skill
 
@@ -27,8 +26,8 @@ Use this as the entrypoint for Google Stitch work. The old local monolithic Stit
 | `stitch-extract-design-md` | Extract a Stitch-compatible DESIGN.md from frontend source code, stylesheets, Tailwind config, theme files, and component patterns. |
 | `stitch-extract-static-html` | Capture a self-contained static HTML snapshot from a running app or mock component so it can be reviewed or uploaded to Stitch. |
 | `stitch-upload-to-stitch` | Upload approved local HTML, markdown, or image assets to a Stitch project using direct MCP for small DESIGN.md files or the bundled API script for larger files. |
-| `stitch-react-components` | Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components with local architecture and validation checks. |
-| `stitch-react-native` | Convert Stitch HTML designs into React Native screens using native primitives, StyleSheet rules, and mobile platform checks. |
+| `stitch-react-components` | Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components, or sync existing components to updated Stitch designs, with local architecture and validation checks. |
+| `stitch-react-native` | Convert Stitch HTML designs into React Native screens, or sync existing native components to updated Stitch designs, using native primitives, StyleSheet rules, and mobile platform checks. |
 | `stitch-remotion` | Create Remotion walkthrough videos from Stitch screen exports with ordered assets, transitions, captions, and render checks. |
 | `stitch-shadcn-ui` | Integrate Stitch-derived UI direction into shadcn/ui React projects with registry-aware setup, ownership rules, theming, and validation. |
 | `stitch-design-md` | Analyze existing Stitch project evidence and synthesize a semantic DESIGN.md for consistent future Stitch generation. |
@@ -42,7 +41,7 @@ The previous `stitch-design` skill repeated design-md, React conversion, build-l
 
 ## Verified Stitch MCP Surface
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
+Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
 
 ## Common Workflow
 
@@ -72,6 +71,7 @@ Before claiming Stitch work is complete:
 6. Success metric: The final response names the selected Stitch skill, evidence used, and whether verification was local, MCP-backed, or manual.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

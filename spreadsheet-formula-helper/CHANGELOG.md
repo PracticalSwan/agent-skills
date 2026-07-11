@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -34,5 +50,5 @@ All notable changes to the `spreadsheet-formula-helper` skill will be documented
 ### Changed
 - Normalized the output wording so the main example line stays ASCII-friendly across hosts.
 
-### Tested
+### Changed
 - Validated `SKILL.md` frontmatter and Gemini command export readiness with `python scripts/validate-skills.py`.

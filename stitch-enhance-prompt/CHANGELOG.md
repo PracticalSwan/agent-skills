@@ -2,6 +2,37 @@
 
 All notable changes to the `stitch-enhance-prompt` skill will be documented in this file.
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
+## [2026-07-11] - Upstream Refresh and MCP Correction
+
+### Added
+
+- Refreshed support material from `https://github.com/google-labs-code/stitch-skills` at `plugins/stitch-utilities/skills/enhance-prompt` and commit `3f64079d75d025bc5890c73669f27c26a2d80b31`.
+
+### Changed
+
+- Normalized the refreshed workflow into the local `version: "1.3"` schema with folder-safe naming.
+- Preserved the verified design-system MCP boundary while incorporating compatible upstream workflow and helper-script improvements.
+
+### Fixed
+
+- Avoided importing upstream assumptions that unverified Stitch screen lookup, generation, or editing tools are always available.
+
 ## [2026-06-15] - Initial Stitch Import and MCP Correction
 
 ### Added

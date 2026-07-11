@@ -1,19 +1,12 @@
 ---
 name: rag-perf
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, rag, performance, latency, throughput, profiling]
 description: "NVIDIA RAG Blueprint performance-tuning guidance for profiling retrieval stacks, comparing bottlenecks, and validating latency or throughput improvements."
-license: Apache-2.0
+license: "Apache-2.0"
 compatibility: "Guidance imported from the NVIDIA RAG Blueprint performance skill for current benchmark and profiling workflows."
-metadata:
-  author: "NVIDIA RAG"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/rag-perf"
-  upstream_repo: "https://github.com/NVIDIA-AI-Blueprints/rag"
 ---
-
 # RAG-Perf — config-driven perf benchmark CLI
 
 ## Purpose
@@ -177,6 +170,7 @@ Before claiming "skill applied successfully":
 5. Success metric: The user gets a reproducible benchmark path and a tuning change that improves the intended metric without hidden regressions.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

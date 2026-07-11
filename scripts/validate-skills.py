@@ -32,6 +32,7 @@ BAD_TEXT_MARKERS = {
     "\ufffd": "replacement character",
 }
 STALE_REFERENCES = {"../nestjs/SKILL.md": "removed nestjs skill"}
+VALID_SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def parse_frontmatter(skill_path: Path) -> dict[str, str]:
@@ -116,6 +117,8 @@ def main() -> int:
             issues.append(f"{skill_dir.name}: missing MCP Availability And Fallback section.")
         if "## Anti-Patterns" not in body:
             issues.append(f"{skill_dir.name}: missing Anti-Patterns section.")
+        if "## Verification Protocol" not in body:
+            issues.append(f"{skill_dir.name}: missing Verification Protocol section.")
         if "## Related Skills" not in body:
             issues.append(f"{skill_dir.name}: missing Related Skills section.")
         if "Preferred MCP Server:" not in body:
@@ -124,6 +127,8 @@ def main() -> int:
             issues.append(f"{skill_dir.name}: MCP section is missing the fallback prompt line.")
         if metadata["name"] != skill_dir.name:
             issues.append(f"{skill_dir.name}: frontmatter name '{metadata['name']}' does not match folder name.")
+        if not VALID_SKILL_NAME_RE.fullmatch(skill_dir.name):
+            issues.append(f"{skill_dir.name}: folder name must use lowercase hyphen-case.")
         unknown_keys = sorted(set(metadata) - ALLOWED_FRONTMATTER_KEYS)
         if unknown_keys:
             issues.append(f"{skill_dir.name}: unsupported top-level frontmatter keys: {', '.join(unknown_keys)}.")
@@ -131,8 +136,11 @@ def main() -> int:
         changelog_path = skill_dir / "CHANGELOG.md"
         if changelog_path.exists():
             changelog = changelog_path.read_text(encoding="utf-8")
-            if "### Verified" in changelog:
-                issues.append(f"{skill_dir.name}: CHANGELOG.md still uses the banned '### Verified' heading.")
+            for banned_heading in ("### Tested", "### Verified"):
+                if re.search(rf"(?m)^{re.escape(banned_heading)}\s*$", changelog):
+                    issues.append(
+                        f"{skill_dir.name}: CHANGELOG.md still uses the banned '{banned_heading[4:]}' heading."
+                    )
         else:
             issues.append(f"{skill_dir.name}: skill folder is missing CHANGELOG.md.")
 
@@ -140,6 +148,17 @@ def main() -> int:
             issues.append(
                 f"{skill_dir.name}: copied official superpower should not also be listed under reference_installs."
             )
+
+        headings = re.findall(r"(?m)^## (.+?)\s*$", body)
+        if "Anti-Patterns" in headings and "Verification Protocol" in headings:
+            anti_index = headings.index("Anti-Patterns")
+            verification_index = headings.index("Verification Protocol")
+            if verification_index != anti_index + 1:
+                issues.append(
+                    f"{skill_dir.name}: Verification Protocol must immediately follow Anti-Patterns."
+                )
+        if headings and headings[-1] != "Related Skills":
+            issues.append(f"{skill_dir.name}: Related Skills must be the final level-two section.")
 
     for markdown_file in iter_source_markdown(repo_root):
         text = markdown_file.read_text(encoding="utf-8")

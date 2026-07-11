@@ -1,11 +1,10 @@
 ---
 name: subagent-delegation
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [subagent, delegation, agents, workflow, automation]
 description: "Delegate routine work to subagents — boilerplate generation, data transformation, file analysis, documentation drafting. Use when splitting tasks into independent subtasks for parallel subagent execution."
 ---
-
 # Subagent Delegation Patterns
 
 - Leverage native parallel subagent dispatch and 200k+ context windows where available.
@@ -47,7 +46,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
 4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
 5. Success metric: Zero context leakage; every delegated output is independently reviewable.
-
 
 ## Examples & Scripts
 

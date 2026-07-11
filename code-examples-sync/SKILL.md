@@ -1,11 +1,10 @@
 ---
 name: code-examples-sync
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [code, examples, sync, workflow, quality]
 description: "Synchronize and verify code examples in documentation. Use when function signatures change, API interfaces update, imports shift, or documentation snippets become outdated and need correction."
 ---
-
 # Code Example Synchronization
 
 Use this skill when docs contain code snippets that are likely to drift from the real implementation.
@@ -45,7 +44,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
 4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
 5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
-
 
 ## Quality Checklist
 

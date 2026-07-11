@@ -1,11 +1,10 @@
 ---
 name: code-quality
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [code, quality, workflow, planning, delivery]
 description: "two-stage review (spec compliance first, then code quality), refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."
 ---
-
 # Code Quality Management
 
 Comprehensive skill for improving code quality through two-stage review (spec compliance first, then code quality), surgical refactoring, and self-evaluation loops.
@@ -311,7 +310,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
 4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
 5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
-
 
 ## Multi-Language Review Examples
 

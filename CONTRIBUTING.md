@@ -20,6 +20,8 @@ For every maintained skill change:
 6. If the skill is MCP-aware, name the preferred MCP server explicitly and provide a practical no-MCP fallback path.
 7. Keep documentation ASCII-first unless Unicode materially improves clarity.
 
+When importing from a child or categorized skill root, use `scripts/promote-child-skills.py` so destination names are validated, nested skills are flattened consistently, and existing changelog history is preserved. Run `scripts/update-skill-registry.py` after changing provenance or copied-official classification.
+
 ## Repo Docs And Counts
 
 If your change affects catalog counts, sync flow, startup rules, supported clients, portability expectations, or GitHub-facing workflow guidance, update the relevant root docs in the same pass:
@@ -47,6 +49,8 @@ python scripts/validate-skills.py
 python scripts/export-gemini-skill.py --all
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
+
+The validator requires `Verification Protocol` immediately after `Anti-Patterns`, requires `Related Skills` to be the final level-two section, and rejects historical `### Tested` and `### Verified` changelog headings.
 
 Re-run validation if the Gemini export changed.
 

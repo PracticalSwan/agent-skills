@@ -42,32 +42,31 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-06-24`. Local overlay totals can differ by machine.
+Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `93` tracked skill folders
-  - `79` tracked maintained skills
-  - `14` tracked copied official superpowers
+  - `134` tracked skill folders
+  - `102` tracked maintained skills
+  - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `151` local skill folders detected
-  - `137` local maintained skills detected
-  - `14` local copied official superpowers detected
+  - `192` local skill folders detected
+  - `160` local maintained skills detected
+  - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-Most tracked maintained skills remain aligned on `version: "1.2"`. The
-imported Stitch skills remain normalized to `version: "1.2"` with
-`last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to
-`version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus
-refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx`
-remain normalized to `version: "1.2"`.
+All `134` tracked skills are aligned on catalog `version: "1.3"` and
+`last_updated: 2026-07-11`. The `58` local-only Google Workspace overlays keep
+their upstream `version: "0.22.5"` while sharing the same 2026-07-11 section
+and validation baseline.
 
-The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match
-that schema baseline, but they still need finalized provenance mapping in
-`scripts/skill-registry.json`.
+The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have
+finalized canonical provenance. Child-path promotion is handled by
+`scripts/promote-child-skills.py`, while `scripts/update-skill-registry.py`
+refreshes provenance and the reference-source report.
 
 ## Source Of Truth
 
@@ -96,6 +95,12 @@ Copied official superpowers sync only to:
 Host-provided or plugin-managed skills that are not part of this maintained
 catalog should stay external unless you intentionally vendor them into this
 repo.
+
+When a child or categorized skill root contains a skill absent from this
+parent, audit its activation boundary and provenance, then promote it with
+`scripts/promote-child-skills.py`. Flatten nested folders by the normalized
+lowercase hyphen-case skill name; do not copy invalid underscore or title-style
+names into the parent unchanged.
 
 ## Workspace-Aware Sync
 
@@ -179,12 +184,11 @@ MCP, Anti-Patterns, Related Skills, and `CHANGELOG.md` baseline. Catalog policy
 also expects each `SKILL.md` to include `## Verification Protocol`
 immediately after `## Anti-Patterns`.
 
-New changelog entries should use `Added`, `Changed`, and `Fixed` sections only;
-do not add a `### Tested` section.
+Changelog entries should use `Added`, `Changed`, and `Fixed` sections only;
+the validator rejects both `### Tested` and `### Verified` headings.
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate
-against the shared catalog structure. Their remaining gap is canonical upstream
-matching and finalized provenance metadata.
+against the shared catalog structure and have finalized provenance metadata.
 
 After adding a new maintained skill:
 

@@ -1,11 +1,10 @@
 ---
 name: csharp-xunit
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [dotnet, testing, development, quality, automation]
 description: "xUnit testing patterns and data-driven test guidance. Use when writing or reviewing .NET unit tests."
 ---
-
 # XUnit Best Practices
 
 > Optimized for current .NET SDK releases, C# 12+, xUnit 2.x, and FluentAssertions 6+.
@@ -30,7 +29,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Before and After Example
 

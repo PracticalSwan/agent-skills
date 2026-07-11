@@ -1,11 +1,10 @@
 ---
 name: canvas-design
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [canvas, design, frontend, ui, visual]
 description: "Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking."
 ---
-
 # Canvas Design
 
 A two-step design workflow: first articulate a design philosophy, then create visual designs on canvas. Based on the [anthropics/skills canvas-design](https://github.com/anthropics/skills) approach.

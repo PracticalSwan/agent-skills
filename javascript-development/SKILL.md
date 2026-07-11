@@ -1,11 +1,10 @@
 ---
 name: javascript-development
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [javascript, development, testing, quality, automation]
 description: "JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools."
 ---
-
 # JavaScript Development
 
 > Optimized for ECMAScript 2024+, Node.js 22+, TypeScript 5.5+, and modern browser or server-first JavaScript runtimes.
@@ -30,7 +29,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Before and After Example
 

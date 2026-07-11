@@ -1,11 +1,10 @@
 ---
 name: agentic-eval
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [agentic, eval, agents, delegation, workflow]
 description: "Evaluate and improve AI-generated output with explicit rubrics, reflection loops, and stop conditions. Use when building self-critique workflows, evaluator-optimizer pipelines, or acceptance gates for code, docs, analysis, or plans."
 ---
-
 # Agentic Eval
 
 Use structured evaluation loops to improve important outputs before you call them done.
@@ -139,7 +138,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
 4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
 5. Success metric: Zero context leakage; every delegated output is independently reviewable.
-
 
 ## Scripts And References
 

@@ -1,11 +1,10 @@
 ---
 name: devops-tooling
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [devops, tooling, workflow, quality, planning]
 description: "Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows."
 ---
-
 # Devops Tooling
 
 Comprehensive toolkit for Git workflows, shell scripting, and development automation.
@@ -1029,7 +1028,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
 4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
 5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
-
 
 ## References & Resources
 

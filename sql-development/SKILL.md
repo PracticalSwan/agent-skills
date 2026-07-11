@@ -1,11 +1,10 @@
 ---
 name: sql-development
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [sql, development, testing, quality, automation]
 description: "T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features."
 ---
-
 # SQL Development
 
 > Optimized for current PostgreSQL, MySQL, and SQL Server releases plus migration-first database workflows.
@@ -30,7 +29,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Before and After Example
 

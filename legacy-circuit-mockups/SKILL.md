@@ -1,11 +1,10 @@
 ---
 name: legacy-circuit-mockups
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [legacy, circuit, mockups, design, frontend]
 description: "Breadboard circuit mockups via HTML5 Canvas. Use when creating circuit layouts, visualizing 6502/retro electronics components, drawing breadboard diagrams, or designing vintage computer schematics with discrete parts."
 ---
-
 # Legacy Circuit Mockups
 
 A skill for creating breadboard circuit mockups and visual diagrams for retro computing and electronics projects. This skill leverages HTML5 Canvas drawing mechanisms to render interactive circuit layouts featuring vintage components like the 6502 microprocessor, 555 timer ICs, EEPROMs, and 7400-series logic gates.
@@ -233,7 +232,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Build Examples
 

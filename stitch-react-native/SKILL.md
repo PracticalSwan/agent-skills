@@ -1,30 +1,30 @@
 ---
 name: stitch-react-native
-version: "1.2"
-last_updated: 2026-06-15
+version: "1.3"
+last_updated: 2026-07-11
 tags: [stitch, react-native, mobile, components, frontend]
-description: "Convert Stitch HTML designs into React Native screens using native primitives, StyleSheet rules, and mobile platform checks."
-license: Apache-2.0
+description: "Convert Stitch HTML designs into React Native screens, or sync existing native components to updated Stitch designs, using native primitives, StyleSheet rules, and mobile platform checks."
+license: "Apache-2.0"
 ---
-
 # Stitch React Native
 
-This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `1544aa4a3be93e7515b0c27d32722f7ca5a2f691`, source path `plugins/stitch-build/skills/react-native`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
+This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `3f64079d75d025bc5890c73669f27c26a2d80b31`, source path `plugins/stitch-build/skills/react-native`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
 
 ## When to Use This Skill
 
-- Use when Stitch web designs should become React Native screens or components.
+- Use when Stitch web designs should become React Native screens or existing native components must be synchronized with newer Stitch evidence.
 - The task involves Google Stitch project IDs, `.stitch/` artifacts, DESIGN.md files, Stitch exports, or Stitch-specific validation.
 - The broader `stitch-design` router points here as the narrowest workflow.
 
 ## Workflow
 
 1. Start from exported Stitch HTML and a screenshot, using host-listed screen tools only when present.
-2. Map web elements to React Native primitives and wrap visible text in `Text`.
-3. Translate CSS into `StyleSheet.create()` with native values.
-4. Replace hover, fixed positioning, browser-only CSS, and DOM events with native patterns.
-5. Use SafeAreaView, useWindowDimensions, Platform.select, FlatList, and SectionList where appropriate.
-6. Validate syntax with the bundled validator when dependencies are installed.
+2. Extract current theme values into `src/theme.ts` and record available project/screen identifiers plus the sync timestamp in `.stitch/metadata.json`.
+3. Map web elements to React Native primitives and wrap visible text in `Text`.
+4. Translate CSS into `StyleSheet.create()` with shared theme values rather than raw color literals.
+5. Replace hover, fixed positioning, browser-only CSS, and DOM events with native patterns.
+6. Use `react-native-safe-area-context`, accessibility labels and roles, useWindowDimensions, Platform.select, FlatList, and SectionList where appropriate.
+7. Validate syntax with the bundled validator when dependencies are installed.
 
 ## Local Assets
 
@@ -34,7 +34,7 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 ## Corrected Stitch MCP Surface
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
 ## Anti-Patterns
 
@@ -56,6 +56,7 @@ Before claiming this skill was applied successfully:
 6. Success metric: The user can identify the exact artifact, project/design-system target, and verification evidence without relying on unstated MCP behavior.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

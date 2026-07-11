@@ -1,11 +1,10 @@
 ---
 name: powerpoint-ppt
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [slides, ppt, docs, writing, quality]
 description: "PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files."
 ---
-
 # PowerPoint Presentation Workflows
 
 > Tech Stack Target / Version: PowerPoint current desktop or web releases and `python-pptx` automation.
@@ -54,7 +53,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
 4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
 5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
-
 
 ## Deck Checklist
 

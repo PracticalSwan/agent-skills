@@ -3,6 +3,30 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-07-11] - Full Catalog Maintenance, Child Promotion, and Source Refresh
+
+### Added
+
+- Promoted `11` Codex-only and `12` workspace-local skills into the parent catalog, normalizing invalid child names to lowercase hyphen-case where required.
+- Flattened `18` newly discovered official Superpowers from categorized child paths and added the current `using-skills` entrypoint while retaining `using-superpowers` for compatibility.
+- Added `scripts/promote-child-skills.py` for safe explicit and recursive child-path promotion.
+- Added `scripts/update-skill-registry.py` to refresh source commits, provenance mappings, copied-official classification, and `REFERENCE_SOURCES.md`.
+- Added the upstream `avoid-ai-writing` detector resources and the expanded current Xquik reference set.
+
+### Changed
+
+- Refreshed all `192` live skills to the 2026-07-11 catalog baseline; all `134` tracked skills now use catalog `version: "1.3"`, while the `58` local-only Google Workspace overlays retain upstream `version: "0.22.5"`.
+- Refreshed `avoid-ai-writing` from upstream `3.15.0`, the Stitch import from commit `3f64079d75d025bc5890c73669f27c26a2d80b31`, and `x-twitter-scraper` from upstream `2.4.17` while preserving stricter local safety and tool-availability boundaries.
+- Updated the `13` overlapping copied Superpowers from `obra/superpowers-skills` and the legacy `using-superpowers` copy from `obra/superpowers`.
+- Finalized canonical provenance for `docx`, `jupyter-notebook`, `pptx`, and `xlsx` and refreshed all source-commit snapshots after exact-path comparison.
+- Updated `README.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `LESSON.md`, `CONTRIBUTING.md`, `SECURITY.md`, and `REFERENCE_SOURCES.md` for the new counts and workflows.
+
+### Fixed
+
+- Aligned validation with documented policy by requiring `Verification Protocol` immediately after `Anti-Patterns`, requiring final `Related Skills`, enforcing lowercase hyphen-case folders, and rejecting both `### Tested` and `### Verified` changelog headings.
+- Migrated historical banned changelog headings without deleting their evidence and added missing verification protocols to the local overlay set.
+- Repaired imported path assumptions, including flattened Superpowers category paths, the parent-installed image generation CLI path, and unavailable optional Figma companion links.
+
 ## [2026-06-24] - Xquik Skill Import, GitHub Guidelines, and PR Conflict Resolution
 
 ### Added

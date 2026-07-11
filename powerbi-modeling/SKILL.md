@@ -1,11 +1,10 @@
 ---
 name: powerbi-modeling
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [powerbi, modeling, documents, automation, productivity]
 description: "Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI."
 ---
-
 # Power BI Modeling
 
 > Tech Stack Target / Version: Power BI Desktop current release, Tabular Editor, DAX Studio, and Fabric semantic-model workflows.
@@ -57,7 +56,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## References & Resources
 

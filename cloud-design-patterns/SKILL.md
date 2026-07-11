@@ -1,11 +1,10 @@
 ---
 name: cloud-design-patterns
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [cloud, design, patterns, architecture, operations]
 description: "Choose and compare cloud design patterns for distributed systems. Use when reviewing architecture, selecting workload patterns, or mapping reliability, performance, messaging, security, and migration concerns to concrete design options."
 ---
-
 # Cloud Design Patterns
 
 Use proven distributed-systems patterns to choose safer architectures and surface trade-offs early.
@@ -67,7 +66,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
 4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
 5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
-
 
 ## Scripts And References
 

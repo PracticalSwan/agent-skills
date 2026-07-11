@@ -61,7 +61,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 
 **Example:**
 ```markdown
-✅ After completing a task, IMMEDIATELY request two-stage review (spec compliance first, then code quality) before proceeding.
+✅ After completing a task, IMMEDIATELY request code review before proceeding.
 ❌ You can review code when convenient.
 ```
 

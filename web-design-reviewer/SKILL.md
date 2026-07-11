@@ -1,11 +1,10 @@
 ---
 name: web-design-reviewer
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [web, design, reviewer, frontend, ui]
 description: "Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing."
 ---
-
 # Web Design Reviewer
 
 Use this skill for visual QA and source-level fixes after a page is already running. This is not the right skill for functional automation or regression suites.
@@ -54,7 +53,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
 4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
 5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
-
 
 ## Review Checklist
 

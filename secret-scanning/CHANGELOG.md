@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -31,7 +47,6 @@
 - Rewrote the top-level skill into the repo house style while preserving the detailed upstream reference notes
 - Added `scripts/precommit-secret-audit.py` as a client-neutral local fallback for pre-commit secret checks
 
-### Tested
-
+### Changed
 - Ran `python secret-scanning/scripts/precommit-secret-audit.py --path secret-scanning/scripts`
 - Planned validation through `python scripts/validate-skills.py`

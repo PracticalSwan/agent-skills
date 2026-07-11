@@ -1,15 +1,14 @@
 ---
 name: stitch-code-to-design
-version: "1.2"
-last_updated: 2026-06-15
+version: "1.3"
+last_updated: 2026-07-11
 tags: [stitch, design, frontend, html, migration]
 description: "Convert an existing frontend into Stitch-ready design assets by extracting static HTML, writing DESIGN.md, creating the design system, and uploading approved files."
-license: Apache-2.0
+license: "Apache-2.0"
 ---
-
 # Stitch Code To Design
 
-This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `1544aa4a3be93e7515b0c27d32722f7ca5a2f691`, source path `plugins/stitch-design/skills/code-to-design`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
+This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `3f64079d75d025bc5890c73669f27c26a2d80b31`, source path `plugins/stitch-design/skills/code-to-design`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
 
 ## When to Use This Skill
 
@@ -22,8 +21,8 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 1. Resolve the target app root, route, and intended Stitch project. If the project ID is unknown, require a user-provided Stitch URL/project ID, the Stitch web UI, or a host-listed lookup tool.
 2. Run `stitch-extract-static-html` for the relevant route or UI state and keep the output under `.stitch/`.
 3. Run `stitch-extract-design-md` against the source tree and save `.stitch/DESIGN.md`.
-4. Run `stitch-manage-design-system` to create or update the Stitch design system.
-5. Run `stitch-upload-to-stitch` for the static HTML only after the user approves the exact file, size, and destination.
+4. Run `stitch-manage-design-system` to create or update the Stitch design system, using `--generated-by 'stitch::code-to-design'` when the bundled upload helper is needed.
+5. Run `stitch-upload-to-stitch` for the static HTML only after the user approves the exact file, size, and destination; identify the producer with `--generated-by 'stitch::extract-static-html'`.
 6. Update `.stitch/metadata.json` with project, screen, and design-system identifiers.
 
 ## Local Assets
@@ -34,7 +33,7 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 ## Corrected Stitch MCP Surface
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
 ## Anti-Patterns
 
@@ -56,6 +55,7 @@ Before claiming this skill was applied successfully:
 6. Success metric: The user can identify the exact artifact, project/design-system target, and verification evidence without relying on unstated MCP behavior.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

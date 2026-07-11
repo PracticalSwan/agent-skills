@@ -1,11 +1,10 @@
 ---
 name: secret-scanning
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [secret, scanning, security, audit, remediation]
 description: "Configure GitHub secret scanning and push protection, triage secret alerts, and run local pre-commit secret audits. Use when enabling secret scanning, handling blocked pushes, defining custom patterns, or checking a repo for accidental credentials before commit."
 ---
-
 # Secret Scanning
 
 > Tech Stack Target / Version: GitHub Advanced Security, GitHub CLI, local Git history tooling, and pre-commit secret audit scripts.
@@ -106,7 +105,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Each severity is justified by exploitability, reachability, and impact rather than vibes.
 4. Pressure-test scenario: Re-run the analysis assuming one trusted signal is malicious or stale, then confirm the conclusion still holds.
 5. Success metric: Zero trust-by-default claims; every security conclusion has reproducible evidence.
-
 
 ## Scripts And References
 

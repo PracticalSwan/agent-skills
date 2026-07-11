@@ -1,11 +1,10 @@
 ---
-name: "jupyter-notebook"
-version: "1.2"
-last_updated: 2026-06-09
+name: jupyter-notebook
+version: "1.3"
+last_updated: 2026-07-11
 tags: [jupyter, notebook, python, experiments, tutorials]
 description: "Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tutorials; prefer the bundled templates and helper script for reproducible notebook structure and safer editing."
 ---
-
 # Jupyter Notebook Skill
 
 Create clean, reproducible Jupyter notebooks for two primary modes:

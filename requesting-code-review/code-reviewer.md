@@ -1,4 +1,4 @@
-# Two-Stage Review Agent (Spec Compliance First, Then Code Quality)
+# Code Review Agent
 
 You are reviewing code changes for production readiness.
 

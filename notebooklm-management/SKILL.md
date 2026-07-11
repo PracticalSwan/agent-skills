@@ -1,11 +1,10 @@
 ---
 name: notebooklm-management
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [research, management, documents, automation, productivity]
 description: "NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks."
 ---
-
 # NotebookLM MCP Management
 
 > Tech Stack Target / Version: NotebookLM current web release, Markdown session capture, and URL-tracked research workflows.
@@ -72,7 +71,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Results are integrated only after evidence, diffs, or citations are checked by the controller.
 4. Pressure-test scenario: Run the workflow on two similar tasks that must not share assumptions or leaked context.
 5. Success metric: Zero context leakage; every delegated output is independently reviewable.
-
 
 ## References & Resources
 

@@ -26,21 +26,21 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 
 ## Current Counts
 
-Snapshot date: `2026-06-24`. Local overlay totals can differ by machine.
+Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-	- `93` tracked skill folders
-	- `79` tracked maintained skills
-	- `14` tracked copied official superpowers
+	- `134` tracked skill folders
+	- `102` tracked maintained skills
+	- `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-	- `151` local skill folders detected
-	- `137` local maintained skills detected
-	- `14` local copied official superpowers detected
+	- `192` local skill folders detected
+	- `160` local maintained skills detected
+	- `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-Most tracked maintained skills remain aligned on `version: "1.2"`; the imported Stitch skills remain normalized to `version: "1.2"` with `last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to `version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`.
-The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match that schema baseline, but they still need finalized provenance mapping in `scripts/skill-registry.json`.
+All `134` tracked skills are aligned on catalog `version: "1.3"` with `last_updated: 2026-07-11`. The `58` local-only Google Workspace overlays retain upstream `version: "0.22.5"` while sharing the current section and validation baseline.
+The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
 ## Downstream Sync Targets
 
@@ -52,6 +52,8 @@ Maintained skills sync to:
 
 Treat those paths as synced mirrors or branch targets, not as the place to author new maintained skills.
 Host-provided or plugin-managed skills that are not part of this maintained catalog should stay external unless you intentionally vendor them into this repo.
+
+Use `python scripts/promote-child-skills.py --map <source> <name>` for an explicit child skill or `--discover <root>` to flatten a categorized skill tree. Normalize invalid underscore or title-style names to lowercase hyphen-case, record provenance, then run `python scripts/update-skill-registry.py`.
 
 The full current skill catalog syncs to:
 
@@ -153,8 +155,8 @@ For a catalog-wide documentation refresh, treat the export and sync steps as req
 
 The validator now expects the catalog frontmatter fields plus the portability, MCP, Anti-Patterns, Related Skills, and `CHANGELOG.md` baseline.
 Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
-New changelog entries should use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section.
-The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared catalog structure. Their remaining gap is canonical upstream matching and finalized provenance metadata.
+Changelog entries should use `Added`, `Changed`, and `Fixed` sections only; the validator rejects `### Tested` and `### Verified` headings.
+The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared catalog structure and have finalized provenance metadata.
 
 After adding a new maintained skill:
 

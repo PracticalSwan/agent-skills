@@ -1,11 +1,10 @@
 ---
 name: vite-development
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [vite, development, testing, quality, automation]
 description: "Vite 8.0.10 build tooling — HMR, fast builds, plugins, and optimized production assets. Use when configuring Vite, setting up React/Vue projects with Vite, or optimizing frontend build performance."
 ---
-
 # Vite Development
 
 > Optimized for Vite 8+, React 19+, TypeScript 5.5+, Vitest 2+, and modern ESM-first frontend builds.
@@ -34,7 +33,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
 4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
 5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
-
 
 ## Before and After Example
 

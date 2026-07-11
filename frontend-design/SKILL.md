@@ -1,11 +1,10 @@
 ---
 name: frontend-design
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [frontend, design, ui, visual]
 description: "UI/UX design — color theory (60-30-10 rule), responsive layouts, WCAG accessibility, CSS/Tailwind patterns, wireframes, and visual review. Use when designing interfaces, choosing palettes, writing CSS, or fixing layout/accessibility issues."
 ---
-
 # Frontend Design
 
 Expert guidance for creating beautiful, accessible, and responsive frontend designs using modern UI principles, color theory, and React+Tailwind CSS patterns.
@@ -569,7 +568,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
 4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
 5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
-
 
 ## Part 5: Design Review Checklist
 

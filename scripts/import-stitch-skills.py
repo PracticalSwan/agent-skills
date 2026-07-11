@@ -8,9 +8,10 @@ import shutil
 from pathlib import Path
 
 
-DATE = "2026-06-15"
+DATE = "2026-07-11"
+MCP_VERIFIED_DATE = "2026-06-15"
 SOURCE_REPO = "https://github.com/google-labs-code/stitch-skills"
-SOURCE_COMMIT = "1544aa4a3be93e7515b0c27d32722f7ca5a2f691"
+SOURCE_COMMIT = "3f64079d75d025bc5890c73669f27c26a2d80b31"
 COPY_DIRS = {"scripts", "resources", "references", "reference", "examples"}
 COPY_FILES = {"package.json", "package-lock.json"}
 
@@ -27,8 +28,8 @@ SKILLS = [
             "Resolve the target app root, route, and intended Stitch project. If the project ID is unknown, require a user-provided Stitch URL/project ID, the Stitch web UI, or a host-listed lookup tool.",
             "Run `stitch-extract-static-html` for the relevant route or UI state and keep the output under `.stitch/`.",
             "Run `stitch-extract-design-md` against the source tree and save `.stitch/DESIGN.md`.",
-            "Run `stitch-manage-design-system` to create or update the Stitch design system.",
-            "Run `stitch-upload-to-stitch` for the static HTML only after the user approves the exact file, size, and destination.",
+            "Run `stitch-manage-design-system` to create or update the Stitch design system, using `--generated-by 'stitch::code-to-design'` when the bundled upload helper is needed.",
+            "Run `stitch-upload-to-stitch` for the static HTML only after the user approves the exact file, size, and destination; identify the producer with `--generated-by 'stitch::extract-static-html'`.",
             "Update `.stitch/metadata.json` with project, screen, and design-system identifiers.",
         ],
         "checks": [
@@ -76,7 +77,7 @@ SKILLS = [
         "workflow": [
             "Create or identify the target project; use `create_project` only when a new project is appropriate.",
             "Inspect `.stitch/DESIGN.md` for project name, colors, type, shape, component, layout, and anti-pattern rules.",
-            "For small DESIGN.md files, base64-encode UTF-8 content and call `upload_design_md` with the numeric project ID.",
+            "For small DESIGN.md files, base64-encode UTF-8 content and call `upload_design_md` with the numeric project ID; for the bundled helper, pass `--generated-by` with the calling skill or agent name.",
             "Immediately call `create_design_system_from_design_md` with the returned screen instance `id` and `sourceScreen`.",
             "Use `list_design_systems` to confirm the design-system asset exists for the project.",
             "Use `apply_design_system` only with valid selected screen instance `id` and `sourceScreen` values.",
@@ -151,7 +152,7 @@ SKILLS = [
         "workflow": [
             "List file path, size, MIME type, target project ID, and upload method before uploading.",
             "For small DESIGN.md content, prefer `upload_design_md` followed by `create_design_system_from_design_md` through `stitch-manage-design-system`.",
-            "For HTML or image uploads, use `scripts/upload_to_stitch.py` only with a user-approved API key source.",
+            "For HTML, markdown, or image uploads, use `scripts/upload_to_stitch.py` only with a user-approved API key source and set `--generated-by` to the calling skill or agent.",
             "Never print, commit, or store the Stitch API key.",
             "Use non-default `--api-url` only when a verified config or user instruction provides it.",
             "Save returned source screen and screen instance IDs in `.stitch/metadata.json`.",
@@ -171,14 +172,16 @@ SKILLS = [
         "source": "plugins/stitch-build/skills/react-components",
         "title": "Stitch React Components",
         "tags": ["stitch", "react", "typescript", "components", "frontend"],
-        "description": "Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components with local architecture and validation checks.",
-        "use": "Use when a Stitch screen or export should become modular React components.",
+        "description": "Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components, or sync existing components to updated Stitch designs, with local architecture and validation checks.",
+        "use": "Use when a Stitch screen or export should become modular React components or an existing React surface must be synchronized with newer Stitch evidence.",
         "workflow": [
             "Acquire source HTML and screenshots from `.stitch/designs/`, Stitch web exports, or current host-listed screen tools.",
             "Do not assume `get_screen` or `list_screens` exists in this workspace.",
+            "Record available project and screen identifiers plus the sync timestamp in `.stitch/metadata.json` when that evidence exists.",
+            "Extract current color, typography, spacing, and radius tokens from the exported HTML before editing components.",
             "Move static copy, image URLs, and lists into `src/data/mockData.ts`.",
             "Create small components with `Readonly` prop interfaces and isolate interactions in hooks.",
-            "Map Stitch theme values into Tailwind/theme tokens instead of scattering raw hex values.",
+            "Map Stitch theme values into Tailwind/theme tokens, replace placeholder links with real application routes, and cover dark-mode states instead of scattering raw hex values.",
             "Run the bundled validator where dependencies are available, then run the app build or dev check.",
         ],
         "checks": [
@@ -196,14 +199,15 @@ SKILLS = [
         "source": "plugins/stitch-build/skills/react-native",
         "title": "Stitch React Native",
         "tags": ["stitch", "react-native", "mobile", "components", "frontend"],
-        "description": "Convert Stitch HTML designs into React Native screens using native primitives, StyleSheet rules, and mobile platform checks.",
-        "use": "Use when Stitch web designs should become React Native screens or components.",
+        "description": "Convert Stitch HTML designs into React Native screens, or sync existing native components to updated Stitch designs, using native primitives, StyleSheet rules, and mobile platform checks.",
+        "use": "Use when Stitch web designs should become React Native screens or existing native components must be synchronized with newer Stitch evidence.",
         "workflow": [
             "Start from exported Stitch HTML and a screenshot, using host-listed screen tools only when present.",
+            "Extract current theme values into `src/theme.ts` and record available project/screen identifiers plus the sync timestamp in `.stitch/metadata.json`.",
             "Map web elements to React Native primitives and wrap visible text in `Text`.",
-            "Translate CSS into `StyleSheet.create()` with native values.",
+            "Translate CSS into `StyleSheet.create()` with shared theme values rather than raw color literals.",
             "Replace hover, fixed positioning, browser-only CSS, and DOM events with native patterns.",
-            "Use SafeAreaView, useWindowDimensions, Platform.select, FlatList, and SectionList where appropriate.",
+            "Use `react-native-safe-area-context`, accessibility labels and roles, useWindowDimensions, Platform.select, FlatList, and SectionList where appropriate.",
             "Validate syntax with the bundled validator when dependencies are installed.",
         ],
         "checks": [
@@ -374,7 +378,7 @@ def render_frontmatter(skill: dict) -> str:
     return (
         "---\n"
         f"name: {skill['dest']}\n"
-        'version: "1.2"\n'
+        'version: "1.3"\n'
         f"last_updated: {DATE}\n"
         f"tags: [{tags}]\n"
         f"description: \"{skill['description']}\"\n"
@@ -421,7 +425,7 @@ This skill is a catalog-normalized import from `{SOURCE_REPO}` at commit `{SOURC
 
 ## Corrected Stitch MCP Surface
 
-Verified in this workspace on {DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+Verified in this workspace on {MCP_VERIFIED_DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
 ## Anti-Patterns
 
@@ -468,26 +472,21 @@ Preferred MCP Server: Stitch MCP
 """
 
 
-def render_changelog(skill: dict) -> str:
-    return f"""# Changelog
-
-All notable changes to the `{skill["dest"]}` skill will be documented in this file.
-
-## [{DATE}] - Initial Stitch Import and MCP Correction
+def render_changelog_entry(skill: dict) -> str:
+    return f"""## [{DATE}] - Upstream Refresh and MCP Correction
 
 ### Added
 
-- Imported support material from `{SOURCE_REPO}` at `{skill["source"]}`.
-- Added catalog-standard portability, MCP fallback, anti-pattern, verification, and related-skill sections.
+- Refreshed support material from `{SOURCE_REPO}` at `{skill["source"]}` and commit `{SOURCE_COMMIT}`.
 
 ### Changed
 
-- Normalized the upstream skill into the local `version: "1.2"` schema with folder-safe naming.
-- Routed overlapping behavior through narrower Stitch skills instead of duplicating the old monolithic `stitch-design` guidance.
+- Normalized the refreshed workflow into the local `version: "1.3"` schema with folder-safe naming.
+- Preserved the verified design-system MCP boundary while incorporating compatible upstream workflow and helper-script improvements.
 
 ### Fixed
 
-- Corrected upstream instructions that assumed unverified Stitch MCP screen lookup, generation, or editing tools were always available.
+- Avoided importing upstream assumptions that unverified Stitch screen lookup, generation, or editing tools are always available.
 """
 
 
@@ -502,7 +501,7 @@ def render_router() -> str:
     related += "\n- [frontend-design](../frontend-design/SKILL.md): Use when the task needs general UI composition beyond Stitch."
     return f"""---
 name: stitch-design
-version: "1.2"
+version: "1.3"
 last_updated: {DATE}
 tags: [stitch, design, frontend, ui, mcp]
 description: "Route Google Stitch tasks to the correct imported Stitch skill, with verified MCP tool boundaries, upload safety, and cross-client fallback guidance."
@@ -531,7 +530,7 @@ The previous `stitch-design` skill repeated design-md, React conversion, build-l
 
 ## Verified Stitch MCP Surface
 
-Verified in this workspace on {DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
+Verified in this workspace on {MCP_VERIFIED_DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
 
 ## Common Workflow
 
@@ -605,28 +604,42 @@ def copy_support(repo_root: Path, source_root: Path, skill: dict, license_text: 
             shutil.copy2(child, dest)
     (dest_dir / "LICENSE.txt").write_text(license_text, encoding="utf-8")
     (dest_dir / "SKILL.md").write_text(render_skill(skill), encoding="utf-8")
-    (dest_dir / "CHANGELOG.md").write_text(render_changelog(skill), encoding="utf-8")
+    changelog_path = dest_dir / "CHANGELOG.md"
+    changelog = (
+        changelog_path.read_text(encoding="utf-8")
+        if changelog_path.exists()
+        else f"# Changelog\n\nAll notable changes to the `{skill['dest']}` skill will be documented in this file.\n"
+    )
+    title = f"## [{DATE}] - Upstream Refresh and MCP Correction"
+    if title not in changelog:
+        first = re.search(r"^## ", changelog, flags=re.MULTILINE)
+        entry = render_changelog_entry(skill)
+        if first:
+            changelog = changelog[: first.start()].rstrip() + "\n\n" + entry + "\n" + changelog[first.start() :]
+        else:
+            changelog = changelog.rstrip() + "\n\n" + entry
+    changelog_path.write_text(changelog.rstrip() + "\n", encoding="utf-8")
 
 
 def update_router_changelog(repo_root: Path) -> None:
     path = repo_root / "stitch-design" / "CHANGELOG.md"
     text = path.read_text(encoding="utf-8") if path.exists() else "# Changelog\n"
     text = text.replace("### Tested", "### Changed")
-    title = f"## [{DATE}] - Stitch Skill Router Consolidation"
+    title = f"## [{DATE}] - Stitch Skill Router Refresh"
     entry = f"""{title}
 
 ### Added
 
-- Added route selection for the dedicated Stitch skills imported from `{SOURCE_REPO}`.
+- Refreshed route selection for the dedicated Stitch skills imported from `{SOURCE_REPO}` at `{SOURCE_COMMIT}`.
 
 ### Changed
 
-- Converted the old monolithic Stitch Design skill into a lightweight router so detailed workflow guidance lives in narrower `stitch-*` skills.
-- Updated the Stitch MCP guidance to name the verified design-system tools and avoid claiming unavailable screen-generation tools.
+- Kept the Stitch Design skill as a lightweight router so detailed workflow guidance remains in narrower `stitch-*` skills.
+- Preserved the verified design-system MCP boundary while refreshing compatible upstream support material.
 
 ### Fixed
 
-- Removed duplicated long-form guidance for design-md, React conversion, stitch-loop, prompt enhancement, Remotion, and shadcn/ui from the entrypoint skill.
+- Prevented upstream screen-tool assumptions from overriding the host-verified fallback guidance.
 
 """
     if title not in text:

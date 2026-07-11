@@ -1,11 +1,10 @@
 ---
 name: nextjs-development
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nextjs, development, testing, quality, automation]
 description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation."
 ---
-
 # Next.js Development
 
 > Optimized for Next.js 16+, React 19+, TypeScript 5.5+, Turbopack, and App Router-first architectures.
@@ -34,7 +33,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
 4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
 5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
-
 
 ## Before and After Example
 

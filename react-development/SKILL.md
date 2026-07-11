@@ -1,11 +1,10 @@
 ---
 name: react-development
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [react, development, testing, quality, automation]
 description: "React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders."
 ---
-
 # React Development
 
 > Optimized for React 19+, TypeScript 5.5+, React Testing Library 16+, and modern server-first app architectures.
@@ -34,7 +33,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
 4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
 5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
-
 
 ## Before and After Example
 

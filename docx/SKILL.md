@@ -1,12 +1,11 @@
 ---
 name: docx
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [docx, word, documents, office, formatting]
 description: "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Covers polished document output, tracked changes, comments, image updates, XML-level repairs, and safe conversion workflows."
-license: Proprietary. LICENSE.txt has complete terms
+license: "Proprietary. LICENSE.txt has complete terms"
 ---
-
 # DOCX creation, editing, and analysis
 
 ## Overview

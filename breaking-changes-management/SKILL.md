@@ -1,11 +1,10 @@
 ---
 name: breaking-changes-management
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [breaking, changes, management, workflow, quality]
 description: "Manage breaking API changes, migration guides, deprecation notices, and semver versioning. Use when introducing breaking changes, writing migration paths, updating changelogs, or releasing major versions."
 ---
-
 # Breaking Changes Management
 
 Use this skill when behavior, interfaces, configuration, or compatibility contracts change in a way that can break consumers.
@@ -53,7 +52,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The next action follows the documented gate order without skipping review or verification steps.
 4. Pressure-test scenario: Apply the workflow under time pressure with one failing check and one tempting shortcut.
 5. Success metric: Zero rationalizations; blocked, failed, or unverified work is reported as such.
-
 
 ## Migration Checklist
 

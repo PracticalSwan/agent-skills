@@ -1,11 +1,10 @@
 ---
 name: spreadsheet-formula-helper
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [spreadsheet, formula, helper, documents, automation]
 description: "Write and debug spreadsheet formulas (Excel/Google Sheets), pivot tables, and array formulas; translate between dialects; use when users need working formulas with examples and edge-case checks."
 ---
-
 # Spreadsheet Formula Helper
 
 Produce reliable spreadsheet formulas with explanations.
@@ -49,7 +48,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
 4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
 5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
-
 
 ## Cross-Client Portability
 

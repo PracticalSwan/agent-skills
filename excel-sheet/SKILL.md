@@ -1,11 +1,10 @@
 ---
 name: excel-sheet
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [spreadsheet, sheet, documents, automation, productivity]
 description: "Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets."
 ---
-
 # Excel Spreadsheet Workflows
 
 > Tech Stack Target / Version: Excel desktop or `openpyxl`-based spreadsheet automation with current OOXML-compatible workflows.
@@ -54,7 +53,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
 4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
 5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
-
 
 ## Workbook Checklist
 

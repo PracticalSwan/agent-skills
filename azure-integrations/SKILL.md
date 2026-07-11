@@ -1,11 +1,10 @@
 ---
 name: azure-integrations
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [azure, integrations, cloud, architecture, operations]
 description: "Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps."
 ---
-
 # Azure Integrations
 
 > Tech Stack Target / Version: Azure Static Web Apps, App Service, Bicep or ARM templates, GitHub Actions, Node.js 20+, and Azure CLI 2.60+.
@@ -43,7 +42,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Edge cases for errors, dependency drift, and environment differences are addressed or explicitly out of scope.
 4. Pressure-test scenario: Apply the workflow to a change that passes happy-path tests but fails one boundary condition.
 5. Success metric: Zero untested success claims; every implementation claim maps to a command or artifact.
-
 
 ## Available Deployment Scripts
 

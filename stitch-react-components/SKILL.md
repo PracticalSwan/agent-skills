@@ -1,19 +1,18 @@
 ---
 name: stitch-react-components
-version: "1.2"
-last_updated: 2026-06-15
+version: "1.3"
+last_updated: 2026-07-11
 tags: [stitch, react, typescript, components, frontend]
-description: "Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components with local architecture and validation checks."
-license: Apache-2.0
+description: "Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components, or sync existing components to updated Stitch designs, with local architecture and validation checks."
+license: "Apache-2.0"
 ---
-
 # Stitch React Components
 
-This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `1544aa4a3be93e7515b0c27d32722f7ca5a2f691`, source path `plugins/stitch-build/skills/react-components`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
+This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `3f64079d75d025bc5890c73669f27c26a2d80b31`, source path `plugins/stitch-build/skills/react-components`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
 
 ## When to Use This Skill
 
-- Use when a Stitch screen or export should become modular React components.
+- Use when a Stitch screen or export should become modular React components or an existing React surface must be synchronized with newer Stitch evidence.
 - The task involves Google Stitch project IDs, `.stitch/` artifacts, DESIGN.md files, Stitch exports, or Stitch-specific validation.
 - The broader `stitch-design` router points here as the narrowest workflow.
 
@@ -21,10 +20,12 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 1. Acquire source HTML and screenshots from `.stitch/designs/`, Stitch web exports, or current host-listed screen tools.
 2. Do not assume `get_screen` or `list_screens` exists in this workspace.
-3. Move static copy, image URLs, and lists into `src/data/mockData.ts`.
-4. Create small components with `Readonly` prop interfaces and isolate interactions in hooks.
-5. Map Stitch theme values into Tailwind/theme tokens instead of scattering raw hex values.
-6. Run the bundled validator where dependencies are available, then run the app build or dev check.
+3. Record available project and screen identifiers plus the sync timestamp in `.stitch/metadata.json` when that evidence exists.
+4. Extract current color, typography, spacing, and radius tokens from the exported HTML before editing components.
+5. Move static copy, image URLs, and lists into `src/data/mockData.ts`.
+6. Create small components with `Readonly` prop interfaces and isolate interactions in hooks.
+7. Map Stitch theme values into Tailwind/theme tokens, replace placeholder links with real application routes, and cover dark-mode states instead of scattering raw hex values.
+8. Run the bundled validator where dependencies are available, then run the app build or dev check.
 
 ## Local Assets
 
@@ -34,7 +35,7 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 ## Corrected Stitch MCP Surface
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
 ## Anti-Patterns
 
@@ -56,6 +57,7 @@ Before claiming this skill was applied successfully:
 6. Success metric: The user can identify the exact artifact, project/design-system target, and verification evidence without relying on unstated MCP behavior.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

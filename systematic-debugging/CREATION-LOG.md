@@ -54,7 +54,7 @@ Framework designed to resist rationalization under pressure:
 
 ## Testing Approach
 
-Created 4 validation tests following skills/meta/testing-skills-with-subagents:
+Created 4 validation tests following testing-skills-with-subagents:
 
 ### Test 1: Academic Context (No Pressure)
 - Simple bug, no time pressure
@@ -82,7 +82,7 @@ Created 4 validation tests following skills/meta/testing-skills-with-subagents:
 - Flowchart for "fix failed" decision
 
 ### Enhancement 1: TDD Reference
-- Added link to skills/testing/test-driven-development
+- Added link to test-driven-development
 - Note explaining TDD's "simplest code" ≠ debugging's "root cause"
 - Prevents confusion between methodologies
 
@@ -104,7 +104,7 @@ Bulletproof skill that:
 ## Usage Example
 
 When encountering a bug:
-1. Load skill: skills/debugging/systematic-debugging
+1. Load skill: systematic-debugging
 2. Read overview (10 sec) - reminded of mandate
 3. Follow Phase 1 checklist - forced investigation
 4. If tempted to skip - see anti-pattern, stop

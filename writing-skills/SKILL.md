@@ -1,28 +1,23 @@
 ---
 name: writing-skills
-version: "1.2"
-last_updated: 2026-04-25
-tags: [writing, skills, docs, quality, templates]
-description: "Use when creating new skills, editing existing skills, or verifying skills work before deployment."
+version: "1.3"
+last_updated: 2026-07-11
+tags: [writing, skills]
+description: "TDD for process documentation - test with subagents before writing, iterate until bulletproof"
 ---
-
 # Writing Skills
 
 ## Overview
 
 **Writing skills IS Test-Driven Development applied to process documentation.**
 
-**Personal skills live in client-specific global directories such as `~/.claude/skills` for Claude Code, `~/.codex/skills/` for Codex, `~/.agents/skills/` as the shared mirror, and `C:/Users/LOQ/.gemini/antigravity/global_skills` for the current Gemini Antigravity setup.**
+**Skills are written to `<catalog-root>` (cloned to `~/.config/superpowers/skills/`).** You edit skills in your local branch of this repository.
 
 You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
 
 **Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
-
-**Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
-
-- Leverage native parallel subagent dispatch and 200k+ context windows where available.
+See test-driven-development for the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
 
 ## What is a Skill?
 
@@ -33,9 +28,6 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 **Skills are NOT:** Narratives about how you solved a problem once
 
 ## TDD Mapping for Skills
-
-
-Increment patch on wording/clarity fixes. Increment minor when adding a new verification step, example, or anti-pattern. Major only on breaking changes to core workflow.
 
 | TDD Concept | Skill Creation |
 |-------------|----------------|
@@ -64,31 +56,30 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 - One-off solutions
 - Standard practices well-documented elsewhere
 - Project-specific conventions (put in CLAUDE.md)
-- Mechanical constraints (if it's enforceable with regex/validation, automate it—save documentation for judgment calls)
 
 ## Skill Types
 
-| Type | Use For | Token Budget Target |
-|------|---------|---------------------|
-| Technique | Concrete method with steps to follow (condition-based-waiting, root-cause-tracing) | 300-700 words |
-| Pattern | Way of thinking about problems (flatten-with-flags, test-invariants) | 250-600 words |
-| Reference | API docs, syntax guides, tool documentation (office docs) | 150-350 words in SKILL.md; move details to references |
+### Technique
+Concrete method with steps to follow (condition-based-waiting, root-cause-tracing)
 
-### Skill Deprecation & Sunset
+### Pattern
+Way of thinking about problems (flatten-with-flags, test-invariants)
 
-Deprecate a skill when the workflow is obsolete, fully covered by a narrower maintained skill, or no longer passes pressure scenarios. Mark the replacement path in frontmatter description or Related Skills, preserve provenance briefly, and remove only after downstream clients no longer depend on the old trigger.
+### Reference
+API docs, syntax guides, tool documentation (office docs)
 
 ## Directory Structure
 
+**All skills are in the skills repository at `<catalog-root>`:**
 
 ```
-skills/
+<catalog-root>
   skill-name/
     SKILL.md              # Main reference (required)
     supporting-file.*     # Only if needed
 ```
 
-**Flat namespace** - all skills in one searchable namespace
+**Flat namespace** - all skills in one searchable location
 
 **Separate files for:**
 1. **Heavy reference** (100+ lines) - API docs, comprehensive syntax
@@ -101,22 +92,14 @@ skills/
 
 ## SKILL.md Structure
 
-**Frontmatter (YAML):**
-- Portable minimum fields: `name` and `description`
-- This maintained catalog also permits bounded imported-skill metadata: `license`, `version`, `compatibility`, and `metadata`
-- For new original skills, prefer only `name` and `description` unless provenance, licensing, or upstream update tracking needs extra metadata
-- Max 1024 characters total
-- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
-- `description`: Third-person, describes ONLY when to use (NOT what it does)
-  - Start with "Use when..." to focus on triggering conditions
-  - Include specific symptoms, situations, and contexts
-  - **NEVER summarize the skill's process or workflow** (see CSO section for why)
-  - Keep under 500 characters if possible
-
 ```markdown
 ---
-name: Skill-Name-With-Hyphens
-description: Use when [specific triggering conditions and symptoms]
+name: Human-Readable Name
+description: One-line summary of what this does
+when_to_use: when [trigger/situation]
+version: 5.1.0
+languages: all | [typescript, python] | etc
+dependencies: (optional) Required tools/libraries
 ---
 
 # Skill Name
@@ -125,8 +108,6 @@ description: Use when [specific triggering conditions and symptoms]
 What is this? Core principle in 1-2 sentences.
 
 ## When to Use
-Use symptom -> action triggers: when one matches, apply this skill and verify with the protocol below.
-
 [Small inline flowchart IF decision non-obvious]
 
 Bullet list with SYMPTOMS and use cases
@@ -140,7 +121,7 @@ Table or bullets for scanning common operations
 
 ## Implementation
 Inline code for simple patterns
-Link to file for heavy reference or reusable tools
+@link to file for heavy reference or reusable tools
 
 ## Common Mistakes
 What goes wrong + fixes
@@ -149,64 +130,39 @@ What goes wrong + fixes
 Concrete results
 ```
 
-
 ## Claude Search Optimization (CSO)
 
 **Critical for discovery:** Future Claude needs to FIND your skill
 
-### 1. Rich Description Field
+### 1. Rich when_to_use
 
-**Purpose:** Claude reads description to decide which skills to load for a given task. Make it answer: "Should I read this skill right now?"
+**Purpose:** Claude reads when_to_use to decide which skills to load for a given task. Make it answer: "Should I read this skill right now?"
 
-**Format:** Start with "Use when..." to focus on triggering conditions
-
-**CRITICAL: Description = When to Use, NOT What the Skill Does**
-
-The description should ONLY describe triggering conditions. Do NOT summarize the skill's process or workflow in the description.
-
-**Why this matters:** Testing revealed that when a description summarizes the skill's workflow, Claude may follow the description instead of reading the full skill content. A description saying "two-stage review (spec compliance first, then code quality) between tasks" caused Claude to do ONE review, even though the skill's flowchart clearly showed TWO reviews (spec compliance then code quality).
-
-When the description was changed to just "Use when executing implementation plans with independent tasks" (no workflow summary), Claude correctly read the flowchart and followed the two-stage review process.
-
-**The trap:** Descriptions that summarize workflow create a shortcut Claude will take. The skill body becomes documentation Claude skips.
-
-```yaml
-# ❌ BAD: Summarizes workflow - Claude may follow this instead of reading skill
-description: Use when executing plans - dispatches subagent per task with two-stage review (spec compliance first, then code quality) between tasks
-
-# ❌ BAD: Too much process detail
-description: Use for TDD - write test first, watch it fail, write minimal code, refactor
-
-# ✅ GOOD: Just triggering conditions, no workflow summary
-description: Use when executing implementation plans with independent tasks in the current session
-
-# ✅ GOOD: Triggering conditions only
-description: Use when implementing any feature or bugfix, before writing implementation code
-```
+**Format:** Start with "when" to complete "Use [skill-path] when [your text]"
 
 **Content:**
 - Use concrete triggers, symptoms, and situations that signal this skill applies
 - Describe the *problem* (race conditions, inconsistent behavior) not *language-specific symptoms* (setTimeout, sleep)
 - Keep triggers technology-agnostic unless the skill itself is technology-specific
 - If skill is technology-specific, make that explicit in the trigger
-- Write in third person (injected into system prompt)
-- **NEVER summarize the skill's process or workflow**
 
 ```yaml
-# ❌ BAD: Too abstract, vague, doesn't include when to use
-description: For async testing
-
-# ❌ BAD: First person
-description: I can help you with async tests when they're flaky
+# ❌ BAD: Too abstract, doesn't start with "when"
+when_to_use: For async testing
 
 # ❌ BAD: Mentions technology but skill isn't specific to it
-description: Use when tests use setTimeout/sleep and are flaky
+when_to_use: when tests use setTimeout/sleep and are flaky
 
-# ✅ GOOD: Starts with "Use when", describes problem, no workflow
-description: Use when tests have race conditions, timing dependencies, or pass/fail inconsistently
+# ✅ GOOD: Starts with "when", describes problem not language symptom
+when_to_use: when tests have race conditions, timing dependencies, or pass/fail inconsistently
 
 # ✅ GOOD: Technology-specific skill with explicit trigger
-description: Use when using React Router and handling authentication redirects
+when_to_use: when using React Router and handling authentication redirects
+```
+
+**Example find-skills output:**
+```
+Use ../condition-based-waiting/SKILL.md when tests have race conditions, timing dependencies, or pass/fail inconsistently
 ```
 
 ### 2. Keyword Coverage
@@ -221,7 +177,7 @@ Use words Claude would search for:
 
 **Use active voice, verb-first:**
 - ✅ `creating-skills` not `skill-creation`
-- ✅ `condition-based-waiting` not `async-test-helpers`
+- ✅ `testing-skills-with-subagents` not `subagent-skill-testing`
 
 ### 4. Token Efficiency (Critical)
 
@@ -250,7 +206,7 @@ When searching, dispatch subagent with template...
 [20 lines of repeated instructions]
 
 # ✅ GOOD: Reference other skill
-Always use subagents (50-100x context savings). REQUIRED: Use [other-skill-name] for workflow.
+Always use subagents (50-100x context savings). See using-skills for workflow.
 ```
 
 **Compress examples:**
@@ -288,17 +244,28 @@ wc -w skills/path/SKILL.md
 - `creating-skills`, `testing-skills`, `debugging-with-logs`
 - Active, describes the action you're taking
 
-### 4. Cross-Referencing Other Skills
+### 4. Content Repetition
+
+Mention key concepts multiple times:
+- In description
+- In when_to_use
+- In overview
+- In section headers
+
+Grep hits from multiple places = easier discovery
+
+### 5. Cross-Referencing Other Skills
 
 **When writing documentation that references other skills:**
 
-Use skill name only, with explicit requirement markers:
-- ✅ Good: `**REQUIRED SUB-SKILL:** Use superpowers:test-driven-development`
-- ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand superpowers:systematic-debugging`
-- ❌ Bad: `See skills/testing/test-driven-development` (unclear if required)
-- ❌ Bad: `@skills/testing/test-driven-development/SKILL.md` (force-loads, burns context)
+Use path format without `@` prefix or `/SKILL.md` suffix:
+- ✅ Good: `test-driven-development`
+- ✅ Good: `systematic-debugging`
+- ❌ Bad: `@../test-driven-development/SKILL.md` (force-loads, burns context)
 
 **Why no @ links:** `@` syntax force-loads files immediately, consuming 200k+ context before you need them.
+
+**To read a skill reference:** Use Read tool on `<catalog-root>/category/skill-name/SKILL.md`
 
 ## Flowchart Usage
 
@@ -327,29 +294,6 @@ digraph when_flowchart {
 - Labels without semantic meaning (step1, helper2)
 
 See @graphviz-conventions.dot for graphviz style rules.
-
-**Visualizing for your human partner:** Use `render-graphs.js` in this directory to render a skill's flowcharts to SVG:
-```bash
-./render-graphs.js ../some-skill           # Each diagram separately
-./render-graphs.js ../some-skill --combine # All diagrams in one SVG
-```
-
-## Anti-Patterns
-
-- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
-- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
-- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
-
-## Verification Protocol
-
-Before claiming "skill applied successfully":
-
-1. Pass/fail: The Writing Skills output identifies audience, purpose, source of truth, and freshness requirements.
-2. Pass/fail: Shared documentation-stack guidance is referenced instead of duplicating another documentation skill.
-3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
-4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
-5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Code Examples
 
@@ -420,7 +364,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The superpowers:test-driven-development skill explains why this matters. Same principles apply to documentation.
+See test-driven-development for why this matters. Same principles apply to documentation.
 
 ## Testing All Skill Types
 
@@ -483,8 +427,6 @@ Different skill types need different test approaches:
 | "I'm confident it's good" | Overconfidence guarantees issues. Test anyway. |
 | "Academic review is enough" | Reading ≠ using. Test application scenarios. |
 | "No time to test" | Deploying untested skill wastes more time fixing it later. |
-| "Frontier models already know this" | Capability does not prove behavior under pressure. Test the actual agent path. |
-| "The system prompt already covers it" | Global rules need local triggers and examples. Test that this skill adds needed specificity. |
 
 **All of these mean: Test before deploying. No exceptions.**
 
@@ -556,10 +498,10 @@ Make it easy for agents to self-check when rationalizing:
 
 ### Update CSO for Violation Symptoms
 
-Add to description: symptoms of when you're ABOUT to violate the rule:
+Add to when_to_use: symptoms of when you're ABOUT to violate the rule:
 
 ```yaml
-description: use when implementing any feature or bugfix, before writing implementation code
+when_to_use: when implementing any feature or bugfix, before writing implementation code
 ```
 
 ## RED-GREEN-REFACTOR for Skills
@@ -585,11 +527,66 @@ Run same scenarios WITH skill. Agent should now comply.
 
 Agent found new rationalization? Add explicit counter. Re-test until bulletproof.
 
-**Testing methodology:** See @testing-skills-with-subagents.md for the complete testing methodology:
+**See skills/testing-skills-with-subagents for:**
 - How to write pressure scenarios
 - Pressure types (time, sunk cost, authority, exhaustion)
 - Plugging holes systematically
 - Meta-testing techniques
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into `$CODEX_HOME/skills/writing-skills` and restart Codex after major changes.
+- Gemini CLI: this repository generates `/skills:writing-skills`. Rebuild it with `python scripts/export-gemini-skill.py writing-skills` and reload commands.
+
+<!-- PORTABILITY:END -->
+
+<!-- MCP:START -->
+## MCP Availability And Fallback
+
+Preferred MCP Server: None required
+
+- Fallback prompt: "Use the Writing Skills skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
+
+## Anti-Patterns
+
+### ❌ Narrative Example
+"In session 2025-10-03, we found empty projectDir caused..."
+**Why bad:** Too specific, not reusable
+
+### ❌ Multi-Language Dilution
+example-js.js, example-py.py, example-go.go
+**Why bad:** Mediocre quality, maintenance burden
+
+### ❌ Code in Flowcharts
+```dot
+step1 [label="import fs"];
+step2 [label="read file"];
+```
+**Why bad:** Can't copy-paste, hard to read
+
+### ❌ Generic Labels
+helper1, helper2, step3, pattern4
+**Why bad:** Labels should have semantic meaning
+
+## Verification Protocol
+
+Before claiming the `writing-skills` workflow succeeded:
+
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## STOP: Before Moving to Next Skill
 
@@ -614,14 +611,12 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Identify patterns in rationalizations/failures
 
 **GREEN Phase - Write Minimal Skill:**
-- [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
-- [ ] YAML frontmatter includes the portable minimum fields: name and description (max 1024 chars)
-- [ ] Description starts with "Use when..." and includes specific triggers/symptoms
-- [ ] Description written in third person
+- [ ] Name describes what you DO or core insight
+- [ ] YAML frontmatter with rich when_to_use (include symptoms!)
 - [ ] Keywords throughout for search (errors, symptoms, tools)
 - [ ] Clear overview with core principle
 - [ ] Address specific baseline failures identified in RED
-- [ ] Code inline OR link to separate file
+- [ ] Code inline OR @link to separate file
 - [ ] One excellent example (not multi-language)
 - [ ] Run scenarios WITH skill - verify agents now comply
 
@@ -648,7 +643,8 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 How future Claude finds your skill:
 
 1. **Encounters problem** ("tests are flaky")
-3. **Finds SKILL** (description matches)
+2. **Searches skills** using `find-skills` tool (searches skills repository)
+3. **Finds SKILL.md** (rich when_to_use matches)
 4. **Scans overview** (is this relevant?)
 5. **Reads patterns** (quick reference table)
 6. **Loads example** (only when implementing)
@@ -665,32 +661,7 @@ Same benefits: Better quality, fewer surprises, bulletproof results.
 
 If you follow TDD for code, follow it for skills. It's the same discipline applied to documentation.
 
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:writing-skills` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py writing-skills` and then run `/commands reload` inside Gemini CLI.
-
-<!-- PORTABILITY:END -->
-
-<!-- MCP:START -->
-## MCP Availability And Fallback
-
-Preferred MCP Server: None required
-
-- Fallback prompt: "Use the Writing Skills skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
-
-<!-- MCP:END -->
-
 ## Related Skills
 
-- [documentation-authoring](../documentation-authoring/SKILL.md): Use it when the workflow also needs drafting structured technical or product documents.
-- [documentation-patterns](../documentation-patterns/SKILL.md): Use it when the workflow also needs reusable documentation structures and templates.
-- [documentation-quality](../documentation-quality/SKILL.md): Use it when the workflow also needs documentation review standards and quality gates.
-- [documentation-verification](../documentation-verification/SKILL.md): Use it when the workflow also needs final documentation validation before publishing.
+- [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
+- [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

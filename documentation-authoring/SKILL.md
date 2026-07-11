@@ -1,11 +1,10 @@
 ---
 name: documentation-authoring
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [documentation, authoring, docs, writing, quality]
 description: "Create structured docs from scratch — PRDs, technical specs, design docs, decision records, knowledge bases. Use when drafting documentation, writing proposals, defining requirements, or planning features."
 ---
-
 # Documentation Authoring Master
 
 Expert guidance for creating structured, high-quality documentation across all types of technical and business documents.
@@ -402,7 +401,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
 4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
 5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Documentation Quality Checklist
 

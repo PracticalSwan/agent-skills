@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -29,7 +45,7 @@ All notable changes to the `premium-frontend-ui` skill will be documented in thi
 ### Changed
 - Added upstream author metadata from `https://github.com/github/awesome-copilot` commit `63d08d51f792d53feec8c1c06897cee870e83c18`.
 
-### Tested
+### Changed
 - Confirmed the current upstream change for this skill is limited to `SKILL.md` frontmatter metadata.
 
 ## [2026-04-04] - Initial Import and Portability Upgrade
@@ -42,5 +58,5 @@ All notable changes to the `premium-frontend-ui` skill will be documented in thi
 ### Changed
 - Rewrote the activation description and opening guidance to be host-neutral instead of Copilot-specific.
 
-### Tested
+### Changed
 - Validated `SKILL.md` frontmatter and Gemini command export readiness with `python scripts/validate-skills.py`.

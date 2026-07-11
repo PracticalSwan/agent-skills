@@ -1,11 +1,10 @@
 ---
 name: documentation-verification
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [documentation, verification, docs, writing, quality]
 description: "Validate documentation before merging - check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation."
 ---
-
 # Documentation Verification
 
 Use this skill when a docs change needs evidence, not just a writing pass.
@@ -48,7 +47,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
 4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
 5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Review Checklist
 

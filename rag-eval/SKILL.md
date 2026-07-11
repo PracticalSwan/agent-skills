@@ -1,19 +1,12 @@
 ---
 name: rag-eval
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, rag, evaluation, retrieval, quality, benchmark]
 description: "NVIDIA RAG Blueprint evaluation guidance for measuring retrieval and answer quality with stable datasets, baselines, and reproducible scoring workflows."
-license: Apache-2.0
+license: "Apache-2.0"
 compatibility: "Guidance imported from the NVIDIA RAG Blueprint evaluation skill for current RAG eval workflows and benchmark tooling."
-metadata:
-  author: "NVIDIA RAG"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/rag-eval"
-  upstream_repo: "https://github.com/NVIDIA-AI-Blueprints/rag"
 ---
-
 # On-disk RAG evaluation (`corpus/` + `train.json`)
 
 ## Purpose
@@ -129,6 +122,7 @@ Before claiming "skill applied successfully":
 5. Success metric: Quality claims survive a rerun on the same eval slice with no hidden configuration drift.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

@@ -1,11 +1,10 @@
 ---
 name: pdf
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [pdf, docs, writing, quality, templates]
 description: "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
 ---
-
 # PDF Skill
 
 > Tech Stack Target / Version: PDF extraction, OCR-capable tooling, conversion scripts, and Acrobat-compatible review workflows.
@@ -92,7 +91,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
 4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
 5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
-
 
 ## Cross-Client Portability
 

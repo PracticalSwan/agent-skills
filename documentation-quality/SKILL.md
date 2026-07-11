@@ -1,11 +1,10 @@
 ---
 name: documentation-quality
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [documentation, quality, docs, writing, templates]
 description: "Documentation quality standards and writing principles. Use when establishing formatting rules, reviewing doc quality metrics, creating writing guidelines, or enforcing consistent documentation style across a project."
 ---
-
 # Documentation Quality Standards
 
 Use this skill when documentation should be judged against explicit standards instead of subjective preference.
@@ -49,7 +48,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
 4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
 5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Quality Checklist
 

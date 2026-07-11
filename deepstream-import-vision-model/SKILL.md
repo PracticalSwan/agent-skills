@@ -1,18 +1,12 @@
 ---
 name: deepstream-import-vision-model
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, deepstream, vision, model-import, tensorrt, onnx]
 description: "NVIDIA DeepStream model-import guidance for bringing vision models from Hugging Face or NVIDIA NGC into DeepStream pipelines with export, TensorRT build, and benchmark steps."
-license: CC-BY-4.0 AND Apache-2.0
+license: "CC-BY-4.0 AND Apache-2.0"
 compatibility: "Guidance imported from the NVIDIA DeepStream model-import skill for ONNX export, TensorRT conversion, and benchmark workflows."
-metadata:
-  author: "NVIDIA"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/deepstream-import-vision-model"
 ---
-
 # DeepStream Import Vision Model
 
 When this skill is active, **read the relevant reference document before starting each phase**. Do not rely on memory — reference documents contain exact script paths, bash variable conventions, log filename contracts, and critical parsing rules.
@@ -197,6 +191,7 @@ Before claiming "skill applied successfully":
 5. Success metric: The user gets a model-import path with stage-by-stage evidence, not just a final engine artifact.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

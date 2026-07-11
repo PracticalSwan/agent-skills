@@ -1,11 +1,10 @@
 ---
 name: codebase-to-course
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [codebase, to, course, docs, writing]
 description: "Turn any codebase into a beautiful, interactive single-page HTML course that teaches how the code works to non-technical people. Use this skill whenever someone wants to create an interactive course, tutorial, or educational walkthrough from a codebase or project. Also trigger when users mention 'turn this into a course,' 'explain this codebase interactively,' 'teach this code,' 'interactive tutorial from code,' 'codebase walkthrough,' 'learn from this codebase,' or 'make a course from this project.' This skill produces a stunning, self-contained HTML file with scroll-based navigation, animated visualizations, embedded quizzes, and code-with-plain-English side-by-side translations."
 ---
-
 # Codebase-to-Course
 
 Transform any codebase into a stunning, interactive course. The output is a **directory** containing a pre-built `styles.css`, `main.js`, per-module HTML files, and an assembled `index.html` — open it directly in the browser with no setup required (only external dependency: Google Fonts CDN). The course teaches how the code works through scroll-based modules, animated visualizations, embedded quizzes, and plain-English translations of code.
@@ -243,7 +242,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
 4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
 5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Cross-Client Portability
 

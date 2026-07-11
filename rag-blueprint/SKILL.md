@@ -1,20 +1,12 @@
 ---
 name: rag-blueprint
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [nvidia, rag, deployment, retrieval, blueprint, ops]
 description: "NVIDIA RAG Blueprint deployment, configuration, troubleshooting, and shutdown guidance for Docker, Helm, and library-based RAG stacks."
-license: Apache-2.0
+license: "Apache-2.0"
 compatibility: "Guidance imported from the NVIDIA RAG Blueprint skill for Docker Compose, Helm, and Python 3.11+ RAG deployments."
-metadata:
-  author: "NVIDIA RAG"
-  source_repo: "https://github.com/NVIDIA/skills"
-  source_commit: "129a1087a1853f32a950e2f7bbc0fd7d57b9d422"
-  source_path: "skills/rag-blueprint"
-  upstream_version: "2.6.0"
-  upstream_repo: "https://github.com/NVIDIA-AI-Blueprints/rag"
 ---
-
 # NVIDIA RAG Blueprint
 
 ## Purpose
@@ -200,6 +192,7 @@ Before claiming "skill applied successfully":
 5. Success metric: The requested RAG feature or service state is reproducible, observable, and verified with a live check path.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

@@ -29,16 +29,16 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-06-24`. Local overlay totals can differ by machine.
+Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `93` tracked skill folders
-  - `79` tracked maintained skills
-  - `14` tracked copied official Claude/Codex-style superpowers
+  - `134` tracked skill folders
+  - `102` tracked maintained skills
+  - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `151` local skill folders detected
-  - `137` local maintained skills detected
-  - `14` local copied official superpowers detected
+  - `192` local skill folders detected
+  - `160` local maintained skills detected
+  - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
   - catalog frontmatter with `name`, `version`, `last_updated`, `tags`, and `description`
@@ -48,8 +48,10 @@ Snapshot date: `2026-06-24`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- Most tracked maintained skills remain aligned on `version: "1.2"`; the imported Stitch skills remain normalized to `version: "1.2"` with `last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to `version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
-- The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match the maintained-skill schema, but they still need finalized provenance mapping in `scripts/skill-registry.json`
+- All `134` tracked skills are aligned on catalog `version: "1.3"` with `last_updated: 2026-07-11`.
+- The `58` local-only Google Workspace overlays retain their upstream `version: "0.22.5"` while sharing the 2026-07-11 catalog sections and validation baseline.
+- Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
+- The 2026-07-11 child-path reconciliation promoted `11` Codex-only skills, `12` workspace-local skills, and `18` newly discovered nested official Superpowers into the parent catalog.
 
 ## Main Workspace
 
@@ -146,13 +148,14 @@ The validator expects:
 - the portability and MCP sections
 - `Preferred MCP Server:` and `Fallback prompt:` inside the MCP section
 - `## Anti-Patterns`
+- `## Verification Protocol` immediately after `## Anti-Patterns`
 - a final `## Related Skills`
 - `CHANGELOG.md` in every skill folder
-- new changelog entries with `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
+- changelog entries with `Added`, `Changed`, and `Fixed` sections only; `### Tested` and `### Verified` are rejected
 
 Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
 
-The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared schema baseline. Their remaining gap is canonical upstream matching and finalized provenance metadata, not catalog structure.
+The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared schema baseline and have finalized canonical provenance metadata.
 
 For a catalog-wide skill refresh, update the root docs in the same pass, then rerun validation, Gemini export, and downstream sync even if the folder counts did not change.
 
@@ -166,6 +169,20 @@ Refresh portability and MCP sections across all skills:
 
 ```powershell
 python scripts/modernize-skills.py
+```
+
+Promote explicit child skills or flatten a nested skill catalog into this parent before normalization:
+
+```powershell
+python scripts/promote-child-skills.py --map "C:\path\to\child-skill" child-skill
+python scripts/promote-child-skills.py --discover "C:\path\to\nested-skill-root"
+python scripts/promote-child-skills.py --normalize-flattened skill-one skill-two
+```
+
+Refresh source commits, provenance mappings, copied-official classification, and the generated reference-source report:
+
+```powershell
+python scripts/update-skill-registry.py
 ```
 
 Sync maintained skills to Codex, the shared mirror, and Claude, sync the full catalog to Gemini Antigravity, and sync maintained skills to discovered workspace-local roots:
@@ -206,20 +223,28 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `documentation-patterns`
 - `documentation-quality`
 - `documentation-verification`
+- `step-by-step-web-project-builder`
+- `web-dev-explainer`
 
 ### Architecture and Platform
 
 - `cloud-design-patterns`
 - `mcp-builder`
+- `vercel-deploy`
 
 ### Frontend, Design, and Testing
 
 - `canvas-design`
 - `excalidraw-diagram-generator`
+- `figma`
+- `figma-implement-design`
 - `frontend-design`
+- `frontend-skill`
+- `imagegen`
 - `legacy-circuit-mockups`
 - `nextjs-development`
 - `premium-frontend-ui`
+- `playwright`
 - `react-development`
 - `stitch-design`
 - `stitch-code-to-design`
@@ -236,6 +261,7 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `stitch-shadcn-ui`
 - `stitch-taste-design`
 - `stitch-upload-to-stitch`
+- `screenshot`
 - `vite-development`
 - `web-design-reviewer`
 - `web-testing`
@@ -249,10 +275,13 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `java-junit`
 - `javascript-development`
 - `jupyter-notebook`
+- `ds-notebook-strict-code`
+- `ds-teaching-assistant`
 - `mongodb-mongoose`
 - `php-development`
 - `powerbi-modeling`
 - `sql-development`
+- `tabular-eda-review`
 
 ### AI, Retrieval, and Accelerated Computing
 
@@ -262,11 +291,14 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `rag-blueprint`
 - `rag-eval`
 - `rag-perf`
+- `recommender-evaluation`
 
 ### Microsoft, Documents, and Office
 
 - `azure-integrations`
+- `doc`
 - `docx`
+- `document-metadata-review`
 - `excel-sheet`
 - `microsoft-development`
 - `pdf`
@@ -282,7 +314,10 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 - `avoid-ai-writing`
 - `codexer`
 - `codebase-to-course`
+- `course-content-map`
 - `custom-agent-usage`
+- `homework-notebook-review`
+- `notebook-execution-safety`
 - `notebooklm-management`
 - `notion-docs`
 - `serena-usage`
@@ -291,8 +326,13 @@ That allows one pass from this repo into your Codex root, shared mirror root, an
 ### Security and Specialized
 
 - `infostealer-malware-detector`
+- `competition-submission-checker`
+- `final-assignment-citation-review`
 - `secret-scanning`
+- `security-best-practices`
+- `security-ownership-map`
 - `security-review`
+- `security-threat-model`
 - `x-twitter-scraper`
 
 ## MCP-Aware Skills
@@ -303,6 +343,8 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `codexer`
 - `devops-tooling`
 - `excel-sheet`
+- `figma`
+- `figma-implement-design`
 - `microsoft-development`
 - `mongodb-mongoose`
 - `nextjs-development`
@@ -362,6 +404,33 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `secret-scanning`
 - `security-review`
 - `x-twitter-scraper`
+- `doc`
+- `docx`
+- `figma`
+- `figma-implement-design`
+- `frontend-skill`
+- `imagegen`
+- `jupyter-notebook`
+- `playwright`
+- `pptx`
+- `screenshot`
+- `security-best-practices`
+- `security-ownership-map`
+- `security-threat-model`
+- `vercel-deploy`
+- `xlsx`
+- `competition-submission-checker`
+- `course-content-map`
+- `document-metadata-review`
+- `ds-notebook-strict-code`
+- `ds-teaching-assistant`
+- `final-assignment-citation-review`
+- `homework-notebook-review`
+- `notebook-execution-safety`
+- `recommender-evaluation`
+- `step-by-step-web-project-builder`
+- `tabular-eda-review`
+- `web-dev-explainer`
 - `stitch-code-to-design`
 - `stitch-design`
 - `stitch-design-md`
@@ -389,12 +458,9 @@ boundaries: `stitch-design-md` and `stitch-extract-design-md`,
 `stitch-react-native`, `stitch-shadcn-ui` and general React/frontend skills,
 and `stitch-taste-design` and general premium UI guidance.
 
-Tracked imports currently in git but still pending schema normalization and finalized provenance:
+No tracked imports are currently pending provenance. The canonical source, commit or tree digest, source path, and rationale for every source-mapped skill are recorded in `scripts/skill-registry.json` and summarized in [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md).
 
-- `docx`
-- `jupyter-notebook`
-- `pptx`
-- `xlsx`
+The copied official Superpowers are classified separately from maintained imports. The 2026-07-11 refresh flattened the categorized `obra/superpowers-skills` child paths into top-level catalog folders and retained `using-superpowers` as a compatibility entry alongside the current `using-skills` entrypoint.
 
 Additional local-only sourced overlays (currently `58`, primarily `gws-*` and `recipe-*`) are mapped in `scripts/skill-registry.json` and summarized in [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md).
 

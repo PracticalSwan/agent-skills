@@ -1,12 +1,11 @@
 ---
 name: pptx
-version: "1.2"
-last_updated: 2026-06-09
+version: "1.3"
+last_updated: 2026-07-11
 tags: [pptx, presentations, slides, office, design]
 description: "Use this skill any time a `.pptx` file is involved as input, output, or both. Covers reading decks, editing existing presentations, creating slides from scratch, visual QA, notes, layouts, and presentation-safe file transforms."
-license: Proprietary. LICENSE.txt has complete terms
+license: "Proprietary. LICENSE.txt has complete terms"
 ---
-
 # PPTX Skill
 
 ## Quick Reference

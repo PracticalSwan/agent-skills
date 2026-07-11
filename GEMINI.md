@@ -12,9 +12,10 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
-- The repo currently tracks `93` skill folders
-- Most tracked maintained skills remain aligned on `version: "1.2"`; the imported Stitch skills remain normalized to `version: "1.2"` with `last_updated: 2026-06-15`, the new `x-twitter-scraper` skill is normalized to `version: "1.2"` with `last_updated: 2026-06-24`, and the NVIDIA skills plus refreshed tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` remain normalized to `version: "1.2"`
-- The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now match that baseline, but they still need finalized provenance mapping in `scripts/skill-registry.json`
+- The repo currently tracks `134` skill folders: `102` maintained skills and `32` copied official Superpowers
+- All tracked skills use catalog `version: "1.3"` with `last_updated: 2026-07-11`
+- The live local catalog contains `192` skills when the `58` local-only Google Workspace overlays are present
+- The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` have finalized canonical provenance in `scripts/skill-registry.json`
 
 ## Generated Commands
 
@@ -49,6 +50,8 @@ python scripts/export-gemini-skill.py --all
 
 Run that export after catalog-wide documentation refreshes too, not only after new skills or helper scripts land.
 
+When a child or categorized skill root has additional skills, promote them into the parent with `scripts/promote-child-skills.py`, normalize the full catalog with `scripts/modernize-skills.py`, and refresh provenance with `scripts/update-skill-registry.py` before exporting commands.
+
 Then reload commands inside Gemini CLI:
 
 ```text
@@ -72,15 +75,15 @@ That validation checks:
 - catalog `SKILL.md` frontmatter (`name`, `version`, `last_updated`, `tags`, `description`)
 - required portability and MCP sections
 - `Preferred MCP Server:` and `Fallback prompt:` lines
-- `Anti-Patterns` and `Related Skills` sections
+- `Anti-Patterns`, immediately followed by `Verification Protocol`, and a final `Related Skills` section
 - `CHANGELOG.md` presence in every skill folder
-- new changelog entries that use `Added`, `Changed`, and `Fixed` sections only; do not add a `### Tested` section
+- changelog entries that use `Added`, `Changed`, and `Fixed` sections only; `### Tested` and `### Verified` are rejected
 - Gemini command count
 - TOML parseability of generated commands
 - obsolete Skill Paths sections, stale removed-skill links, mojibake markers, and generated Python bytecode
 
-Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
-The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared schema baseline. Their remaining gap is canonical upstream matching and finalized provenance metadata.
+Catalog policy and validation require each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
+The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared schema baseline and have finalized provenance metadata.
 
 For externally imported skills, normalize the workspace copy and run any local smoke tests before exporting new Gemini command files. The generated command should only mirror maintained content that already passed the repo checks.
 

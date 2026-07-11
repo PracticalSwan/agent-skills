@@ -17,6 +17,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Keep copied official superpowers separate from maintained skills so counts and maintenance expectations stay honest.
 - Treat `gws-*` and `recipe-*` folders as local-only skills excluded from the public repo via `.gitignore`. Do not include them in public counts, catalogs, or GitHub-facing documentation.
 - Keep two inventory views in root docs: git-tracked catalog counts and local workspace counts. Mixing them in one number creates avoidable drift and confusion.
+- Child-path reconciliation must compare names across the parent, global mirrors, and discovered workspace-local roots. Promote portable extras into the parent, normalize invalid underscore or title-style names to lowercase hyphen-case, and preserve the original source path in provenance.
+- Categorized upstream catalogs can hide skills below an extra directory level. Discover by `SKILL.md`, flatten by the normalized skill name, and check for duplicate names before copying.
 
 ## Portability Lessons
 
@@ -36,6 +38,7 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Workspace-local skill roots under `.agent\skills`, `.agents\skills`, and `.claude\skills` are worth syncing when the broader workspace depends on shared skills.
 - Gemini Antigravity can consume the full current skill catalog from `C:\Users\LOQ\.gemini\antigravity\global_skills`, so it should be treated as a first-class sync target rather than a manual copy.
 - Mirror copies should replace stale skill folders entirely so old `SKILL.md.bak` files or removed support files do not linger.
+- When refreshing copied official skills from a newly categorized upstream, replace stale support files in the parent while preserving catalog changelog history. Promote extracted support documents that became standalone skills instead of keeping duplicate embedded copies.
 - After a user-requested mutation task in this workspace is complete and satisfactory, sync outward every time, then commit and push without asking for extra confirmation. Escalate before commit or push only when work is incomplete, validation/export/sync failed, a required command was rejected, security or privacy risk remains, or staging is unsafe.
 
 ## Documentation Lessons
@@ -53,6 +56,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - When the catalog frontmatter or required section schema changes, update the validator before relying on the next export or sync pass.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
 - Record source repo and commit metadata for imported skills so later updates can be traced safely.
+- When a child source is not owned by git, record a `local-workspace://` source plus a SHA-256 tree digest instead of inventing a commit.
+- Historical curated skills can disappear from upstream HEAD. Match the child copy byte-for-byte to the last canonical commit and record that historical commit rather than pretending the retired skill is still current.
 - Keep official provenance sidecars from trusted imports when they add value. NVIDIA skill imports, for example, ship `skill-card.md`, `skill.oms.sig`, and benchmark evidence that should stay with the vendored copy unless removal is deliberate and documented.
 - If an imported tracked skill is still missing catalog sections or `CHANGELOG.md`, document that exception plainly until the modernization pass is done.
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
@@ -62,6 +67,8 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 - Local secret scans should ignore generated command folders and agent metadata by default or they will drown in false positives.
 - Do not commit Python bytecode or generated `__pycache__` artifacts. They are ignored and should be removed if a helper-script smoke test creates them.
 - Validation scans should ignore local environment folders such as `.venv`, `venv`, and `env` when looking for stray `*.pyc` files, or they will produce false positives from toolchain internals.
+- Keep validator behavior aligned with documented policy. If docs ban `### Tested` and require `Verification Protocol` immediately after `Anti-Patterns`, enforce both conditions and migrate historical headings without deleting their evidence.
+- Partial clones can fail when a later checkout needs missing blobs. For source refreshes that require copying many support files, a shallow full checkout is more reliable than a filtered no-checkout clone on this Windows host.
 
 ## Update Checklist
 

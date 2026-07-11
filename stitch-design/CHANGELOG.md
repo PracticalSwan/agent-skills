@@ -1,5 +1,36 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
+## [2026-07-11] - Stitch Skill Router Refresh
+
+### Added
+
+- Refreshed route selection for the dedicated Stitch skills imported from `https://github.com/google-labs-code/stitch-skills` at `3f64079d75d025bc5890c73669f27c26a2d80b31`.
+
+### Changed
+
+- Kept the Stitch Design skill as a lightweight router so detailed workflow guidance remains in narrower `stitch-*` skills.
+- Preserved the verified design-system MCP boundary while refreshing compatible upstream support material.
+
+### Fixed
+
+- Prevented upstream screen-tool assumptions from overriding the host-verified fallback guidance.
+
 ## [2026-06-15] - Stitch Skill Router Consolidation
 
 ### Added

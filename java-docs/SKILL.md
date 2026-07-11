@@ -1,11 +1,10 @@
 ---
 name: java-docs
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [java, docs, development, testing, quality]
 description: "Java Javadoc best practices. Use when adding or reviewing documentation for Java types, methods, packages, and public APIs."
 ---
-
 # Java Documentation (Javadoc) Best Practices
 
 > Optimized for current Java LTS releases, JavaDoc doclint, Maven or Gradle builds, and module-aware API documentation.
@@ -49,7 +48,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: Claims, links, commands, examples, and screenshots are verified or explicitly marked unverified.
 4. Pressure-test scenario: Apply the skill to a doc request with a stale command, missing owner, and conflicting audience.
 5. Success metric: Zero undocumented assumptions; every reader-facing claim is sourced or scoped.
-
 
 ## Before and After Example
 

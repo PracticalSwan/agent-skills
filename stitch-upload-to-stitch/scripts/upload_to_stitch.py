@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Upload an image or HTML to a Stitch project via BatchCreateScreens.
+r"""Upload an image, HTML, or Markdown file to a Stitch project via BatchCreateScreens.
 
 WHY THIS SCRIPT EXISTS:
     The AI model cannot upload files via the MCP tool directly because MCP tool
@@ -16,6 +16,7 @@ WHY THIS SCRIPT EXISTS:
 SUPPORTED FILE TYPES:
     - Images: .png, .jpg, .jpeg, .webp
     - HTML: .html, .htm
+    - Markdown: .md
 
 Usage:
     python3 upload_to_stitch.py \
@@ -24,6 +25,7 @@ Usage:
         [--api-url <STITCH_API_BASE_URL>] \
         [--api-key <API_KEY>] \
         [--title <SCREEN_TITLE>] \
+        [--generated-by <GENERATED_BY>] \
         [--create-screen-instances]
 """
 
@@ -34,6 +36,13 @@ import pathlib
 import sys
 from typing import Any
 import urllib.request
+
+try:
+  import ssl
+  import certifi
+  _SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+except ImportError:
+  _SSL_CONTEXT = None
 
 
 # Maps file extensions to MIME types.
@@ -98,7 +107,10 @@ def call_batch_create_screens(
 
   try:
     print("Calling urlopen...")
-    with urlopen(req, timeout=120) as resp:
+    urlopen_kwargs = {"timeout": 120}
+    if _SSL_CONTEXT is not None:
+      urlopen_kwargs["context"] = _SSL_CONTEXT
+    with urlopen(req, **urlopen_kwargs) as resp:
       print(f"urlopen returned. Status: {resp.getcode()}")
       body = resp.read().decode("utf-8")
       print(f"Response status: {resp.getcode()}")
@@ -118,6 +130,7 @@ def build_screen_request(
     mime_type: str,
     b64_data: str,
     title: str | None = None,
+    generated_by: str | None = None,
 ) -> dict[str, Any]:
   """Build a CreateScreenRequest dict from a file.
 
@@ -128,6 +141,7 @@ def build_screen_request(
     mime_type: The MIME type of the file.
     b64_data: Base64-encoded file content.
     title: Optional title for the screen.
+    generated_by: Optional value for the generatedBy field (HTML/markdown only).
 
   Returns:
     A CreateScreenRequest-shaped dict.
@@ -143,6 +157,13 @@ def build_screen_request(
         "screenType": "DOCUMENT",
         "isCreatedByClient": True,
     }
+    if not generated_by:
+      if mime_type == "text/markdown":
+        generated_by = "UserUploadedDesignMd"
+      elif mime_type == "text/html":
+        generated_by = "UserUploadedHtml"
+    if generated_by:
+      screen["generatedBy"] = generated_by
   else:
     screen = {
         "screenshot": file_obj,
@@ -186,6 +207,14 @@ def parse_args():
       default=None,
       help="Optional title for the created screen",
   )
+  parser.add_argument(
+      "--generated-by",
+      default=None,
+      help=(
+          "Value for the generatedBy field in the screen proto"
+          " (HTML/markdown uploads only)."
+      ),
+  )
   return parser.parse_args()
 
 
@@ -207,13 +236,18 @@ def main():
     print(f"Error: File not found: {file_path}")
     sys.exit(1)
 
+  if args.generated_by and mime_type not in ("text/html", "text/markdown"):
+    print("Warning: --generated-by is ignored for image uploads.")
+
   print(f"File:      {file_path}")
   print(f"MIME type: {mime_type}")
 
   b64_data = encode_file(file_path)
   print(f"Base64:    {len(b64_data)} chars")
 
-  screen_request = build_screen_request(mime_type, b64_data, title=args.title)
+  screen_request = build_screen_request(
+      mime_type, b64_data, title=args.title, generated_by=args.generated_by,
+  )
 
   print(f"\nUploading to project: {args.project_id}")
   print(f"API URL:   {args.api_url}")

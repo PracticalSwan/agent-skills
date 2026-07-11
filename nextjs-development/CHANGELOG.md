@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-07-11] - Catalog Maintenance Refresh
+
+### Added
+
+- Added the current catalog verification baseline where it was missing.
+
+### Changed
+
+- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
+- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+
+### Fixed
+
+- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+
 ## [2026-04-25] - Version 1.2 Verification Protocol Refresh
 
 ### Added
@@ -31,7 +47,7 @@ All notable changes to the `nextjs-development` skill will be documented in this
 - Updated the active Next.js version guidance from 16.1.6 to 16.2.4 after checking the current npm package version.
 - Removed the redundant standalone Skill Paths section; the generated portability section remains the authoritative cross-client path guidance.
 
-### Tested
+### Changed
 - Verified the latest published package version with `npm view next version`.
 
 ## [2026-04-04] - Gemini Path Clarification
@@ -45,7 +61,7 @@ All notable changes to the `nextjs-development` skill will be documented in this
 - Added a standard portability note covering GitHub Copilot, Claude Code, Codex, and Gemini CLI.
 - Documented the preferred MCP server surface for this skill and a local no-MCP fallback workflow.
 
-### Tested
+### Changed
 - Validated `SKILL.md` frontmatter, portability sections, and Gemini export readiness with `python scripts/validate-skills.py`.
 ## [2026-03-10] — Initial Release
 

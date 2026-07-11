@@ -1,11 +1,10 @@
 ---
 name: word-document
-version: "1.2"
-last_updated: 2026-04-25
+version: "1.3"
+last_updated: 2026-07-11
 tags: [docs, document, writing, quality, templates]
 description: "Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion."
 ---
-
 # Word Document Workflows
 
 > Tech Stack Target / Version: Word desktop or `python-docx` automation with current OOXML-compatible workflows.
@@ -55,7 +54,6 @@ Before claiming "skill applied successfully":
 3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
 4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
 5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
-
 
 ## Document Checklist
 

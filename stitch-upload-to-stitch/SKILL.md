@@ -1,15 +1,14 @@
 ---
 name: stitch-upload-to-stitch
-version: "1.2"
-last_updated: 2026-06-15
+version: "1.3"
+last_updated: 2026-07-11
 tags: [stitch, upload, assets, html, mcp]
 description: "Upload approved local HTML, markdown, or image assets to a Stitch project using direct MCP for small DESIGN.md files or the bundled API script for larger files."
-license: Apache-2.0
+license: "Apache-2.0"
 ---
-
 # Stitch Upload To Stitch
 
-This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `1544aa4a3be93e7515b0c27d32722f7ca5a2f691`, source path `plugins/stitch-design/skills/upload-to-stitch`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
+This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `3f64079d75d025bc5890c73669f27c26a2d80b31`, source path `plugins/stitch-design/skills/upload-to-stitch`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
 
 ## When to Use This Skill
 
@@ -21,7 +20,7 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 1. List file path, size, MIME type, target project ID, and upload method before uploading.
 2. For small DESIGN.md content, prefer `upload_design_md` followed by `create_design_system_from_design_md` through `stitch-manage-design-system`.
-3. For HTML or image uploads, use `scripts/upload_to_stitch.py` only with a user-approved API key source.
+3. For HTML, markdown, or image uploads, use `scripts/upload_to_stitch.py` only with a user-approved API key source and set `--generated-by` to the calling skill or agent.
 4. Never print, commit, or store the Stitch API key.
 5. Use non-default `--api-url` only when a verified config or user instruction provides it.
 6. Save returned source screen and screen instance IDs in `.stitch/metadata.json`.
@@ -34,7 +33,7 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 ## Corrected Stitch MCP Surface
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
 ## Anti-Patterns
 
@@ -56,6 +55,7 @@ Before claiming this skill was applied successfully:
 6. Success metric: The user can identify the exact artifact, project/design-system target, and verification evidence without relying on unstated MCP behavior.
 
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.

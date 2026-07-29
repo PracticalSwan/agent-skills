@@ -64,9 +64,6 @@ Before claiming "skill applied successfully":
 
 ## References & Resources
 
-### Documentation
-- [PowerPoint References](./references/) - Supporting notes for formatting, structure, and automation expectations
-
 ### Scripts
 - [PPT Automation Script](./scripts/ppt-automation.py) - Local fallback for building or updating presentation content
 

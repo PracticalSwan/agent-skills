@@ -39,9 +39,11 @@ Catalog version 2.0 is a breaking client-support reset dated `2026-07-29`.
    list. Use a healthy external Chrome DevTools, Puppeteer, or Playwright MCP,
    or keep the workflow at a manual handoff.
 
-Legacy external mirror directories are no longer managed by this repository.
-They are not deleted automatically because they may contain user-managed
-material.
+The two verified legacy skill-only mirror trees were removed during the
+user-requested cleanup after confirming they were byte-identical, stale,
+unreferenced, and unused by running processes. Their surrounding application
+state was preserved. Do not delete neighboring client data when cleaning up
+retired mirror leaves.
 
 ## Rollback
 

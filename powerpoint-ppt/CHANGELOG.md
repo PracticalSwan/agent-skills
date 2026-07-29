@@ -15,6 +15,8 @@
 ### Fixed
 
 - Prevented catalog modernization from reintroducing removed Gemini or Antigravity guidance.
+- Removed the stale `./references/` link because that local-only empty
+  directory contained no tracked support material.
 
 ## [2026-07-11] - Catalog Maintenance Refresh
 

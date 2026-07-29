@@ -41,6 +41,11 @@ file.
   imported Xquik setup notes, and the legacy Superpowers tool mapping.
 - Kept authenticated LinkedIn publication confirmation-gated and prohibited
   search/reader tools from being treated as browser write surfaces.
+- Removed two verified byte-identical retired skill mirrors, generated Python
+  and Serena caches, and four empty local placeholder directories while
+  preserving surrounding application state and intentional catalog copies.
+- Removed a stale PowerPoint reference link whose untracked empty directory
+  masked the missing support material in local link checks.
 
 ## [2026-07-29] - LinkedIn Chrome Publishing Skill
 

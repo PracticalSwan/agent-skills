@@ -27,6 +27,11 @@ Codex skill catalog.
   personal roots. Promote portable extras into the parent, normalize invalid
   names to lowercase hyphen-case, and preserve source provenance.
 - Categorized upstream catalogs can hide skills below an extra directory level. Discover by `SKILL.md`, flatten by the normalized skill name, and check for duplicate names before copying.
+- Exact duplicate files across separate skill folders are not automatically
+  redundant. Preserve self-contained schemas, validators, licenses, and
+  per-skill changelogs unless the deployment contract changes.
+- An untracked empty directory can mask a broken tracked Markdown link. Verify
+  links against files present in Git, not only against the live filesystem.
 
 ## Portability Lessons
 
@@ -105,6 +110,11 @@ Codex skill catalog.
 - Validation scans should ignore local environment folders such as `.venv`, `venv`, and `env` when looking for stray `*.pyc` files, or they will produce false positives from toolchain internals.
 - Keep validator behavior aligned with documented policy. If docs ban `### Tested` and require `Verification Protocol` immediately after `Anti-Patterns`, enforce both conditions and migrate historical headings without deleting their evidence.
 - Partial clones can fail when a later checkout needs missing blobs. For source refreshes that require copying many support files, a shallow full checkout is more reliable than a filtered no-checkout clone on this Windows host.
+- Run the final cache scan after helper-script smoke tests because imports and
+  help commands can regenerate ignored `__pycache__` files.
+- Before removing a retired external mirror, resolve the exact leaf path,
+  compare inventories and digests, confirm that no configuration or process
+  uses it, and preserve all surrounding application state.
 
 ## Update Checklist
 

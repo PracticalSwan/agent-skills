@@ -3,6 +3,37 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-07-30] - Official Tavily Agent Skills
+
+### Added
+
+- Imported all eight current skill folders from the official
+  `tavily-ai/skills` repository at commit
+  `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`: `tavily-best-practices`,
+  `tavily-cli`, `tavily-crawl`, `tavily-dynamic-search`, `tavily-extract`,
+  `tavily-map`, `tavily-research`, and `tavily-search`.
+- Added self-contained MIT licenses, per-skill changelogs, provenance
+  records, Tavily MCP mappings, no-MCP CLI/SDK fallbacks, and cross-client
+  guidance for GitHub Copilot, GLM-backed Claude Code, and Codex.
+
+### Changed
+
+- Updated tracked catalog counts to `149` skill folders and `117` maintained
+  skills; the live workspace now contains `207` skills including `58`
+  local-only overlays.
+- Replaced upstream pipe-to-shell defaults with reviewable `uv` and `pip`
+  installation choices and documented that the skills do not install the
+  Tavily CLI or store credentials.
+- Updated root catalog, contribution, security, provenance, and client
+  documentation for the Tavily suite.
+
+### Fixed
+
+- Removed the imported removed-client integration so the suite does not
+  reintroduce removed-client support.
+- Added explicit API-key, private-target, prompt-injection, crawl-scope,
+  output-overwrite, job-state, cost, and citation-verification safeguards.
+
 ## [2026-07-29] - Version 2.0 Client Support Reset
 
 ### Added

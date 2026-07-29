@@ -42,31 +42,37 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
+Snapshot date: `2026-07-30`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `141` tracked skill folders
-  - `109` tracked maintained skills
+  - `149` tracked skill folders
+  - `117` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `199` local skill folders detected
-  - `167` local maintained skills detected
+  - `207` local skill folders detected
+  - `175` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `141` tracked skills are aligned on catalog `version: "2.0"` and
-`last_updated: 2026-07-29`. The `58` local-only Google Workspace overlays keep
-their upstream `version: "0.22.5"` while sharing the 2026-07-29 retained-client
-section and validation baseline.
+All `149` tracked skills use catalog `version: "2.0"`. The `141` pre-existing
+tracked skills retain `last_updated: 2026-07-29`; the eight official Tavily
+imports use `last_updated: 2026-07-30`. The `58` local-only Google Workspace
+overlays keep their upstream `version: "0.22.5"` while sharing the 2026-07-29
+retained-client section and validation baseline.
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have
 finalized canonical provenance. Child-path promotion is handled by
 `scripts/promote-child-skills.py`, while `scripts/update-skill-registry.py`
 refreshes provenance and the reference-source report.
+
+The Tavily suite is sourced from `tavily-ai/skills` at commit
+`ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`. Keep its eight skills
+self-contained, retain the local secret and prompt-injection safeguards, and
+do not reintroduce removed-client integrations from upstream references.
 
 ## Source Of Truth
 

@@ -27,6 +27,10 @@ Codex skill catalog.
   personal roots. Promote portable extras into the parent, normalize invalid
   names to lowercase hyphen-case, and preserve source provenance.
 - Categorized upstream catalogs can hide skills below an extra directory level. Discover by `SKILL.md`, flatten by the normalized skill name, and check for duplicate names before copying.
+- An upstream installation page, repository README, and live skill tree can
+  expose different counts. For `--all` imports, reconcile the live
+  `SKILL.md` tree at a pinned commit and document any newer unlisted skill
+  instead of silently omitting it.
 - Exact duplicate files across separate skill folders are not automatically
   redundant. Preserve self-contained schemas, validators, licenses, and
   per-skill changelogs unless the deployment contract changes.
@@ -43,6 +47,9 @@ Codex skill catalog.
 - Claude Code on a third-party endpoint such as the GLM Coding Plan must not
   assume Anthropic's native Chrome integration is available. Use an active
   external browser MCP or stop at a manual handoff.
+- CLI-backed web skills remain portable when the skill separates capability
+  routing from the host surface: use a configured MCP server when present,
+  otherwise use the reviewed external CLI or official SDK.
 - Discovery catalogs are not automatically the canonical source. If a discovery repo points to an official upstream skill, record both and import from the stronger maintained original.
 - If you track a raw imported skill before normalizing it, update the root docs immediately so counts stay accurate and the schema exceptions are explicit.
 
@@ -95,6 +102,13 @@ Codex skill catalog.
   `SKILL.md` files and reject retired support surfaces in the repo.
 - When the catalog frontmatter or required section schema changes, update the validator before relying on the next export or sync pass.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
+- Audit imported reference files as well as `SKILL.md`. A removed-client
+  integration can remain hidden in a support document even when the skill
+  entrypoint is portable.
+- Installing an agent skill does not authorize installing its runtime or
+  collecting credentials. Keep runtime setup explicit, prefer reviewable
+  package-manager commands, and leave authentication to an approved secret or
+  login flow.
 - Record source repo and commit metadata for imported skills so later updates can be traced safely.
 - When a child source is not owned by git, record a `local-workspace://` source plus a SHA-256 tree digest instead of inventing a commit.
 - Historical curated skills can disappear from upstream HEAD. Match the child copy byte-for-byte to the last canonical commit and record that historical commit rather than pretending the retired skill is still current.

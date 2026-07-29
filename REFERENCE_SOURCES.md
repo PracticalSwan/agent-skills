@@ -3,10 +3,10 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-07-29)
+## Snapshot (2026-07-30)
 
-- `129` skills have source mappings.
-- `71` source-mapped skills are part of the git-tracked catalog.
+- `137` skills have source mappings.
+- `79` source-mapped skills are part of the git-tracked catalog.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*`).
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
@@ -26,6 +26,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/obra/superpowers`
 - `https://github.com/obra/superpowers-skills`
 - `https://github.com/openai/skills`
+- `https://github.com/tavily-ai/skills`
 - `https://github.com/travisvn/awesome-claude-skills`
 - `https://github.com/zarazhangrui/codebase-to-course`
 
@@ -48,6 +49,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `openai_skills` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` |
 | `superpowers_skills` | `https://github.com/obra/superpowers-skills` | `cdcd624ad3fd8026deb692e565351854569798dd` |
 | `superpowers_legacy` | `https://github.com/obra/superpowers` | `44c9b2d6e889982ac18c27d05a19fefe335194e1` |
+| `tavily_skills` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` |
 
 ## Tracked Reference Installs
 
@@ -120,6 +122,14 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `stitch-taste-design` | `https://github.com/google-labs-code/stitch-skills` | `7b53207b94e62911777d53d4238b5f8c88c2b519` | `plugins/stitch-utilities/skills/taste-design` |
 | `stitch-upload-to-stitch` | `https://github.com/google-labs-code/stitch-skills` | `7b53207b94e62911777d53d4238b5f8c88c2b519` | `plugins/stitch-design/skills/upload-to-stitch` |
 | `tabular-eda-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:0bf5541310d362988bb8af9c50c6c553b8c1a57210fd1b7d273fc0b56903bc7d` | `.agents/skills/tabular-eda-review` |
+| `tavily-best-practices` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-best-practices` |
+| `tavily-cli` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-cli` |
+| `tavily-crawl` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-crawl` |
+| `tavily-dynamic-search` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-dynamic-search` |
+| `tavily-extract` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-extract` |
+| `tavily-map` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-map` |
+| `tavily-research` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-research` |
+| `tavily-search` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-search` |
 | `vercel-deploy` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/vercel-deploy` |
 | `web-dev-explainer` | `local-workspace://C:/Assumption University/Finished/CSX4107/Assignments` | `sha256:64302e7c5f9bd864c4e88cf4d1a8915ad9c69582ec417e1ff097f07f650c5cd0` | `.agent/skills/web_dev_explainer` |
 | `x-twitter-scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `bfa27fab00dbb8b5367e15153c5723ee608ba00b` | `skills/x-twitter-scraper` |
@@ -155,6 +165,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   `jupyter-notebook` now maps to `openai/skills`. Their support trees matched
   the current canonical sources, with only the catalog-normalized `SKILL.md`
   wrappers differing.
+- Eight Tavily skills map to the official `tavily-ai/skills` repository at
+  commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`. Their operational guidance
+  is retained with catalog metadata, reviewed installation choices,
+  cross-client fallbacks, and the removed-client integration excluded.
 
 ## Selection And Refresh Notes
 

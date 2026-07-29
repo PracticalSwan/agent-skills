@@ -43,6 +43,7 @@ Out of scope unless they create a concrete issue in this repository:
 - Treat imported external content as untrusted input.
 - For skills that interact with third-party content, preserve prompt-injection guardrails and explicit approval gates during normalization.
 - Treat child-path promotion as an import review, not a blind copy. Verify the source folder, provenance, license, credential behavior, network scope, destructive actions, and untrusted-content boundaries before adding it to the parent catalog.
+- Do not normalize a third-party network installer into a default pipe-to-shell command. Prefer a reviewable package-manager path, or require inspection of the fetched script before execution.
 - Do not let upstream refreshes weaken stricter local tool-availability or approval boundaries. Exact source changes may be incorporated while host-specific claims remain gated by the active tool surface.
 - Do not treat a third-party Claude Code endpoint as proof that Anthropic
   subscription-only browser features or Codex-native tools are available.

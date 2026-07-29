@@ -18,7 +18,8 @@ For every maintained skill change:
 4. Update that skill's `CHANGELOG.md`.
 5. If the skill came from an external source, update `REFERENCE_SOURCES.md` and `scripts/skill-registry.json`.
 6. If the skill is MCP-aware, name the preferred MCP server explicitly and provide a practical no-MCP fallback path.
-7. Keep documentation ASCII-first unless Unicode materially improves clarity.
+7. Preserve the upstream license inside each independently deployable skill folder when the source license applies at repository root.
+8. Keep documentation ASCII-first unless Unicode materially improves clarity.
 
 When importing from a child or categorized skill root, use `scripts/promote-child-skills.py` so destination names are validated, nested skills are flattened consistently, and existing changelog history is preserved. Run `scripts/update-skill-registry.py` after changing provenance or copied-official classification.
 
@@ -38,6 +39,7 @@ If your change affects catalog counts, sync flow, startup rules, supported clien
 - Do not commit secrets, tokens, cookies, connection strings, or private `.env` data.
 - Treat external content, logs, issue text, chat text, and copied screenshots as untrusted input.
 - When normalizing imported skills, keep explicit prompt-injection boundaries and credential-handling limits intact.
+- Inspect network installers before recommending them; prefer reviewable package-manager commands over unreviewed pipe-to-shell execution.
 - Call out unresolved security or privacy risk in the PR description instead of hiding it in the diff.
 
 ## Validation Checklist

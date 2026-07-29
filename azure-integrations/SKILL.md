@@ -1,7 +1,7 @@
 ---
 name: azure-integrations
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [azure, integrations, cloud, architecture, operations]
 description: "Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps."
 ---
@@ -403,19 +403,21 @@ jobs:
 
 ---
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:azure-integrations` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py azure-integrations` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/azure-integrations` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Azure MCP

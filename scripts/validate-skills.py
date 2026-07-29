@@ -3,14 +3,7 @@ from __future__ import annotations
 
 import json
 import re
-import sys
 from pathlib import Path
-
-try:
-    import tomllib  # type: ignore[attr-defined]
-except ModuleNotFoundError:
-    tomllib = None
-
 
 FRONTMATTER_RE = re.compile(r"^---\r?\n(.*?)\r?\n---\r?\n?", re.DOTALL)
 ALLOWED_FRONTMATTER_KEYS = {
@@ -24,8 +17,8 @@ ALLOWED_FRONTMATTER_KEYS = {
     "compatibility",
 }
 REQUIRED_FRONTMATTER_KEYS = {"name", "description", "version", "last_updated", "tags"}
-SKIP_SCAN_DIRS = {".git", ".gemini", ".serena"}
-SKIP_BYTECODE_DIRS = {".git", ".gemini", ".serena", ".venv", "venv", "env", "__pycache__"}
+SKIP_SCAN_DIRS = {".git", ".serena"}
+SKIP_BYTECODE_DIRS = {".git", ".serena", ".venv", "venv", "env", "__pycache__"}
 BAD_TEXT_MARKERS = {
     "\u00e2\u20ac\u201d": "mojibake em dash",
     "\u00e2\u0153\u201c": "mojibake check mark",
@@ -33,6 +26,15 @@ BAD_TEXT_MARKERS = {
 }
 STALE_REFERENCES = {"../nestjs/SKILL.md": "removed nestjs skill"}
 VALID_SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+ACTIVE_ROOT_DOCS = [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "CONTRIBUTING.md",
+    "LESSON.md",
+    "SECURITY.md",
+    "REFERENCE_SOURCES.md",
+]
 
 
 def parse_frontmatter(skill_path: Path) -> dict[str, str]:
@@ -74,33 +76,40 @@ def has_generated_bytecode(repo_root: Path) -> list[Path]:
     )
 
 
-def parse_command_toml(text: str) -> dict[str, str]:
-    if tomllib is not None:
-        return tomllib.loads(text)
-
-    parsed: dict[str, str] = {}
-    for raw_line in text.splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if "=" not in line:
-            raise ValueError(f"Unsupported TOML line without '=': {raw_line}")
-        key, value = line.split("=", 1)
-        parsed[key.strip()] = json.loads(value.strip())
-    return parsed
-
-
 def main() -> int:
     repo_root = Path(__file__).resolve().parents[1]
     registry = json.loads((repo_root / "scripts" / "skill-registry.json").read_text(encoding="utf-8"))
     superpower_skills = set(registry["copied_official_superpowers"])
+    codex_system_managed = registry.get("codex_system_managed_skills")
     skill_dirs = sorted(
         skill_dir
         for skill_dir in repo_root.iterdir()
         if skill_dir.is_dir() and (skill_dir / "SKILL.md").exists()
     )
+    skill_names = {skill_dir.name for skill_dir in skill_dirs}
 
     issues: list[str] = []
+
+    if not isinstance(codex_system_managed, list) or not codex_system_managed:
+        issues.append("scripts/skill-registry.json must define codex_system_managed_skills.")
+        codex_system_managed = []
+    elif codex_system_managed != sorted(set(codex_system_managed)):
+        issues.append("codex_system_managed_skills must be unique and sorted.")
+
+    unknown_system_skills = sorted(set(codex_system_managed) - skill_names)
+    if unknown_system_skills:
+        issues.append(
+            "codex_system_managed_skills names missing from the parent catalog: "
+            + ", ".join(unknown_system_skills)
+            + "."
+        )
+    system_superpower_overlap = sorted(set(codex_system_managed) & superpower_skills)
+    if system_superpower_overlap:
+        issues.append(
+            "Codex system-managed skills cannot also be copied official Superpowers: "
+            + ", ".join(system_superpower_overlap)
+            + "."
+        )
 
     for skill_dir in skill_dirs:
         skill_path = skill_dir / "SKILL.md"
@@ -111,6 +120,10 @@ def main() -> int:
             continue
 
         body = skill_path.read_text(encoding="utf-8")
+        if re.search(r"\b(?:Gemini|Antigravity)(?:\s+CLI)?\b", body, re.IGNORECASE):
+            issues.append(
+                f"{skill_dir.name}: active SKILL.md still names removed Gemini or Antigravity support."
+            )
         if "## Cross-Client Portability" not in body:
             issues.append(f"{skill_dir.name}: missing Cross-Client Portability section.")
         if "## MCP Availability And Fallback" not in body:
@@ -175,23 +188,39 @@ def main() -> int:
     for pyc_file in has_generated_bytecode(repo_root):
         issues.append(f"{pyc_file}: generated Python bytecode should not be committed or left in the repo.")
 
-    commands_root = repo_root / ".gemini" / "commands" / registry["gemini_namespace"]
-    if commands_root.exists():
-        command_files = sorted(commands_root.rglob("*.toml"))
-        if len(command_files) != len(skill_dirs):
-            issues.append(
-                f"Gemini command count mismatch: found {len(command_files)} TOML files for {len(skill_dirs)} skills."
-            )
-        for command_file in command_files:
-            try:
-                data = parse_command_toml(command_file.read_text(encoding="utf-8"))
-            except (ValueError, json.JSONDecodeError) as exc:
-                issues.append(f"{command_file}: invalid TOML ({exc}).")
-                continue
-            if "description" not in data or "prompt" not in data:
-                issues.append(f"{command_file}: missing description or prompt.")
-    else:
-        issues.append(f"{commands_root} does not exist. Run scripts/export-gemini-skill.py first.")
+    if "gemini_namespace" in registry:
+        issues.append("scripts/skill-registry.json still defines removed Gemini command metadata.")
+
+    for doc_name in ACTIVE_ROOT_DOCS:
+        doc_path = repo_root / doc_name
+        if not doc_path.is_file():
+            issues.append(f"{doc_path}: required active root documentation is missing.")
+            continue
+        if re.search(
+            r"\b(?:Gemini|Antigravity)(?:\s+CLI)?\b",
+            doc_path.read_text(encoding="utf-8"),
+            re.IGNORECASE,
+        ):
+            issues.append(f"{doc_path}: active root documentation still names a removed client.")
+
+    sync_script = (repo_root / "scripts" / "sync-skills.ps1").read_text(encoding="utf-8")
+    for required_root in (
+        r"C:\Users\LOQ\.agents\skills",
+        r"C:\Users\LOQ\.codex\skills",
+        r"C:\Users\LOQ\.claude\skills",
+    ):
+        if required_root not in sync_script:
+            issues.append(f"scripts/sync-skills.ps1 is missing approved downstream root {required_root}.")
+
+    removed_paths = [
+        repo_root / ".gemini",
+        repo_root / "GEMINI.md",
+        repo_root / "scripts" / "export-gemini-skill.py",
+        repo_root / "using-superpowers" / "references" / "antigravity-tools.md",
+    ]
+    for removed_path in removed_paths:
+        if removed_path.exists():
+            issues.append(f"{removed_path}: removed Gemini or Antigravity support surface still exists.")
 
     if issues:
         print(json.dumps({"status": "failed", "issues": issues}, indent=2))
@@ -202,7 +231,6 @@ def main() -> int:
             {
                 "status": "ok",
                 "skills": len(skill_dirs),
-                "gemini_commands": len(list(commands_root.rglob('*.toml'))),
             },
             indent=2,
         )

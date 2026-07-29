@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-This repository contains shared skills for GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This repository contains shared skills for GitHub Copilot, Claude Code, and
+Codex.
 
 ## Required Session Start Rule
 
@@ -11,10 +12,16 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 ## Required Completion, Sync, and Publish Rule
 
 - For every user-requested mutation task in this workspace, complete the requested work in `C:\Users\LOQ\.copilot\skills` first.
-- After the work is complete, run the repo validation and Gemini export, then sync outward to the downstream skill folders every time.
+- After the work is complete, run the repo validation, then sync outward to the downstream skill folders every time.
 - If the AI agent judges the result satisfactory, commit and push to GitHub without asking for another confirmation.
-- Treat work as satisfactory only when validation/export pass, sync completes, the task is complete, no requested step was skipped, no required command was rejected, no unresolved secret/security/privacy issue remains, and the final diff matches the user's request.
-- Elevate to the user before commit or push when there are security concerns, incomplete work, skipped steps, rejected or blocked required commands, validation/export/sync failures, unexpected unrelated dirty files that make staging unsafe, or any other reason the work is not satisfactory.
+- Treat work as satisfactory only when validation passes, sync completes, the
+  task is complete, no requested step was skipped, no required command was
+  rejected, no unresolved secret/security/privacy issue remains, and the final
+  diff matches the user's request.
+- Elevate to the user before commit or push when there are security concerns,
+  incomplete work, skipped steps, rejected or blocked required commands,
+  validation/sync failures, unexpected unrelated dirty files that make staging
+  unsafe, or any other reason the work is not satisfactory.
 - For read-only or advisory tasks with no file changes, do not create empty sync, commit, or push churn; report that no mutation workflow was needed.
 
 ## Repository Role
@@ -29,28 +36,29 @@ This repository contains shared skills for GitHub Copilot, Claude Code, Codex, a
 Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-	- `135` tracked skill folders
-	- `103` tracked maintained skills
-	- `32` tracked copied official Superpowers
+  - `141` tracked skill folders
+  - `109` tracked maintained skills
+  - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-	- `193` local skill folders detected
-	- `161` local maintained skills detected
-	- `32` local copied official Superpowers detected
+  - `199` local skill folders detected
+  - `167` local maintained skills detected
+  - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `135` tracked skills are aligned on catalog `version: "1.3"`. The `linkedin-create-post` skill is dated `2026-07-29`; the prior tracked catalog baseline remains dated `2026-07-11`. The `58` local-only Google Workspace overlays retain upstream `version: "0.22.5"` while sharing the current section and validation baseline.
+All `141` tracked skills are aligned on catalog `version: "2.0"` and
+`last_updated: 2026-07-29`. The `58` local-only Google Workspace overlays
+retain upstream `version: "0.22.5"` while sharing the 2026-07-29
+retained-client section and validation baseline.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
 ## Downstream Sync Targets
 
-The only approved downstream sync destinations are these five personal-global roots:
+The only approved downstream sync destinations are these three personal-global roots:
 
 - `C:\Users\LOQ\.agents\skills`
 - `C:\Users\LOQ\.codex\skills`
 - `C:\Users\LOQ\.claude\skills`
-- `C:\Users\LOQ\.gemini\antigravity\global_skills`
-- `C:\Users\LOQ\.gemini\antigravity-cli\skills`
 
 There must be no downstream sync to any other path. The sync script enforces this list and refuses to write anywhere else.
 
@@ -58,38 +66,45 @@ Per-target routing:
 
 - Maintained skills sync to `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and `C:\Users\LOQ\.claude\skills`.
 - Copied official superpowers sync only to the `superpowers` subfolder of the shared mirror: `C:\Users\LOQ\.agents\skills\superpowers` (this is inside the approved `.agents\skills` root, not a separate destination).
-- The full current skill catalog (maintained plus copied official superpowers) syncs to both Gemini roots: `C:\Users\LOQ\.gemini\antigravity\global_skills` and `C:\Users\LOQ\.gemini\antigravity-cli\skills`.
+- The six `codex_system_managed_skills` stay authoritative under Codex
+  `.system` and are skipped by top-level Codex mirror writes. Their normalized
+  parent copies still sync to the shared and Claude roots.
+- Sync removes known catalog-owned top-level route conflicts, but preserves
+  unknown personal skills and all Codex `.system` folders.
 
 Treat those paths as synced mirrors or branch targets, not as the place to author new maintained skills.
 Host-provided or plugin-managed skills that are not part of this maintained catalog should stay external unless you intentionally vendor them into this repo.
 
 Do not mirror copied official superpowers into `C:\Users\LOQ\.claude\skills` unless you explicitly want local overrides over Claude's plugin-managed copies.
 
-## Gemini CLI Support
+## Claude Code With GLM Coding Plan
 
-Gemini CLI uses generated command files from:
-
-- `C:\Users\LOQ\.copilot\skills\.gemini\commands\skills`
-- `C:\Users\LOQ\.gemini\antigravity\global_skills`
-- `C:\Users\LOQ\.gemini\antigravity-cli\skills`
-
-After editing skills:
-
-1. Run `python scripts/export-gemini-skill.py --all`
-2. Reload commands in Gemini CLI with `/commands reload`
-
-`SKILL.md` remains the source of truth. The Gemini command files are generated artifacts.
+- The GLM Coding Plan endpoint changes the model provider through Claude
+  Code's Anthropic-compatible environment variables. It does not change the
+  personal skill root: use `C:\Users\LOQ\.claude\skills`.
+- Do not assume native Claude in Chrome is available. Anthropic's current
+  native integration requires direct paid-plan and authentication
+  prerequisites that third-party API endpoints do not satisfy.
+- Inspect `claude mcp list` and the active session tool list before naming or
+  calling a browser tool. A connected external Chrome DevTools, Puppeteer, or
+  Playwright MCP can provide browser automation; a search or reader tool
+  cannot publish through an authenticated LinkedIn session.
+- Keep login, CAPTCHA, upload, and final-submit actions confirmation-gated.
+  Stop at a manual handoff when no healthy authenticated browser surface is
+  exposed.
 
 ## Upstream-Only Skill Sources
 
-Workspace-local skill roots (`.agent\skills`, `.agents\skills`, and `.claude\skills` under project trees such as `C:\Assumption University`) are upstream sources only, never downstream sync destinations. The sync script no longer writes to them.
+Normal child promotion is limited to the personal `.codex` and `.claude`
+roots. Project-local paths such as `C:\Assumption University` are not scanned
+or written unless a later user request explicitly places them in scope.
 
 To pull a skill from such a root into this parent catalog, promote it upstream and record provenance:
 
 - Use `python scripts/promote-child-skills.py --map <source> <name>` for an explicit child skill or `--discover <root>` to flatten a categorized skill tree. Normalize invalid underscore or title-style names to lowercase hyphen-case.
 - Then run `python scripts/update-skill-registry.py` to refresh provenance, copied-official classification, and `REFERENCE_SOURCES.md`.
 
-The only downstream sync call is to the five approved personal-global roots:
+The only downstream sync call is to the three approved personal-global roots:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
@@ -143,11 +158,10 @@ The MCP mapping source lives in `scripts/skill-registry.json`.
 After meaningful changes:
 
 1. Run `python scripts/validate-skills.py`
-2. Run `python scripts/export-gemini-skill.py --all`
-3. Re-run validation if the export changed
-4. Sync outward if the repo is in a good state
+2. Sync outward if the repo is in a good state
 
-For a catalog-wide documentation refresh, treat the export and sync steps as required even when the inventory counts stay the same.
+For a catalog-wide documentation refresh, treat validation and sync as required
+even when the inventory counts stay the same.
 
 The validator now expects the catalog frontmatter fields plus the portability, MCP, Anti-Patterns, Related Skills, and `CHANGELOG.md` baseline.
 Catalog policy also expects each `SKILL.md` to include `## Verification Protocol` immediately after `## Anti-Patterns`.
@@ -172,7 +186,7 @@ When repo behavior, counts, sync flow, portability, or supported clients change:
 - update `CHANGELOG.md`
 - update `CLAUDE.md`
 - update `LESSON.md`
-- update `GEMINI.md` if Gemini CLI behavior changed
+- update `MIGRATION.md` when a breaking client or sync boundary changes
 
 ## Codex Notes
 
@@ -186,6 +200,6 @@ When repo behavior, counts, sync flow, portability, or supported clients change:
 - `README.md`: catalog and maintenance commands
 - `CHANGELOG.md`: repo-wide change history
 - `CONTRIBUTING.md`: contribution workflow and repo validation expectations
-- `GEMINI.md`: Gemini CLI usage guidance
 - `LESSON.md`: maintenance lessons and gotchas
+- `MIGRATION.md`: version 2.0 breaking migration and rollback guidance
 - `SECURITY.md`: vulnerability reporting and sensitive-disclosure guidance

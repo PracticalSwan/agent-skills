@@ -1,7 +1,7 @@
 ---
 name: vercel-deploy
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [vercel, deploy]
 description: "Deploy applications and websites to Vercel. Use when the user requests deployment actions like \"deploy my app\", \"deploy and give me the link\", \"push this live\", or \"create a preview deployment\"."
 ---
@@ -78,19 +78,21 @@ Example guidance to the user:
 The deploy needs escalated network access to deploy to Vercel. I can rerun the command with escalated permissions—want me to proceed?
 ```
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/vercel-deploy` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:vercel-deploy`. Rebuild it with `python scripts/export-gemini-skill.py vercel-deploy` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/vercel-deploy` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

@@ -9,7 +9,7 @@ from pathlib import Path
 
 HEADING_RE = re.compile(r"^(#+)\s+")
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
-SKIP_DIRS = {".git", ".gemini", ".serena"}
+SKIP_DIRS = {".git", ".serena"}
 
 
 def is_table_row(line: str) -> bool:

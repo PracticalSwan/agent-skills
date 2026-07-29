@@ -1,7 +1,7 @@
 ---
 name: nextjs-development
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [nextjs, development, testing, quality, automation]
 description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation."
 ---
@@ -905,19 +905,21 @@ test('dashboard has no critical accessibility issues', async ({ page }) => {
 - Using old synchronous request APIs: Current Next.js releases expect async `params`, `searchParams`, `cookies()`, and `headers()`.
 - Skipping error and loading states: Streaming routes feel broken when only the happy path is modeled.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:nextjs-development` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py nextjs-development` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/nextjs-development` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Next.js MCP

@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [test, driven, development]
 description: "Write the test first, watch it fail, write minimal code to pass"
 ---
@@ -365,19 +365,21 @@ Otherwise → not TDD
 
 No exceptions without your human partner's permission.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/test-driven-development` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:test-driven-development`. Rebuild it with `python scripts/export-gemini-skill.py test-driven-development` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/test-driven-development` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

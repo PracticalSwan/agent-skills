@@ -1,24 +1,25 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "30472ecf0fe34cc561df958c08501ecc5ca80ea4"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "8ae5a99109124c22288eee0254da61741e44d12a"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
-    "anthropic_skills": ("https://github.com/anthropics/skills", "9d2f1ae187231d8199c64b5b762e1bdf2244733d"),
-    "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "9c9da64cf1bbea611d43dd14a10788d55369b353"),
+    "anthropic_skills": ("https://github.com/anthropics/skills", "b29e7cf65e5cb78a5ac33d582270551bc74a14eb"),
+    "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "500ff59006f19c27120c5ddbd9b56fc3d937b6bf"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "27156c7ae69fade80f2a3410e6899b780248709d"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "f6075a5060ed3c86536055700d95eb68655162ee"),
-    "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "3f64079d75d025bc5890c73669f27c26a2d80b31"),
-    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "4b444b719b2022867b202788ca3df1305049f2d9"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "ce70ca7f1966c243e0b6a56b67085a185121d096"),
+    "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "7b53207b94e62911777d53d4238b5f8c88c2b519"),
+    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "bfa27fab00dbb8b5367e15153c5723ee608ba00b"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
     "superpowers_skills": ("https://github.com/obra/superpowers-skills", "cdcd624ad3fd8026deb692e565351854569798dd"),
-    "superpowers_legacy": ("https://github.com/obra/superpowers", "d884ae04edebef577e82ff7c4e143debd0bbec99"),
+    "superpowers_legacy": ("https://github.com/obra/superpowers", "44c9b2d6e889982ac18c27d05a19fefe335194e1"),
 }
 
 SUPERPOWERS = {
@@ -67,6 +68,15 @@ OPENAI_CURRENT = {
     "security-ownership-map": "skills/.curated/security-ownership-map",
     "security-threat-model": "skills/.curated/security-threat-model",
     "vercel-deploy": "skills/.curated/vercel-deploy",
+}
+
+CODEX_SYSTEM_SKILLS = {
+    "imagegen": "Codex owns a newer system bundle than the public parent copy; preserve the system copy in place and publish a normalized cross-client catalog copy elsewhere.",
+    "openai-docs": "Promoted from the personal Codex system bundle with official-domain and no-native-tool fallbacks for other clients.",
+    "plugin-creator": "Promoted as an explicitly Codex-plugin workflow with a Claude Code plugin-format boundary.",
+    "review-agent": "Promoted from the Codex system bundle as a portable read-only review workflow.",
+    "skill-creator": "Promoted from the Codex system bundle with separate Codex and Claude Code skill installation paths.",
+    "skill-installer": "Promoted as a Codex installer workflow with a safe manual Claude Code installation fallback.",
 }
 
 LOCAL_IMPORTS = {
@@ -145,6 +155,25 @@ LOCAL_IMPORTS = {
 }
 
 
+def tree_digest(root: Path) -> str:
+    digest = hashlib.sha256()
+    ignored_parts = {".git", "__pycache__"}
+    files = sorted(
+        path
+        for path in root.rglob("*")
+        if path.is_file()
+        and not any(part in ignored_parts for part in path.relative_to(root).parts)
+        and path.suffix.lower() != ".pyc"
+    )
+    for path in files:
+        relative = path.relative_to(root).as_posix().encode("utf-8")
+        digest.update(relative)
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+        digest.update(b"\0")
+    return f"sha256:{digest.hexdigest()}"
+
+
 def write_reference_sources(repo_root: Path, data: dict) -> None:
     refs = data["reference_installs"]
     tracked = sorted(
@@ -175,7 +204,7 @@ def write_reference_sources(repo_root: Path, data: dict) -> None:
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-07-11)
+## Snapshot (2026-07-29)
 
 - `{len(refs)}` skills have source mappings.
 - `{len(tracked)}` source-mapped skills are part of the git-tracked catalog.
@@ -214,21 +243,47 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
-- The 2026-07-11 maintenance pass compared the parent catalog with the Codex, shared, Claude, Gemini, and discovered workspace-local skill roots.
-- Eleven Codex-only skills were promoted; current OpenAI sources were preferred where available, while the retired `doc` and `frontend-skill` copies were matched byte-for-byte to their last canonical historical commits.
-- Twelve workspace-local skills were promoted. Invalid underscore or title-style names were normalized to lowercase hyphen-case in the parent catalog while their original source paths remain recorded.
-- The official `obra/superpowers-skills` catalog was flattened from categorized child paths into top-level folders. `using-superpowers` remains as a documented compatibility copy from `obra/superpowers`, while `using-skills` is the current canonical entrypoint.
-- `docx`, `pptx`, and `xlsx` now map to `anthropics/skills`; `jupyter-notebook` now maps to `openai/skills`. Their support trees matched the current canonical sources, with only the catalog-normalized `SKILL.md` wrappers differing.
+- The 2026-07-29 maintenance pass compared the parent catalog only with the
+  personal Codex and Claude skill roots. Project-specific roots under
+  `C:\\Assumption University` were not scanned or changed.
+- Five Codex system-only skills were promoted into normalized parent copies.
+  The Codex-owned system copies remain authoritative inside Codex and are
+  excluded from top-level Codex mirror writes; the parent copies deploy to the
+  shared and Claude roots.
+- The existing parent `imagegen` copy was refreshed from the newer Codex
+  system bundle without overwriting Codex's managed `.system` copy.
+- The 2026-07-11 project-local imports remain cataloged with their original
+  provenance, but were not refreshed from project paths during this pass.
+- The official `obra/superpowers-skills` catalog was flattened from categorized
+  child paths into top-level folders. `using-superpowers` remains as a
+  documented compatibility copy from `obra/superpowers`, while `using-skills`
+  is the current canonical entrypoint.
+- `docx`, `pptx`, and `xlsx` now map to `anthropics/skills`;
+  `jupyter-notebook` now maps to `openai/skills`. Their support trees matched
+  the current canonical sources, with only the catalog-normalized `SKILL.md`
+  wrappers differing.
 
 ## Selection And Refresh Notes
 
-- Import new or refreshed skills into `C:\\Users\\LOQ\\.copilot\\skills` first; downstream roots are deployment targets.
-- Prefer canonical upstream sources over discovery catalogs and compare exact recorded paths before changing normalized skill content.
-- Upstream HEAD movement alone is not a reason to rewrite a skill. On 2026-07-11, exact-path comparison showed no relevant changes for the tracked Awesome Copilot, Anthropic `mcp-builder`, NVIDIA, Google Workspace CLI, and several other imports.
-- Real upstream changes were incorporated for `avoid-ai-writing`, five Stitch workflows and their upload helper, and `x-twitter-scraper` references and core workflow.
-- The Stitch refresh preserved the previously verified project/design-system MCP boundary. Broader screen tools remain optional and must be rediscovered in the active host before use.
-- Imported skills that handle third-party content retain prompt-injection, credential, approval, and private-data boundaries during normalization.
-- Copied official Superpowers remain separately classified so maintained counts, sync routing, and provenance reporting stay honest.
+- Import new or refreshed skills into `C:\\Users\\LOQ\\.copilot\\skills` first;
+  downstream roots are deployment targets.
+- Prefer canonical upstream sources over discovery catalogs and compare exact
+  recorded paths before changing normalized skill content.
+- Upstream HEAD movement alone is not a reason to rewrite a skill. On
+  2026-07-29, exact-path comparison showed no relevant changes for the tracked
+  Awesome Copilot skills, Awesome Codex formula helper, Anthropic
+  `mcp-builder`, Google Workspace CLI, OpenAI skills, and the current
+  Superpowers catalog.
+- Real upstream changes were incorporated for Anthropic document helpers,
+  `avoid-ai-writing`, two NVIDIA skills, Stitch workflows and validators, and
+  `x-twitter-scraper`.
+- The Stitch refresh preserved the previously verified project/design-system
+  MCP boundary. Broader screen tools remain optional and must be rediscovered
+  in the active host before use.
+- Imported skills that handle third-party content retain prompt-injection,
+  credential, approval, and private-data boundaries during normalization.
+- Copied official Superpowers remain separately classified so maintained
+  counts, sync routing, and provenance reporting stay honest.
 """
     (repo_root / "REFERENCE_SOURCES.md").write_text(content, encoding="utf-8")
 
@@ -243,6 +298,7 @@ def main() -> int:
         for key, (repo, commit) in SOURCE_COMMITS.items()
     }
     data["copied_official_superpowers"] = sorted(SUPERPOWERS)
+    data["codex_system_managed_skills"] = sorted(CODEX_SYSTEM_SKILLS)
 
     current_by_repo = {repo: commit for repo, commit in SOURCE_COMMITS.values()}
     refs = data.setdefault("reference_installs", {})
@@ -292,6 +348,17 @@ def main() -> int:
             "source_path": source_path,
             "reason": "Promoted from the Codex child root and refreshed from the current canonical OpenAI skills source.",
         }
+    codex_system_root = Path.home() / ".codex" / "skills" / ".system"
+    for name, reason in CODEX_SYSTEM_SKILLS.items():
+        source = codex_system_root / name
+        if not (source / "SKILL.md").is_file():
+            raise FileNotFoundError(f"Missing Codex system skill source: {source}")
+        refs[name] = {
+            "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+            "source_commit": tree_digest(source),
+            "source_path": name,
+            "reason": reason,
+        }
     for name, (source_repo, source_commit, source_path, reason) in LOCAL_IMPORTS.items():
         refs[name] = {
             "source_repo": source_repo,
@@ -310,6 +377,44 @@ def main() -> int:
             "servers": ["Figma MCP"],
             "fallback": figma_fallback,
         }
+
+    mcp_skills = data.setdefault("mcp_skills", {})
+    mcp_skills["linkedin-create-post"] = {
+        "mode": "Primary",
+        "servers": [
+            "Codex Chrome browser control",
+            "Claude Code external browser MCP",
+        ],
+        "fallback": [
+            "On Codex, use the host-exposed Chrome control workflow when it is available.",
+            "On Claude Code with a third-party API endpoint such as the GLM Coding Plan, do not assume native Claude in Chrome is available; use an explicitly configured and healthy external browser MCP, or stop at a manual publishing handoff.",
+            "Require action-time confirmation before any media upload or final LinkedIn Post action, and never claim publication without finding the live post.",
+        ],
+    }
+    mcp_skills["openai-docs"] = {
+        "mode": "Primary",
+        "servers": ["OpenAI Developer Docs MCP"],
+        "fallback": [
+            "Use current official OpenAI developer documentation and restrict browsing to official OpenAI domains when the active host does not expose the docs MCP.",
+            "Codex-only manual helpers and tool wrappers are optional capabilities, not requirements for Claude Code or GitHub Copilot.",
+        ],
+    }
+    mcp_skills["plugin-creator"] = {
+        "mode": "Host-specific",
+        "servers": ["Codex plugin tooling"],
+        "fallback": [
+            "Use this workflow only for Codex plugins. For Claude Code plugins, switch to Claude Code's documented plugin format rather than generating `.codex-plugin` metadata.",
+            "If the active host cannot validate Codex plugin metadata, generate files locally and clearly report the unverified Codex-specific step.",
+        ],
+    }
+    mcp_skills["imagegen"] = {
+        "mode": "Host-specific",
+        "servers": ["Host image-generation tool or approved image API"],
+        "fallback": [
+            "Use Codex's built-in image generation path when exposed. Other clients must use an explicitly available image tool, MCP server, or approved API credential path.",
+            "Do not claim a host-native image tool exists in Claude Code or GitHub Copilot unless it is present in the active tool list.",
+        ],
+    }
 
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
     write_reference_sources(repo_root, data)

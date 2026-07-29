@@ -1,7 +1,7 @@
 ---
 name: javascript-development
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [javascript, development, testing, quality, automation]
 description: "JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools."
 ---
@@ -1009,19 +1009,21 @@ test('search form has no obvious accessibility violations', async () => {
 
 ---
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:javascript-development` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py javascript-development` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/javascript-development` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

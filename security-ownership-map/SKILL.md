@@ -1,7 +1,7 @@
 ---
 name: security-ownership-map
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [security, ownership, map]
 description: "Analyze git repositories to build a security ownership topology (people-to-file), compute bus factor and sensitive-code ownership, and export CSV/JSON for graph databases and visualization. Trigger only when the user explicitly wants a security-oriented ownership or bus-factor analysis grounded in git history (for example: orphaned sensitive code, security maintainers, CODEOWNERS reality checks for risk, sensitive hotspots, or ownership clusters). Do not trigger for general maintainer lists or non-security ownership questions."
 ---
@@ -207,19 +207,21 @@ Use `references/neo4j-import.md` when you need to load the CSVs into Neo4j. It i
 - If `git log` is too large, narrow with `--since` or `--until`.
 - Compare `summary.json` against CODEOWNERS to highlight ownership drift.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/security-ownership-map` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:security-ownership-map`. Rebuild it with `python scripts/export-gemini-skill.py security-ownership-map` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/security-ownership-map` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

@@ -8,10 +8,10 @@ import shutil
 from pathlib import Path
 
 
-DATE = "2026-07-11"
+DATE = "2026-07-29"
 MCP_VERIFIED_DATE = "2026-06-15"
 SOURCE_REPO = "https://github.com/google-labs-code/stitch-skills"
-SOURCE_COMMIT = "3f64079d75d025bc5890c73669f27c26a2d80b31"
+SOURCE_COMMIT = "7b53207b94e62911777d53d4238b5f8c88c2b519"
 COPY_DIRS = {"scripts", "resources", "references", "reference", "examples"}
 COPY_FILES = {"package.json", "package-lock.json"}
 
@@ -193,6 +193,32 @@ SKILLS = [
         "fallback": "Use local Stitch exports and browser screenshots when MCP screen retrieval is unavailable.",
         "related": ["react-development", "frontend-design", "stitch-extract-static-html", "stitch-shadcn-ui"],
         "reason": "Narrows old Stitch-to-React guidance into a dedicated React implementation skill.",
+    },
+    {
+        "dest": "stitch-react-vite-dashboard",
+        "source": "plugins/stitch-build/skills/react-vite-dashboard",
+        "title": "Stitch React Vite Dashboard",
+        "tags": ["stitch", "react", "vite", "dashboard", "typescript"],
+        "description": "Convert approved Stitch exports into accessible React and Vite dashboards with DESIGN.md tokens, TanStack Query data boundaries, responsive layouts, and optional read-only Web3 integrations.",
+        "use": "Use when a Stitch design should become a data-dense React and Vite dashboard rather than a general component library.",
+        "workflow": [
+            "Acquire approved Stitch HTML and screenshots from local exports, the Stitch web UI, or current host-listed screen tools; do not assume screen retrieval tools exist.",
+            "Read DESIGN.md and map real color, typography, spacing, radius, and focus tokens into CSS variables or the selected styling system.",
+            "Scaffold or confirm React, Vite, TypeScript, React Router, and TanStack Query boundaries before generating dashboard components.",
+            "Use semantic tables or TanStack Table for tabular data, native buttons and labels, visible focus states, and `aria-busy` for loading regions.",
+            "Keep presentational components pure and place asynchronous access in typed query hooks.",
+            "For optional Web3 reads, isolate providers, format token values safely, show network identity, and never embed private keys or private RPC credentials.",
+            "Run the local build, type checks, responsive checks at narrow and desktop widths, and an accessibility review.",
+        ],
+        "checks": [
+            "Dashboard tokens are traceable to DESIGN.md or explicitly labeled as fallbacks.",
+            "Tables, forms, loading states, keyboard order, and focus behavior use accessible semantics.",
+            "Data access is isolated from presentational components and does not leak secrets into Vite-exposed environment variables.",
+            "The dashboard build and representative responsive states were checked locally or the blocker is documented.",
+        ],
+        "fallback": "Use approved local Stitch exports and standard React/Vite tooling when Stitch MCP screen retrieval is unavailable.",
+        "related": ["stitch-react-components", "stitch-design-md", "react-development", "vite-development"],
+        "reason": "Adds the upstream dashboard-specific workflow without merging data-dense, query-driven concerns into the general React component skill.",
     },
     {
         "dest": "stitch-react-native",
@@ -378,7 +404,7 @@ def render_frontmatter(skill: dict) -> str:
     return (
         "---\n"
         f"name: {skill['dest']}\n"
-        'version: "1.3"\n'
+        'version: "2.0"\n'
         f"last_updated: {DATE}\n"
         f"tags: [{tags}]\n"
         f"description: \"{skill['description']}\"\n"
@@ -425,7 +451,7 @@ This skill is a catalog-normalized import from `{SOURCE_REPO}` at commit `{SOURC
 
 ## Corrected Stitch MCP Surface
 
-Verified in this workspace on {MCP_VERIFIED_DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+Verified in this workspace on {MCP_VERIFIED_DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-29 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
 ## Anti-Patterns
 
@@ -446,12 +472,11 @@ Before claiming this skill was applied successfully:
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
 - GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:{skill["dest"]}` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py {skill["dest"]}` and then run `/commands reload` inside Gemini CLI.
 
 <!-- PORTABILITY:END -->
 
@@ -481,7 +506,7 @@ def render_changelog_entry(skill: dict) -> str:
 
 ### Changed
 
-- Normalized the refreshed workflow into the local `version: "1.3"` schema with folder-safe naming.
+- Normalized the refreshed workflow into the local `version: "2.0"` schema with folder-safe naming.
 - Preserved the verified design-system MCP boundary while incorporating compatible upstream workflow and helper-script improvements.
 
 ### Fixed
@@ -501,7 +526,7 @@ def render_router() -> str:
     related += "\n- [frontend-design](../frontend-design/SKILL.md): Use when the task needs general UI composition beyond Stitch."
     return f"""---
 name: stitch-design
-version: "1.3"
+version: "2.0"
 last_updated: {DATE}
 tags: [stitch, design, frontend, ui, mcp]
 description: "Route Google Stitch tasks to the correct imported Stitch skill, with verified MCP tool boundaries, upload safety, and cross-client fallback guidance."
@@ -530,7 +555,7 @@ The previous `stitch-design` skill repeated design-md, React conversion, build-l
 
 ## Verified Stitch MCP Surface
 
-Verified in this workspace on {MCP_VERIFIED_DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
+Verified in this workspace on {MCP_VERIFIED_DATE}: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-29 source refresh did not re-verify a broader live MCP surface. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
 
 ## Common Workflow
 
@@ -562,12 +587,11 @@ Before claiming Stitch work is complete:
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
 - GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
 - Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:stitch-design` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py stitch-design` and then run `/commands reload` inside Gemini CLI.
 
 <!-- PORTABILITY:END -->
 
@@ -602,6 +626,14 @@ def copy_support(repo_root: Path, source_root: Path, skill: dict, license_text: 
             shutil.copytree(child, dest)
         elif child.is_file() and child.name in COPY_FILES:
             shutil.copy2(child, dest)
+    for markdown_path in dest_dir.rglob("*.md"):
+        text = markdown_path.read_text(encoding="utf-8")
+        text = re.sub(
+            r"so that the coding agent \([^)]*\) knows exactly",
+            "so that the coding agent knows exactly",
+            text,
+        )
+        markdown_path.write_text(text, encoding="utf-8")
     (dest_dir / "LICENSE.txt").write_text(license_text, encoding="utf-8")
     (dest_dir / "SKILL.md").write_text(render_skill(skill), encoding="utf-8")
     changelog_path = dest_dir / "CHANGELOG.md"

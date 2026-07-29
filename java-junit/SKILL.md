@@ -1,7 +1,7 @@
 ---
 name: java-junit
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [java, testing, development, quality, automation]
 description: "JUnit 5 testing patterns and parameterized-test guidance. Use when writing or reviewing Java unit tests."
 ---
@@ -113,19 +113,21 @@ Shifts from a vague happy-path assertion to a precise behavioral test that captu
 - Using sleeps instead of deterministic setup: Time-based tests stay flaky even when the production code is correct.
 - Asserting only that no exception occurred: A test without a meaningful assertion cannot prove the behavior is right.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:java-junit` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py java-junit` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/java-junit` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

@@ -1,7 +1,7 @@
 ---
 name: figma
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [figma]
 description: "Use the Figma MCP server to fetch design context, screenshots, variables, and assets from Figma, and to translate Figma nodes into production code. Trigger when a task involves Figma URLs, node IDs, design-to-code implementation, or Figma MCP setup and troubleshooting."
 ---
@@ -43,19 +43,21 @@ These rules define how to translate Figma inputs into code for this project and 
 - `references/figma-mcp-config.md` — setup, verification, troubleshooting, and link-based usage reminders.
 - `references/figma-tools-and-prompts.md` — tool catalog and prompt patterns for selecting frameworks/components and fetching metadata.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/figma` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:figma`. Rebuild it with `python scripts/export-gemini-skill.py figma` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/figma` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Figma MCP

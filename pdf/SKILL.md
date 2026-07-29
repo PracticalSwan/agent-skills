@@ -1,7 +1,7 @@
 ---
 name: pdf
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [pdf, docs, writing, quality, templates]
 description: "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
 ---
@@ -80,30 +80,33 @@ pdftoppm -png $INPUT_PDF $OUTPUT_PREFIX
 - Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
 - Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 
 ## Verification Protocol
 
-Before claiming "skill applied successfully":
+Before claiming the `pdf` workflow succeeded:
 
-1. Pass/fail: The PDF artifact type, target format, and required output fidelity are stated before editing.
-2. Pass/fail: MCP availability is checked and the native automation fallback path is named when MCP is absent.
-3. Pass/fail: The produced file or formula is opened, parsed, rendered, or otherwise validated locally.
-4. Pressure-test scenario: Apply the workflow to a file with formatting, metadata, or conversion edge cases and verify nothing important is lost.
-5. Success metric: Zero unverified document claims; the artifact itself is the evidence.
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:pdf` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py pdf` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/pdf` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

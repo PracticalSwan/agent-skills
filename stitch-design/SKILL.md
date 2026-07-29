@@ -1,14 +1,14 @@
 ---
 name: stitch-design
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [stitch, design, frontend, ui, mcp]
 description: "Route Google Stitch tasks to the correct imported Stitch skill, with verified MCP tool boundaries, upload safety, and cross-client fallback guidance."
 license: "Apache-2.0"
 ---
 # Stitch Design
 
-Use this as the entrypoint for Google Stitch work. The old local monolithic Stitch guidance has been consolidated into narrower skills imported from `https://github.com/google-labs-code/stitch-skills` at commit `3f64079d75d025bc5890c73669f27c26a2d80b31`. This file now routes tasks and carries shared safety rules; detailed workflows live in the dedicated `stitch-*` skills.
+Use this as the entrypoint for Google Stitch work. The old local monolithic Stitch guidance has been consolidated into narrower skills imported from `https://github.com/google-labs-code/stitch-skills` at commit `7b53207b94e62911777d53d4238b5f8c88c2b519`. This file now routes tasks and carries shared safety rules; detailed workflows live in the dedicated `stitch-*` skills.
 
 ## When to Use This Skill
 
@@ -27,6 +27,7 @@ Use this as the entrypoint for Google Stitch work. The old local monolithic Stit
 | `stitch-extract-static-html` | Capture a self-contained static HTML snapshot from a running app or mock component so it can be reviewed or uploaded to Stitch. |
 | `stitch-upload-to-stitch` | Upload approved local HTML, markdown, or image assets to a Stitch project using direct MCP for small DESIGN.md files or the bundled API script for larger files. |
 | `stitch-react-components` | Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components, or sync existing components to updated Stitch designs, with local architecture and validation checks. |
+| `stitch-react-vite-dashboard` | Convert approved Stitch exports into accessible React and Vite dashboards with DESIGN.md tokens, TanStack Query data boundaries, responsive layouts, and optional read-only Web3 integrations. |
 | `stitch-react-native` | Convert Stitch HTML designs into React Native screens, or sync existing native components to updated Stitch designs, using native primitives, StyleSheet rules, and mobile platform checks. |
 | `stitch-remotion` | Create Remotion walkthrough videos from Stitch screen exports with ordered assets, transitions, captions, and render checks. |
 | `stitch-shadcn-ui` | Integrate Stitch-derived UI direction into shadcn/ui React projects with registry-aware setup, ownership rules, theming, and validation. |
@@ -41,7 +42,7 @@ The previous `stitch-design` skill repeated design-md, React conversion, build-l
 
 ## Verified Stitch MCP Surface
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-11 source refresh did not re-verify a broader live MCP surface. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
+Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-29 source refresh did not re-verify a broader live MCP surface. Treat screen lookup, screen generation, screen editing, and variant generation tools as optional host-specific capabilities. Use them only when they are present in the active tool list.
 
 ## Common Workflow
 
@@ -70,20 +71,22 @@ Before claiming Stitch work is complete:
 5. Pressure-test scenario: Re-run the route selection with only the verified design-system MCP tools available and confirm the fallback path still works.
 6. Success metric: The final response names the selected Stitch skill, evidence used, and whether verification was local, MCP-backed, or manual.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:stitch-design` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py stitch-design` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/stitch-design` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Stitch MCP
@@ -103,7 +106,7 @@ Preferred MCP Server: Stitch MCP
 - [stitch-extract-static-html](../stitch-extract-static-html/SKILL.md): Dedicated Stitch workflow.
 - [stitch-upload-to-stitch](../stitch-upload-to-stitch/SKILL.md): Dedicated Stitch workflow.
 - [stitch-react-components](../stitch-react-components/SKILL.md): Dedicated Stitch workflow.
+- [stitch-react-vite-dashboard](../stitch-react-vite-dashboard/SKILL.md): Dedicated Stitch workflow.
 - [stitch-react-native](../stitch-react-native/SKILL.md): Dedicated Stitch workflow.
 - [stitch-remotion](../stitch-remotion/SKILL.md): Dedicated Stitch workflow.
-- [stitch-shadcn-ui](../stitch-shadcn-ui/SKILL.md): Dedicated Stitch workflow.
 - [frontend-design](../frontend-design/SKILL.md): Use when the task needs general UI composition beyond Stitch.

@@ -1,7 +1,7 @@
 ---
 name: figma-implement-design
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [figma, implement, design]
 description: "Translate Figma designs into production-ready application code with 1:1 visual fidelity. Use for Figma URLs, node IDs, implementation requests, or components that must match Figma specs; use the local `figma` skill for general Figma MCP context and setup."
 ---
@@ -258,19 +258,21 @@ By following this workflow, you ensure that every Figma design is implemented wi
 - [Figma MCP Server Tools and Prompts](https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/)
 - [Figma Variables and Design Tokens](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma)
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/figma-implement-design` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:figma-implement-design`. Rebuild it with `python scripts/export-gemini-skill.py figma-implement-design` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/figma-implement-design` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Figma MCP

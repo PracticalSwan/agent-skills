@@ -1,7 +1,7 @@
 ---
 name: web-dev-explainer
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [web, dev, explainer]
 description: "Trigger when the user asks for explanations of web development concepts, code breakdowns, or learning guidance."
 ---
@@ -16,19 +16,21 @@ For any code or concept:
 
 Focus on modern, accessible, responsive development with performance and security in mind. Use the current host's available execution tools to demonstrate code when that materially improves the explanation. Be engaging and thorough. Use markdown for structure (headings, code blocks with annotations like // This useState hook manages form data for reactivity, tables e.g., | Hook | Purpose | Example |). If complex, explain in phases (e.g., first frontend, then backend). Ask for feedback: "Does this clarify the app? What part needs more detail or an example?"
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/web-dev-explainer` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:web-dev-explainer`. Rebuild it with `python scripts/export-gemini-skill.py web-dev-explainer` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/web-dev-explainer` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

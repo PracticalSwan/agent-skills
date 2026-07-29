@@ -10,7 +10,7 @@ from pathlib import Path
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
 INLINE_CODE_RE = re.compile(r"`[^`\n]*`")
-SKIP_DIRS = {".git", ".gemini", ".serena"}
+SKIP_DIRS = {".git", ".serena"}
 
 
 def remove_code(text: str) -> str:

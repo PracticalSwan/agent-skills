@@ -1,7 +1,7 @@
 ---
 name: recommender-evaluation
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [recommender, evaluation]
 description: "Evaluate recommender system quality for the CSX4207 Vinyl Record Store. Use whenever you must compute or report recommender metrics (Precision@k, Recall@k, HitRate@k, MRR, MAP@k, NDCG@k, coverage, diversity, novelty, serendipity, personalization), design an evaluation protocol/split, run a baseline comparison, or write the evaluation section of a course deliverable. Covers formulas, JavaScript reference implementations, and the reporting checklist."
 ---
@@ -135,19 +135,21 @@ export const catalogCoverage = (allRecs, itemUniverse) => {
 
 If any of these cannot be confirmed, say so in the report rather than presenting a number as solid.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/recommender-evaluation` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:recommender-evaluation`. Rebuild it with `python scripts/export-gemini-skill.py recommender-evaluation` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/recommender-evaluation` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

@@ -18,12 +18,16 @@ import swc from '@swc/core';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const HEX_COLOR_REGEX = /#[0-9A-Fa-f]{6}/;
+const HEX_COLOR_REGEX = /#[0-9A-Fa-f]{3,8}\b/;
 
 async function validateComponent(filePath) {
-  const code = fs.readFileSync(filePath, 'utf-8');
-  const filename = path.basename(filePath);
+  if (!filePath) {
+    console.error("Usage: node validate.js <path-to-component>");
+    process.exit(1);
+  }
   try {
+    const code = fs.readFileSync(filePath, 'utf-8');
+    const filename = path.basename(filePath);
     const ast = await swc.parse(code, { syntax: "typescript", tsx: true });
     let hasInterface = false;
     let tailwindIssues = [];
@@ -31,12 +35,20 @@ async function validateComponent(filePath) {
     console.log("🔍 Scanning AST...");
 
     const walk = (node) => {
-      if (!node) return;
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) {
+        for (const item of node) walk(item);
+        return;
+      }
+      if (typeof node.type !== 'string') return;
       if (node.type === 'TsInterfaceDeclaration' && node.id.value.endsWith('Props')) hasInterface = true;
       if (node.type === 'JSXAttribute' && (node.name?.value === 'className' || node.name?.name === 'className')) {
         if (node.value?.value && HEX_COLOR_REGEX.test(node.value.value)) tailwindIssues.push(node.value.value);
       }
-      for (const key in node) { if (node[key] && typeof node[key] === 'object') walk(node[key]); }
+      for (const key in node) {
+        if (key === 'span') continue;
+        if (node[key] && typeof node[key] === 'object') walk(node[key]);
+      }
     };
     walk(ast);
 
@@ -62,7 +74,7 @@ async function validateComponent(filePath) {
       process.exit(1);
     }
   } catch (err) {
-    console.error("❌ PARSE ERROR:", err.message);
+    console.error("❌ ERROR:", err.message);
     process.exit(1);
   }
 }

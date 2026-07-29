@@ -1,7 +1,7 @@
 ---
 name: collision-zone-thinking
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [collision, zone, thinking]
 description: "Force unrelated concepts together to discover emergent properties - \"What if we treated X like Y?"
 ---
@@ -61,19 +61,21 @@ Revolutionary insights come from forcing unrelated concepts to collide. Treat X 
 - Document even failed collisions (they teach)
 - Best source domains: physics, biology, economics, psychology
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/collision-zone-thinking` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:collision-zone-thinking`. Rebuild it with `python scripts/export-gemini-skill.py collision-zone-thinking` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/collision-zone-thinking` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

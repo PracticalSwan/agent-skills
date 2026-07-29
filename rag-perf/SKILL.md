@@ -1,7 +1,7 @@
 ---
 name: rag-perf
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [nvidia, rag, performance, latency, throughput, profiling]
 description: "NVIDIA RAG Blueprint performance-tuning guidance for profiling retrieval stacks, comparing bottlenecks, and validating latency or throughput improvements."
 license: "Apache-2.0"
@@ -169,20 +169,22 @@ Before claiming "skill applied successfully":
 4. Pressure-test scenario: Re-run the workflow on a retrieval stack that speeds up only because caching masked a stale index.
 5. Success metric: The user gets a reproducible benchmark path and a tuning change that improves the intended metric without hidden regressions.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:rag-perf` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py rag-perf` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/rag-perf` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

@@ -6,7 +6,7 @@ Thanks for helping improve the shared skill catalog.
 
 - Read [LESSON.md](C:\Users\LOQ\.copilot\skills\LESSON.md) and [AGENTS.md](C:\Users\LOQ\.copilot\skills\AGENTS.md) before making changes.
 - Edit maintained content in `C:\Users\LOQ\.copilot\skills` first. Do not author new maintained skills directly in downstream sync targets.
-- Treat `SKILL.md` as the source of truth. Do not hand-edit generated files under `.gemini/commands/skills`.
+- Treat `SKILL.md` as the source of truth.
 
 ## Maintained Skill Changes
 
@@ -31,7 +31,7 @@ If your change affects catalog counts, sync flow, startup rules, supported clien
 - `CHANGELOG.md`
 - `CLAUDE.md`
 - `LESSON.md`
-- `GEMINI.md` when Gemini-facing behavior or command guidance changes
+- `MIGRATION.md` when a breaking client or sync boundary changes
 
 ## Security And Privacy
 
@@ -46,13 +46,10 @@ Run these commands after meaningful changes:
 
 ```powershell
 python scripts/validate-skills.py
-python scripts/export-gemini-skill.py --all
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
 
 The validator requires `Verification Protocol` immediately after `Anti-Patterns`, requires `Related Skills` to be the final level-two section, and rejects historical `### Tested` and `### Verified` changelog headings.
-
-Re-run validation if the Gemini export changed.
 
 ## Pull Requests
 

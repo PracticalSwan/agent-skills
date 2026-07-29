@@ -1,7 +1,7 @@
 ---
 name: notebook-execution-safety
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [notebook, execution, safety]
 description: "Review Jupyter notebooks for side effects, dependencies, and safe execution strategy before running or editing them."
 ---
@@ -33,19 +33,21 @@ State:
 - which cells or notebook path were verified
 - what was intentionally not run
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/notebook-execution-safety` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:notebook-execution-safety`. Rebuild it with `python scripts/export-gemini-skill.py notebook-execution-safety` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/notebook-execution-safety` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

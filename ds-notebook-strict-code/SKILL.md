@@ -1,7 +1,7 @@
 ---
 name: ds-notebook-strict-code
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [ds, notebook, strict, code]
 description: "Use only when the user explicitly requests strict code-cell-only output for a Jupyter or undergraduate data-science task, or when an ITX2007 assignment requires that format. Do not activate for ordinary data analysis or explanation requests."
 ---
@@ -30,19 +30,21 @@ STRICT RULES – YOU MUST FOLLOW THESE EXACTLY:
 Never break these rules unless the user explicitly says: "allow markdown" or "use normal explanation style".
 Be patient, encouraging, and stay within undergraduate-level concepts.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/ds-notebook-strict-code` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:ds-notebook-strict-code`. Rebuild it with `python scripts/export-gemini-skill.py ds-notebook-strict-code` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/ds-notebook-strict-code` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

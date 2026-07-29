@@ -1,7 +1,7 @@
 ---
 name: accelerated-computing-cudf
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [nvidia, cudf, rapids, pandas, gpu, etl]
 description: "Official NVIDIA-authored guidance for NVIDIA cuDF GPU DataFrames, pandas acceleration, dask-cuDF, ETL, joins, groupby, CSV/Parquet I/O, nullable semantics, and multi-GPU DataFrame workloads."
 license: "CC-BY-4.0 AND Apache-2.0"
@@ -213,20 +213,22 @@ Before claiming "skill applied successfully":
 4. Pressure-test scenario: Re-run the workflow on a pandas ETL job with one unsupported op and a dataset that does not fit GPU memory.
 5. Success metric: The user gets a runnable GPU dataframe plan with explicit correctness and performance evidence paths.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:accelerated-computing-cudf` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py accelerated-computing-cudf` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/accelerated-computing-cudf` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

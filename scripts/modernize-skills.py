@@ -7,8 +7,8 @@ import re
 from pathlib import Path
 
 
-DATE_STAMP = "2026-07-11"
-CATALOG_VERSION = "1.3"
+DATE_STAMP = "2026-07-29"
+CATALOG_VERSION = "2.0"
 PORTABILITY_START = "<!-- PORTABILITY:START -->"
 PORTABILITY_END = "<!-- PORTABILITY:END -->"
 MCP_START = "<!-- MCP:START -->"
@@ -70,22 +70,40 @@ def render_frontmatter(skill_name: str, metadata: dict[str, str]) -> str:
     ]
     for optional in ("license", "compatibility"):
         value = metadata.get(optional, "").strip()
+        if optional == "compatibility":
+            for removed_client in (
+                ", and Gemini CLI",
+                " and Gemini CLI",
+                ", Gemini CLI",
+                "Gemini CLI",
+                ", and Antigravity CLI",
+                " and Antigravity CLI",
+                ", Antigravity CLI",
+                "Antigravity CLI",
+                ", and Antigravity",
+                " and Antigravity",
+                ", Antigravity",
+                "Antigravity",
+            ):
+                value = value.replace(removed_client, "")
+            value = re.sub(r"\s{2,}", " ", value).strip(" ,;")
         if value and value not in {">", ">-", "|", "|-"}:
             lines.append(f"{optional}: {json.dumps(value, ensure_ascii=False)}")
     lines.extend(["---", ""])
     return "\n".join(lines)
 
 
-def render_portability_section(skill_name: str, namespace: str) -> str:
+def render_portability_section(skill_name: str) -> str:
     return f"""{PORTABILITY_START}
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/{skill_name}` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/{namespace}:{skill_name}`. Rebuild it with `python scripts/export-gemini-skill.py {skill_name}` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/{skill_name}` and restart Codex after major changes.
 
 {PORTABILITY_END}"""
 
@@ -179,14 +197,21 @@ def insert_before(body: str, heading: str, section: str) -> str:
 
 def normalize_sections(body: str, skill_name: str, title: str, registry: dict) -> str:
     body = body.strip()
-    if "## Cross-Client Portability" not in body:
-        body = insert_before(
-            body,
-            "Anti-Patterns",
-            render_portability_section(skill_name, registry["gemini_namespace"]),
-        )
+    managed_portability = re.compile(
+        rf"\s*{re.escape(PORTABILITY_START)}.*?{re.escape(PORTABILITY_END)}\s*",
+        re.DOTALL,
+    )
+    if managed_portability.search(body):
+        body = managed_portability.sub("\n\n", body).strip()
+    else:
+        body, _ = remove_section(body, "Cross-Client Portability")
     if "## MCP Availability And Fallback" not in body:
         body = insert_before(body, "Anti-Patterns", render_mcp_section(skill_name, title, registry))
+    body = insert_before(
+        body,
+        "MCP Availability And Fallback",
+        render_portability_section(skill_name),
+    )
     if "## Anti-Patterns" not in body:
         body += "\n\n" + render_anti_patterns(skill_name)
 
@@ -215,31 +240,32 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
         text = f"# Changelog\n\nAll notable changes to the `{skill_dir.name}` skill are documented here.\n"
 
     text = re.sub(r"(?m)^### (?:Tested|Verified)\s*$", "### Changed", text)
-    title = (
-        f"## [{DATE_STAMP}] - Child-Path Import And Version {CATALOG_VERSION} Normalization"
-        if skill_dir.name in imported
-        else f"## [{DATE_STAMP}] - Catalog Maintenance Refresh"
-    )
-    if not re.search(rf"(?m)^## \[{re.escape(DATE_STAMP)}\] - ", text):
-        added = (
-            "- Promoted this skill from a verified child or nested skill path into the parent catalog.\n"
-            if skill_dir.name in imported
-            else "- Added the current catalog verification baseline where it was missing.\n"
-        )
+    title = f"## [{DATE_STAMP}] - Version {CATALOG_VERSION} Client Support Reset"
+    if title not in text:
+        added_lines = [
+            "- Added the current GitHub Copilot, Claude Code, and Codex portability baseline."
+        ]
+        if skill_dir.name in imported:
+            added_lines.insert(
+                0,
+                "- Promoted this skill from a verified `.codex` or `.claude` child path into the parent catalog.",
+            )
+        added = "\n".join(added_lines)
         entry = f"""{title}
 
 ### Added
 
 {added}
+
 ### Changed
 
-- Refreshed catalog metadata and last-updated state for the 2026-07-11 maintenance pass.
-- Kept the cross-client, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
-- Reclassified historical `Tested` or `Verified` changelog headings under the allowed changelog vocabulary without dropping their evidence.
+- **BREAKING:** Removed Gemini CLI and Antigravity as supported clients.
+- Refreshed catalog metadata and last-updated state for the 2026-07-29 maintenance pass.
+- Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
 
 ### Fixed
 
-- Closed validator and documentation drift so the enforced schema matches the documented skill baseline.
+- Prevented catalog modernization from reintroducing removed Gemini or Antigravity guidance.
 
 """
         first = re.search(r"(?m)^## \[", text)

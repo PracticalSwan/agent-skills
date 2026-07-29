@@ -1,7 +1,7 @@
 ---
 name: systematic-debugging
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [systematic, debugging]
 description: "Four-phase debugging framework that ensures root cause investigation before attempting fixes. Never jump to solutions."
 ---
@@ -293,19 +293,21 @@ From debugging sessions:
 - First-time fix rate: 95% vs 40%
 - New bugs introduced: Near zero vs common
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/systematic-debugging` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:systematic-debugging`. Rebuild it with `python scripts/export-gemini-skill.py systematic-debugging` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/systematic-debugging` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

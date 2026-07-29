@@ -1,6 +1,6 @@
 ---
 name: linkedin-create-post
-version: "1.3"
+version: "2.0"
 last_updated: 2026-07-29
 tags: [linkedin, chrome, browser, social-media, publishing]
 description: "Draft, prepare, publish, and verify personal or project LinkedIn posts through the user's signed-in Chrome session, including audience review, public-safe media uploads, links, action-time confirmation, and post-publication checks."
@@ -15,13 +15,36 @@ publication.
 ## Route the request
 
 1. Confirm that the user wants a LinkedIn post created, edited, or published.
-2. Use the host's Chrome browser-control workflow when Chrome is requested.
-   Read its current instructions before interacting with the browser.
+2. Select the browser route from the active host capabilities below. Do not
+   infer browser control from the model provider or from a generic web-search
+   tool.
 3. Prefer a LinkedIn connector only when the user did not explicitly request
    Chrome and the connector supports the exact publishing action.
 4. If no authenticated browser or write-capable connector is available,
    prepare the final copy and media plan, then stop at a clear handoff. Never
    claim that a post was published.
+
+## Browser host routing
+
+- **Codex:** Use the current `chrome:control-chrome` or equivalent
+  host-exposed Chrome workflow when available. Read that workflow before
+  interacting with the browser, and preserve its tab, upload, confirmation,
+  and recovery rules.
+- **Claude Code with direct Anthropic access:** Native Claude in Chrome is an
+  option only when the account meets Anthropic's current paid-plan,
+  authentication, browser-extension, and `/chrome` prerequisites. Verify the
+  integration is actually available before using it.
+- **Claude Code with a third-party endpoint, including the GLM Coding Plan:**
+  Do not assume native Claude in Chrome is available. Inspect the active Claude
+  Code MCP configuration and health first. Use a connected, user-approved
+  browser automation MCP such as Chrome DevTools, Puppeteer, or Playwright only
+  through the tool names that the current session exposes.
+- Claude Code `WebFetch`, web search, and provider-specific search or reader
+  tools are not authenticated browser controls and cannot publish a LinkedIn
+  post.
+- If the selected browser route cannot reuse the user's authenticated profile,
+  stop for user sign-in or give a manual handoff. Never request cookies,
+  passwords, session tokens, or two-factor codes.
 
 ## Gather reliable source material
 
@@ -66,11 +89,11 @@ publication.
 5. Read the browser's current file-upload guidance before invoking a file
    chooser. Upload only the exact approved file.
 
-## Publish through Chrome
+## Publish through the selected browser surface
 
-1. Connect to the user's Chrome browser and name the browser session.
+1. Connect through the selected host route and identify the browser session.
 2. Reuse an authenticated LinkedIn tab when available, or open LinkedIn in a
-   new Chrome tab.
+   new browser tab.
 3. Verify that the visible account matches the intended profile.
 4. Open the LinkedIn post composer from visible page state.
 5. Set or confirm the audience before entering the final publishing step.
@@ -97,7 +120,7 @@ publication.
 4. Report publication as live browser verification, not as inference from a
    button click.
 5. Keep the published post open as a deliverable tab and close or release
-   intermediate tabs according to the browser-control workflow.
+   intermediate tabs according to the selected browser-control workflow.
 
 ## Failure handling
 
@@ -111,22 +134,28 @@ publication.
 - If the post text or media changes after approval, request a fresh
   action-time confirmation.
 
+## Browser reference links
+
+- Claude in Chrome prerequisites:
+  `https://code.claude.com/docs/en/chrome#prerequisites`
+- Claude Code feature and plugin surfaces:
+  `https://code.claude.com/docs/en/features-overview` and
+  `https://code.claude.com/docs/en/plugins`
+- Z.ai GLM Coding Plan setup for Claude Code:
+  `https://docs.z.ai/devpack/tool/claude`
+
+<!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex,
-and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
 - GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
   workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or compatible
-  plugin source and use an available Chrome-control surface.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
 - Codex: install or sync the folder into
-  `$CODEX_HOME/skills/linkedin-create-post` and restart Codex after major
-  changes.
-- Gemini CLI: this repository generates
-  `/skills:linkedin-create-post`. Rebuild it with
-  `python scripts/export-gemini-skill.py linkedin-create-post` and reload
-  commands.
+  `$CODEX_HOME/skills/linkedin-create-post` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
 
 ## MCP Availability And Fallback
 

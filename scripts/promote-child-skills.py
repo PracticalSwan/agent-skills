@@ -64,9 +64,53 @@ def replace_skill(source: Path, destination: Path, preserve_skill: bool) -> str:
     else:
         action = "imported"
 
-    shutil.copytree(source, destination)
+    shutil.copytree(
+        source,
+        destination,
+        ignore=shutil.ignore_patterns(
+            ".git",
+            ".DS_Store",
+            "__pycache__",
+            "*.pyc",
+        ),
+    )
     for filename, content in preserved.items():
         (destination / filename).write_bytes(content)
+    return action
+
+
+def replace_support_path(source: Path, destination_skill: Path, relative_path: str) -> str:
+    source = source.resolve()
+    relative = Path(relative_path)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError(f"Support destination must stay inside a skill folder: {relative_path}")
+    destination = (destination_skill / relative).resolve()
+    destination.relative_to(destination_skill.resolve())
+    if not source.exists():
+        raise ValueError(f"Support source does not exist: {source}")
+
+    if destination.exists():
+        if destination.is_dir():
+            shutil.rmtree(destination)
+        else:
+            destination.unlink()
+        action = "support-refreshed"
+    else:
+        action = "support-imported"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if source.is_dir():
+        shutil.copytree(
+            source,
+            destination,
+            ignore=shutil.ignore_patterns(
+                ".git",
+                ".DS_Store",
+                "__pycache__",
+                "*.pyc",
+            ),
+        )
+    else:
+        shutil.copy2(source, destination)
     return action
 
 
@@ -182,6 +226,14 @@ def main() -> int:
         help="Replace a destination skill's core body while preserving its catalog tail.",
     )
     parser.add_argument(
+        "--support-map",
+        nargs=3,
+        action="append",
+        default=[],
+        metavar=("SOURCE", "DESTINATION", "RELATIVE_PATH"),
+        help="Replace one file or support directory inside an existing destination skill.",
+    )
+    parser.add_argument(
         "--normalize-flattened",
         nargs="*",
         default=[],
@@ -226,6 +278,19 @@ def main() -> int:
                 "name": destination_name,
                 "action": "core-refreshed",
                 "source": str(Path(source_skill).resolve()),
+            }
+        )
+
+    for source_path, destination_name, relative_path in args.support_map:
+        destination = assert_destination(repo_root, destination_name)
+        if not (destination / "SKILL.md").is_file():
+            raise ValueError(f"Support destination is not an existing skill: {destination}")
+        action = replace_support_path(Path(source_path), destination, relative_path)
+        summary.append(
+            {
+                "name": destination_name,
+                "action": action,
+                "source": str(Path(source_path).resolve()),
             }
         )
 

@@ -10,7 +10,6 @@ from pathlib import Path
 
 IGNORE_DIRS = {
     ".git",
-    ".gemini",
     ".next",
     ".serena",
     ".turbo",

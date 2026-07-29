@@ -2,6 +2,22 @@
 
 All notable changes to the `ds-teaching-assistant` skill are documented here.
 
+## [2026-07-29] - Version 2.0 Client Support Reset
+
+### Added
+
+- Added the current GitHub Copilot, Claude Code, and Codex portability baseline.
+
+### Changed
+
+- **BREAKING:** Removed Gemini CLI and Antigravity as supported clients.
+- Refreshed catalog metadata and last-updated state for the 2026-07-29 maintenance pass.
+- Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+
+### Fixed
+
+- Prevented catalog modernization from reintroducing removed Gemini or Antigravity guidance.
+
 ## [2026-07-11] - Child-Path Import And Version 1.3 Normalization
 
 ### Added

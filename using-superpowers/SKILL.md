@@ -1,7 +1,7 @@
 ---
 name: using-superpowers
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [using, superpowers]
 description: "Legacy compatibility entry for prompts or documentation that explicitly name `using-superpowers`. Route new skill-discovery workflows to `using-skills`; do not activate both entrypoints for the same task."
 ---
@@ -61,25 +61,29 @@ If your harness appears here, read its reference file for special instructions:
 
 - Codex: `references/codex-tools.md`
 - Pi: `references/pi-tools.md`
-- Antigravity: `references/antigravity-tools.md`
 
 ## User Instructions
 
-User instructions (CLAUDE.md, AGENTS.md, GEMINI.md, etc, direct requests) take precedence over skills, which in turn override default behavior. Only skip skill workflows or instructions when your human partner has explicitly told you to.
+User instructions (`CLAUDE.md`, `AGENTS.md`, other host-native instruction
+files, and direct requests) take precedence over skills, which in turn
+override default behavior. Only skip skill workflows or instructions when your
+human partner has explicitly told you to.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/using-superpowers` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:using-superpowers`. Rebuild it with `python scripts/export-gemini-skill.py using-superpowers` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/using-superpowers` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

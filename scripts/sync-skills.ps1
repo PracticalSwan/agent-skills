@@ -4,28 +4,22 @@ param(
     [string]$CodexRoot = "C:\Users\LOQ\.codex\skills",
     [string]$SharedRoot = "C:\Users\LOQ\.agents\skills",
     [string]$ClaudeRoot = "C:\Users\LOQ\.claude\skills",
-    [string]$GeminiRoot = "C:\Users\LOQ\.gemini\antigravity\global_skills",
-    [string]$GeminiCliRoot = "C:\Users\LOQ\.gemini\antigravity-cli\skills",
     [switch]$SkipCodex,
     [switch]$SkipShared,
-    [switch]$SkipClaude,
-    [switch]$SkipGemini,
-    [switch]$SkipGeminiCli
+    [switch]$SkipClaude
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Downstream sync is locked to these five personal-global targets. Any other
+# Downstream sync is locked to these three personal-global targets. Any other
 # skill folder path (including workspace-local roots such as .agent\skills,
 # .agents\skills, or .claude\skills under a project tree) is an upstream
 # promotion source only, never a downstream sync destination.
 $script:allowedDownstreamRoots = @(
     'C:\Users\LOQ\.agents\skills',
     'C:\Users\LOQ\.codex\skills',
-    'C:\Users\LOQ\.claude\skills',
-    'C:\Users\LOQ\.gemini\antigravity\global_skills',
-    'C:\Users\LOQ\.gemini\antigravity-cli\skills'
+    'C:\Users\LOQ\.claude\skills'
 )
 
 function Get-NormalizedPath {
@@ -129,6 +123,36 @@ function Sync-SkillFolders {
     return $synced
 }
 
+function Remove-RetiredRouteCopies {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string[]]$SkillNames,
+        [Parameter(Mandatory = $true)]
+        [string]$TargetRoot,
+        [Parameter(Mandatory = $true)]
+        [string]$Label
+    )
+
+    Assert-ApprovedDownstreamRoot -TargetRoot $TargetRoot
+    $removed = New-Object System.Collections.Generic.List[string]
+
+    foreach ($skillName in @($SkillNames | Sort-Object -Unique)) {
+        if ($skillName -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') {
+            throw "Refusing to prune invalid skill folder name '$skillName'."
+        }
+        $targetSkillPath = Join-Path $TargetRoot $skillName
+        Assert-WithinRoot -CandidatePath $targetSkillPath -RootPath $TargetRoot
+        if (Test-Path -LiteralPath $targetSkillPath) {
+            if ($PSCmdlet.ShouldProcess($targetSkillPath, "Remove stale $Label skill copy")) {
+                Remove-Item -LiteralPath $targetSkillPath -Recurse -Force
+            }
+            $removed.Add($skillName) | Out-Null
+        }
+    }
+
+    return $removed
+}
+
 $defaultSourceRoot = Join-Path (Split-Path -Parent $PSCommandPath) ".."
 if ([string]::IsNullOrWhiteSpace($SourceRoot)) {
     $SourceRoot = $defaultSourceRoot
@@ -138,8 +162,6 @@ $workspaceRoot = Get-NormalizedPath $SourceRoot
 $codexRootPath = Get-NormalizedPath $CodexRoot
 $sharedRootPath = Get-NormalizedPath $SharedRoot
 $claudeRootPath = Get-NormalizedPath $ClaudeRoot
-$geminiRootPath = Get-NormalizedPath $GeminiRoot
-$geminiCliRootPath = Get-NormalizedPath $GeminiCliRoot
 $sharedSuperpowersRoot = Join-Path $sharedRootPath "superpowers"
 
 if (-not (Test-Path -LiteralPath $workspaceRoot)) {
@@ -159,12 +181,17 @@ if (-not (Test-Path -LiteralPath $registryPath)) {
 
 $registry = Get-Content -LiteralPath $registryPath -Raw | ConvertFrom-Json
 $copiedOfficialNames = @($registry.copied_official_superpowers)
+$codexSystemManagedNames = @($registry.codex_system_managed_skills)
 if ($copiedOfficialNames.Count -eq 0) {
     throw "Skill registry '$registryPath' does not define copied_official_superpowers."
 }
 
 $skillSet = Get-SkillSet -RootPath $workspaceRoot -CopiedOfficialNames $copiedOfficialNames
-$allSkills = @($skillSet.Maintained + $skillSet.CopiedOfficial) | Sort-Object Name
+$codexMaintained = @(
+    $skillSet.Maintained |
+        Where-Object { $codexSystemManagedNames -notcontains $_.Name } |
+        Sort-Object Name
+)
 
 $summary = [ordered]@{
     source = [ordered]@{
@@ -175,34 +202,53 @@ $summary = [ordered]@{
     codex = [ordered]@{
         root = $codexRootPath
         synced_maintained = @()
+        skipped_system_managed = @(
+            $skillSet.Maintained |
+                Where-Object { $codexSystemManagedNames -contains $_.Name } |
+                Select-Object -ExpandProperty Name
+        )
+        pruned_stale_system_mirrors = @()
+        pruned_stale_superpowers = @()
     }
     shared = [ordered]@{
         root = $sharedRootPath
         synced_maintained = @()
         synced_superpowers = @()
+        pruned_top_level_superpowers = @()
     }
     claude = [ordered]@{
         root = $claudeRootPath
         synced_maintained = @()
         skipped_superpowers = @($skillSet.CopiedOfficial | Select-Object -ExpandProperty Name)
-    }
-    gemini = [ordered]@{
-        root = $geminiRootPath
-        synced_all = @()
-    }
-    gemini_cli = [ordered]@{
-        root = $geminiCliRootPath
-        synced_all = @()
+        pruned_top_level_superpowers = @()
     }
 }
 
 if (-not $SkipCodex) {
+    $summary.codex.pruned_stale_system_mirrors = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $codexSystemManagedNames `
+            -TargetRoot $codexRootPath `
+            -Label "top-level Codex system-shadow"
+    )
+    $summary.codex.pruned_stale_superpowers = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $copiedOfficialNames `
+            -TargetRoot $codexRootPath `
+            -Label "top-level Codex Superpower"
+    )
     $summary.codex.synced_maintained = @(
-        Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $codexRootPath -Label "Codex maintained"
+        Sync-SkillFolders -SkillDirs $codexMaintained -TargetRoot $codexRootPath -Label "Codex maintained"
     )
 }
 
 if (-not $SkipShared) {
+    $summary.shared.pruned_top_level_superpowers = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $copiedOfficialNames `
+            -TargetRoot $sharedRootPath `
+            -Label "top-level shared Superpower"
+    )
     $summary.shared.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $sharedRootPath -Label "Shared maintained"
     )
@@ -212,20 +258,14 @@ if (-not $SkipShared) {
 }
 
 if (-not $SkipClaude) {
+    $summary.claude.pruned_top_level_superpowers = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $copiedOfficialNames `
+            -TargetRoot $claudeRootPath `
+            -Label "top-level Claude Superpower"
+    )
     $summary.claude.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $claudeRootPath -Label "Claude maintained"
-    )
-}
-
-if (-not $SkipGemini) {
-    $summary.gemini.synced_all = @(
-        Sync-SkillFolders -SkillDirs $allSkills -TargetRoot $geminiRootPath -Label "Gemini skill"
-    )
-}
-
-if (-not $SkipGeminiCli) {
-    $summary.gemini_cli.synced_all = @(
-        Sync-SkillFolders -SkillDirs $allSkills -TargetRoot $geminiCliRootPath -Label "Gemini CLI skill"
     )
 }
 

@@ -1,14 +1,15 @@
 # Agent Skills
 
-Shared skill catalog for GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+Shared skill catalog for GitHub Copilot, Claude Code, and Codex.
 
-This workspace is the main branch for maintained skills, cross-client portability guidance, Gemini command generation, and MCP fallback rules.
+This workspace is the main branch for maintained skills, cross-client
+portability guidance, host-aware routing, and MCP fallback rules.
 Install or import new maintained skills here first, then sync them outward to the downstream targets.
 
 ## Session Start Rule
 
-Every AI agent working in this workspace, including Codex, Claude Code,
-Antigravity or Gemini CLI, and GitHub Copilot, must read
+Every AI agent working in this workspace, including Codex, Claude Code, and
+GitHub Copilot, must read
 [`LESSON.md`](c:\Users\LOQ\.copilot\skills\LESSON.md) at the start of each new
 session before analysis, planning, edits, validation, reviews, or advisory
 work.
@@ -16,11 +17,11 @@ work.
 ## Completion, Sync, and Publish Rule
 
 For every user-requested mutation task in this workspace, finish the requested
-work in `C:\Users\LOQ\.copilot\skills` first, then validate, export Gemini
-commands, sync outward to the skill folders, and commit and push to GitHub when
+work in `C:\Users\LOQ\.copilot\skills` first, then validate, sync outward to
+the approved skill folders, and commit and push to GitHub when
 the result is satisfactory.
 
-Treat the work as satisfactory only when validation/export pass, sync completes,
+Treat the work as satisfactory only when validation passes, sync completes,
 no requested step was skipped, no required command was rejected, no unresolved
 secret/security/privacy issue remains, and the final diff matches the user's
 request. Escalate to the user instead of committing or pushing when those
@@ -32,12 +33,12 @@ do not create empty sync, commit, or push churn.
 Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `135` tracked skill folders
-  - `103` tracked maintained skills
+  - `141` tracked skill folders
+  - `109` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `193` local skill folders detected
-  - `161` local maintained skills detected
+  - `199` local skill folders detected
+  - `167` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -48,24 +49,34 @@ Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `135` tracked skills are aligned on catalog `version: "1.3"`; `linkedin-create-post` is dated `2026-07-29`, while the prior tracked catalog baseline remains dated `2026-07-11`.
-- The `58` local-only Google Workspace overlays retain their upstream `version: "0.22.5"` while sharing the 2026-07-11 catalog sections and validation baseline.
+- All `141` tracked skills are aligned on catalog `version: "2.0"` and
+  `last_updated: 2026-07-29`.
+- The `58` local-only Google Workspace overlays retain their upstream
+  `version: "0.22.5"` while sharing the 2026-07-29 retained-client sections
+  and validation baseline.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
-- The 2026-07-11 child-path reconciliation promoted `11` Codex-only skills, `12` workspace-local skills, and `18` newly discovered nested official Superpowers into the parent catalog.
+- The 2026-07-29 child-path reconciliation inspected only the personal
+  `.codex` and `.claude` roots. It promoted five Codex system-only skills,
+  refreshed the existing `imagegen` copy, and found no Claude-only skill.
 
 ## Main Workspace
 
 - Author, import, and maintain new skills in `C:\Users\LOQ\.copilot\skills`
-- The only approved downstream sync targets are these five personal-global roots (no other path receives downstream sync):
+- The only approved downstream sync targets are these three personal-global roots (no other path receives downstream sync):
   - `C:\Users\LOQ\.codex\skills`
   - `C:\Users\LOQ\.agents\skills`
   - `C:\Users\LOQ\.claude\skills`
-  - `C:\Users\LOQ\.gemini\antigravity\global_skills`
-  - `C:\Users\LOQ\.gemini\antigravity-cli\skills`
-- Maintained skills sync to the Codex, shared mirror, and Claude roots; copied official superpowers sync only to the `superpowers` subfolder of the shared mirror (`C:\Users\LOQ\.agents\skills\superpowers`, inside the approved `.agents\skills` root); the full current skill catalog syncs to both Gemini roots
+- Maintained skills sync to the Codex, shared mirror, and Claude roots; copied
+  official superpowers sync only to the `superpowers` subfolder of the shared
+  mirror (`C:\Users\LOQ\.agents\skills\superpowers`, inside the approved
+  `.agents\skills` root)
+- The six entries in `codex_system_managed_skills` are not written into the
+  top level of the Codex mirror because Codex owns newer `.system` copies.
+  Their normalized parent copies still sync to the shared and Claude roots.
+- Sync prunes only known catalog-owned copies that violate current routing:
+  stale top-level Codex system shadows and top-level copied Superpowers.
+  Unknown personal skills and Codex `.system` folders are preserved.
 - Leave host-provided or plugin-managed skills outside this repo unless you intentionally choose to vendor and maintain them here
-- Generated Gemini CLI commands live under:
-  - [`.gemini/commands/skills`](c:\Users\LOQ\.copilot\skills\.gemini\commands\skills)
 
 ## Client Support
 
@@ -77,6 +88,11 @@ Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
 
 - Sync maintained skills to `C:\Users\LOQ\.claude\skills`
 - Keep copied official superpowers out of that folder unless you intentionally want local overrides
+- A GLM Coding Plan endpoint changes Claude Code's model provider, not its
+  skill root or available tools.
+- Native Claude in Chrome requires Anthropic's current direct-plan and
+  authentication prerequisites. GLM-backed sessions must use an explicitly
+  configured, healthy external browser MCP or stop at a manual handoff.
 
 ### Codex
 
@@ -85,14 +101,8 @@ Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
 - Sync copied official superpowers to `C:\Users\LOQ\.agents\skills\superpowers`
 - Do not install new maintained skills directly into those target roots; install them in this repo first
 - The Codex root can contain extra local skills beyond this catalog, so verify sync by checking that the expected maintained set is present instead of relying only on raw folder totals
-
-### Gemini CLI
-
-- Sync the full current skill catalog to `C:\Users\LOQ\.gemini\antigravity\global_skills` and `C:\Users\LOQ\.gemini\antigravity-cli\skills`
-- Use the generated `/skills:<skill-name>` commands from [`.gemini/commands/skills`](c:\Users\LOQ\.copilot\skills\.gemini\commands\skills)
-- Rebuild them with `python scripts/export-gemini-skill.py --all`
-- Reload them in Gemini CLI with `/commands reload`
-- See [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md) for usage notes
+- Preserve Codex-owned `.system` skills; the sync script skips their
+  same-named top-level catalog copies.
 
 ## Maintained Skill Structure
 
@@ -132,10 +142,10 @@ When adding a new maintained skill:
 3. Update `REFERENCE_SOURCES.md` and `scripts/skill-registry.json` if the skill came from an external source
 4. Smoke-test any bundled helper scripts or local fallback workflow
 5. Update the touched changelogs and root docs
-6. Validate and export
+6. Validate
 7. Sync outward from this repo
 
-Validate all skills and generated Gemini commands:
+Validate all skills:
 
 ```powershell
 python scripts/validate-skills.py
@@ -156,13 +166,8 @@ Catalog policy also expects each `SKILL.md` to include `## Verification Protocol
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now validate against the shared schema baseline and have finalized canonical provenance metadata.
 
-For a catalog-wide skill refresh, update the root docs in the same pass, then rerun validation, Gemini export, and downstream sync even if the folder counts did not change.
-
-Regenerate Gemini CLI commands:
-
-```powershell
-python scripts/export-gemini-skill.py --all
-```
+For a catalog-wide skill refresh, update the root docs in the same pass, then
+rerun validation and downstream sync even if the folder counts did not change.
 
 Refresh portability and MCP sections across all skills:
 
@@ -184,17 +189,22 @@ Refresh source commits, provenance mappings, copied-official classification, and
 python scripts/update-skill-registry.py
 ```
 
-Sync maintained skills to Codex, the shared mirror, and Claude; sync copied official superpowers to the shared mirror `superpowers` subfolder; and sync the full catalog to both Gemini roots (Antigravity and Antigravity CLI):
+Sync maintained skills to Codex, the shared mirror, and Claude, while syncing
+copied official Superpowers only to the shared mirror `superpowers` subfolder:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
 
-The script refuses to write anywhere outside the five approved downstream roots.
+The script refuses to write anywhere outside the three approved downstream
+roots. It also removes only known catalog-owned top-level copies that conflict
+with the routing policy; it does not prune unknown personal skills.
 
 ## Upstream-Only Skill Sources
 
-Workspace-local skill roots (`.agent\skills`, `.agents\skills`, and `.claude\skills` under project trees such as `C:\Assumption University`) are upstream sources only, never downstream sync destinations. The sync script no longer writes to them.
+Project-local skill roots under paths such as `C:\Assumption University` are
+neither scanned nor written during normal maintenance. The 2026-07-29 child
+promotion was limited to the personal `.codex` and `.claude` roots.
 
 To bring a skill from such a root into this parent catalog, promote it upstream with `scripts/promote-child-skills.py`, then refresh provenance with `scripts/update-skill-registry.py`.
 
@@ -247,6 +257,7 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `stitch-loop`
 - `stitch-manage-design-system`
 - `stitch-react-components`
+- `stitch-react-vite-dashboard`
 - `stitch-react-native`
 - `stitch-remotion`
 - `stitch-shadcn-ui`
@@ -309,6 +320,11 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `custom-agent-usage`
 - `homework-notebook-review`
 - `linkedin-create-post`
+- `openai-docs`
+- `plugin-creator`
+- `review-agent`
+- `skill-creator`
+- `skill-installer`
 - `notebook-execution-safety`
 - `notebooklm-management`
 - `notion-docs`
@@ -337,12 +353,15 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `excel-sheet`
 - `figma`
 - `figma-implement-design`
+- `imagegen`
 - `linkedin-create-post`
 - `microsoft-development`
 - `mongodb-mongoose`
 - `nextjs-development`
 - `notebooklm-management`
 - `notion-docs`
+- `openai-docs`
+- `plugin-creator`
 - `powerbi-modeling`
 - `powerpoint-ppt`
 - `secret-scanning`
@@ -373,7 +392,9 @@ The registry for MCP mappings and no-MCP fallback guidance is stored in [scripts
 
 The following externally sourced skills are currently tracked and maintained in this repo.
 
-Imported after auditing the wider `C:\Assumption University` workspace and matching them to real project needs:
+Source-mapped imports include canonical external sources and historical local
+imports. Project-specific sources were retained as provenance but were not
+scanned or refreshed during the 2026-07-29 pass:
 
 - `accelerated-computing-cudf`
 - `agentic-eval`
@@ -403,6 +424,11 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `figma-implement-design`
 - `frontend-skill`
 - `imagegen`
+- `openai-docs`
+- `plugin-creator`
+- `review-agent`
+- `skill-creator`
+- `skill-installer`
 - `jupyter-notebook`
 - `playwright`
 - `pptx`
@@ -434,6 +460,7 @@ Imported after auditing the wider `C:\Assumption University` workspace and match
 - `stitch-loop`
 - `stitch-manage-design-system`
 - `stitch-react-components`
+- `stitch-react-vite-dashboard`
 - `stitch-react-native`
 - `stitch-remotion`
 - `stitch-shadcn-ui`
@@ -462,6 +489,7 @@ Additional local-only sourced overlays (currently `58`, primarily `gws-*` and `r
 - [CHANGELOG.md](c:\Users\LOQ\.copilot\skills\CHANGELOG.md): repo-wide history
 - [CLAUDE.md](c:\Users\LOQ\.copilot\skills\CLAUDE.md): maintenance guidance for Claude-style workflows
 - [CONTRIBUTING.md](c:\Users\LOQ\.copilot\skills\CONTRIBUTING.md): contribution workflow, validation, and sync expectations
-- [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md): Gemini CLI command guidance
 - [LESSON.md](c:\Users\LOQ\.copilot\skills\LESSON.md): maintenance lessons and gotchas
+- [MIGRATION.md](c:\Users\LOQ\.copilot\skills\MIGRATION.md): breaking
+  version 2.0 client-support migration
 - [SECURITY.md](c:\Users\LOQ\.copilot\skills\SECURITY.md): vulnerability reporting and sensitive-disclosure guidance

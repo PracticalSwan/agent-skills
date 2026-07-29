@@ -3,6 +3,45 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-07-29] - Version 2.0 Client Support Reset
+
+### Added
+
+- Added normalized parent copies of five Codex system-only skills:
+  `openai-docs`, `plugin-creator`, `review-agent`, `skill-creator`, and
+  `skill-installer`.
+- Added `stitch-react-vite-dashboard` from the current Stitch source and
+  refreshed `imagegen` from the personal Codex system bundle.
+- Added `MIGRATION.md` with old/new behavior, migration steps, legacy mirror
+  handling, and rollback guidance.
+
+### Changed
+
+- **BREAKING:** Removed Gemini CLI and Antigravity from the supported client
+  matrix, retired command generation, and reduced downstream sync from five
+  roots to the Codex, shared, and Claude roots.
+- Updated all `199` live skills to the 2026-07-29 retained-client baseline;
+  all `141` intended tracked skills now use catalog `version: "2.0"`, while
+  the `58` local Google Workspace overlays retain upstream `version: "0.22.5"`.
+- Limited child promotion to the personal `.codex` and `.claude` roots and
+  left project-specific paths out of scope.
+- Refreshed changed Anthropic document helpers, `avoid-ai-writing`, two NVIDIA
+  workflows, Stitch workflows, and `x-twitter-scraper` from their current
+  recorded sources.
+- Added capability-based browser, plugin, docs, image, creator, and installer
+  routing that preserves Codex behavior while giving GLM-backed Claude Code a
+  safe external-MCP or manual fallback.
+
+### Fixed
+
+- Prevented top-level sync from overwriting six Codex-owned `.system` skills.
+- Pruned stale catalog-owned top-level system shadows and copied Superpowers
+  that no longer belong in retained-client mirror roots.
+- Removed retired client names and paths from active skills, root guidance,
+  imported Xquik setup notes, and the legacy Superpowers tool mapping.
+- Kept authenticated LinkedIn publication confirmation-gated and prohibited
+  search/reader tools from being treated as browser write surfaces.
+
 ## [2026-07-29] - LinkedIn Chrome Publishing Skill
 
 ### Added
@@ -262,7 +301,7 @@ file.
 - Added `scripts/export-gemini-skill.py` to generate Gemini CLI `/skills:<skill-name>` commands from repo `SKILL.md` files
 - Added `scripts/modernize-skills.py` to inject the standard cross-client portability section and MCP fallback section across skills
 - Added `scripts/validate-skills.py` to verify skill frontmatter, required sections, and generated Gemini command validity
-- Added [GEMINI.md](c:\Users\LOQ\.copilot\skills\GEMINI.md) for Gemini CLI usage guidance
+- Added the former `GEMINI.md` guide for Gemini CLI usage guidance
 - Added [REFERENCE_SOURCES.md](c:\Users\LOQ\.copilot\skills\REFERENCE_SOURCES.md) documenting imported skill sources, commits, and selection rationale
 - Imported and maintained these new skills after auditing `C:\Assumption University`:
   - `csharp-xunit`

@@ -1,5 +1,4 @@
 {
-  "gemini_namespace": "skills",
   "copied_official_superpowers": [
     "brainstorming",
     "collision-zone-thinking",
@@ -37,7 +36,7 @@
   "source_commits": {
     "awesome_copilot": {
       "repo": "https://github.com/github/awesome-copilot",
-      "commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4"
+      "commit": "8ae5a99109124c22288eee0254da61741e44d12a"
     },
     "awesome_claude_skills": {
       "repo": "https://github.com/travisvn/awesome-claude-skills",
@@ -45,11 +44,11 @@
     },
     "anthropic_skills": {
       "repo": "https://github.com/anthropics/skills",
-      "commit": "9d2f1ae187231d8199c64b5b762e1bdf2244733d"
+      "commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb"
     },
     "awesome_codex_skills": {
       "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
-      "commit": "9c9da64cf1bbea611d43dd14a10788d55369b353"
+      "commit": "0930e1373789d2eda449039f7ac154b33031de89"
     },
     "googleworkspace_cli": {
       "repo": "https://github.com/googleworkspace/cli",
@@ -57,7 +56,7 @@
     },
     "avoid_ai_writing": {
       "repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "commit": "500ff59006f19c27120c5ddbd9b56fc3d937b6bf"
+      "commit": "27156c7ae69fade80f2a3410e6899b780248709d"
     },
     "codebase_to_course": {
       "repo": "https://github.com/zarazhangrui/codebase-to-course",
@@ -65,15 +64,15 @@
     },
     "nvidia_skills": {
       "repo": "https://github.com/NVIDIA/skills",
-      "commit": "f6075a5060ed3c86536055700d95eb68655162ee"
+      "commit": "ce70ca7f1966c243e0b6a56b67085a185121d096"
     },
     "stitch_skills": {
       "repo": "https://github.com/google-labs-code/stitch-skills",
-      "commit": "3f64079d75d025bc5890c73669f27c26a2d80b31"
+      "commit": "7b53207b94e62911777d53d4238b5f8c88c2b519"
     },
     "xquik_x_twitter_scraper": {
       "repo": "https://github.com/Xquik-dev/x-twitter-scraper",
-      "commit": "4b444b719b2022867b202788ca3df1305049f2d9"
+      "commit": "bfa27fab00dbb8b5367e15153c5723ee608ba00b"
     },
     "openai_skills": {
       "repo": "https://github.com/openai/skills",
@@ -85,7 +84,7 @@
     },
     "superpowers_legacy": {
       "repo": "https://github.com/obra/superpowers",
-      "commit": "d884ae04edebef577e82ff7c4e143debd0bbec99"
+      "commit": "44c9b2d6e889982ac18c27d05a19fefe335194e1"
     }
   },
   "mcp_skills": {
@@ -264,11 +263,13 @@
     "linkedin-create-post": {
       "mode": "Primary",
       "servers": [
-        "Chrome browser control"
+        "Codex Chrome browser control",
+        "Claude Code external browser MCP"
       ],
       "fallback": [
-        "Prepare the verified final text, audience, links, and public-safe media when Chrome control is unavailable, but stop at a manual handoff and do not claim publication.",
-        "Require action-time confirmation before any live media upload or final LinkedIn Post action."
+        "On Codex, use the host-exposed Chrome control workflow when it is available.",
+        "On Claude Code with a third-party API endpoint such as the GLM Coding Plan, do not assume native Claude in Chrome is available; use an explicitly configured and healthy external browser MCP, or stop at a manual publishing handoff.",
+        "Require action-time confirmation before any media upload or final LinkedIn Post action, and never claim publication without finding the live post."
       ]
     },
     "x-twitter-scraper": {
@@ -440,30 +441,70 @@
         "Use user-provided Figma exports, screenshots, variables, and local design-system files when Figma MCP is unavailable.",
         "Do not claim node metadata, screenshots, or assets were fetched unless the active host exposed and completed those calls."
       ]
+    },
+    "openai-docs": {
+      "mode": "Primary",
+      "servers": [
+        "OpenAI Developer Docs MCP"
+      ],
+      "fallback": [
+        "Use current official OpenAI developer documentation and restrict browsing to official OpenAI domains when the active host does not expose the docs MCP.",
+        "Codex-only manual helpers and tool wrappers are optional capabilities, not requirements for Claude Code or GitHub Copilot."
+      ]
+    },
+    "plugin-creator": {
+      "mode": "Host-specific",
+      "servers": [
+        "Codex plugin tooling"
+      ],
+      "fallback": [
+        "Use this workflow only for Codex plugins. For Claude Code plugins, switch to Claude Code's documented plugin format rather than generating `.codex-plugin` metadata.",
+        "If the active host cannot validate Codex plugin metadata, generate files locally and clearly report the unverified Codex-specific step."
+      ]
+    },
+    "imagegen": {
+      "mode": "Host-specific",
+      "servers": [
+        "Host image-generation tool or approved image API"
+      ],
+      "fallback": [
+        "Use Codex's built-in image generation path when exposed. Other clients must use an explicitly available image tool, MCP server, or approved API credential path.",
+        "Do not claim a host-native image tool exists in Claude Code or GitHub Copilot unless it is present in the active tool list."
+      ]
+    },
+    "stitch-react-vite-dashboard": {
+      "mode": "Primary",
+      "servers": [
+        "Stitch MCP"
+      ],
+      "fallback": [
+        "Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.",
+        "Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list."
+      ]
     }
   },
   "reference_installs": {
     "avoid-ai-writing": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "500ff59006f19c27120c5ddbd9b56fc3d937b6bf",
+      "source_commit": "27156c7ae69fade80f2a3410e6899b780248709d",
       "source_path": ".",
       "reason": "Portable writing cleanup skill for auditing and rewriting content that has obvious AI-generated phrasing."
     },
     "agentic-eval": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/agentic-eval",
       "reason": "Evaluator-optimizer and rubric workflows are broadly useful across code, documentation, and planning tasks."
     },
     "cloud-design-patterns": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/cloud-design-patterns",
       "reason": "Distributed-system and cloud architecture trade-offs are common enough to justify a reusable shortlist skill."
     },
     "accelerated-computing-cudf": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/accelerated-computing-cudf",
       "reason": "The active Assumption University workspace includes pandas, scikit-learn, and PyTorch coursework where GPU dataframe guidance is a realistic next step."
     },
@@ -475,49 +516,49 @@
     },
     "context-map": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/context-map",
       "reason": "A dedicated pre-edit scoping skill is useful for safer multi-file changes and bug investigations."
     },
     "csharp-xunit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/csharp-xunit",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "dotnet-best-practices": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/dotnet-best-practices",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "deepstream-dev": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/deepstream-dev",
       "reason": "The active Computer Vision coursework already uses OpenCV, making DeepStream pipeline guidance a relevant next-stage NVIDIA workflow."
     },
     "deepstream-import-vision-model": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/deepstream-import-vision-model",
       "reason": "The active Computer Vision coursework can grow from OpenCV demos into real detector deployment, export, and TensorRT integration work."
     },
     "java-docs": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/java-docs",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java documentation guidance."
     },
     "java-junit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/java-junit",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java testing guidance."
     },
     "mcp-builder": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+      "source_commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
       "source_path": "skills/mcp-builder",
       "discovery_repo": "https://github.com/travisvn/awesome-claude-skills",
       "discovery_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
@@ -525,7 +566,7 @@
     },
     "nemo-retriever": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/nemo-retriever",
       "reason": "The IBM RAG and Agentic AI workshop repo makes local retriever setup and corpus-grounded QA workflows directly relevant."
     },
@@ -538,43 +579,43 @@
     },
     "premium-frontend-ui": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/premium-frontend-ui",
       "reason": "The workspace includes several React, Vite, Next.js, and Three.js frontends where higher-quality UI direction is useful."
     },
     "rag-blueprint": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/rag-blueprint",
       "reason": "The IBM RAG and Agentic AI workshop repo makes end-to-end RAG deployment and configuration guidance directly relevant."
     },
     "rag-eval": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/rag-eval",
       "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable evaluation workflow for retrieval and answer quality checks."
     },
     "rag-perf": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "f6075a5060ed3c86536055700d95eb68655162ee",
+      "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
       "source_path": "skills/rag-perf",
       "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable latency and throughput tuning workflow once the stack is running."
     },
     "secret-scanning": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/secret-scanning",
       "reason": "Local pre-commit secret hygiene and GitHub alert workflows are broadly useful and safe to ship in a shared catalog."
     },
     "security-review": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "30472ecf0fe34cc561df958c08501ecc5ca80ea4",
+      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
       "source_path": "skills/security-review",
       "reason": "The workspace includes multiple web apps and APIs that benefit from repeatable security review guidance."
     },
     "spreadsheet-formula-helper": {
       "source_repo": "https://github.com/ComposioHQ/awesome-codex-skills",
-      "source_commit": "9c9da64cf1bbea611d43dd14a10788d55369b353",
+      "source_commit": "0930e1373789d2eda449039f7ac154b33031de89",
       "source_path": "spreadsheet-formula-helper",
       "reason": "The workspace contains spreadsheet-heavy coursework and XLSX files where formula debugging is a recurring need."
     },
@@ -928,97 +969,97 @@
     },
     "stitch-design": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "local router for plugins/stitch-design, plugins/stitch-build, and plugins/stitch-utilities",
       "reason": "Entry point for routing Google Stitch work to the dedicated imported Stitch skills while preserving verified MCP boundaries."
     },
     "stitch-code-to-design": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-design/skills/code-to-design",
       "reason": "Orchestrates the end-to-end path from an existing frontend to a Stitch project while keeping each step separately verifiable."
     },
     "stitch-generate-design": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-design/skills/generate-design",
       "reason": "Keeps generation and editing prompt work separate from upload and code-conversion workflows while correcting unsupported MCP assumptions."
     },
     "stitch-manage-design-system": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-design/skills/manage-design-system",
       "reason": "Provides the verified MCP-backed core of the Stitch import and replaces unsupported upstream lookup calls with actual design-system tools."
     },
     "stitch-extract-design-md": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-design/skills/extract-design-md",
       "reason": "Keeps source-code design extraction distinct from rendered Stitch project analysis."
     },
     "stitch-extract-static-html": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-design/skills/extract-static-html",
       "reason": "Splits static capture from upload so local browser evidence is available before external Stitch side effects."
     },
     "stitch-upload-to-stitch": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-design/skills/upload-to-stitch",
       "reason": "Centralizes upload safety, credential handling, and token-limit workarounds."
     },
     "stitch-react-components": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-build/skills/react-components",
       "reason": "Narrows old Stitch-to-React guidance into a dedicated React implementation skill."
     },
     "stitch-react-native": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-build/skills/react-native",
       "reason": "Keeps mobile conversion separate from web React conversion because platform constraints differ."
     },
     "stitch-remotion": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-build/skills/remotion",
       "reason": "Preserves the media-generation workflow as its own skill."
     },
     "stitch-shadcn-ui": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-build/skills/shadcn-ui",
       "reason": "Keeps shadcn integration separate from general React conversion because it has its own CLI and ownership model."
     },
     "stitch-design-md": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-utilities/skills/design-md",
       "reason": "Keeps rendered/project-based DESIGN.md synthesis distinct from source-code extraction."
     },
     "stitch-enhance-prompt": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-utilities/skills/enhance-prompt",
       "reason": "Prompt enhancement is reusable across generation, editing, and loop workflows without depending on external tools."
     },
     "stitch-loop": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-utilities/skills/stitch-loop",
       "reason": "Keeps autonomous multi-page iteration separate from one-off screen generation and local code conversion."
     },
     "stitch-taste-design": {
       "source_repo": "https://github.com/google-labs-code/stitch-skills",
-      "source_commit": "3f64079d75d025bc5890c73669f27c26a2d80b31",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
       "source_path": "plugins/stitch-utilities/skills/taste-design",
       "reason": "Preserves the opinionated design-quality role as distinct from extraction and prompt-polishing skills."
     },
     "x-twitter-scraper": {
       "source_repo": "https://github.com/Xquik-dev/x-twitter-scraper",
-      "source_commit": "4b444b719b2022867b202788ca3df1305049f2d9",
+      "source_commit": "bfa27fab00dbb8b5367e15153c5723ee608ba00b",
       "source_path": "skills/x-twitter-scraper",
       "reason": "Adds guarded X/Twitter data workflows with explicit approval gates, MCP fallback guidance, and untrusted-content handling."
     },
@@ -1036,19 +1077,19 @@
     },
     "docx": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+      "source_commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
       "source_path": "skills/docx",
       "reason": "Matches the current Anthropic DOCX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper."
     },
     "pptx": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+      "source_commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
       "source_path": "skills/pptx",
       "reason": "Matches the current Anthropic PPTX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper."
     },
     "xlsx": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
+      "source_commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
       "source_path": "skills/xlsx",
       "reason": "Matches the current Anthropic XLSX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper."
     },
@@ -1065,10 +1106,10 @@
       "reason": "Promoted from the Codex child root and refreshed from the current canonical OpenAI skills source."
     },
     "imagegen": {
-      "source_repo": "https://github.com/openai/skills",
-      "source_commit": "49f948faa9258a0c61caceaf225e179651397431",
-      "source_path": "skills/.system/imagegen",
-      "reason": "Promoted from the Codex child root and refreshed from the current canonical OpenAI skills source."
+      "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+      "source_commit": "sha256:faf51a61d813648f54d0e5c6a0c6aeaf8011e412210b151e5de91abea67072e9",
+      "source_path": "imagegen",
+      "reason": "Codex owns a newer system bundle than the public parent copy; preserve the system copy in place and publish a normalized cross-client catalog copy elsewhere."
     },
     "jupyter-notebook": {
       "source_repo": "https://github.com/openai/skills",
@@ -1183,6 +1224,50 @@
       "source_commit": "sha256:0bf5541310d362988bb8af9c50c6c553b8c1a57210fd1b7d273fc0b56903bc7d",
       "source_path": ".agents/skills/tabular-eda-review",
       "reason": "Promotes a concise tabular-data quality, leakage, and modeling-readiness review workflow."
+    },
+    "openai-docs": {
+      "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+      "source_commit": "sha256:b1eb25319be283a189214c71a7e5b928dedbb3c1f5764868c77aa1229b124715",
+      "source_path": "openai-docs",
+      "reason": "Promoted from the personal Codex system bundle with official-domain and no-native-tool fallbacks for other clients."
+    },
+    "plugin-creator": {
+      "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+      "source_commit": "sha256:8e636d04c0e0383d1f1c046a14dea187760218112b1696803dde6dc4a57b433b",
+      "source_path": "plugin-creator",
+      "reason": "Promoted as an explicitly Codex-plugin workflow with a Claude Code plugin-format boundary."
+    },
+    "review-agent": {
+      "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+      "source_commit": "sha256:8e74c25fd7d12521b1196c0bbc4790dcbd90520630a19da512f9c806c817cdd8",
+      "source_path": "review-agent",
+      "reason": "Promoted from the Codex system bundle as a portable read-only review workflow."
+    },
+    "skill-creator": {
+      "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+      "source_commit": "sha256:3af8105ffc4f76c1f91c60be8a0b9a4922176b435912b197f37b92ca850f1d4d",
+      "source_path": "skill-creator",
+      "reason": "Promoted from the Codex system bundle with separate Codex and Claude Code skill installation paths."
+    },
+    "skill-installer": {
+      "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
+      "source_commit": "sha256:0dbac1bd83451923b5933c0a52311a3e27e552ec5f75edae27a78106a53d55e5",
+      "source_path": "skill-installer",
+      "reason": "Promoted as a Codex installer workflow with a safe manual Claude Code installation fallback."
+    },
+    "stitch-react-vite-dashboard": {
+      "source_repo": "https://github.com/google-labs-code/stitch-skills",
+      "source_commit": "7b53207b94e62911777d53d4238b5f8c88c2b519",
+      "source_path": "plugins/stitch-build/skills/react-vite-dashboard",
+      "reason": "Adds the upstream dashboard-specific workflow without merging data-dense, query-driven concerns into the general React component skill."
     }
-  }
+  },
+  "codex_system_managed_skills": [
+    "imagegen",
+    "openai-docs",
+    "plugin-creator",
+    "review-agent",
+    "skill-creator",
+    "skill-installer"
+  ]
 }

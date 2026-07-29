@@ -94,6 +94,66 @@ test('repeated Tier 1 phrase does not inflate score linearly', () => {
   );
 });
 
+test('em-dash detector skips definition-list separators (bold term / link + dash)', () => {
+  const text = [
+    '- **Detect mode** — flag patterns without rewriting anything in the file.',
+    '- **Edit mode** — rewrite the file in place and report what changed.',
+    '- [agentskills.io](https://agentskills.io) — the SKILL.md format this repo follows.',
+    'The catalog lives in one file and a CI check keeps the README count honest.',
+  ].join('\n');
+  const r = AIDetector.analyzeText(text);
+  const emDashIssues = r.issues.filter((i) => i.type === 'em-dash');
+  assert.equal(emDashIssues.length, 0, 'separator-position dashes should not count toward the rate');
+});
+
+test('em-dash carve-out covers numbered-list separators too', () => {
+  const text = [
+    '1. **Install** — run the setup script from the repo root.',
+    '2. **Configure** — copy the sample config and set the API token.',
+    '3. **Verify** — the status command reports green when everything works.',
+    '4) **Cleanup** — remove the temp files once the run finishes.',
+    'The whole flow takes about two minutes on a fresh machine.',
+  ].join('\n');
+  const r = AIDetector.analyzeText(text);
+  const emDashIssues = r.issues.filter((i) => i.type === 'em-dash');
+  assert.equal(emDashIssues.length, 0, 'numbered-list separators should not count toward the rate');
+});
+
+test('em-dash carve-out requires a list marker — line-initial bold splices still fire', () => {
+  const text = [
+    '**The architecture** — it scales horizontally without coordination.',
+    '**The cache layer** — it absorbs the read traffic before it hits disk.',
+    '**The result** — latency drops and throughput climbs on every node.',
+  ].join('\n');
+  const r = AIDetector.analyzeText(text);
+  const emDashIssues = r.issues.filter((i) => i.type === 'em-dash');
+  assert.ok(emDashIssues.length >= 1, 'bold-lead splices outside a list should still count');
+});
+
+test('smart-punct signature is not corroborated by separator-only em dashes', () => {
+  // Curly quotes + Oxford commas + zero typos + ≥80 words, but every em
+  // dash is a list-item separator. Before the carve-out this fired on
+  // the dash-as-typography; now the em-dash leg of the co-occurrence
+  // requires a non-separator dash.
+  const text = [
+    '- **Detect mode** — flags “possible issues” without rewriting, so you can review, compare, and decide.',
+    '- **Edit mode** — rewrites the file in place and keeps the original wording where it already reads fine.',
+    '- **Voice profiles** — casual, professional, and technical presets tune how hard each rule is enforced.',
+    'The catalog lives in one file, the CI check keeps the README count honest, and the plugin copy is generated from the root skill so the two can never drift apart in a release.',
+  ].join('\n');
+  const r = AIDetector.analyzeText(text);
+  const hits = r.issues.filter((i) => i.type === 'smart-punct-signature');
+  assert.equal(hits.length, 0, 'separator-only dashes should not complete the co-occurrence signature');
+});
+
+test('em-dash detector still fires on mid-sentence splices at the same density', () => {
+  const text =
+    'The build is fast — under a second — on most machines. The cache helps — especially on cold starts. Deploys run on push — no manual step — and roll back automatically.';
+  const r = AIDetector.analyzeText(text);
+  const emDashIssues = r.issues.filter((i) => i.type === 'em-dash');
+  assert.ok(emDashIssues.length >= 1, 'prose splices should still flag');
+});
+
 test('em-dash detector ignores CLI flags like --save-dev', () => {
   const text = 'Run npm install --save-dev and then npm run build --no-verify --silent. Takes about ten seconds on this machine. The package is installed into node_modules directly after the install command completes successfully.';
   const r = AIDetector.analyzeText(text);
@@ -166,6 +226,65 @@ test('hashtag-stuff does not fire on prose with 2-3 hashtags', () => {
   const r = AIDetector.analyzeText(text);
   const types = new Set(r.issues.map((i) => i.type));
   assert.ok(!types.has('hashtag-stuff'), 'should not flag 2 hashtags as hashtag-stuff');
+});
+
+test('"load-bearing" (metaphor) flags tier1; construction nouns exempt', () => {
+  // Every fixture is padded past the wordCount < 10 gate in analyzeText, which
+  // returns zero issues before any pattern runs. A shorter fixture asserts
+  // nothing: it would pass with the carve-out deleted entirely.
+  const lbHits = (text) => {
+    const r = AIDetector.analyzeText(text);
+    assert.ok(!r.tooShort, `fixture must clear the length gate (wordCount >= 10): ${text}`);
+    return { hits: r.issues.filter((i) => /load[- ]bearing/i.test(i.text)), types: new Set(r.issues.map((i) => i.type)) };
+  };
+
+  const metaphors = [
+    'The load-bearing assumption here is that users will migrate to the platform voluntarily.',
+    'That load-bearing claim never gets defended anywhere in the entire twelve page document.',
+    'The whole load-bearing invariant rests on a cache that nobody has actually measured.',
+    // Abstract-capable nouns are deliberately absent from the carve-out so the
+    // metaphor still fires on them.
+    'The load-bearing structure of his argument collapses once you check the second citation.',
+  ];
+  for (const text of metaphors) {
+    const { hits, types } = lbHits(text);
+    assert.ok(types.has('tier1'), `expected tier1 flag for metaphor: ${text}`);
+    assert.ok(hits.length > 0, `expected a load-bearing tier1 hit: ${text}`);
+  }
+
+  // One fixture per carve-out noun: dropping any single noun from the lookahead
+  // must fail this test. Previously only `wall` was pinned.
+  const literals = [
+    'Install a load-bearing wall between the kitchen and the garage today.',
+    'The steel load-bearing beam spans twelve feet across the finished basement ceiling.',
+    'The concrete load-bearing column in the parking garage was inspected last week.',
+    'Every load-bearing joist under the second floor was replaced during the remodel.',
+    'The roof load-bearing truss was engineered to handle heavy snow load safely.',
+    'These load-bearing trusses were installed by the framing crew earlier this spring.',
+    'Each load-bearing member of the frame must meet the local building code.',
+    'The load-bearing footing was poured before the inspector arrived on site Monday.',
+    'The load-bearing slab under the garage cracked during the cold winter months.',
+    'The load-bearing stud spacing must comply with local residential building code requirements.',
+    'The old load-bearing partition was replaced with a steel beam last summer.',
+    'The load-bearing masonry needs repair before the inspector will sign off here.',
+    'The load-bearing lintel above the window was cracked and needed full replacement.',
+    'Each load-bearing pier under the deck was set below the frost line.',
+    'The load-bearing rafter was replaced after the storm damaged the roof badly.',
+    'The load-bearing girder running under the floor was inspected and approved today.',
+    'The engineer calculated the load-bearing capacity of the floor before approving the plan.',
+    // Optional adjective between `load-bearing` and the structural noun.
+    'The crew removed a load-bearing structural wall during the kitchen renovation project.',
+    'They reinforced the load-bearing exterior wall before pouring the new concrete footing.',
+    // Unhyphenated "load bearing" is ordinary English: `bearing` as a
+    // participle, not a compound modifier. The tell is always hyphenated.
+    'The heavy load bearing down on the old bridge finally cracked the concrete support.',
+    'Engineers reduced the load bearing on the rear axle by shifting the cargo forward.',
+    'You could feel the load bearing down on the whole team that entire quarter.',
+  ];
+  for (const text of literals) {
+    const { hits } = lbHits(text);
+    assert.equal(hits.length, 0, `literal construction use should not fire tier1: ${text}`);
+  }
 });
 
 test('"quietly" clusters with another Tier 2 word flags tier2', () => {

@@ -1,5 +1,36 @@
 # Changelog
 
+## [2026-07-29] - Version 2.0 Client Support Reset
+
+### Added
+
+- Added the current GitHub Copilot, Claude Code, and Codex portability baseline.
+
+### Changed
+
+- **BREAKING:** Removed Gemini CLI and Antigravity as supported clients.
+- Refreshed catalog metadata and last-updated state for the 2026-07-29 maintenance pass.
+- Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+
+### Fixed
+
+- Prevented catalog modernization from reintroducing removed Gemini or Antigravity guidance.
+
+## [2026-07-29] - Stitch Skill Router Refresh
+
+### Added
+
+- Refreshed route selection for the dedicated Stitch skills imported from `https://github.com/google-labs-code/stitch-skills` at `7b53207b94e62911777d53d4238b5f8c88c2b519`.
+
+### Changed
+
+- Kept the Stitch Design skill as a lightweight router so detailed workflow guidance remains in narrower `stitch-*` skills.
+- Preserved the verified design-system MCP boundary while refreshing compatible upstream support material.
+
+### Fixed
+
+- Prevented upstream screen-tool assumptions from overriding the host-verified fallback guidance.
+
 ## [2026-07-11] - Catalog Maintenance Refresh
 
 ### Added

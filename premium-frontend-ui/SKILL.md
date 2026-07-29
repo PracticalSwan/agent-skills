@@ -1,7 +1,7 @@
 ---
 name: premium-frontend-ui
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [premium, frontend, ui, design, visual]
 description: "Premium frontend UI direction for immersive, high-performance web experiences with strong motion, typography, and visual systems. Use when building high-end landing pages, polished interactive components, or portfolio-style sites."
 ---
@@ -124,30 +124,33 @@ Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component
 - Ignoring final render or export review: Layout bugs often appear only after the asset is opened in its destination tool.
 - Fixing content and presentation in one pass: It becomes hard to tell whether a problem is structural or visual.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 
 ## Verification Protocol
 
-Before claiming "skill applied successfully":
+Before claiming the `premium-frontend-ui` workflow succeeded:
 
-1. Pass/fail: The Premium Frontend Ui guidance is tied to a concrete route, component, screen, or design artifact.
-2. Pass/fail: Component states cover loading, empty, error, success, and responsive breakpoints where applicable.
-3. Pass/fail: Accessibility, visual hierarchy, and interaction behavior are reviewed against the shared component rubric.
-4. Pressure-test scenario: Review the component on a narrow mobile viewport, keyboard-only path, and slow-loading state.
-5. Success metric: Zero generic UI approval; every approval cites rendered behavior or source evidence.
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:premium-frontend-ui` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py premium-frontend-ui` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/premium-frontend-ui` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

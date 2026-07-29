@@ -1,7 +1,7 @@
 ---
 name: final-assignment-citation-review
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [final, assignment, citation, review]
 description: "Review final-assignment materials for requirements, citations, AI-use disclosure, and data-analysis completeness."
 ---
@@ -40,19 +40,21 @@ Help the user improve clarity, evidence, citation, and structure. Do not
 ghostwrite a finished student submission unless the user explicitly asks for a
 draft and academic-integrity constraints permit it.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/final-assignment-citation-review` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:final-assignment-citation-review`. Rebuild it with `python scripts/export-gemini-skill.py final-assignment-citation-review` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/final-assignment-citation-review` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

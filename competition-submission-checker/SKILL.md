@@ -1,7 +1,7 @@
 ---
 name: competition-submission-checker
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [competition, submission, checker]
 description: "Validate GCI competition predictions and notebook outputs against expected schema, metric, and submission constraints."
 ---
@@ -43,19 +43,21 @@ Snapshot from project onboarding:
 - Do not submit files externally unless the user explicitly asks.
 - Do not use git, GitHub, or Google services.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/competition-submission-checker` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:competition-submission-checker`. Rebuild it with `python scripts/export-gemini-skill.py competition-submission-checker` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/competition-submission-checker` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

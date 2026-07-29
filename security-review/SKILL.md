@@ -1,7 +1,7 @@
 ---
 name: security-review
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [security, review, audit, remediation, verification]
 description: "AI-powered codebase security scanner that reasons about code like a security researcher — tracing data flows, understanding component interactions, and catching vulnerabilities that pattern-matching tools miss. Use this skill when asked to scan code for security vulnerabilities, find bugs, check for SQL injection, XSS, command injection, exposed API keys, hardcoded secrets, insecure dependencies, access control issues, or any request like \"is my code secure?\", \"review for security issues\", \"audit this codebase\", or \"check for vulnerabilities\". Covers injection flaws, authentication and access control bugs, secrets exposure, weak cryptography, insecure dependencies, and business logic issues across JavaScript, TypeScript, Python, Java, PHP, Go, Ruby, and Rust."
 ---
@@ -187,30 +187,33 @@ For detailed detection guidance, load the following reference files as needed:
 - Leaving secrets or sensitive samples in examples: The skill itself becomes part of the exposure surface.
 - Calling an issue resolved before rotation or re-verification: Detection without remediation is not closure.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 
 ## Verification Protocol
 
-Before claiming "skill applied successfully":
+Before claiming the `security-review` workflow succeeded:
 
-1. Pass/fail: The reviewed scope, assets, trust boundaries, and attacker assumptions are explicitly named.
-2. Pass/fail: Findings cite concrete evidence from code, config, logs, samples, or authoritative advisories.
-3. Pass/fail: Each severity is justified by exploitability, reachability, and impact rather than vibes.
-4. Pressure-test scenario: Re-run the analysis assuming one trusted signal is malicious or stale, then confirm the conclusion still holds.
-5. Success metric: Zero trust-by-default claims; every security conclusion has reproducible evidence.
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill or plugin path, or wrap the workflow as project instructions if the host does not support portable skill folders directly.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin or marketplace source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/<skill-name>` and restart Codex after major changes.
-- Gemini CLI: this repository generates a project command named `/skills:security-review` from this skill. Rebuild commands with `python scripts/export-gemini-skill.py security-review` and then run `/commands reload` inside Gemini CLI.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/security-review` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

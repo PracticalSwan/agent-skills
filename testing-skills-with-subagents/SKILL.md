@@ -1,7 +1,7 @@
 ---
 name: testing-skills-with-subagents
-version: "1.3"
-last_updated: 2026-07-11
+version: "2.0"
+last_updated: 2026-07-29
 tags: [testing, skills, with, subagents]
 description: "RED-GREEN-REFACTOR for process documentation - baseline without skill, write addressing failures, iterate closing loopholes"
 ---
@@ -389,19 +389,21 @@ From applying TDD to TDD skill itself (2025-10-03):
 - Final VERIFY GREEN: 100% compliance under maximum pressure
 - Same process works for any discipline-enforcing skill
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
-This skill is written to stay usable across GitHub Copilot, Claude Code, Codex, and Gemini CLI.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/testing-skills-with-subagents` and restart Codex after major changes.
-- Gemini CLI: this repository generates `/skills:testing-skills-with-subagents`. Rebuild it with `python scripts/export-gemini-skill.py testing-skills-with-subagents` and reload commands.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/testing-skills-with-subagents` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: None required

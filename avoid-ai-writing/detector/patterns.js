@@ -143,6 +143,21 @@ const AIDetector = (() => {
     { pattern: /\bascertain(?:s|ing|ed)?\b/gi, replace: 'find out, determine' },
     { pattern: /\bendeavou?r(?:s|ing|ed)?\b/gi, replace: 'effort, attempt, try' },
     { pattern: /\bunderscor(?:es|ing|ed)\b/gi, replace: 'highlights, shows' },
+    // Hyphen required. The unhyphenated "load bearing" is ordinary English —
+    // "the load bearing down on the bridge" — where `bearing` is a participle,
+    // not part of a compound modifier. The tell is always hyphenated.
+    //
+    // Construction carve-out: exempt attributive `load-bearing` before a literal
+    // structural noun, with one optional material/position adjective in between
+    // ("load-bearing structural wall"). The noun list is limited to commonly
+    // physical nouns; the abstract-capable ones most likely to carry the
+    // metaphor (structure, element, frame, foundation) are omitted so "the
+    // load-bearing structure of the argument" still fires. Some listed nouns
+    // (member, column, partition) can still be used metaphorically and are
+    // silently exempt — a recall loss in the safe direction, tracked in #56.
+    // Predicative use ("the wall is load-bearing") is NOT exempt: the tell
+    // lives in the subject, which a lookahead cannot reach. Also #56.
+    { pattern: /\bload-bearing\b(?!\s+(?:(?:structural|exterior|interior|internal|external|concrete|steel|timber|wooden|brick|masonry|perimeter|basement|main|primary|existing|original)\s+)?(?:walls?|beams?|columns?|joists?|truss(?:es)?|members?|footings?|slabs?|studs?|partitions?|masonry|lintels?|piers?|rafters?|girders?|capacity|capacities)\b)/gi, replace: 'essential, critical, or say what breaks if you remove it' },
   ];
 
   // ─── Tier 2: Flag in clusters (2+ per paragraph) ──────────────────
@@ -944,15 +959,25 @@ const AIDetector = (() => {
       });
     }
 
+    // Em dashes in list-item separator position — a bulleted or numbered
+    // list item opening with a bolded lead term or markdown link, then the
+    // dash ("- **Term** — desc", "- [label](url) — desc") — are
+    // definition-list typography, not prose punctuation. Shared by the
+    // smart-punct signature below and the em-dash frequency check (§22).
+    const SEPARATOR_DASH_RE = /^\s*(?:[-*+]|\d+[.)])\s+(?:\*\*[^*\n]+\*\*|\[[^\]\n]+\]\([^)\n]*\))[ \t]*—/gm;
+
     // ── Smart-punctuation co-occurrence signature ────────────────────
     // Curly quotes + em-dash + Oxford comma all present + zero typos
     // (no double-spaces, no missing apostrophes in common contractions)
     // is a near-dispositive paste-from-LLM signature: humans typing
     // directly into a textarea don't produce all four. Standalone any of
-    // these is meaningless — co-occurrence is the signal.
+    // these is meaningless — co-occurrence is the signal. Separator-position
+    // dashes are typography and don't corroborate it.
     {
       const hasCurly = /[“”‘’]/.test(text);
-      const hasEmDash = /—/.test(text);
+      const totalEmDashes = (text.match(/—/g) || []).length;
+      const separatorEmDashes = (text.match(SEPARATOR_DASH_RE) || []).length;
+      const hasEmDash = totalEmDashes > separatorEmDashes;
       const oxfordHit = text.match(/\b\w+,\s+\w+,\s+and\s+\w+/g);
       const hasOxford = (oxfordHit?.length || 0) >= 1;
       const doubleSpaces = (text.match(/[^.!?]  +/g) || []).length;
@@ -1256,7 +1281,14 @@ const AIDetector = (() => {
     // ── 22. Em dash frequency ────────────────────────────────────
     // Match real em dashes, plus `--` only when surrounded by whitespace on at
     // least one side (skips CLI flags like --save-dev and YAML `---` blocks).
-    const emDashCount = (text.match(/—|(?<=\s)--(?=\s|$)|(?<=^|\s)--(?=\s)/gm) || []).length;
+    // Separator-position em dashes (SEPARATOR_DASH_RE above) are excluded
+    // from the rate. The list marker is required on purpose: a line-initial
+    // "**Bold lead** — full sentence" outside a list is itself an AI tell
+    // and still counts, as does a mid-sentence "**bold** — like this"
+    // splice. Em dash only — the `--` substitute is never carved out.
+    const rawEmDashCount = (text.match(/—|(?<=\s)--(?=\s|$)|(?<=^|\s)--(?=\s)/gm) || []).length;
+    const separatorDashCount = (text.match(SEPARATOR_DASH_RE) || []).length;
+    const emDashCount = rawEmDashCount - separatorDashCount;
     const emDashRate = emDashCount / (wordCount / 1000);
     if (emDashRate > 1) {
       issues.push({

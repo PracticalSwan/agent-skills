@@ -12,9 +12,9 @@ This repository exposes its skills to Gemini CLI through generated project comma
 
 - Edit skill content in `SKILL.md` files under `C:\Users\LOQ\.copilot\skills`
 - Do not hand-edit files under `.gemini/commands/skills`
-- The repo currently tracks `134` skill folders: `102` maintained skills and `32` copied official Superpowers
-- All tracked skills use catalog `version: "1.3"` with `last_updated: 2026-07-11`
-- The live local catalog contains `192` skills when the `58` local-only Google Workspace overlays are present
+- The repo currently tracks `135` skill folders: `103` maintained skills and `32` copied official Superpowers
+- All tracked skills use catalog `version: "1.3"`; `linkedin-create-post` is dated `2026-07-29`, while the prior tracked catalog baseline remains dated `2026-07-11`
+- The live local catalog contains `193` skills when the `58` local-only Google Workspace overlays are present
 - The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` have finalized canonical provenance in `scripts/skill-registry.json`
 
 ## Generated Commands
@@ -26,6 +26,7 @@ Each skill is exported as a Gemini CLI command:
 Examples:
 
 - `/skills:java-junit`
+- `/skills:linkedin-create-post`
 - `/skills:pdf`
 - `/skills:security-review`
 - `/skills:x-twitter-scraper`

@@ -3,6 +3,23 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-07-29] - LinkedIn Chrome Publishing Skill
+
+### Added
+
+- Added the maintained `linkedin-create-post` skill for drafting, publishing,
+  and verifying LinkedIn posts through a signed-in Chrome session.
+
+### Changed
+
+- Updated catalog counts, client guidance, the MCP registry, Gemini command
+  generation, and five-root global sync coverage for the new skill.
+
+### Fixed
+
+- Defined action-time confirmation, public-safe media review, and live
+  post-publication verification as required boundaries for LinkedIn writes.
+
 ## [2026-07-11] - Sync Path Policy: Locked Downstream Targets and Antigravity CLI
 
 ### Changed

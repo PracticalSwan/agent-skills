@@ -29,15 +29,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
+Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `134` tracked skill folders
-  - `102` tracked maintained skills
+  - `135` tracked skill folders
+  - `103` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `192` local skill folders detected
-  - `160` local maintained skills detected
+  - `193` local skill folders detected
+  - `161` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -48,7 +48,7 @@ Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `134` tracked skills are aligned on catalog `version: "1.3"` with `last_updated: 2026-07-11`.
+- All `135` tracked skills are aligned on catalog `version: "1.3"`; `linkedin-create-post` is dated `2026-07-29`, while the prior tracked catalog baseline remains dated `2026-07-11`.
 - The `58` local-only Google Workspace overlays retain their upstream `version: "0.22.5"` while sharing the 2026-07-11 catalog sections and validation baseline.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
 - The 2026-07-11 child-path reconciliation promoted `11` Codex-only skills, `12` workspace-local skills, and `18` newly discovered nested official Superpowers into the parent catalog.
@@ -308,6 +308,7 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `course-content-map`
 - `custom-agent-usage`
 - `homework-notebook-review`
+- `linkedin-create-post`
 - `notebook-execution-safety`
 - `notebooklm-management`
 - `notion-docs`
@@ -336,6 +337,7 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `excel-sheet`
 - `figma`
 - `figma-implement-design`
+- `linkedin-create-post`
 - `microsoft-development`
 - `mongodb-mongoose`
 - `nextjs-development`

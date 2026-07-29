@@ -42,26 +42,27 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-07-11`. Local overlay totals can differ by machine.
+Snapshot date: `2026-07-29`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `134` tracked skill folders
-  - `102` tracked maintained skills
+  - `135` tracked skill folders
+  - `103` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `192` local skill folders detected
-  - `160` local maintained skills detected
+  - `193` local skill folders detected
+  - `161` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `134` tracked skills are aligned on catalog `version: "1.3"` and
-`last_updated: 2026-07-11`. The `58` local-only Google Workspace overlays keep
-their upstream `version: "0.22.5"` while sharing the same 2026-07-11 section
-and validation baseline.
+All `135` tracked skills are aligned on catalog `version: "1.3"`. The
+`linkedin-create-post` skill is dated `2026-07-29`; the prior tracked catalog
+baseline remains dated `2026-07-11`. The `58` local-only Google Workspace
+overlays keep their upstream `version: "0.22.5"` while sharing the same
+2026-07-11 section and validation baseline.
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have
 finalized canonical provenance. Child-path promotion is handled by

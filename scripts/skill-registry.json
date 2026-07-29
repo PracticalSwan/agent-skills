@@ -261,6 +261,16 @@
         "Re-open or render the document locally so formatting, comments, and pagination are verified before delivery."
       ]
     },
+    "linkedin-create-post": {
+      "mode": "Primary",
+      "servers": [
+        "Chrome browser control"
+      ],
+      "fallback": [
+        "Prepare the verified final text, audience, links, and public-safe media when Chrome control is unavailable, but stop at a manual handoff and do not claim publication.",
+        "Require action-time confirmation before any live media upload or final LinkedIn Post action."
+      ]
+    },
     "x-twitter-scraper": {
       "mode": "Primary",
       "servers": [

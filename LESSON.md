@@ -53,6 +53,9 @@ Lessons and maintenance mistakes for the shared Copilot, Claude Code, Codex, and
 
 ## Verification Lessons
 
+- Live social-post skills must distinguish drafting from publishing, require
+  action-time confirmation before media upload or final submission, and find
+  the new post in current activity before claiming success.
 - Structural validation is not enough for Gemini support; export and parse the generated TOML files too.
 - When the catalog frontmatter or required section schema changes, update the validator before relying on the next export or sync pass.
 - Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.

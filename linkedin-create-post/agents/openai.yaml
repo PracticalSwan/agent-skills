@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Create Post"
+  short_description: "Create and verify LinkedIn posts in Chrome"
+  default_prompt: "Use $linkedin-create-post to draft and publish a LinkedIn post through my signed-in Chrome session."

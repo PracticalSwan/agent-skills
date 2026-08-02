@@ -3,10 +3,10 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-07-30)
+## Snapshot (2026-08-02)
 
-- `137` skills have source mappings.
-- `79` source-mapped skills are part of the git-tracked catalog.
+- `136` skills have source mappings.
+- `78` source-mapped skills are part of the git-tracked catalog.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*`).
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
@@ -75,7 +75,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `figma` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma` |
 | `figma-implement-design` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma-implement-design` |
 | `final-assignment-citation-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:48da323567833f9009344e11e50f09406ca5066329cca1543e27c6c1a09ff894` | `.agents/skills/final-assignment-citation-review` |
-| `frontend-skill` | `https://github.com/openai/skills` | `30444aed500c00c85294d12074f6e3ee794f808a` | `skills/.curated/frontend-skill` |
+| `frontend-design` | `https://github.com/openai/skills` | `30444aed500c00c85294d12074f6e3ee794f808a` | `skills/.curated/frontend-skill` |
 | `homework-notebook-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:6f97c5514c2bac5d6d2bcfb0af09f82cbdf43aeeabd90d9fcf505f023613e0ad` | `.agents/skills/homework-notebook-review` |
 | `imagegen` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:faf51a61d813648f54d0e5c6a0c6aeaf8011e412210b151e5de91abea67072e9` | `imagegen` |
 | `java-docs` | `https://github.com/github/awesome-copilot` | `8ae5a99109124c22288eee0254da61741e44d12a` | `skills/java-docs` |
@@ -89,7 +89,6 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `playwright` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/playwright` |
 | `plugin-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:8e636d04c0e0383d1f1c046a14dea187760218112b1696803dde6dc4a57b433b` | `plugin-creator` |
 | `pptx` | `https://github.com/anthropics/skills` | `b29e7cf65e5cb78a5ac33d582270551bc74a14eb` | `skills/pptx` |
-| `premium-frontend-ui` | `https://github.com/github/awesome-copilot` | `8ae5a99109124c22288eee0254da61741e44d12a` | `skills/premium-frontend-ui` |
 | `rag-blueprint` | `https://github.com/NVIDIA/skills` | `ce70ca7f1966c243e0b6a56b67085a185121d096` | `skills/rag-blueprint` |
 | `rag-eval` | `https://github.com/NVIDIA/skills` | `ce70ca7f1966c243e0b6a56b67085a185121d096` | `skills/rag-eval` |
 | `rag-perf` | `https://github.com/NVIDIA/skills` | `ce70ca7f1966c243e0b6a56b67085a185121d096` | `skills/rag-perf` |
@@ -169,6 +168,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`. Their operational guidance
   is retained with catalog metadata, reviewed installation choices,
   cross-client fallbacks, and the removed-client integration excluded.
+- The 2026-08-02 frontend consolidation maps the canonical `frontend-design`
+  skill to the historical OpenAI `frontend-skill` source at commit
+  `30444aed500c00c85294d12074f6e3ee794f808a`. The canonical folder preserves
+  its original MIT license, the modified OpenAI Apache-2.0 material, and the
+  reviewed Awesome Copilot MIT attribution. `frontend-skill` and
+  `premium-frontend-ui` are retired names, not separate reference installs.
 
 ## Selection And Refresh Notes
 

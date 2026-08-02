@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Design"
+  short_description: "Design context-fit, accessible frontend interfaces"
+  default_prompt: "Use $frontend-design to choose a context-fit design mode, establish the visual and content plan, implement complete accessible states, and verify the rendered interface."

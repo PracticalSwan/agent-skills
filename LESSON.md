@@ -53,6 +53,24 @@ Codex skill catalog.
 - Discovery catalogs are not automatically the canonical source. If a discovery repo points to an official upstream skill, record both and import from the stronger maintained original.
 - If you track a raw imported skill before normalizing it, update the root docs immediately so counts stay accurate and the schema exceptions are explicit.
 
+## Skill Consolidation Lessons
+
+- Keep one canonical general frontend creation and art-direction workflow at
+  `frontend-design`. Route the retired `frontend-skill` and
+  `premium-frontend-ui` names there instead of recreating style-specific
+  skills.
+- Keep `web-design-reviewer` separate because post-implementation browser QA
+  has a different activation boundary and evidence path from design creation.
+- Define frontend quality as fitness for context with accessibility and
+  functional correctness as hard gates. Visual intensity, cards, motion,
+  immersive effects, and animation dependencies are conditional techniques.
+- Before deleting overlapping imported skills, inspect every source file and
+  upstream license. Preserve applicable license texts, attribution, historical
+  provenance, and modification notices with the canonical result.
+- When external skills link to a canonical section anchor such as
+  `#component-review-rubric`, verify the heading and every dependent link after
+  the rewrite.
+
 ## Sync Lessons
 
 - The workspace sync script should treat the repo inventory and discovered workspace targets as separate summary keys. Reusing the same key hides useful state.
@@ -80,6 +98,10 @@ Codex skill catalog.
   for extra confirmation. Escalate before commit or push only when work is
   incomplete, validation/sync failed, a required command was rejected,
   security or privacy risk remains, or staging is unsafe.
+- When a maintained skill is deliberately retired, add only its reviewed exact
+  name to the sync cleanup and verify it is removed from all three approved
+  personal-global roots. Never expand that cleanup into unknown personal or
+  project-specific skill paths.
 
 ## Documentation Lessons
 

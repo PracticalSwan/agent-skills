@@ -42,27 +42,29 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-07-30`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-02`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `149` tracked skill folders
-  - `117` tracked maintained skills
+  - `147` tracked skill folders
+  - `115` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `207` local skill folders detected
-  - `175` local maintained skills detected
+  - `205` local skill folders detected
+  - `173` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `149` tracked skills use catalog `version: "2.0"`. The `141` pre-existing
-tracked skills retain `last_updated: 2026-07-29`; the eight official Tavily
-imports use `last_updated: 2026-07-30`. The `58` local-only Google Workspace
-overlays keep their upstream `version: "0.22.5"` while sharing the 2026-07-29
-retained-client section and validation baseline.
+All `147` tracked skills use catalog `version: "2.0"`. The `131` unchanged
+pre-existing tracked skills retain `last_updated: 2026-07-29`; the eight
+official Tavily imports use `last_updated: 2026-07-30`; and the eight skills
+touched by the frontend consolidation use `last_updated: 2026-08-02`. The
+`58` local-only Google Workspace overlays keep their upstream
+`version: "0.22.5"` while sharing the 2026-07-29 retained-client section and
+validation baseline.
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have
 finalized canonical provenance. Child-path promotion is handled by
@@ -73,6 +75,12 @@ The Tavily suite is sourced from `tavily-ai/skills` at commit
 `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`. Keep its eight skills
 self-contained, retain the local secret and prompt-injection safeguards, and
 do not reintroduce removed-client integrations from upstream references.
+
+`frontend-design` is the only general frontend creation and art-direction
+skill. The retired names `frontend-skill` and `premium-frontend-ui` redirect
+conceptually to `frontend-design`; `web-design-reviewer` remains the separate
+post-implementation visual QA skill. Keep framework, Figma, and Stitch skills
+separate because they own narrower implementation or tool-specific workflows.
 
 ## Source Of Truth
 
@@ -106,6 +114,9 @@ Per-target routing:
 - Sync removes known catalog-owned top-level shadows that violate those
   routes, including copied Superpowers outside the shared `superpowers`
   subfolder. It must preserve unknown personal skills and Codex `.system`.
+- Sync also prunes the exact retired catalog folders `frontend-skill` and
+  `premium-frontend-ui` from the three approved roots after their content and
+  provenance have been consolidated into `frontend-design`.
 
 Host-provided or plugin-managed skills that are not part of this maintained
 catalog should stay external unless you intentionally vendor them into this

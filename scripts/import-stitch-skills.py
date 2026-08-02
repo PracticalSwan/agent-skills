@@ -114,7 +114,7 @@ SKILLS = [
             "No fabricated brand claims, metrics, or unsupported implementation details were introduced.",
         ],
         "fallback": "No Stitch MCP is required; use local source reads, repo search, and framework references.",
-        "related": ["stitch-design-md", "stitch-manage-design-system", "frontend-design", "premium-frontend-ui"],
+        "related": ["stitch-design-md", "stitch-manage-design-system", "frontend-design"],
         "reason": "Keeps source-code design extraction distinct from rendered Stitch project analysis.",
     },
     {
@@ -293,7 +293,7 @@ SKILLS = [
             "Design mapping is token-based rather than arbitrary classes.",
         ],
         "fallback": "Use the shadcn CLI and official registry docs when no shadcn MCP server is exposed.",
-        "related": ["react-development", "frontend-design", "stitch-react-components", "premium-frontend-ui"],
+        "related": ["react-development", "frontend-design", "stitch-react-components"],
         "reason": "Keeps shadcn integration separate from general React conversion because it has its own CLI and ownership model.",
     },
     {
@@ -393,7 +393,7 @@ SKILLS = [
             "No fake data, unsupported claims, or inaccessible requirements were introduced.",
         ],
         "fallback": "No MCP is required for drafting; upload later through Stitch MCP or web UI.",
-        "related": ["premium-frontend-ui", "frontend-design", "stitch-design-md", "stitch-enhance-prompt"],
+        "related": ["frontend-design", "stitch-design-md", "stitch-enhance-prompt"],
         "reason": "Preserves the opinionated design-quality role as distinct from extraction and prompt-polishing skills.",
     },
 ]

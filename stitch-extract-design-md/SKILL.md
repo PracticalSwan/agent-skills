@@ -1,7 +1,7 @@
 ---
 name: stitch-extract-design-md
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-02
 tags: [stitch, design-system, frontend, tokens, audit]
 description: "Extract a Stitch-compatible DESIGN.md from frontend source code, stylesheets, Tailwind config, theme files, and component patterns."
 license: "Apache-2.0"
@@ -85,4 +85,3 @@ Preferred MCP Server: Stitch MCP
 - [stitch-design-md](../stitch-design-md/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [stitch-manage-design-system](../stitch-manage-design-system/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [frontend-design](../frontend-design/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
-- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use when the task also needs this adjacent Stitch workflow.

@@ -1,7 +1,7 @@
 ---
 name: stitch-taste-design
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-02
 tags: [stitch, design-system, taste, ui, prompting]
 description: "Create opinionated premium DESIGN.md guidance for Stitch, emphasizing calibrated typography, restrained color, layout discipline, motion, and anti-generic UI rules."
 license: "Apache-2.0"
@@ -82,7 +82,6 @@ Preferred MCP Server: Stitch MCP
 
 ## Related Skills
 
-- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [frontend-design](../frontend-design/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [stitch-design-md](../stitch-design-md/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [stitch-enhance-prompt](../stitch-enhance-prompt/SKILL.md): Use when the task also needs this adjacent Stitch workflow.

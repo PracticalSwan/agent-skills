@@ -1,7 +1,7 @@
 ---
 name: stitch-shadcn-ui
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-02
 tags: [stitch, shadcn, react, components, tailwind]
 description: "Integrate Stitch-derived UI direction into shadcn/ui React projects with registry-aware setup, ownership rules, theming, and validation."
 license: "Apache-2.0"
@@ -85,4 +85,3 @@ Preferred MCP Server: Stitch MCP
 - [react-development](../react-development/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [frontend-design](../frontend-design/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
 - [stitch-react-components](../stitch-react-components/SKILL.md): Use when the task also needs this adjacent Stitch workflow.
-- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use when the task also needs this adjacent Stitch workflow.

@@ -1,5 +1,40 @@
 # Changelog
 
+## [2026-08-02] - Canonical Frontend Design Consolidation
+
+### Added
+
+- Added a six-mode design router for product, marketing, data, editorial,
+  commerce, and justified immersive work.
+- Added the weighted context-fit decision rubric, explicit hard gates, compact
+  workflow, complete state model, and current responsive and performance
+  verification criteria.
+- Added canonical agent metadata and retained the Apache-2.0 and GitHub MIT
+  license texts plus provenance and modification notices for the consolidated
+  source material.
+
+### Changed
+
+- **BREAKING:** Consolidated the removed `frontend-skill` and
+  `premium-frontend-ui` behaviors into `frontend-design`; use
+  `web-design-reviewer` separately for post-implementation visual QA.
+- Rewrote `SKILL.md` from 867 lines into a concise, context-first workflow
+  that treats visual style and advanced effects as conditional choices.
+- Replaced the oversized component tutorials with a focused WCAG 2.2
+  checklist while retaining the local contrast checker.
+- Marked the adapted OpenAI art-direction material as modified under
+  Apache-2.0 and preserved the original local MIT terms.
+
+### Fixed
+
+- Removed broken contrast and modal examples, malformed headings, corrupted
+  review text, and generic framework code that duplicated specialized skills.
+- Corrected the 60-30-10 rule from a universal claim to an optional heuristic.
+- Distinguished the WCAG 2.2 AA 24-by-24 CSS-pixel target-size requirement
+  and its exceptions from the stronger 44-by-44 enhanced recommendation.
+- Replaced mandatory premium effects and dependencies with accessible,
+  measurable, and performance-bounded optional techniques.
+
 ## [2026-07-29] - Version 2.0 Client Support Reset
 
 ### Added

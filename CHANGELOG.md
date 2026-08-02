@@ -3,6 +3,44 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-02] - Canonical Frontend Design Consolidation
+
+### Added
+
+- Added a context-fit operating rubric and six-mode router to the canonical
+  `frontend-design` skill, with accessibility and functional correctness as
+  hard gates.
+- Added canonical agent metadata, a corrected WCAG 2.2 accessibility
+  reference, complete Apache-2.0 and GitHub MIT license texts, and provenance
+  and modification notices.
+- Added exact retired-name cleanup to the downstream sync for
+  `frontend-skill` and `premium-frontend-ui` across only the three approved
+  personal-global roots.
+
+### Changed
+
+- **BREAKING:** Consolidated the general creation and art-direction behavior
+  of `frontend-skill` and `premium-frontend-ui` into `frontend-design` while
+  retaining `web-design-reviewer` as post-implementation visual QA.
+- Reduced the tracked catalog to `147` skill folders and `115` maintained
+  skills; the live workspace contains `205` skill folders and `173` maintained
+  skills including `58` local-only overlays.
+- Migrated framework, Stitch, visual-tool, registry, import-script, and root
+  documentation references to the canonical path while preserving the
+  `#component-review-rubric` anchor used by React, Next.js, and Vite.
+- Updated provenance to map `frontend-design` to the modified historical
+  OpenAI source and preserved the reviewed Awesome Copilot source attribution.
+
+### Fixed
+
+- Removed broken JSX and contrast examples, corrupted text, universal
+  60-30-10 and 44-pixel claims, and excessive generic framework tutorials.
+- Replaced mandatory preloaders, smooth scrolling, custom cursors, pinned
+  journeys, 3D, and animation dependencies with optional techniques bounded by
+  accessibility, performance, and maintenance cost.
+- Removed the inaccessible recipe-card example and duplicative Tailwind
+  component catalog instead of preserving unsupported quality claims.
+
 ## [2026-07-30] - Official Tavily Agent Skills
 
 ### Added

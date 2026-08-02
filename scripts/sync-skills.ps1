@@ -22,6 +22,14 @@ $script:allowedDownstreamRoots = @(
     'C:\Users\LOQ\.claude\skills'
 )
 
+# These exact maintained-skill names were retired by the 2026-08-02 frontend
+# consolidation. Prune only these known catalog-owned copies; preserve unknown
+# personal skills and all host-managed folders.
+$script:retiredCatalogSkills = @(
+    'frontend-skill',
+    'premium-frontend-ui'
+)
+
 function Get-NormalizedPath {
     param(
         [Parameter(Mandatory = $true)]
@@ -209,18 +217,21 @@ $summary = [ordered]@{
         )
         pruned_stale_system_mirrors = @()
         pruned_stale_superpowers = @()
+        pruned_retired_skills = @()
     }
     shared = [ordered]@{
         root = $sharedRootPath
         synced_maintained = @()
         synced_superpowers = @()
         pruned_top_level_superpowers = @()
+        pruned_retired_skills = @()
     }
     claude = [ordered]@{
         root = $claudeRootPath
         synced_maintained = @()
         skipped_superpowers = @($skillSet.CopiedOfficial | Select-Object -ExpandProperty Name)
         pruned_top_level_superpowers = @()
+        pruned_retired_skills = @()
     }
 }
 
@@ -237,6 +248,12 @@ if (-not $SkipCodex) {
             -TargetRoot $codexRootPath `
             -Label "top-level Codex Superpower"
     )
+    $summary.codex.pruned_retired_skills = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $script:retiredCatalogSkills `
+            -TargetRoot $codexRootPath `
+            -Label "retired frontend catalog"
+    )
     $summary.codex.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $codexMaintained -TargetRoot $codexRootPath -Label "Codex maintained"
     )
@@ -248,6 +265,12 @@ if (-not $SkipShared) {
             -SkillNames $copiedOfficialNames `
             -TargetRoot $sharedRootPath `
             -Label "top-level shared Superpower"
+    )
+    $summary.shared.pruned_retired_skills = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $script:retiredCatalogSkills `
+            -TargetRoot $sharedRootPath `
+            -Label "retired frontend catalog"
     )
     $summary.shared.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $sharedRootPath -Label "Shared maintained"
@@ -263,6 +286,12 @@ if (-not $SkipClaude) {
             -SkillNames $copiedOfficialNames `
             -TargetRoot $claudeRootPath `
             -Label "top-level Claude Superpower"
+    )
+    $summary.claude.pruned_retired_skills = @(
+        Remove-RetiredRouteCopies `
+            -SkillNames $script:retiredCatalogSkills `
+            -TargetRoot $claudeRootPath `
+            -Label "retired frontend catalog"
     )
     $summary.claude.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $claudeRootPath -Label "Claude maintained"

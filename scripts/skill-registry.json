@@ -669,12 +669,6 @@
       "local_source_path": "C:/Users/LOQ/.codex/skills/pdf",
       "reason": "The workspace contains many PDF course materials and student deliverables that need layout-aware PDF handling."
     },
-    "premium-frontend-ui": {
-      "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "8ae5a99109124c22288eee0254da61741e44d12a",
-      "source_path": "skills/premium-frontend-ui",
-      "reason": "The workspace includes several React, Vite, Next.js, and Three.js frontends where higher-quality UI direction is useful."
-    },
     "rag-blueprint": {
       "source_repo": "https://github.com/NVIDIA/skills",
       "source_commit": "ce70ca7f1966c243e0b6a56b67085a185121d096",
@@ -1161,11 +1155,11 @@
       "source_path": "skills/.curated/doc",
       "reason": "Preserves the exact historical OpenAI DOCX skill found in the Codex child root after the curated source was retired."
     },
-    "frontend-skill": {
+    "frontend-design": {
       "source_repo": "https://github.com/openai/skills",
       "source_commit": "30444aed500c00c85294d12074f6e3ee794f808a",
       "source_path": "skills/.curated/frontend-skill",
-      "reason": "Preserves the exact historical OpenAI frontend art-direction skill found in the Codex child root after the curated source was retired."
+      "reason": "Canonical consolidation that preserves modified historical OpenAI art-direction guidance under Apache-2.0 alongside the original local MIT skill; reviewed premium guidance was restated rather than copied."
     },
     "docx": {
       "source_repo": "https://github.com/anthropics/skills",

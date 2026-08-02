@@ -1,7 +1,7 @@
 ---
 name: legacy-circuit-mockups
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-02
 tags: [legacy, circuit, mockups, design, frontend]
 description: "Breadboard circuit mockups via HTML5 Canvas. Use when creating circuit layouts, visualizing 6502/retro electronics components, drawing breadboard diagrams, or designing vintage computer schematics with discrete parts."
 ---
@@ -333,6 +333,5 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
-- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
 - [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
 - [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.

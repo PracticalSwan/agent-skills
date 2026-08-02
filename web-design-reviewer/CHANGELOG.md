@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-08-02] - Frontend Design Reference Consolidation
+
+### Changed
+
+- Removed the retired `premium-frontend-ui` cross-reference and kept
+  `frontend-design` as the creation skill while this skill remains the
+  separate post-implementation visual QA workflow.
+
 ## [2026-07-29] - Version 2.0 Client Support Reset
 
 ### Added

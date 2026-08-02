@@ -23,6 +23,12 @@ For every maintained skill change:
 
 When importing from a child or categorized skill root, use `scripts/promote-child-skills.py` so destination names are validated, nested skills are flattened consistently, and existing changelog history is preserved. Run `scripts/update-skill-registry.py` after changing provenance or copied-official classification.
 
+When consolidating or retiring a maintained skill, migrate useful content and
+applicable licenses first, update every active cross-reference and provenance
+record, and add only the exact retired catalog names to the sync cleanup. Keep
+specialized implementation or review skills separate when their activation
+boundaries remain distinct.
+
 ## Repo Docs And Counts
 
 If your change affects catalog counts, sync flow, startup rules, supported clients, portability expectations, or GitHub-facing workflow guidance, update the relevant root docs in the same pass:

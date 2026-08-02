@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-08-02] - Frontend Design Reference Consolidation
+
+### Changed
+
+- Removed the retired `premium-frontend-ui` cross-reference; route general UI
+  creation and art direction to the canonical `frontend-design` skill.
+
 ## [2026-07-29] - Version 2.0 Client Support Reset
 
 ### Added

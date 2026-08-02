@@ -2,6 +2,13 @@
 
 All notable changes to the `stitch-taste-design` skill will be documented in this file.
 
+## [2026-08-02] - Frontend Design Reference Consolidation
+
+### Changed
+
+- Removed the retired `premium-frontend-ui` cross-reference and retained
+  `frontend-design` as the canonical general art-direction companion.
+
 ## [2026-07-29] - Version 2.0 Client Support Reset
 
 ### Added

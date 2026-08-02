@@ -1,7 +1,7 @@
 ---
 name: excalidraw-diagram-generator
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-02
 tags: [excalidraw, diagram, generator, design, frontend]
 description: "Generate .excalidraw diagrams from natural language. Use when creating flowcharts, mind maps, system architecture diagrams, sequence diagrams, ER diagrams, network diagrams, or any visual process visualization."
 ---
@@ -667,6 +667,5 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
-- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
 - [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
 - [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.

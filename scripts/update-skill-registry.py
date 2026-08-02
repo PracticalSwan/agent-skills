@@ -23,6 +23,8 @@ SOURCE_COMMITS = {
     "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
 }
 
+SNAPSHOT_DATE = "2026-08-02"
+
 SUPERPOWERS = {
     "brainstorming",
     "collision-zone-thinking",
@@ -216,7 +218,7 @@ def write_reference_sources(repo_root: Path, data: dict) -> None:
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-07-30)
+## Snapshot ({SNAPSHOT_DATE})
 
 - `{len(refs)}` skills have source mappings.
 - `{len(tracked)}` source-mapped skills are part of the git-tracked catalog.
@@ -224,7 +226,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
-- `32` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
+- `{len(data['copied_official_superpowers'])}` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
 
 ## Source Catalogs
 
@@ -278,6 +280,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`. Their operational guidance
   is retained with catalog metadata, reviewed installation choices,
   cross-client fallbacks, and the removed-client integration excluded.
+- The 2026-08-02 frontend consolidation maps the canonical `frontend-design`
+  skill to the historical OpenAI `frontend-skill` source at commit
+  `30444aed500c00c85294d12074f6e3ee794f808a`. The canonical folder preserves
+  its original MIT license, the modified OpenAI Apache-2.0 material, and the
+  reviewed Awesome Copilot MIT attribution. `frontend-skill` and
+  `premium-frontend-ui` are retired names, not separate reference installs.
 
 ## Selection And Refresh Notes
 
@@ -318,6 +326,8 @@ def main() -> int:
 
     current_by_repo = {repo: commit for repo, commit in SOURCE_COMMITS.values()}
     refs = data.setdefault("reference_installs", {})
+    for retired_name in ("frontend-skill", "premium-frontend-ui"):
+        refs.pop(retired_name, None)
     for metadata in refs.values():
         source_repo = metadata.get("source_repo")
         if source_repo in current_by_repo:
@@ -331,11 +341,11 @@ def main() -> int:
                 "source_path": "skills/.curated/doc",
                 "reason": "Preserves the exact historical OpenAI DOCX skill found in the Codex child root after the curated source was retired.",
             },
-            "frontend-skill": {
+            "frontend-design": {
                 "source_repo": "https://github.com/openai/skills",
                 "source_commit": "30444aed500c00c85294d12074f6e3ee794f808a",
                 "source_path": "skills/.curated/frontend-skill",
-                "reason": "Preserves the exact historical OpenAI frontend art-direction skill found in the Codex child root after the curated source was retired.",
+                "reason": "Canonical consolidation that preserves modified historical OpenAI art-direction guidance under Apache-2.0 alongside the original local MIT skill; reviewed premium guidance was restated rather than copied.",
             },
             "docx": {
                 "source_repo": "https://github.com/anthropics/skills",

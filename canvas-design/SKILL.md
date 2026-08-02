@@ -1,7 +1,7 @@
 ---
 name: canvas-design
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-02
 tags: [canvas, design, frontend, ui, visual]
 description: "Design philosophy docs and canvas-based visual creation. Use when articulating design principles, crafting multi-page design documents, or exploring aesthetic philosophy with intentional design thinking."
 ---
@@ -162,6 +162,5 @@ Preferred MCP Server: None required
 ## Related Skills
 
 - [frontend-design](../frontend-design/SKILL.md): Use it when the workflow also needs UI composition and front-end design direction.
-- [premium-frontend-ui](../premium-frontend-ui/SKILL.md): Use it when the workflow also needs high-fidelity UI polish and interaction detail.
 - [web-design-reviewer](../web-design-reviewer/SKILL.md): Use it when the workflow also needs browser-based UI review and responsive QA.
 - [stitch-design](../stitch-design/SKILL.md): Use it when the workflow also needs turning interface designs into implementation-ready assets.

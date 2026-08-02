@@ -33,24 +33,25 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-07-30`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-02`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `149` tracked skill folders
-  - `117` tracked maintained skills
+  - `147` tracked skill folders
+  - `115` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `207` local skill folders detected
-  - `175` local maintained skills detected
+  - `205` local skill folders detected
+  - `173` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `149` tracked skills use catalog `version: "2.0"`. The `141` pre-existing
-tracked skills retain `last_updated: 2026-07-29`; the eight official Tavily
-imports use `last_updated: 2026-07-30`. The `58` local-only Google Workspace
-overlays retain upstream `version: "0.22.5"` while sharing the 2026-07-29
-retained-client section and validation baseline.
+All `147` tracked skills use catalog `version: "2.0"`. The `131` unchanged
+pre-existing tracked skills retain `last_updated: 2026-07-29`; the eight
+official Tavily imports use `last_updated: 2026-07-30`; and the eight skills
+touched by the frontend consolidation use `last_updated: 2026-08-02`. The
+`58` local-only Google Workspace overlays retain upstream `version: "0.22.5"`
+while sharing the 2026-07-29 retained-client section and validation baseline.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
 The Tavily suite is sourced from `tavily-ai/skills` at commit
@@ -58,6 +59,12 @@ The Tavily suite is sourced from `tavily-ai/skills` at commit
 GLM Coding Plan endpoint should use the external `tvly` CLI, official SDK, or a
 healthy configured Tavily MCP server; they must not assume subscription-only
 browser integrations.
+
+`frontend-design` is the only general frontend creation and art-direction
+skill. Use it instead of the retired `frontend-skill` and
+`premium-frontend-ui` names. Keep `web-design-reviewer` separate for
+post-implementation visual QA and keep framework, Figma, and Stitch skills for
+their specialized workflows.
 
 ## Downstream Sync Targets
 
@@ -78,6 +85,8 @@ Per-target routing:
   parent copies still sync to the shared and Claude roots.
 - Sync removes known catalog-owned top-level route conflicts, but preserves
   unknown personal skills and all Codex `.system` folders.
+- Sync removes the exact retired catalog copies `frontend-skill` and
+  `premium-frontend-ui` from these three approved roots.
 
 Treat those paths as synced mirrors or branch targets, not as the place to author new maintained skills.
 Host-provided or plugin-managed skills that are not part of this maintained catalog should stay external unless you intentionally vendor them into this repo.

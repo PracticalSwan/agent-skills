@@ -152,6 +152,21 @@ Codex skill catalog.
   compare inventories and digests, confirm that no configuration or process
   uses it, and preserve all surrounding application state.
 
+## 2026-08-08 Matt Pocock Skill Import
+
+- When importing from a categorized upstream catalog, audit every live
+  `SKILL.md` entrypoint and its support files first; README indexes can omit
+  beta, misc, or newly added entries.
+- Select skills by real workspace gaps and preserve stronger local equivalents
+  for overlapping TDD, debugging, review, implementation, planning, and skill
+  authoring workflows.
+- Normalize imported content before validation, retain the upstream license
+  and pinned commit, and adapt host-specific or destructive-operation guidance
+  to the catalog's cross-client and approval boundaries.
+- Keep the parent catalog as the source of truth and sync only the approved
+  personal-global roots. Project-local skill paths remain out of scope even
+  when the workspace audit reads their project documentation.
+
 ## Update Checklist
 
 1. Edit the workspace copy.

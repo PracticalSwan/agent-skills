@@ -33,24 +33,25 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-08-02`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-08`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `147` tracked skill folders
-  - `115` tracked maintained skills
+  - `155` tracked skill folders
+  - `123` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `205` local skill folders detected
-  - `173` local maintained skills detected
+  - `213` local skill folders detected
+  - `181` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `147` tracked skills use catalog `version: "2.0"`. The `131` unchanged
+All `155` tracked skills use catalog `version: "2.0"`. The `131` unchanged
 pre-existing tracked skills retain `last_updated: 2026-07-29`; the eight
-official Tavily imports use `last_updated: 2026-07-30`; and the eight skills
-touched by the frontend consolidation use `last_updated: 2026-08-02`. The
-`58` local-only Google Workspace overlays retain upstream `version: "0.22.5"`
+official Tavily imports use `last_updated: 2026-07-30`; the eight skills
+touched by the frontend consolidation use `last_updated: 2026-08-02`; and the
+eight selected Matt Pocock imports use `last_updated: 2026-08-08`. The `58`
+local-only Google Workspace overlays retain upstream `version: "0.22.5"`
 while sharing the 2026-07-29 retained-client section and validation baseline.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
@@ -59,6 +60,13 @@ The Tavily suite is sourced from `tavily-ai/skills` at commit
 GLM Coding Plan endpoint should use the external `tvly` CLI, official SDK, or a
 healthy configured Tavily MCP server; they must not assume subscription-only
 browser integrations.
+
+The selected Matt Pocock import is sourced from `mattpocock/skills` at commit
+`84fdeffd12f2ee307994d1eb6feb48173b6e0502`. It adds eight cross-client gaps
+for architecture, domain modeling, prototypes, primary-source research,
+conflict resolution, handoffs, and agent-document writing. Keep the existing
+catalog equivalents for TDD, debugging, review, implementation, planning, and
+skill authoring as the canonical overlapping workflows.
 
 `frontend-design` is the only general frontend creation and art-direction
 skill. Use it instead of the retired `frontend-skill` and

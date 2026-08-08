@@ -1,0 +1,34 @@
+# Changelog
+
+All notable changes to the `domain-modeling` skill are documented here.
+
+## [2026-08-08] - Workspace Fit And Catalog Import
+
+### Added
+
+- Added the MIT-licensed upstream skill from `mattpocock/skills` at commit `84fdeffd12f2ee307994d1eb6feb48173b6e0502`.
+
+### Changed
+
+- Added the catalog metadata, cross-client portability, MCP fallback, and verification baseline.
+- Aligned context-file guidance with existing workspace instructions and canonical memory surfaces.
+
+### Fixed
+
+- Prevented parallel glossary files from being created when a project already has an authoritative context or memory convention.
+
+## [2026-07-29] - Version 2.0 Client Support Reset
+
+### Added
+
+- Added the current GitHub Copilot, Claude Code, and Codex portability baseline.
+
+### Changed
+
+- **BREAKING:** Removed Gemini CLI and Antigravity as supported clients.
+- Refreshed catalog metadata and last-updated state for the 2026-07-29 maintenance pass.
+- Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+
+### Fixed
+
+- Prevented catalog modernization from reintroducing removed Gemini or Antigravity guidance.

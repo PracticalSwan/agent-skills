@@ -89,6 +89,10 @@
     "tavily_skills": {
       "repo": "https://github.com/tavily-ai/skills",
       "commit": "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"
+    },
+    "matt_pocock_skills": {
+      "repo": "https://github.com/mattpocock/skills",
+      "commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502"
     }
   },
   "mcp_skills": {
@@ -1313,7 +1317,7 @@
     },
     "openai-docs": {
       "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
-      "source_commit": "sha256:b1eb25319be283a189214c71a7e5b928dedbb3c1f5764868c77aa1229b124715",
+      "source_commit": "sha256:43ba6399569a39bb3a4c42ac1150bae34a3e60098943290c558ac18045aeab1c",
       "source_path": "openai-docs",
       "reason": "Promoted from the personal Codex system bundle with official-domain and no-native-tool fallbacks for other clients."
     },
@@ -1394,6 +1398,54 @@
       "source_commit": "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2",
       "source_path": "skills/tavily-search",
       "reason": "Official Tavily web-search workflow with bounded query, recency, domain, and source-verification guidance."
+    },
+    "codebase-design": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/engineering/codebase-design",
+      "reason": "Adds a deep-module design vocabulary for the user's TypeScript storefront, OCR pipeline, and other multi-module projects; retained project naming contracts during normalization."
+    },
+    "domain-modeling": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/engineering/domain-modeling",
+      "reason": "Adds active domain-term and ADR discipline for the user's storefront, OCR, and course-project workflows while honoring existing context and memory surfaces."
+    },
+    "improve-codebase-architecture": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/engineering/improve-codebase-architecture",
+      "reason": "Adds a bounded architecture survey and visual report workflow that complements the catalog's code-quality and review skills."
+    },
+    "prototype": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/engineering/prototype",
+      "reason": "Adds a throwaway logic and UI prototyping workflow for the user's storefront, Three.js, OCR GUI, and state-model design questions."
+    },
+    "research": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/engineering/research",
+      "reason": "Adds a tool-agnostic primary-source research workflow that complements the existing Tavily-specific research skills."
+    },
+    "resolving-merge-conflicts": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/engineering/resolving-merge-conflicts",
+      "reason": "Adds a focused merge/rebase conflict-resolution workflow for the user's nested repositories with explicit history-change approval gates."
+    },
+    "handoff": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/productivity/handoff",
+      "reason": "Adds a privacy-safe temporary handoff workflow for continuing work across the user's multiple workspaces and agents."
+    },
+    "writing-for-agents": {
+      "source_repo": "https://github.com/mattpocock/skills",
+      "source_commit": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "source_path": "skills/productivity/writing-for-agents",
+      "reason": "Adds progressive-disclosure guidance for maintaining skills and agent instruction files; retained the catalog's existing writing-skills workflow for test-driven skill authoring."
     }
   },
   "codex_system_managed_skills": [

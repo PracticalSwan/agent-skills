@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-08-02`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-08`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `147` tracked skill folders
-  - `115` tracked maintained skills
+  - `155` tracked skill folders
+  - `123` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `205` local skill folders detected
-  - `173` local maintained skills detected
+  - `213` local skill folders detected
+  - `181` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,10 +49,11 @@ Snapshot date: `2026-08-02`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `147` tracked skills use catalog `version: "2.0"`. The `131` unchanged
+- All `155` tracked skills use catalog `version: "2.0"`. The `131` unchanged
   pre-existing tracked skills retain `last_updated: 2026-07-29`; the eight
-  Tavily imports use `last_updated: 2026-07-30`; and the eight skills touched
-  by the frontend consolidation use `last_updated: 2026-08-02`.
+  Tavily imports use `last_updated: 2026-07-30`; the eight skills touched by
+  the frontend consolidation use `last_updated: 2026-08-02`; and the eight
+  selected Matt Pocock imports use `last_updated: 2026-08-08`.
 - The `58` local-only Google Workspace overlays retain their upstream
   `version: "0.22.5"` while sharing the 2026-07-29 retained-client sections
   and validation baseline.
@@ -60,6 +61,14 @@ Snapshot date: `2026-08-02`. Local overlay totals can differ by machine.
 - The eight Tavily skills are imported from the official `tavily-ai/skills`
   repository at commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`,
   including the current `tavily-dynamic-search` workflow.
+- The selected Matt Pocock import is sourced from `mattpocock/skills` at
+  commit `84fdeffd12f2ee307994d1eb6feb48173b6e0502`. The audited 35-skill
+  tree contributed only `codebase-design`, `domain-modeling`,
+  `improve-codebase-architecture`, `prototype`, `research`,
+  `resolving-merge-conflicts`, `handoff`, and `writing-for-agents`.
+- Existing catalog equivalents remain canonical for upstream `tdd`,
+  `diagnosing-bugs`, `code-review`, and `implement` overlap; no project-local
+  skill roots receive sync.
 - The 2026-07-29 child-path reconciliation inspected only the personal
   `.codex` and `.claude` roots. It promoted five Codex system-only skills,
   refreshed the existing `imagegen` copy, and found no Claude-only skill.
@@ -269,12 +278,17 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `documentation-patterns`
 - `documentation-quality`
 - `documentation-verification`
+- `handoff`
+- `resolving-merge-conflicts`
 - `step-by-step-web-project-builder`
 - `web-dev-explainer`
 
 ### Architecture and Platform
 
+- `codebase-design`
 - `cloud-design-patterns`
+- `domain-modeling`
+- `improve-codebase-architecture`
 - `mcp-builder`
 - `vercel-deploy`
 
@@ -289,6 +303,7 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `legacy-circuit-mockups`
 - `nextjs-development`
 - `playwright`
+- `prototype`
 - `react-development`
 - `stitch-design`
 - `stitch-code-to-design`
@@ -366,6 +381,7 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `openai-docs`
 - `plugin-creator`
 - `review-agent`
+- `research`
 - `skill-creator`
 - `skill-installer`
 - `notebook-execution-safety`
@@ -381,6 +397,7 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `tavily-map`
 - `tavily-research`
 - `tavily-search`
+- `writing-for-agents`
 
 ### Security and Specialized
 

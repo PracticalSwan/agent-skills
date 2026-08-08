@@ -21,9 +21,10 @@ SOURCE_COMMITS = {
     "superpowers_skills": ("https://github.com/obra/superpowers-skills", "cdcd624ad3fd8026deb692e565351854569798dd"),
     "superpowers_legacy": ("https://github.com/obra/superpowers", "44c9b2d6e889982ac18c27d05a19fefe335194e1"),
     "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
+    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "84fdeffd12f2ee307994d1eb6feb48173b6e0502"),
 }
 
-SNAPSHOT_DATE = "2026-08-02"
+SNAPSHOT_DATE = "2026-08-08"
 
 SUPERPOWERS = {
     "brainstorming",
@@ -82,6 +83,41 @@ TAVILY_SKILLS = {
     "tavily-map": "Official Tavily URL-discovery workflow for bounded map-then-extract operations.",
     "tavily-research": "Official Tavily cited-research workflow with job-state, cost, and citation-verification safeguards.",
     "tavily-search": "Official Tavily web-search workflow with bounded query, recency, domain, and source-verification guidance.",
+}
+
+MATT_POCOCK_SKILLS = {
+    "codebase-design": (
+        "skills/engineering/codebase-design",
+        "Adds a deep-module design vocabulary for the user's TypeScript storefront, OCR pipeline, and other multi-module projects; retained project naming contracts during normalization.",
+    ),
+    "domain-modeling": (
+        "skills/engineering/domain-modeling",
+        "Adds active domain-term and ADR discipline for the user's storefront, OCR, and course-project workflows while honoring existing context and memory surfaces.",
+    ),
+    "improve-codebase-architecture": (
+        "skills/engineering/improve-codebase-architecture",
+        "Adds a bounded architecture survey and visual report workflow that complements the catalog's code-quality and review skills.",
+    ),
+    "prototype": (
+        "skills/engineering/prototype",
+        "Adds a throwaway logic and UI prototyping workflow for the user's storefront, Three.js, OCR GUI, and state-model design questions.",
+    ),
+    "research": (
+        "skills/engineering/research",
+        "Adds a tool-agnostic primary-source research workflow that complements the existing Tavily-specific research skills.",
+    ),
+    "resolving-merge-conflicts": (
+        "skills/engineering/resolving-merge-conflicts",
+        "Adds a focused merge/rebase conflict-resolution workflow for the user's nested repositories with explicit history-change approval gates.",
+    ),
+    "handoff": (
+        "skills/productivity/handoff",
+        "Adds a privacy-safe temporary handoff workflow for continuing work across the user's multiple workspaces and agents.",
+    ),
+    "writing-for-agents": (
+        "skills/productivity/writing-for-agents",
+        "Adds progressive-disclosure guidance for maintaining skills and agent instruction files; retained the catalog's existing writing-skills workflow for test-driven skill authoring.",
+    ),
 }
 
 CODEX_SYSTEM_SKILLS = {
@@ -286,6 +322,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   its original MIT license, the modified OpenAI Apache-2.0 material, and the
   reviewed Awesome Copilot MIT attribution. `frontend-skill` and
   `premium-frontend-ui` are retired names, not separate reference installs.
+- The 2026-08-08 Matt Pocock audit inspected all `35` live upstream skill
+  entrypoints at commit `84fdeffd12f2ee307994d1eb6feb48173b6e0502` and
+  imported only eight cross-client gaps: architecture, domain modeling,
+  prototypes, primary-source research, conflict resolution, handoffs, and
+  agent-document writing. The source MIT license is retained in each imported
+  folder.
 
 ## Selection And Refresh Notes
 
@@ -306,6 +348,9 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   in the active host before use.
 - Imported skills that handle third-party content retain prompt-injection,
   credential, approval, and private-data boundaries during normalization.
+- Overlapping upstream TDD, debugging, code review, implementation, planning,
+  and skill-authoring workflows remain represented by the stronger existing
+  catalog skills rather than being duplicated.
 - Copied official Superpowers remain separately classified so maintained
   counts, sync routing, and provenance reporting stay honest.
 """
@@ -379,6 +424,13 @@ def main() -> int:
             "source_repo": "https://github.com/tavily-ai/skills",
             "source_commit": SOURCE_COMMITS["tavily_skills"][1],
             "source_path": f"skills/{name}",
+            "reason": reason,
+        }
+    for name, (source_path, reason) in MATT_POCOCK_SKILLS.items():
+        refs[name] = {
+            "source_repo": "https://github.com/mattpocock/skills",
+            "source_commit": SOURCE_COMMITS["matt_pocock_skills"][1],
+            "source_path": source_path,
             "reason": reason,
         }
     codex_system_root = Path.home() / ".codex" / "skills" / ".system"

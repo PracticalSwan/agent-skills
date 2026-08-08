@@ -3,6 +3,41 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-08] - Selected Matt Pocock Skills Import
+
+### Added
+
+- Audited all `35` live skill entrypoints in `mattpocock/skills` at commit
+  `84fdeffd12f2ee307994d1eb6feb48173b6e0502`.
+- Added the eight selected MIT-licensed skills: `codebase-design`,
+  `domain-modeling`, `improve-codebase-architecture`, `prototype`,
+  `research`, `resolving-merge-conflicts`, `handoff`, and
+  `writing-for-agents`.
+- Added per-skill licenses, catalog changelogs, registry provenance, and
+  cross-client fallback metadata.
+
+### Changed
+
+- Updated the live catalog to `155` skill folders and `123` maintained skills;
+  the local workspace now contains `213` skill folders and `181` maintained
+  skills including `58` local-only overlays.
+- Retained the existing catalog equivalents for upstream TDD, debugging, code
+  review, implementation, planning, and skill-authoring overlaps.
+- Adapted the imported workflows for existing project conventions, concise
+  clarification, Windows-first temporary paths, and explicit Git approval
+  gates.
+- Updated root instructions, client guidance, catalog lists, source registry,
+  and reference-source documentation. Downstream sync remains limited to the
+  three approved personal-global roots; no project-local skill path was used.
+
+### Fixed
+
+- Removed the imported architecture workflow's hard dependency on an absent
+  `/grilling` skill by routing to the local `brainstorming` workflow or a
+  bounded direct decision loop.
+- Prevented imported merge/conflict and prototype workflows from implying
+  unauthorized destructive, history-changing, or publication actions.
+
 ## [2026-08-02] - Canonical Frontend Design Consolidation
 
 ### Added

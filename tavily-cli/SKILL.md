@@ -1,13 +1,12 @@
 ---
 name: tavily-cli
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, cli, web-search, extraction, crawling, research]
 description: "Route Tavily web-search, extraction, mapping, crawling, and cited-research requests to the narrowest `tvly` command. Use for command-line Tavily work, installation checks, authentication setup, or choosing among the specialized Tavily skills."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI and authenticated Tavily access; command examples must be adapted to the active shell."
 ---
-
 # Tavily CLI
 
 Web search, content extraction, site crawling, URL discovery, and deep research. Returns JSON optimized for LLM consumption.
@@ -100,19 +99,22 @@ Before claiming a Tavily CLI workflow succeeded:
 5. Pressure test: Handle an authentication error, empty result, or API failure without inventing a result or exposing a secret.
 6. Success metric: Report the command class, bounded scope, output location if any, and direct execution evidence.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: invoke `tvly` through an available terminal or use the official SDK when terminal execution is unavailable.
-- Claude Code: a GLM Coding Plan endpoint can use the external CLI through its shell; it must not assume Anthropic-native browser access.
-- Codex: use the local shell or an exposed Tavily connector/MCP surface; do not assume a Codex-only wrapper exists.
-- POSIX examples use `bash` syntax. On Windows, translate environment-variable and pipeline syntax for PowerShell and prefer `python` when `python3` is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-cli` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

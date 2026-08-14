@@ -1,7 +1,7 @@
 ---
 name: code-examples-sync
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [code, examples, sync, workflow, quality]
 description: "Synchronize and verify code examples in documentation. Use when function signatures change, API interfaces update, imports shift, or documentation snippets become outdated and need correction."
 ---

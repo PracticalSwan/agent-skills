@@ -1,7 +1,7 @@
 ---
 name: stitch-shadcn-ui
 version: "2.0"
-last_updated: 2026-08-02
+last_updated: 2026-08-14
 tags: [stitch, shadcn, react, components, tailwind]
 description: "Integrate Stitch-derived UI direction into shadcn/ui React projects with registry-aware setup, ownership rules, theming, and validation."
 license: "Apache-2.0"

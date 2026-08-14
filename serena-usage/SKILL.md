@@ -1,7 +1,7 @@
 ---
 name: serena-usage
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [serena, usage, workflow, automation, guidance]
 description: "Serena MCP for project memory and code navigation. Use when managing Serena memories, navigating symbols, performing intelligent refactoring, or maintaining context/continuity across AI agent sessions."
 ---

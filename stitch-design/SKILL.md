@@ -1,7 +1,7 @@
 ---
 name: stitch-design
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, design, frontend, ui, mcp]
 description: "Route Google Stitch tasks to the correct imported Stitch skill, with verified MCP tool boundaries, upload safety, and cross-client fallback guidance."
 license: "Apache-2.0"

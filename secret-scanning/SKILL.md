@@ -1,7 +1,7 @@
 ---
 name: secret-scanning
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [secret, scanning, security, audit, remediation]
 description: "Configure GitHub secret scanning and push protection, triage secret alerts, and run local pre-commit secret audits. Use when enabling secret scanning, handling blocked pushes, defining custom patterns, or checking a repo for accidental credentials before commit."
 ---

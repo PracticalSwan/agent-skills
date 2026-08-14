@@ -1,7 +1,7 @@
 ---
 name: deepstream-dev
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [nvidia, deepstream, gstreamer, tensorrt, video, vision]
 description: "NVIDIA DeepStream SDK development guidance for Python pyservicemaker pipelines, video analytics, TensorRT integration, and streaming inference workflows."
 license: "CC-BY-4.0 AND Apache-2.0"

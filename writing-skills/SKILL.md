@@ -1,7 +1,7 @@
 ---
 name: writing-skills
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [writing, skills]
 description: "TDD for process documentation - test with subagents before writing, iterate until bulletproof"
 ---

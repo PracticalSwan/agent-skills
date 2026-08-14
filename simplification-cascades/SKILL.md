@@ -1,7 +1,7 @@
 ---
 name: simplification-cascades
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [simplification, cascades]
 description: "Find one insight that eliminates multiple components - \"if this is true, we don't need X, Y, or Z"
 ---

@@ -1,7 +1,7 @@
 ---
 name: ds-teaching-assistant
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [ds, teaching, assistant]
 description: "Use for explicit undergraduate data-science teaching, assignment guidance, concept clarification, method selection, or output interpretation. Do not activate merely because a task contains data or Python code."
 ---

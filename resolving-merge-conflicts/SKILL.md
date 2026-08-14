@@ -1,7 +1,7 @@
 ---
 name: resolving-merge-conflicts
 version: "2.0"
-last_updated: 2026-08-08
+last_updated: 2026-08-14
 tags: [resolving, merge, conflicts]
 description: "Use when you need to resolve an in-progress git merge/rebase conflict."
 license: "MIT"

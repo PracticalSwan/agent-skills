@@ -3,6 +3,36 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-14] - Catalog-Wide Freshness And Source Sync
+
+### Added
+
+- Added the current upstream support material for `avoid-ai-writing`, Stitch,
+  Xquik, and the affected copied Superpowers workflows, including the new
+  detector validation/style helpers, Angular-aware Stitch capture guidance,
+  Xquik reference workflows, and bounded visual-brainstorming helpers.
+- Recorded current source-head provenance for the audited external catalogs
+  and refreshed the generated reference-source report.
+
+### Changed
+
+- Refreshed all `213` live skill entrypoints to the 2026-08-14 catalog
+  metadata and documentation baseline while preserving `2.0` tracked
+  versions and the upstream overlay version contract.
+- Reconciled only the personal `.codex` and `.claude` child roots; no
+  child-only skills required promotion, and no project-specific path was
+  scanned or synchronized.
+- Updated root maintenance documentation, per-skill changelogs, source
+  selection notes, and the current downstream-sync guidance.
+
+### Fixed
+
+- Removed imported Gemini/Antigravity operational setup from refreshed Stitch,
+  Xquik, and visual-companion guidance while retaining local no-MCP and secret
+  handling fallbacks.
+- Kept copied Superpowers and Codex system-managed routing distinct from the
+  maintained catalog during normalization and downstream synchronization.
+
 ## [2026-08-08] - Selected Matt Pocock Skills Import
 
 ### Added

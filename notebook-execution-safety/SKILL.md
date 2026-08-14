@@ -1,7 +1,7 @@
 ---
 name: notebook-execution-safety
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [notebook, execution, safety]
 description: "Review Jupyter notebooks for side effects, dependencies, and safe execution strategy before running or editing them."
 ---

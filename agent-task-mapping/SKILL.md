@@ -1,7 +1,7 @@
 ---
 name: agent-task-mapping
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [task, mapping, agents, delegation, workflow]
 description: "Map tasks to specialist agents. Use when choosing which agent for a job, comparing agent capabilities, or routing to React/Next.js/Playwright/docs/code-quality experts. Keywords: which agent, best agent for this, delegate to expert, agent capability mapping."
 ---

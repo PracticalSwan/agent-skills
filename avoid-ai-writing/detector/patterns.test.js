@@ -119,6 +119,51 @@ test('em-dash carve-out covers numbered-list separators too', () => {
   assert.equal(emDashIssues.length, 0, 'numbered-list separators should not count toward the rate');
 });
 
+test('em-dash carve-out covers a bold lead term with a parenthetical (#67)', () => {
+  // Found by the self-scan: the bare `- **Term** —` form was carved out but
+  // `- **Term** (`slug`) —` was not, though it is the same definition
+  // typography. 1 of the 84 counted dashes in CHANGELOG.md was this shape.
+  const text = [
+    '- **Lingering-attention claims** (`lingering-attention`) — the share-post frame.',
+    '- **Narrated candor** (judgment-only) — announcing your disclosure instead of disclosing.',
+    'Both rules landed in the same release and share a severity tier.',
+  ].join('\n');
+  const r = AIDetector.analyzeText(text);
+  assert.equal(r.issues.filter((i) => i.type === 'em-dash').length, 0);
+});
+
+test('em-dash carve-out covers Keep-a-Changelog version headings (#67)', () => {
+  // `## [3.21.0] — 2026-07-30` joins a label to a value exactly as a list
+  // separator does. 32 of the 84 counted dashes in CHANGELOG.md were these.
+  const body = Array.from({ length: 60 }, (_, i) => `word${i}`).join(' ') + '.';
+  const text = `## [3.21.0] — 2026-07-30\n\n${body}\n\n## [3.20.0] — 2026-07-29\n\n${body}`;
+  const r = AIDetector.analyzeText(text);
+  assert.equal(r.issues.filter((i) => i.type === 'em-dash').length, 0);
+});
+
+test('em-dash carve-out stays narrow — prose dashes in a heading still fire (#67)', () => {
+  const text = [
+    '## Why this matters — and why it did not before now',
+    'Short text — with several — prose dashes — packed into it here today.',
+  ].join('\n');
+  const r = AIDetector.analyzeText(text);
+  assert.ok(r.issues.filter((i) => i.type === 'em-dash').length >= 1);
+});
+
+test('hedge-stack does not fire on ordinary negation or inverted questions (#69)', () => {
+  // Measured on the human-control corpus: 3 of 4 hedge-stack flags were this
+  // over-match. The old pattern allowed two words between modal and adverb.
+  const frame = (s) => `The committee reviewed the proposal at length and concluded that it ${s} work as designed, given every constraint documented during the previous quarter.`;
+  for (const phrase of ['could not possibly', 'could never possibly', 'could a savage possibly', 'might a person conceivably']) {
+    const r = AIDetector.analyzeText(frame(phrase));
+    assert.equal(r.issues.filter((i) => i.type === 'hedge-stack').length, 0, `"${phrase}" should not fire`);
+  }
+  for (const phrase of ['could potentially', 'may eventually unlock', 'might ultimately transform']) {
+    const r = AIDetector.analyzeText(frame(phrase));
+    assert.ok(r.issues.filter((i) => i.type === 'hedge-stack').length >= 1, `"${phrase}" should still fire`);
+  }
+});
+
 test('em-dash carve-out requires a list marker — line-initial bold splices still fire', () => {
   const text = [
     '**The architecture** — it scales horizontally without coordination.',
@@ -214,6 +259,29 @@ test('"Interesting part of the project:" header opener flags emotional-flatline'
   assert.ok(types.has('emotional-flatline'), 'expected emotional-flatline flag');
 });
 
+test('"the line I keep coming back to" flags lingering-attention', () => {
+  const text = 'Recorded with a guest yesterday. The line I keep coming back to is that agents behave like teenagers on an unbounded goal.';
+  const r = AIDetector.analyzeText(text);
+  const types = new Set(r.issues.map((i) => i.type));
+  assert.ok(types.has('lingering-attention'), 'expected lingering-attention flag');
+});
+
+test('"I cannot stop thinking about" flags lingering-attention', () => {
+  const text = "I can't stop thinking about the runtime guardrail argument he made near the end of our conversation about agent drift.";
+  const r = AIDetector.analyzeText(text);
+  const types = new Set(r.issues.map((i) => i.type));
+  assert.ok(types.has('lingering-attention'), 'expected lingering-attention flag');
+});
+
+test('bare "I keep coming back to X because ..." does NOT flag lingering-attention', () => {
+  // Precision carve-out: the bare verb phrase with a reason attached is
+  // legitimate analytical writing, so only the noun-anchored frame fires.
+  const text = 'I keep coming back to the exit-voice framing because it predicts which engineers quit and which ones file the RFC instead.';
+  const r = AIDetector.analyzeText(text);
+  const types = new Set(r.issues.map((i) => i.type));
+  assert.ok(!types.has('lingering-attention'), 'bare reasoned form must not flag');
+});
+
 test('"real on-chain tokenomics" flags real-actual-inflation', () => {
   const text = 'The team is researching real on-chain tokenomics and actual reward sustainability versus electricity cost across the network deployment phase.';
   const r = AIDetector.analyzeText(text);
@@ -285,6 +353,284 @@ test('"load-bearing" (metaphor) flags tier1; construction nouns exempt', () => {
     const { hits } = lbHits(text);
     assert.equal(hits.length, 0, `literal construction use should not fire tier1: ${text}`);
   }
+});
+
+test('#107: deterministic unnecessary hyphenation subclasses fire with fixes', () => {
+  const cases = [
+    ['The team built a research-impact aggregator for the annual reporting workflow.', 'research-impact aggregator', 'research impact aggregator'],
+    ['The report summarizes two research-impact aggregations from the external evaluation teams.', 'research-impact aggregations', 'research impact aggregations'],
+    ['We agreed on a data-source strategy before rebuilding the ingestion pipeline.', 'data-source strategy', 'data source strategy'],
+    ['The guide compares Python-package usage across the supported deployment environments.', 'Python-package usage', 'Python package usage'],
+    ['The guide also compares Rust-crate usage across the supported deployment environments.', 'Rust-crate usage', 'Rust crate usage'],
+    ['The repository keeps a single-Project Manifest for every supported deployment environment.', 'single-Project Manifest', 'single Project Manifest'],
+    ['The audit records a total-downloads figure for every published package each month.', 'total-downloads figure', 'total downloads figure'],
+    ['The dashboard reports a life-sciences-native citation count beside each indexed article.', 'life-sciences-native citation count', 'citation count from a life sciences source'],
+    ['The old code-base still powers the internal dashboard used by the support team.', 'code-base', 'codebase'],
+    ['- Migration note\n    The old code-base remains available while customers finish moving their applications.', 'code-base', 'codebase'],
+    ['The old data-set still feeds the internal dashboard used by the support team.', 'data-set', 'dataset'],
+    ['The published time-frame leaves enough room for another review before launch.', 'time-frame', 'timeframe'],
+    ['The product road-map lists every migration milestone planned for the next quarter.', 'road-map', 'roadmap'],
+    ['The service refreshes the dashboard in real-time, even during the nightly import.', 'in real-time', 'in real time'],
+    ['The service refreshes the dashboard in real-time every day during the nightly import.', 'in real-time', 'in real time'],
+    ['The service refreshes the dashboard in real-time continuously during the nightly import.', 'in real-time', 'in real time'],
+    ['The service refreshes the dashboard in real-time as new records arrive for processing.', 'in real-time', 'in real time'],
+    ['The service refreshes the dashboard in real-time via the existing event stream.', 'in real-time', 'in real time'],
+    ['The current release works out-of-the-box on every operating system we support.', 'works out-of-the-box', 'works out of the box'],
+    ['That shortcut creates maintenance problems over the long-term, despite its early convenience.', 'over the long-term', 'over the long term'],
+    ['That shortcut creates maintenance problems over the long-term across every department.', 'over the long-term', 'over the long term'],
+    ['That shortcut creates maintenance problems over the long-term through deferred upgrades.', 'over the long-term', 'over the long term'],
+    ['The team plans to keep this compatibility layer for the long-term by design.', 'for the long-term', 'for the long term'],
+  ];
+
+  for (const [text, matched, suggestion] of cases) {
+    const result = AIDetector.analyzeText(text);
+    const hits = result.issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+    assert.equal(hits.length, 1, `expected one unnecessary-hyphenation hit: ${text}`);
+    assert.equal(hits[0].text, matched, `unexpected matched text: ${text}`);
+    assert.equal(hits[0].suggestion, suggestion, `unexpected suggestion: ${text}`);
+    assert.equal(hits[0].severity, 'medium', `hyphenation cleanup should be P2: ${text}`);
+  }
+});
+
+test('#107: standard compound modifiers and open forms do not fire', () => {
+  const clean = [
+    'The team ships high-quality reports through a well-tested release process every week.',
+    'The highly-skilled editor reviewed the draft before the scheduled publication date.',
+    'A family-owned consultancy maintains the third-party integration for our regional offices.',
+    'The real-time dashboard shows a field-normalized score from the open-access dataset.',
+    'The service publishes changes in real-time monthly reports for each customer account.',
+    'The service publishes changes in real-time supply chain analytics for each customer.',
+    'The long-term plan includes out-of-the-box support for server-side rendering.',
+    'The system improved over the long-term planning horizon measured by the research team.',
+    'The report compares results in real-time and historical dashboards for each customer.',
+    'The report compares performance over the long-term and short-term planning horizons.',
+    'The codebase stores each dataset and roadmap in the same project workspace.',
+    'We agreed on a data source strategy before rebuilding the ingestion pipeline.',
+  ];
+
+  for (const text of clean) {
+    const result = AIDetector.analyzeText(text);
+    const hits = result.issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+    assert.equal(hits.length, 0, `legitimate compound should stay clean: ${text}`);
+  }
+});
+
+test('#107: protected spans are excluded from unnecessary-hyphenation detection', () => {
+  const text = [
+    'The docs mention `data-source strategy` only as a literal compatibility key.',
+    'The file lives at docs/code-base/notes.md beside the archived code-base.md document.',
+    'The Windows copy lives at C:\\docs\\code-base\\notes.md for legacy users.',
+    'The Windows fixture directory is C:\\fixtures\\code-base for legacy users.',
+    'Run the command with --code-base before starting the local service.',
+    'Run the command with -code-base before starting the local service.',
+    'The migration guide says "the old code-base remains available" for legacy users.',
+    "The migration guide calls this 'the old code-base' for legacy users.",
+    "The migration guide calls this 'the user's old code-base remains available' for legacy users.",
+    'The migration guide calls this ‘the old code-base’ for legacy users.',
+    `The migration guide says "${'word '.repeat(120)}the old code-base remains available" for legacy users.`,
+    'See https://example.com/guides/code-base for the archived implementation notes.',
+    'The archived exports are named code-base.csv and code-base.go for legacy users.',
+    '> The old code-base remains available to teams migrating legacy applications.',
+    '```text',
+    'Python-package usage and works out-of-the-box are fixture strings here.',
+    '```',
+    '',
+    '    The old code-base remains in this top-level indented code block.',
+  ].join('\n');
+
+  const result = AIDetector.analyzeText(text);
+  const hits = result.issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+  assert.equal(hits.length, 0, `protected text should not fire: ${JSON.stringify(hits)}`);
+});
+
+test('#107: proper nouns, identifiers, and version strings stay protected', () => {
+  const protectedForms = [
+    'Code-Base Enterprise publishes its quarterly release notes for customers today.',
+    'Road-Map Analytics shared its annual report with the engineering group today.',
+    'Research-Impact Aggregator Enterprise shared its annual report with customers today.',
+    'Data-Source Strategy Analytics shared its annual report with customers today.',
+    'The CODE-BASE heading is a product label used by the documentation team.',
+    'Install the code-base package before running the local development server today.',
+    'Use the .code-base selector when styling the legacy navigation component today.',
+    'The code-base config key remains supported for older deployment manifests today.',
+    'The current package release is code-base@2.4.1 for supported production systems.',
+    'The migration still targets code-base-v2 across all supported production systems.',
+    'The deployment identifier code-base remains supported across production systems today.',
+    'The filename is code-base, which the migration script still recognizes for compatibility.',
+    'The folder named road-map remains available to older deployment scripts today.',
+    'The release notes quote "the old\ncode-base remains available" for compatibility.',
+    "The release notes quote 'the old\ncode-base remains available' for compatibility.",
+    'See https://example.com/guides/(code-base) for the archived implementation notes today.',
+  ];
+
+  for (const text of protectedForms) {
+    const hits = AIDetector.analyzeText(text).issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+    assert.equal(hits.length, 0, `proper noun or identifier should stay protected: ${text}`);
+  }
+
+  const prose = AIDetector.analyzeText(
+    'The old code-base still powers the internal dashboard used by the support team.'
+  );
+  assert.equal(
+    prose.issues.filter((issue) => issue.type === 'unnecessary-hyphenation').length,
+    1,
+    'ordinary lowercase prose must still fire'
+  );
+
+  const keyAsAdjective = AIDetector.analyzeText(
+    'The key code-base migration remains unfinished while the support team reviews it.'
+  );
+  assert.equal(
+    keyAsAdjective.issues.filter((issue) => issue.type === 'unnecessary-hyphenation').length,
+    1,
+    'an adjectival "key" must not be mistaken for an identifier cue'
+  );
+});
+
+test('#107: punctuation-adjacent flags and single-component paths stay protected', () => {
+  const protectedForms = [
+    'Use (--code-base) when starting the local compatibility service for older clients.',
+    'Pass ,--code-base when starting the local compatibility service for older clients.',
+    'Use [--code-base] when documenting the local compatibility service for older clients.',
+    'Set mode=--code-base when starting the local compatibility service for older clients.',
+    'The Windows file lives at C:\\code-base for users of the legacy client.',
+    'The portable file lives at C:/code-base for users of the legacy client.',
+    'The home-directory file lives at ~/code-base for users of the legacy client.',
+    'The root-level file lives at /code-base for users of the legacy client.',
+    'The generated output is copied into code-base/ during every local release build.',
+    'The relative file lives at ./code-base for users of the legacy client.',
+    'The parent-relative file lives at ../code-base for users of the legacy client.',
+    `The generated file lives at /${'a'.repeat(65)}-code-base for users of the legacy client.`,
+    `The generated Windows file lives at C:\\${'a'.repeat(65)}-code-base for legacy users.`,
+  ];
+
+  for (const text of protectedForms) {
+    const hits = AIDetector.analyzeText(text).issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+    assert.equal(hits.length, 0, `flag or path should stay protected: ${text}`);
+  }
+
+  const prose = AIDetector.analyzeText(
+    'Outside those literal paths, the old code-base remains ordinary prose and needs editing.'
+  );
+  assert.equal(
+    prose.issues.filter((issue) => issue.type === 'unnecessary-hyphenation').length,
+    1,
+    'nearby prose must still fire'
+  );
+});
+
+test('#107: frontmatter, YAML, Markdown tables, and HTML attributes stay protected', () => {
+  const text = [
+    '---',
+    'title: Code-base migration notes',
+    'tags:',
+    '  - code-base',
+    '---',
+    '',
+    'release-name: code-base',
+    'legacy-tags:',
+    '  - road-map',
+    '',
+    '| Setting | Legacy value |',
+    '| --- | --- |',
+    '| package | code-base |',
+    '',
+    '<div data-package=code-base class=road-map>Rendered content remains ordinary prose here.</div>',
+  ].join('\n');
+
+  const hits = AIDetector.analyzeText(text).issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+  assert.equal(hits.length, 0, `metadata should stay protected: ${JSON.stringify(hits)}`);
+
+  const prose = AIDetector.analyzeText(
+    'After the metadata, the old code-base remains ordinary prose and needs editing today.'
+  );
+  assert.equal(
+    prose.issues.filter((issue) => issue.type === 'unnecessary-hyphenation').length,
+    1,
+    'ordinary prose outside metadata must still fire'
+  );
+
+  const labelledProse = AIDetector.analyzeText(
+    'Note: the old code-base remains ordinary prose and still needs editing before publication.'
+  );
+  assert.equal(
+    labelledProse.issues.filter((issue) => issue.type === 'unnecessary-hyphenation').length,
+    1,
+    'a capitalized prose label must not be mistaken for unfenced YAML'
+  );
+});
+
+test('#107: adversarial filename masking remains within a linear-time budget', () => {
+  const attacks = [
+    `${'a-'.repeat(3000)}a`,
+    `${'segment/'.repeat(1000)}`,
+  ];
+  for (const attack of attacks) {
+    const text = `The generated identifier below has no filename extension and must remain safe to scan. ${attack}`;
+    const started = performance.now();
+    AIDetector.analyzeText(text);
+    const elapsedMs = performance.now() - started;
+    assert.ok(elapsedMs < 1000, `adversarial mask scan took ${elapsedMs.toFixed(1)}ms`);
+  }
+});
+
+test('#107: long closed quotations are masked without a length cutoff', () => {
+  const text = `The release notes quote "${'word '.repeat(3600)}the old code-base remains available" for compatibility.`;
+  const hits = AIDetector.analyzeText(text).issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+  assert.equal(hits.length, 0, 'quoted material must stay protected below the analyzer word limit');
+});
+
+test('#107: copyedit-only findings do not affect score or trinary classification', () => {
+  const clean = 'The team reviewed the release notes before publishing them to customers. Everyone checked the examples, links, headings, and migration steps before the final approval meeting.';
+  const copyedits = 'The code-base and data-set updates follow the time-frame in the road-map. The service runs in real-time, works out-of-the-box, and remains supported over the long-term for every customer.';
+  const baseline = AIDetector.analyzeText(clean);
+  const result = AIDetector.analyzeText(copyedits);
+
+  assert.ok(
+    result.issues.filter((issue) => issue.type === 'unnecessary-hyphenation').length >= 7,
+    'fixture must contain enough distinct copyedits to exercise the short-document threshold'
+  );
+  assert.equal(result.score, baseline.score, 'copyedit-only issues must not change the AI score');
+  assert.equal(result.label, baseline.label, 'copyedit-only issues must not change the AI label');
+  assert.equal(result.document_classification, baseline.document_classification);
+  assert.deepEqual(result.class_probabilities, baseline.class_probabilities);
+  assert.deepEqual(
+    result.highlight_sentence_for_ai,
+    [],
+    'copyedit-only issues must not create AI-highlight regions'
+  );
+});
+
+test('"verbatim" is Tier 3: single use stays clean, overuse flags by density', () => {
+  // Tier 3 words fire only at density (max(3, 3% of words)), so a lone
+  // "verbatim" — including the legal/QA term-of-art use — never flags, and the
+  // word only surfaces when the writer leans on it.
+  const single = AIDetector.analyzeText(
+    'The packaging step copies the in-app resource verbatim into the extension bundle today.'
+  );
+  assert.ok(!single.tooShort, 'single-use fixture must clear the length gate');
+  assert.equal(
+    single.issues.filter((i) => i.type === 'tier3' && /verbatim/i.test(i.text)).length,
+    0,
+    'one "verbatim" is below the density floor and should not flag'
+  );
+
+  // The term of art repeated once in a normal sentence also stays clean.
+  const termOfArt = AIDetector.analyzeText(
+    'The verbatim transcript was entered into evidence during the second day of the hearing.'
+  );
+  assert.equal(
+    termOfArt.issues.filter((i) => i.type === 'tier3' && /verbatim/i.test(i.text)).length,
+    0,
+    'a single term-of-art use should not flag'
+  );
+
+  // Repeated uses in a short piece clear max(3, floor(wordCount * 0.03)).
+  const overused = AIDetector.analyzeText(
+    'He copied the file verbatim, read the note verbatim, typed the line verbatim, and repeated it verbatim to the room.'
+  );
+  const hits = overused.issues.filter((i) => i.type === 'tier3' && /verbatim/i.test(i.text));
+  assert.ok(hits.length > 0, 'repeated "verbatim" uses in a short piece should flag tier3 density');
 });
 
 test('"quietly" clusters with another Tier 2 word flags tier2', () => {
@@ -423,6 +769,82 @@ test('hashtag-stuff excludes URL fragments from the count', () => {
   const r = AIDetector.analyzeText(text);
   const types = new Set(r.issues.map((i) => i.type));
   assert.ok(!types.has('hashtag-stuff'), 'URL fragments should not count as hashtags');
+});
+
+test('hashtag-stuff excludes issue and PR references from the count', () => {
+  // `#88` in prose is a GitHub issue reference, not a tag. A changelog
+  // paragraph routinely cites six of them, and every such paragraph scored
+  // as a stuffed hashtag block. Found when this repo's own README linked an
+  // issue and the detector flagged the README.
+  const text = 'The regression came in through #88 and stayed hidden until #91 landed. I reverted #92, reopened #93, and then #94 turned out to be the same bug in a different file. #95 is the follow up that fixes it, and #96 tracks the test we still owe.';
+  const types = new Set(AIDetector.analyzeText(text).issues.map((i) => i.type));
+  assert.ok(!types.has('hashtag-stuff'), 'issue references should not count as hashtags');
+});
+
+test('hashtag-stuff excludes hex colours and preprocessor directives', () => {
+  // `#fff` is a colour and `#include` is a directive. Both appear in
+  // technical prose well past six per post.
+  const css = 'Background is #fff in light mode and #eee in dark. Body text sits at #1a2b3c, muted text at #6b7280, the link colour is #2563eb, hover is #1d4ed8, and the one accent is #f59e0b on the button.';
+  // 8-character RGBA values, so dropping the {8} alternative is caught.
+  const rgba = 'Palette is #1a2b3cff for body and #6b7280ee muted and #2563ebdd links and #1d4ed8cc hover and #f59e0bbb accent and #0a1b2cdd border today.';
+  const c = 'Put #include <stdio.h> first, then #include <stdlib.h>, then #include <string.h>. Add #include <unistd.h> and #include <fcntl.h> after those, and guard the block with #ifndef and #endif so it stays idempotent.';
+  for (const [label, text] of [['hex colours', css], ['rgba colours', rgba], ['directives', c]]) {
+    const types = new Set(AIDetector.analyzeText(text).issues.map((i) => i.type));
+    assert.ok(!types.has('hashtag-stuff'), `${label} should not count as hashtags`);
+  }
+});
+
+test('hashtag-stuff ignores hashes inside code spans and fences', () => {
+  // A tag in backticks is the author documenting the syntax, not using it.
+  // Every span here is a tag isSocialTag would otherwise KEEP, so the count is
+  // 6 without masking and 0 with it. An earlier version of this fixture quoted
+  // #88 and #fff, which the carve-outs already removed, so it passed with
+  // inline masking deleted and tested nothing.
+  const inline = 'The escape rules trip people up. Write `#AI` for the tag, `#Innovation` for the category, `#Startups` for the vertical, `#Leadership` for the theme, `#Growth` for the metric, and `#FutureOfWork` when you mean the movement.';
+  const fenced = 'Here is the config we ship by default, and it has not changed in a year:\n\n```\n#alpha\n#beta\n#gamma\n#delta\n#epsilon\n#zeta\n```\n\nEverything below that line is user overridable and nothing above it is.';
+  for (const [label, text] of [['inline code', inline], ['fenced code', fenced]]) {
+    const types = new Set(AIDetector.analyzeText(text).issues.map((i) => i.type));
+    assert.ok(!types.has('hashtag-stuff'), `${label} should not count as hashtags`);
+  }
+});
+
+test('hashtag-stuff still counts short hex-shaped words, which are real tags', () => {
+  // #b2b, #e2e, #dad, #cafe, #ace and #face are ordinary tags. Carving out
+  // 3- and 4-digit hex to catch CSS palettes silently deleted true positives on
+  // the stuffed-block shape, so only 6- and 8-char forms CONTAINING A DIGIT are
+  // subtracted: #decade and #facade are a-f words, not colours.
+  const gtm = 'Great conversation on the go-to-market motion this week with the whole revenue team here.\n#b2b #e2e #saas #growth #ace #fade';
+  const family = 'Weekend was good and the whole family got outside for once this month together.\n#dad #cafe #beef #face #travel #weekend';
+  const decade = 'Reflecting on the last ten years of shipping developer tools to teams everywhere here.\n#decade #facade #deface #beaded #effaced #growth';
+  // Four spaces under a list marker is a paragraph continuation, not a code
+  // block, which is why indented runs are not masked.
+  const listed = '- We shipped the detector and the whole team is happy with how it landed today.\n\n    #AI #Innovation #FutureOfWork #MachineLearning #Leadership #Growth';
+  for (const [label, text] of [['b2b/e2e block', gtm], ['dad/cafe block', family], ['a-f word tags', decade], ['tags under a list item', listed]]) {
+    const types = new Set(AIDetector.analyzeText(text).issues.map((i) => i.type));
+    assert.ok(types.has('hashtag-stuff'), `${label} should still flag as hashtag stuffing`);
+  }
+});
+
+test('hashtag-stuff still fires on a tag block that also cites an issue', () => {
+  // The carve-outs subtract non-tag forms; they must not let a real block
+  // through because a `#88` sits beside it.
+  const text = 'Closed out #88 today and the release is live for everyone.\n#AI #Innovation #FutureOfWork #MachineLearning #Leadership #Growth #Startups';
+  const r = AIDetector.analyzeText(text);
+  const types = new Set(r.issues.map((i) => i.type));
+  assert.ok(types.has('hashtag-stuff'), 'expected hashtag-stuff on a 7-tag block');
+  assert.equal(
+    r.issues.find((i) => i.type === 'hashtag-stuff').text,
+    '7 hashtags',
+    'the issue reference must not be counted as a tag'
+  );
+});
+
+test('hashtag-stuff still fires on tags spread inline through a post', () => {
+  // Masking code and subtracting non-tag forms must not weaken the inline
+  // shape, which is the one a trailing-block-only rule would miss.
+  const text = 'Loving the #AI space right now, especially #MachineLearning and #DeepLearning, plus #Startups and #Innovation and #FutureOfWork keep me busy every single day of the week.';
+  const types = new Set(AIDetector.analyzeText(text).issues.map((i) => i.type));
+  assert.ok(types.has('hashtag-stuff'), 'expected hashtag-stuff on 6 inline tags');
 });
 
 test('low-ttr fires on a 200+ token text with narrow vocabulary', () => {
@@ -719,6 +1141,187 @@ test('v2: context mode "technical" suppresses Title Case header flag', () => {
   assert.ok(!technicalHas, 'technical mode should suppress title-case header');
 });
 
+test('#62: Title Case flagged on a Markdown heading, not just a bare line', () => {
+  // The `^[A-Z]` anchor required the line to START with a capital, so a
+  // `## Heading` never matched — the first character is `#`. The rule missed
+  // the commonest way a heading is actually written while catching the bare
+  // form it gets converted from. Reported by a downstream vendoring the file.
+  const body =
+    '\n\nThe team closed three deals this quarter. Each agreement included revenue-share terms and dispute-resolution clauses. The legal review took two weeks per contract on average.';
+  for (const prefix of ['#', '##', '######']) {
+    const r = AIDetector.analyzeText(`${prefix} Strategic Negotiations And Key Partnerships${body}`, {
+      contextMode: 'general',
+    });
+    assert.ok(
+      r.issues.some((i) => i.type === 'title-case-header'),
+      `expected title-case-header on a "${prefix}" heading`,
+    );
+  }
+});
+
+test('#62: the heading fix does not flag sentence-case or non-headings', () => {
+  const body =
+    '\n\nThe team closed three deals this quarter. Each agreement included revenue-share terms and dispute-resolution clauses. The legal review took two weeks per contract on average.';
+  const cases = [
+    ['## Strategic negotiations and key partnerships', 'sentence-case heading is correct, not a tell'],
+    ['##Strategic Negotiations And Key Partnerships', 'no space after # is not a Markdown heading'],
+    ['####### Strategic Negotiations And Key Partnerships', 'seven hashes is not a heading'],
+  ];
+  for (const [line, why] of cases) {
+    const r = AIDetector.analyzeText(line + body, { contextMode: 'general' });
+    assert.ok(!r.issues.some((i) => i.type === 'title-case-header'), why);
+  }
+});
+
+// Prose long enough to clear the ten-word gate, appended to single-line fixtures.
+const HEADING_BODY =
+  '\n\nThe team closed three deals this quarter. Each agreement included revenue-share terms and dispute-resolution clauses. The legal review took two weeks per contract on average.';
+
+function titleCaseHits(text) {
+  const r = AIDetector.analyzeText(text, { contextMode: 'general' });
+  return r.issues.filter((i) => i.type === 'title-case-header');
+}
+
+// NOT covered, and deliberately so: a four-content-word Title Case heading such
+// as '# The Art Of War' or '## Notes On The Design' still fires. The >= 4 guard
+// cannot tell those from '## Benefits And Strategic Considerations' -- they are
+// the same shape. That is pre-existing behaviour, identical for the bare-line
+// form on main, and out of scope here.
+test('#62: legitimate three-word Title Case headings are not flagged', () => {
+  // The regression the first version of this fix shipped. matchPatterns reports
+  // match[0], so '## Terms Of Service' arrived with '##' as a token, silently
+  // lowering the proper-noun guard from four content words to three for
+  // headings only. These are ordinary human headings, on a detector whose
+  // stated first priority is not firing on human writing.
+  for (const heading of [
+    '## Terms Of Service',
+    '## Table Of Contents',
+    '## Bank Of America',
+    '## Pride And Prejudice',
+    '## Statement Of Work',
+  ]) {
+    assert.equal(titleCaseHits(heading + HEADING_BODY).length, 0, `must not flag: ${heading}`);
+  }
+});
+
+test('#62: a heading inside a fenced block is illustration, not a section header', () => {
+  // A document that documents Markdown is the normal case for this rule.
+  // Without the fence check, every docs page flags itself.
+  const fence = '```';
+  const text = [
+    'How to write documentation, briefly, with a worked example that follows.',
+    '',
+    fence + 'markdown',
+    '## Benefits And Strategic Considerations',
+    fence,
+    '',
+    'That is the shape to avoid in your own prose, not in a code sample.',
+  ].join('\n');
+  assert.equal(titleCaseHits(text).length, 0, 'a fenced example must not flag');
+});
+
+test('#62: headings opening with a function word are not the tell', () => {
+  // Measured on 81 files that provably predate LLMs (2018-19 eBooks stamped
+  // year: 2018/2019, 2020 posts): these fired 13 times on the branch and zero
+  // times on main. Every one opens with "The". The rule's own comment has
+  // always said the function word marks a MID-sentence "And"; the test never
+  // enforced it. Verbatim headings from that corpus.
+  for (const heading of [
+    '## The New Security Landscape',
+    '## The Microsoft Approach to Identity',
+    '### The Four Keys to a Successful and Secure Modern Workplace',
+    '## The Changing Face of Manufacturing',
+    '## The Key to Winning Georgia',
+    '## The Chain of Thought Podcast',
+  ]) {
+    assert.equal(titleCaseHits(heading + HEADING_BODY).length, 0, `must not flag: ${heading}`);
+  }
+});
+
+test('#62: an interior function word still flags, in both forms', () => {
+  // The other side of the guard above. If this ever goes quiet the rule is dead.
+  for (const heading of [
+    '## Benefits And Strategic Considerations',
+    'Benefits And Strategic Considerations',
+    '## Strategic Negotiations And Key Partnerships',
+  ]) {
+    assert.equal(titleCaseHits(heading + HEADING_BODY).length, 1, `must flag: ${heading}`);
+  }
+});
+
+test('#62: fences that a parity count gets wrong', () => {
+  const f3 = '```';
+  const f4 = '````';
+  const intro = 'Documentation about writing Markdown, long enough to clear the word gate.';
+  const title = '## Benefits And Strategic Considerations';
+
+  // A four-backtick fence wrapping a three-backtick example is how you document
+  // fences — the motivating case. Counting delimiters inverts on it.
+  assert.equal(
+    titleCaseHits([intro, f4, f3 + 'markdown', title, f3, f4].join('\n') + HEADING_BODY).length,
+    0,
+    'four-backtick outer fence',
+  );
+  // CommonMark allows up to three spaces of indent.
+  assert.equal(
+    titleCaseHits([intro, '   ' + f3, title, '   ' + f3].join('\n') + HEADING_BODY).length,
+    0,
+    'indented fence',
+  );
+  // An unclosed fence runs to end of document, as renderers treat it.
+  assert.equal(
+    titleCaseHits([intro, f3, title].join('\n') + HEADING_BODY).length,
+    0,
+    'unclosed fence',
+  );
+  // ...and a correctly closed one must not swallow what follows.
+  assert.equal(
+    titleCaseHits([intro, f3, 'code', f3, title].join('\n') + HEADING_BODY).length,
+    1,
+    'heading after a closed fence must still flag',
+  );
+});
+
+test('#62: MD_HEADING_PREFIX accepts what the pattern accepts', () => {
+  // The two must stay coupled: TITLE_CASE_HEADER matches `#{1,6}[ \t]+`, so if
+  // the prefix strip stops accepting a tab, `##` survives into the token list
+  // and reintroduces the ##-as-token bug this fix exists for.
+  //
+  // The probe has to open with a function word. On a heading whose function
+  // word is interior, an unstripped `##` only pushes the token COUNT up and the
+  // result is unchanged — mutation testing caught that a firing fixture here
+  // passes either way. Here the unstripped `##` shifts what slice(1) sees onto
+  // the leading "The", which flips the verdict.
+  assert.equal(
+    titleCaseHits('##\tThe New Security Landscape' + HEADING_BODY).length,
+    0,
+    'a tab-separated heading must strip like a space-separated one',
+  );
+  assert.equal(
+    titleCaseHits('##\tBenefits And Strategic Considerations' + HEADING_BODY).length,
+    1,
+    'and must still flag the real tell',
+  );
+});
+
+test('#62: an indented line is not a Markdown heading', () => {
+  // Kills the `#{0,6}` mutant: making the hash count optional turns any indented
+  // line into a heading, so four-space code blocks would flag.
+  assert.equal(
+    titleCaseHits('    Benefits And Strategic Considerations' + HEADING_BODY).length,
+    0,
+    'an indented line must not flag',
+  );
+});
+
+test('#62: the reported text is value-asserted, not merely present', () => {
+  // The whole change alters what match[0] contains, so assert the value. A
+  // presence-only check is what let the `##`-as-token defect through.
+  const hits = titleCaseHits('## Benefits And Strategic Considerations' + HEADING_BODY);
+  assert.equal(hits.length, 1);
+  assert.equal(hits[0].text.trim(), '## Benefits And Strategic Considerations');
+});
+
 test('v2: markdown **bold** is preserved by normalize pre-pass', () => {
   // Regression: lookbehind/lookahead added in review fix. The pre-fix
   // regex stripped the inner half of `**bold**` and counted each as
@@ -958,6 +1561,27 @@ test('v2: backward compat — score, label, issues, stats still present', () => 
   assert.ok(typeof r.label === 'string', 'label still string');
   assert.ok(Array.isArray(r.issues), 'issues still array');
   assert.ok(r.stats && typeof r.stats === 'object', 'stats still object');
+});
+
+test('#109: Object.prototype names in prose do not fire tier lookups', () => {
+  // Plain-object membership tests made TIER1['constructor'] resolve to
+  // Object.prototype.constructor (truthy), flagging ordinary prose.
+  const text =
+    'The class constructor takes nine arguments in this codebase. Review the constructor before calling it, and check that its prototype chain and toString output match what the documentation describes for each valueOf call.';
+  const r = AIDetector.analyzeText(text);
+  const protoHits = r.issues.filter(
+    (i) => ['constructor', 'prototype', 'tostring', 'valueof', 'hasownproperty'].includes(String(i.text).toLowerCase())
+  );
+  assert.equal(protoHits.length, 0, `prototype-name tokens flagged: ${JSON.stringify(protoHits)}`);
+});
+
+test('#109 complement: real tier1 vocabulary still fires after the hasOwn guard', () => {
+  const r = AIDetector.analyzeText(
+    'We delve into the constructor design of this system. The team continues to navigate this comprehensive transformation across every module boundary.'
+  );
+  const tier1Texts = r.issues.filter((i) => i.type === 'tier1').map((i) => String(i.text).toLowerCase());
+  assert.ok(tier1Texts.includes('delve'), `expected 'delve' to still fire, got tier1=${JSON.stringify(tier1Texts)}`);
+  assert.ok(!tier1Texts.includes('constructor'), 'constructor must not ride along in tier1');
 });
 
 if (failed > 0) {

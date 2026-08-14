@@ -1,7 +1,7 @@
 ---
 name: course-content-map
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [course, content, map]
 description: "Refresh a safe, concise map of this GCI World 2026 workspace before deeper course, assignment, or dataset work."
 ---

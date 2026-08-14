@@ -16,13 +16,15 @@ global themes and component-scoped styles.
 3. **`src/theme.scss` / `src/theme/`** — Explicit theme directory. Custom
    Material/component palettes.
 
-4. **`tailwind.config.js`** (if Tailwind) — Same extraction as React.
+4. **Tailwind Config (`tailwind.config.js` or Tailwind v4 `@theme {}`)** — For Tailwind v3, read `tailwind.config.js`. For Tailwind v4, inspect `@theme {}` blocks, `@custom-variant`, and `@plugin 'tailwindcss-primeui'` in your global CSS/SCSS (e.g. `src/styles.css` or `src/assets/tailwind.css`) for CSS custom property tokens (`--color-*`, `--font-*`, `--text-*`, `--breakpoint-*`).
 
 5. **`src/app/app.component.scss`** — Root component styles, reveals global
    layout patterns.
 
 6. **Component `.scss` / `.css` files** — Co-located styles (ViewEncapsulation
    scoped by default).
+
+7. **External Template `.html` files (`src/app/**/*.component.html`)** — Essential for Angular 17+ standalone components using Tailwind CSS utility classes (`bg-*`, `text-*`, `p-*`, `rounded-*`) or structural class bindings (`[ngClass]`, `[class.*]`). Always inspect `.html` templates when styling uses utility classes.
 
 ## Angular Material Theme Extraction
 
@@ -99,11 +101,17 @@ component styles:
 ## PrimeNG / Nebular / NG-ZORRO
 
 If component libraries are used:
-- **PrimeNG**: Theme SCSS in `node_modules/primeng/resources/themes/` —
-  look for custom theme or `styles.scss` overrides.
+- **PrimeNG (v17/v18/v19+)**: Look for modern theme configuration in `src/app.config.ts` (e.g., `providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } })`). Check for Tailwind v4 integration via `@plugin 'tailwindcss-primeui'` in CSS assets. Inspect CSS custom properties defined by PrimeNG tokens (`--primary-color`, `--surface-*`).
 - **Nebular**: `nb-theme()` in `styles.scss` with custom theme object.
 - **NG-ZORRO (Ant Design for Angular)**: `ng-zorro-antd.less` variables
   or custom theme config in `angular.json`.
+
+## Modern Angular (v17 - v19) Standalone Components & Control Flow
+
+In modern Angular repositories:
+- **Standalone Components (`@Component({ standalone: true })`)**: Components import their own dependencies directly without NgModules. Inspect `templateUrl` and `styleUrl(s)` in component metadata to locate the template and style files.
+- **Control Flow (`@if`, `@for`, `@switch`)**: Notice how conditional layouts and lists are structured in `.html` templates when analyzing component density and spacing rules.
+- **Signals & Zoneless (`signal()`, `input()`, `computed()`, `provideZonelessChangeDetection()`)**: Dynamic styling or theme toggling is often driven by signals bound to `[class.dark]` or custom CSS classes in templates. Notice `app.config.ts` for app-wide providers.
 
 ## Responsive Patterns
 

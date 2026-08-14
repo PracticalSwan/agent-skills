@@ -1,7 +1,7 @@
 ---
 name: react-development
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [react, development, testing, quality, automation]
 description: "React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders."
 ---

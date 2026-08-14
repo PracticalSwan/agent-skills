@@ -6,23 +6,25 @@ the skill, decide here whether it's regex-detectable (give it a detector `type`)
 or LLM-only judgment (mark it so). When you add a detector `type`, point it back
 at the skill section it enforces.
 
-The engine exposes 45 issue `type`s (see `TYPE_LABELS` in `patterns.js`). The
+The engine exposes 48 issue `type`s (see `TYPE_LABELS` in `patterns.js`). The
 skill has more `###` sections than that — the gap is **not** missing coverage,
 it's rules that are judgment calls a regex can't make. The three groups below
 account for every entry on both sides.
 
 Three counts coexist on purpose and should not be forced to match: the README's
 **pattern-category count** (the human-facing prose catalog, derived from SKILL.md
-and guarded in CI), the engine's **45 `type`s** (which split the vocabulary tiers
+and guarded in CI), the engine's **48 `type`s** (which split the vocabulary tiers
 and add stylometric signals), and SKILL.md's `###` sections (which also include
 writer-side tests with no detectable form). The
-`categories.test.js` check enforces only the engine ↔ this-file mapping.
+`categories.test.js` enforces the engine ↔ this-file mapping, and checks every
+prose statement of the engine `type` total against `TYPE_LABELS`.
 
 ## A. Direct mapping (skill rule → detector `type`)
 
 | Detector `type` | Label | SKILL.md section |
 |---|---|---|
 | `tier1` / `tier2` / `tier3` | AI vocabulary / Word cluster / Overused word | Words and phrases to replace |
+| `tier1-clarity` | Wordiness | Words and phrases to replace (Tier 1B) |
 | `transition` | AI transition | Transition phrases to remove or rewrite |
 | `template-phrase` | Template phrase | Template phrases (avoid) |
 | `tier3-phrase` / `tier3-phrase-cluster` | Boilerplate phrase / cluster | Template phrases (avoid) |
@@ -30,7 +32,7 @@ writer-side tests with no detectable form). The
 | `sycophantic` | Sycophantic tone | Sycophantic tone |
 | `acknowledgment-loop` | Acknowledgment loop | Acknowledgment loops |
 | `filler` | Filler phrase | Filler phrases |
-| `hollow-intensifier` | Hollow intensifier | Filler phrases (intensifiers) |
+| `hollow-intensifier` | Hollow intensifier | Filler phrases (intensifiers), except context-dependent `actually` (see §C) |
 | `generic-conclusion` | Generic conclusion | Generic conclusions |
 | `social-cta-closer` | Engagement-bait closer | Social endorsement closers |
 | `future-narrative` | Generic future narrative | Generic future-narrative closers |
@@ -41,6 +43,7 @@ writer-side tests with no detectable form). The
 | `real-actual-inflation` | "Real/actual" inflation | "Real/actual" adjective inflation |
 | `vague-attribution` | Vague attribution | Vague attributions |
 | `emotional-flatline` | Emotional flatline | Emotional flatline / Superficial -ing analyses |
+| `lingering-attention` | Lingering-attention claim | Lingering-attention claims *(noun-anchored frames only — the bare "I keep coming back to X" stays LLM-judgment, since a following reason clause makes it legitimate and isn't regex-detectable)* |
 | `cutoff-disclaimer` | Cutoff disclaimer | Cutoff disclaimers |
 | `false-concession` | False concession | False concession structure |
 | `rhetorical-question` | Rhetorical question | Rhetorical question openers |
@@ -59,6 +62,7 @@ writer-side tests with no detectable form). The
 | `ai-citation-markup` | Chatbot citation markup leak | Chatbot citation markup leaks |
 | `ai-utm-source` | AI-tool URL parameter | AI-tool URL parameters |
 | `smart-punct-signature` | Smart-punct signature | Formatting (curly quotation marks) — *partial* |
+| `unnecessary-hyphenation` | Unnecessary hyphenation | Unnecessary hyphenation *(curated open, closed, and position-dependent subclasses only)* |
 
 > **Partial map:** `smart-punct-signature` fires only when curly quotes co-occur
 > with an em-dash, an Oxford comma, and clean typing (≥80 words) — never on curly
@@ -88,14 +92,20 @@ mistake their absence for a coverage gap:
 - Synonym cycling
 - Copula avoidance
 - Promotional language
+- Context-dependent `actually` as a hollow intensifier *(delete it when it only adds emphasis; keep it when it carries a named correction or expectation gap). The same token performs both jobs, so matching it unconditionally would flag ordinary corrective prose.*
 - Sentence structure: "It's not X — it's Y" / split-sentence form / multi-negation countdown / tailing negation
 - Structural issues / Excessive structure / Inline-header lists / Numbered list inflation
+- Moral-adjective category errors (including ontological slop on assumptions, gratuitous universal quantifiers)
+- Invented contrast-pair mirroring
+- Hyphenated modifier stacking
+- Unnecessary hyphenation outside the detector's curated subclasses
 - False ranges
 - Notability name-dropping
 - Vague third-party validation
 - Self-labeling significance
 - Wall-of-text replies (missing line breaks) *(tried as a detector — "reply-length, >=4 sentences, zero newlines" — and reverted; it fires on any ordinary short paragraph, not just conversational-reply register, so it stayed judgment-only. See the NOTE in `patterns.js` near the bullet-NP-list block)*
 - Recap-flattery opener
+- Narrated candor *(tried as a detector and reverted: the phrasings are shared with idiomatic conflict-of-interest disclosure ("in the interest of full disclosure, I own shares in...") and with the ordinary English comparative ("I'd rather die than let you drive"), so any regex tight enough to avoid those stopped matching the tell. Judging it needs reading whether the clause carries information or only announces that information is coming)*
 - Immaculate typography in casual registers *(folded into the Formatting section — same weak-signal tier as curly quotes, not a standalone category)*
 - Subjectless fragments and agentless passives *(docs and changelog registers are carve-outs — the fragment is the correct form there)*
 - Diff-anchored writing *(changelogs, release notes, and migration guides are carve-outs)*

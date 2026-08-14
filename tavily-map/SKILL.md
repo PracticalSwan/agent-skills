@@ -1,13 +1,12 @@
 ---
 name: tavily-map
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, url-discovery, site-map, web, cli]
 description: "Discover and filter URLs on a known website through Tavily without extracting every page. Use to locate a specific subpage, inspect site structure, or prepare a bounded map-then-extract workflow."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI and authenticated Tavily access, or an active Tavily MCP server exposing map."
 ---
-
 # tavily map
 
 Discover URLs on a website without extracting content. Faster than crawling.
@@ -107,19 +106,22 @@ Before claiming Tavily map succeeded:
 5. Pressure test: Reduce depth or add path filters when the initial map is noisy, oversized, or crosses site boundaries.
 6. Success metric: Report the mapped root, applied filters, result count, and selected follow-up URLs.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- Use an exposed Tavily map tool when available; otherwise use `tvly map`.
-- Claude Code with the GLM Coding Plan endpoint should rely on the external CLI or a configured Tavily MCP server.
-- Codex and GitHub Copilot can use the CLI or official SDK through their available execution surface.
-- Translate POSIX command syntax when running in Windows PowerShell.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-map` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

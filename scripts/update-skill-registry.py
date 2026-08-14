@@ -7,24 +7,24 @@ from pathlib import Path
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "8ae5a99109124c22288eee0254da61741e44d12a"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "3e66ff32306a4c10407c836f62507bca26a6cccf"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
-    "anthropic_skills": ("https://github.com/anthropics/skills", "b29e7cf65e5cb78a5ac33d582270551bc74a14eb"),
+    "anthropic_skills": ("https://github.com/anthropics/skills", "f6656c1256d5a8adfa37db9110046ef20bac644c"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "27156c7ae69fade80f2a3410e6899b780248709d"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "3c0fd8a2668962df97f0a6771dcd57c84a4be568"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "ce70ca7f1966c243e0b6a56b67085a185121d096"),
-    "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "7b53207b94e62911777d53d4238b5f8c88c2b519"),
-    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "bfa27fab00dbb8b5367e15153c5723ee608ba00b"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "e1b747ed9fc0492342f97cc6ba7ac954279ac48f"),
+    "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "535b0889a46868c9b08f8a7f7084db3c1958a2b6"),
+    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "cec8d63a5501d2fcc7192628a67e09ac1311a788"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
     "superpowers_skills": ("https://github.com/obra/superpowers-skills", "cdcd624ad3fd8026deb692e565351854569798dd"),
-    "superpowers_legacy": ("https://github.com/obra/superpowers", "44c9b2d6e889982ac18c27d05a19fefe335194e1"),
+    "superpowers_legacy": ("https://github.com/obra/superpowers", "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"),
     "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
-    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "84fdeffd12f2ee307994d1eb6feb48173b6e0502"),
+    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "8b78b531ab965735c5dc74f6f7a219e1e37326df"),
 }
 
-SNAPSHOT_DATE = "2026-08-08"
+SNAPSHOT_DATE = "2026-08-14"
 
 SUPERPOWERS = {
     "brainstorming",

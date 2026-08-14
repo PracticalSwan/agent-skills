@@ -2,6 +2,10 @@
 
 The MCP server at `https://xquik.com/mcp` provides 2 structured API tools. The agent sends API requests through the server, which handles authentication and execution for `xquik.com/api/v1`.
 
+Hosted MCP v2.6.0 supports `2026-07-28` through `server/discover`.
+Current MCP SDKs add request metadata and headers automatically.
+Modern calls need no initialization session.
+
 ## Contents
 
 - [Tools](#tools)
@@ -31,6 +35,7 @@ interface EndpointInfo {
   category: string; // account, composition, credits, extraction, media, monitoring, support, twitter, x-accounts, x-write
   free: boolean; // Included usage flag from endpoint metadata
   parameters?: Array<{ name: string; in: 'query' | 'path' | 'body'; required: boolean; type: string; description: string }>;
+  injectedHeaders?: string[];
   responseShape?: string;
 }
 
@@ -52,7 +57,11 @@ async () => spec.endpoints.filter(e => e.summary.toLowerCase().includes('tweet')
 
 ### `xquik` - Send API Requests
 
-The tool provides `xquik.request()` with auth injected automatically. Never pass API keys.
+The tool provides `xquik.request()` with authentication and required idempotency headers injected automatically. Never pass API keys or headers. The sandbox reuses each generated key for bounded transient retries. After an unresolved write failure, verify state. Start a new attempt only when `safe_to_retry` is true and the user approves.
+
+For `409 coverage_cursor_unavailable`, wait the exact `Retry-After` seconds and
+retry the same cursor once. For `410 coverage_cursor_gone`, the response omits
+`Retry-After`. Restart without a cursor and deduplicate by ID.
 
 ## Safety Gates
 
@@ -124,10 +133,15 @@ Use `explore` first to find endpoints, then `xquik` to call them.
 | Get bookmark folders | `GET /api/v1/x/bookmarks/folders` |
 | Get notifications | `GET /api/v1/x/notifications` (private; confirmation required) |
 | Get home timeline | `GET /api/v1/x/timeline` (private; confirmation required) |
-| Get DM history | `GET /api/v1/x/dm/{userId}/history` (private; confirmation required) |
+| Get DM history | `GET /api/v1/x/dm/{userId}/history?account={username}` (private; exact-account approval required; block ambiguous selection) |
 | Check credit balance | `GET /api/v1/credits` |
 
 Use `POST /api/v1/extractions` ONLY for bulk data that simpler endpoints cannot provide (all followers, all replies to a tweet, community members, etc.). Always call `POST /api/v1/extractions/estimate` first.
+
+Fresh cursorless Tweet Search with `queryType=Latest` is newest-first across
+pages. Existing cursors retain their ordering. Thread reads accept 32 effective
+result filters. They exclude `nativeRetweets`, `sinceTime`, and `untilTime`.
+See [direct lookups](api-endpoints-x-api.md) for the exact names.
 
 ## Workflow Patterns
 
@@ -138,9 +152,10 @@ Use `POST /api/v1/extractions` ONLY for bulk data that simpler endpoints cannot 
 | **Bulk extraction** | `POST /extractions/estimate` -> `POST /extractions` -> `GET /extractions/{id}` |
 | **Compose optimized tweet** | `POST /compose` (step=compose -> refine -> score) |
 | **Analyze tweet style** | `POST /styles` -> `GET /styles/{id}` -> `POST /compose` with `styleUsername` |
-| **Post a tweet** | `GET /x/accounts` -> `POST /x/tweets` with `account` + `text` |
+| **Post a tweet** | `GET /x/accounts` -> confirm -> `POST /x/tweets` with `account` and `text` -> hosted MCP injects a unique `Idempotency-Key` -> poll `statusUrl` |
 | **Get trending news** | `GET /radar` (supported sources, via `xquik` tool) -> `POST /compose` with trending topic |
 | **Open support ticket** | `POST /support/tickets` -> `GET /support/tickets/{id}` |
+| **Collect maximum-coverage replies** | `GET /x/tweets/{id}/replies?mode=complete&limit=<1-25000>` -> filter direct rows by `inReplyToId` -> keep `nested_replies` separate -> inspect `diagnostic` |
 
 ## Common Mistakes
 
@@ -154,10 +169,14 @@ Use `POST /api/v1/extractions` ONLY for bulk data that simpler endpoints cannot 
 | Passing API keys in code | Auth is injected automatically. Never include keys |
 | Using `explore` for API calls | `explore` is read-only spec search. Use `xquik` for actual API calls |
 | Looking up follow/DM by username | Follow and DM endpoints need numeric user ID. Look up via `GET /x/users/{id}` first; that route accepts usernames and IDs |
+| Treating nested replies as direct replies | Match `inReplyToId` to the root ID. Keep `nested_replies` separate |
+| Treating 424 as an empty failure | Keep safe partial rows. Follow `diagnostic.recommendedFallback` and disclose coverage |
 
 ## REST-only operations
 
-MCP v2.5.6 catalogs 119 of 127 REST operations. Of these, 118 support JSON or text. Binary support downloads use REST. These 8 credential or session operations remain outside MCP:
+Hosted MCP v2.6.0 catalogs 120 of 128 REST operations.
+Of these, 119 support JSON or text. Binary support downloads use REST.
+These 8 credential, checkout, or guest-wallet operations remain outside MCP:
 
 - API key creation
 - API key listing

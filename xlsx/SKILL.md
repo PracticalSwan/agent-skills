@@ -1,7 +1,7 @@
 ---
 name: xlsx
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [xlsx, spreadsheet, excel, data, formulas]
 description: "Use this skill any time a spreadsheet file is the primary input or output. Covers reading, editing, cleaning, modeling, formula repair, workbook generation, and converting tabular data into validated spreadsheet deliverables."
 license: "Proprietary. LICENSE.txt has complete terms"

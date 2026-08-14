@@ -1,13 +1,12 @@
 ---
 name: tavily-dynamic-search
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, programmatic-search, context-isolation, python, research]
 description: "Run programmatic Tavily search and extraction while filtering raw results outside the main agent context. Use for multi-step or high-volume research where titles, snippets, and selected passages should be curated before synthesis."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI, authenticated Tavily access, and Python or jq for local filtering; shell examples must be adapted to the active platform."
 ---
-
 # Tavily Dynamic Search
 
 Search the web, filter results, and extract content so that **raw search data never enters your context window**. Only your curated `print()` output comes back.
@@ -482,19 +481,22 @@ Before claiming dynamic Tavily search succeeded:
 5. Pressure test: Inspect one rejected or low-ranked result to confirm the filter is not hiding important contradictory evidence.
 6. Success metric: The final synthesis is materially smaller than the raw dataset while every important claim remains traceable to a checked source.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- The isolation pattern is host-independent: keep raw data in the local process or file and emit only selected fields.
-- Claude Code with the GLM Coding Plan endpoint can run `tvly` plus Python through its shell; it must not assume Anthropic's hosted programmatic-tool surface.
-- Codex and GitHub Copilot can apply the same pattern through their local shell or an exposed Tavily tool followed by local filtering.
-- On Windows PowerShell use `python` when `python3` is unavailable and translate heredocs, `/tmp`, and redirection to safe workspace or temporary paths.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-dynamic-search` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

@@ -1,7 +1,7 @@
 ---
 name: java-docs
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [java, docs, development, testing, quality]
 description: "Java Javadoc best practices. Use when adding or reviewing documentation for Java types, methods, packages, and public APIs."
 ---

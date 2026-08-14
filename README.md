@@ -30,7 +30,7 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-08-08`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-14`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `155` tracked skill folders
@@ -49,29 +49,33 @@ Snapshot date: `2026-08-08`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `155` tracked skills use catalog `version: "2.0"`. The `131` unchanged
-  pre-existing tracked skills retain `last_updated: 2026-07-29`; the eight
-  Tavily imports use `last_updated: 2026-07-30`; the eight skills touched by
-  the frontend consolidation use `last_updated: 2026-08-02`; and the eight
-  selected Matt Pocock imports use `last_updated: 2026-08-08`.
-- The `58` local-only Google Workspace overlays retain their upstream
-  `version: "0.22.5"` while sharing the 2026-07-29 retained-client sections
-  and validation baseline.
+- All `155` tracked skills use catalog `version: "2.0"` and were refreshed to
+  the current `last_updated: 2026-08-14` catalog baseline. The `58`
+  local-only Google Workspace overlays retain their upstream
+  `version: "0.22.5"` while receiving the same retained-client sections and
+  maintenance date.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
 - The eight Tavily skills are imported from the official `tavily-ai/skills`
   repository at commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`,
   including the current `tavily-dynamic-search` workflow.
 - The selected Matt Pocock import is sourced from `mattpocock/skills` at
-  commit `84fdeffd12f2ee307994d1eb6feb48173b6e0502`. The audited 35-skill
+  commit `8b78b531ab965735c5dc74f6f7a219e1e37326df`. The audited 35-skill
   tree contributed only `codebase-design`, `domain-modeling`,
   `improve-codebase-architecture`, `prototype`, `research`,
   `resolving-merge-conflicts`, `handoff`, and `writing-for-agents`.
 - Existing catalog equivalents remain canonical for upstream `tdd`,
   `diagnosing-bugs`, `code-review`, and `implement` overlap; no project-local
   skill roots receive sync.
-- The 2026-07-29 child-path reconciliation inspected only the personal
-  `.codex` and `.claude` roots. It promoted five Codex system-only skills,
-  refreshed the existing `imagegen` copy, and found no Claude-only skill.
+- The 2026-08-14 child-path reconciliation inspected only the personal
+  `.codex` and `.claude` roots. No child-only skills remained to promote;
+  Codex system-managed copies remain protected and the three approved
+  downstream roots are the only sync destinations.
+
+The 2026-08-14 source refresh audited current upstream heads and updated the
+mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
+workflows, plus the affected copied Superpowers workflows. Exact-path audits
+left unchanged mapped skills untouched, and imported support material was
+reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
 
 ## Canonical Frontend Design
 
@@ -257,8 +261,8 @@ with the routing policy; it does not prune unknown personal skills.
 ## Upstream-Only Skill Sources
 
 Project-local skill roots under paths such as `C:\Assumption University` are
-neither scanned nor written during normal maintenance. The 2026-07-29 child
-promotion was limited to the personal `.codex` and `.claude` roots.
+neither scanned nor written during normal maintenance. The 2026-08-14 child
+reconciliation was limited to the personal `.codex` and `.claude` roots.
 
 To bring a skill from such a root into this parent catalog, promote it upstream with `scripts/promote-child-skills.py`, then refresh provenance with `scripts/update-skill-registry.py`.
 

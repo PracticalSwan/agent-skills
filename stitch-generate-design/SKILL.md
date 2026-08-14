@@ -1,7 +1,7 @@
 ---
 name: stitch-generate-design
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, design, prompting, screens, ui]
 description: "Prepare Stitch screen-generation, edit, image-to-design, and variant prompts with verified tool checks and design-system-aware wording."
 license: "Apache-2.0"

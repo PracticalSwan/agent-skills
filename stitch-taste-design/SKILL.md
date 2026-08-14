@@ -1,7 +1,7 @@
 ---
 name: stitch-taste-design
 version: "2.0"
-last_updated: 2026-08-02
+last_updated: 2026-08-14
 tags: [stitch, design-system, taste, ui, prompting]
 description: "Create opinionated premium DESIGN.md guidance for Stitch, emphasizing calibrated typography, restrained color, layout discipline, motion, and anti-generic UI rules."
 license: "Apache-2.0"

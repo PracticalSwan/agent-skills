@@ -1,7 +1,7 @@
 ---
 name: research
 version: "2.0"
-last_updated: 2026-08-08
+last_updated: 2026-08-14
 tags: [research]
 description: "Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent."
 license: "MIT"

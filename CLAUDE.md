@@ -33,7 +33,7 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-08-08`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-14`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `155` tracked skill folders
@@ -46,13 +46,10 @@ Snapshot date: `2026-08-08`. Local overlay totals can differ by machine.
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `155` tracked skills use catalog `version: "2.0"`. The `131` unchanged
-pre-existing tracked skills retain `last_updated: 2026-07-29`; the eight
-official Tavily imports use `last_updated: 2026-07-30`; the eight skills
-touched by the frontend consolidation use `last_updated: 2026-08-02`; and the
-eight selected Matt Pocock imports use `last_updated: 2026-08-08`. The `58`
-local-only Google Workspace overlays retain upstream `version: "0.22.5"`
-while sharing the 2026-07-29 retained-client section and validation baseline.
+All `155` tracked skills use catalog `version: "2.0"` and were refreshed to
+the current `last_updated: 2026-08-14` catalog baseline. The `58` local-only
+Google Workspace overlays retain upstream `version: "0.22.5"` while receiving
+the same retained-client sections and maintenance date.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
 The Tavily suite is sourced from `tavily-ai/skills` at commit
@@ -62,11 +59,17 @@ healthy configured Tavily MCP server; they must not assume subscription-only
 browser integrations.
 
 The selected Matt Pocock import is sourced from `mattpocock/skills` at commit
-`84fdeffd12f2ee307994d1eb6feb48173b6e0502`. It adds eight cross-client gaps
+`8b78b531ab965735c5dc74f6f7a219e1e37326df`. It adds eight cross-client gaps
 for architecture, domain modeling, prototypes, primary-source research,
 conflict resolution, handoffs, and agent-document writing. Keep the existing
 catalog equivalents for TDD, debugging, review, implementation, planning, and
 skill authoring as the canonical overlapping workflows.
+
+The 2026-08-14 source refresh audited current upstream heads and updated the
+mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
+workflows, plus the affected copied Superpowers workflows. Exact-path audits
+left unchanged mapped skills untouched, and imported support material was
+reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
 
 `frontend-design` is the only general frontend creation and art-direction
 skill. Use it instead of the retired `frontend-skill` and

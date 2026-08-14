@@ -1,7 +1,7 @@
 ---
 name: stitch-loop
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, workflow, websites, iteration, frontend]
 description: "Run an iterative Stitch website-building loop using `.stitch/next-prompt.md`, SITE.md, DESIGN.md, generated pages, and verification checkpoints."
 license: "Apache-2.0"

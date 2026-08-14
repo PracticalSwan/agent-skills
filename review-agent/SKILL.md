@@ -1,7 +1,7 @@
 ---
 name: review-agent
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [review, agent]
 description: "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions."
 ---

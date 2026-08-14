@@ -1,5 +1,11 @@
 # Xquik REST API Endpoints: Error Codes
 
+Default v1 responses put a legacy string code in `error`. Send
+`xquik-api-contract: 2026-04-29` to receive an object with `message`, `type`,
+and `code`. OpenAPI enumerates 112 codes, including `closed`, `expired`,
+`missing_url`, and `user_not_found`. This table highlights common codes.
+`closed` and `expired` map to 410. `missing_url` maps to 502.
+
 | Status | Code | Meaning |
 |--------|------|---------|
 | 400 | `invalid_input` | Request body failed validation |
@@ -11,6 +17,7 @@
 | 400 | `invalid_tool_type` | Extraction tool type not recognized |
 | 400 | `invalid_format` | Export format not `csv`, `json`, `md`, `md-document`, `pdf`, `txt`, or `xlsx` |
 | 400 | `invalid_params` | Export query parameters are missing or invalid |
+| 400 | `invalid_coverage_cursor` | Automatic coverage cursor is malformed. Restart without it |
 | 400 | `missing_query` | Required query parameter is missing |
 | 400 | `missing_params` | Required query parameters are missing |
 | 400 | `no_media` | Tweet has no downloadable media |
@@ -28,10 +35,33 @@
 | 404 | `style_not_found` | No cached style found |
 | 404 | `draft_not_found` | Draft not found |
 | 409 | `monitor_already_exists` | Duplicate monitor for same username |
+| 409 | `coverage_cursor_unavailable` | Wait the exact `Retry-After` seconds, then retry the same cursor once |
+| 410 | `coverage_cursor_gone` | No `Retry-After`. Restart without a cursor and deduplicate by ID |
 | 422 | `login_failed` | Account connection failed; use dashboard re-auth flow |
 | 429 | - | Rate limited. Retry with backoff |
 | 429 | `x_api_rate_limited` | X data source rate limited. Retry |
 | 500 | `internal_error` | Server error |
-| 502 | `stream_registration_failed` | Stream registration failed. Retry |
 | 502 | `x_api_unavailable` | X data source temporarily unavailable |
 | 502 | `x_api_unauthorized` | X data source authentication failed. Retry |
+
+## Cursor Recovery Examples
+
+`409 coverage_cursor_unavailable` requires an integer `Retry-After` response
+header. Wait that many seconds, then retry the same cursor once.
+
+```json
+{
+  "error": "coverage_cursor_unavailable",
+  "message": "Cursor busy. Retry after the indicated delay."
+}
+```
+
+`410 coverage_cursor_gone` has no `Retry-After` header. Restart without a
+cursor and deduplicate by ID.
+
+```json
+{
+  "error": "coverage_cursor_gone",
+  "message": "Cursor finished, expired, or superseded. Restart pagination without cursor."
+}
+```

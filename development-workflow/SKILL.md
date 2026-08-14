@@ -1,7 +1,7 @@
 ---
 name: development-workflow
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [workflow, quality, planning, delivery]
 description: "Spec-driven development lifecycle — EARS requirements, technical design docs, implementation tracking, and contribution guidelines. Use when planning features, defining requirements, or managing project lifecycle."
 ---

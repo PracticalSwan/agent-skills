@@ -1,7 +1,7 @@
 ---
 name: handoff
 version: "2.0"
-last_updated: 2026-08-08
+last_updated: 2026-08-14
 tags: [handoff]
 description: "Compact the current conversation into a handoff document for another agent to pick up."
 license: "MIT"

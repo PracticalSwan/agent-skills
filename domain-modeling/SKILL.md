@@ -1,7 +1,7 @@
 ---
 name: domain-modeling
 version: "2.0"
-last_updated: 2026-08-08
+last_updated: 2026-08-14
 tags: [domain, modeling]
 description: "Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model."
 license: "MIT"
@@ -40,7 +40,7 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 │       └── docs/adr/
 ```
 
-Create files lazily — only when you have something to write. Read the project's existing `AGENTS.md`, `CLAUDE.md`, memory bank, and contribution guidance first. If the project already has a canonical context or memory surface, update that surface instead of creating a parallel glossary. Create `CONTEXT.md` or `docs/adr/` only when the project convention supports it and the user-authorized scope includes the new file.
+Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
 
 ## During the session
 

@@ -1,7 +1,7 @@
 ---
 name: nemo-retriever
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [nvidia, nemo, retriever, rag, indexing, qa]
 description: "NVIDIA NeMo Retriever deployment and usage guidance for local retrieval services, corpus ingestion, and grounded question-answering workflows."
 license: "CC-BY-4.0 AND Apache-2.0"

@@ -1,7 +1,7 @@
 ---
 name: testing-skills-with-subagents
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [testing, skills, with, subagents]
 description: "RED-GREEN-REFACTOR for process documentation - baseline without skill, write addressing failures, iterate closing loopholes"
 ---

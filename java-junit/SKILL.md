@@ -1,7 +1,7 @@
 ---
 name: java-junit
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [java, testing, development, quality, automation]
 description: "JUnit 5 testing patterns and parameterized-test guidance. Use when writing or reviewing Java unit tests."
 ---

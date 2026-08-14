@@ -1,7 +1,7 @@
 ---
 name: improve-codebase-architecture
 version: "2.0"
-last_updated: 2026-08-08
+last_updated: 2026-08-14
 tags: [improve, codebase, architecture]
 description: "Scan a codebase for deepening opportunities, present them as a visual HTML report, then guide a user-directed decision loop for the selected candidate."
 license: "MIT"

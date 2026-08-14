@@ -1,39 +1,76 @@
 ---
 name: stitch-code-to-design
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, design, frontend, html, migration]
 description: "Convert an existing frontend into Stitch-ready design assets by extracting static HTML, writing DESIGN.md, creating the design system, and uploading approved files."
 license: "Apache-2.0"
 ---
-# Stitch Code To Design
+# Code to Design
 
-This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `7b53207b94e62911777d53d4238b5f8c88c2b519`, source path `plugins/stitch-design/skills/code-to-design`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
+Transform your existing frontend code (React + Vite, Next.js, Angular, Vue, etc.) into a Stitch Design so you can iterate and improve it using Stitch.
 
-## When to Use This Skill
-
-- Use when an existing web app, React view, or static page must be moved into Stitch.
-- The task involves Google Stitch project IDs, `.stitch/` artifacts, DESIGN.md files, Stitch exports, or Stitch-specific validation.
-- The broader `stitch-design` router points here as the narrowest workflow.
+This skill orchestrates three other skills in sequence:
+1. `extract-static-html`: Extract a single self-contained HTML file from your build output or running dev server (e.g., Vite dev server or Angular CLI `ng serve`).
+2. `extract-design-md`: Analyze the source code (including Angular `angular.json`, external `.html` templates, theme files, and components) to create a design system (DESIGN.md).
+3. `upload-to-stitch`: Upload that HTML file and the design system to your Stitch project.
 
 ## Workflow
 
-1. Resolve the target app root, route, and intended Stitch project. If the project ID is unknown, require a user-provided Stitch URL/project ID, the Stitch web UI, or a host-listed lookup tool.
-2. Run `stitch-extract-static-html` for the relevant route or UI state and keep the output under `.stitch/`.
-3. Run `stitch-extract-design-md` against the source tree and save `.stitch/DESIGN.md`.
-4. Run `stitch-manage-design-system` to create or update the Stitch design system, using `--generated-by 'stitch::code-to-design'` when the bundled upload helper is needed.
-5. Run `stitch-upload-to-stitch` for the static HTML only after the user approves the exact file, size, and destination; identify the producer with `--generated-by 'stitch::extract-static-html'`.
-6. Update `.stitch/metadata.json` with project, screen, and design-system identifiers.
+Follow these steps to convert your existing code.
 
-## Local Assets
+### Prerequisites
 
-- `examples/`, `resources/`, `references/`, or `reference/` are upstream support material when present. Treat `SKILL.md` as the source of truth if a support file mentions an unavailable MCP tool.
-- `scripts/` are optional helpers. On Windows, prefer PowerShell or Node equivalents unless Git Bash or WSL is actually available.
-- Keep generated `.stitch/` files out of commits unless the user explicitly wants them as durable examples.
+- A running local dev server (e.g. `npm run dev`, `ng serve`) OR a built web application directory containing `index.html` and assets.
+- Target Stitch `projectId` (use `list_projects` if unknown).
 
-## Corrected Stitch MCP Surface
+### Steps
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-29 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+#### 1. Extract Self-Contained HTML
+
+Delegate to the `extract-static-html` skill to generate a standalone HTML file.
+Read [stitch-extract-static-html/SKILL.md](../stitch-extract-static-html/SKILL.md) for detailed instructions and script usage.
+
+Expected output: A single file like `/path/to/extracted/standalone.html`.
+
+#### 2. Verify HTML (Optional — User-Driven)
+
+After extraction, inform the user of the output file path so they can manually
+verify in a browser if desired. **Do not block on verification** — proceed
+directly to Step 3.
+
+If the user reports issues after reviewing, fix them before continuing.
+
+#### 3. Extract Design System (File)
+
+Delegate to the `extract-design-md` skill to analyze the project's source files
+(components, stylesheets, theme configs) and produce a design system. Read
+[stitch-extract-design-md/SKILL.md](../stitch-extract-design-md/SKILL.md) for the
+full analysis workflow.
+
+Write `.stitch/DESIGN.md` following the `extract-design-md` skill's output
+structure.
+
+#### 4. Upload DESIGN.md and Create Design System in Stitch
+
+Delegate to the `manage-design-system` skill to upload the `DESIGN.md` and
+create the design system in Stitch. Read
+[stitch-manage-design-system/SKILL.md](../stitch-manage-design-system/SKILL.md) for
+the full workflow (upload script usage, `create_design_system_from_design_md`
+call, and required schemas). Pass
+`--generated-by 'stitch::code-to-design'` when uploading.
+
+#### 5. Upload HTML to Stitch
+
+Use the same `upload-to-stitch` skill's script to upload the extracted HTML file.
+Read [stitch-upload-to-stitch/SKILL.md](../stitch-upload-to-stitch/SKILL.md) for detailed instructions and script usage.
+
+You will need:
+- The path to the standalone HTML file generated in Step 1.
+- Your Stitch API Key (same key used in Step 4).
+- The target `projectId`.
+- The `--generated-by` argument set to `'stitch::extract-static-html'`.
+- The `--title` argument set to the **route path** of the page (e.g., `'/dashboard'`, `'/settings/profile'`, `'/inbox'`) so that the screen name/title in Stitch clearly identifies its route in the application.
 
 ## Anti-Patterns
 

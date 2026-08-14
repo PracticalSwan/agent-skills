@@ -167,6 +167,25 @@ Codex skill catalog.
   personal-global roots. Project-local skill paths remain out of scope even
   when the workspace audit reads their project documentation.
 
+## 2026-08-14 Catalog Freshness And Source Sync
+
+- Compare each recorded source commit with the live upstream head, then
+  inspect only the exact mapped paths before refreshing a normalized skill.
+  Repository-wide head movement is not evidence that every imported skill
+  changed.
+- When an upstream refresh adds a client-specific setup path that the catalog
+  intentionally retired, copy the current workflow but remove that setup
+  surface and keep an honest no-MCP or manual fallback.
+- Preserve the parent catalog's wrappers and changelogs when importing current
+  support trees. Replacing a full upstream folder can silently drop local
+  provenance, approval gates, or client-routing safeguards.
+- A catalog-wide metadata refresh must update all root inventory snapshots and
+  the generated source report in the same change, even when skill counts stay
+  unchanged.
+- Child reconciliation is a separate check from upstream refresh: compare only
+  personal `.codex` and `.claude` roots, report zero extras explicitly, and do
+  not scan project-specific paths.
+
 ## Update Checklist
 
 1. Edit the workspace copy.

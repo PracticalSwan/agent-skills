@@ -1,13 +1,12 @@
 ---
 name: tavily-best-practices
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, web-search, extraction, crawling, research, sdk]
 description: "Build or review production-ready Tavily SDK and API integrations for web search, extraction, crawling, mapping, and research. Use when implementing Tavily in an agent, RAG pipeline, or application rather than only running one CLI command."
 license: "MIT"
 compatibility: "Uses the official Tavily Python or JavaScript SDK and authenticated Tavily access; the Tavily MCP server and CLI are optional execution surfaces."
 ---
-
 # Tavily
 
 Tavily is a search API designed for LLMs, enabling AI applications to access real-time web data.
@@ -169,19 +168,22 @@ Before claiming a Tavily integration is ready:
 5. Pressure test: Exercise an empty result, failed URL, timeout, or rate-limit path without leaking credentials or silently inventing content.
 6. Success metric: The result records the method, relevant options, source URLs or citations, and the verification evidence.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep this folder in a Copilot-visible skill root or expose the workflow through repository instructions.
-- Claude Code: use the official SDK, `tvly`, or an explicitly configured Tavily MCP server. A GLM Coding Plan endpoint does not imply Anthropic-native browser tools.
-- Codex: use an exposed Tavily connector/MCP surface when available, or run the same SDK and CLI workflows through the local shell.
-- Do not invent a host wrapper. Verify the active tool list before choosing MCP, CLI, or SDK execution.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-best-practices` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

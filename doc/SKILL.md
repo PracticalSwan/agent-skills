@@ -1,7 +1,7 @@
 ---
 name: doc
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [doc]
 description: "Use when the task involves reading, creating, or editing `.docx` documents, especially when formatting or layout fidelity matters; prefer `python-docx` plus the bundled `scripts/render_docx.py` for visual checks."
 ---

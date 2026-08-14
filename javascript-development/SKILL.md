@@ -1,7 +1,7 @@
 ---
 name: javascript-development
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [javascript, development, testing, quality, automation]
 description: "JavaScript/TypeScript ES2024+, async/await, DOM manipulation, Node.js, and API integration. Use when writing vanilla JS/TS code, working with REST/fetch APIs, implementing frontend logic, or configuring JS build tools."
 ---

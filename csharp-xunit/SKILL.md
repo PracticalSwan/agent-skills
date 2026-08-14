@@ -1,7 +1,7 @@
 ---
 name: csharp-xunit
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [dotnet, testing, development, quality, automation]
 description: "xUnit testing patterns and data-driven test guidance. Use when writing or reviewing .NET unit tests."
 ---

@@ -1,7 +1,7 @@
 ---
 name: jupyter-notebook
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [jupyter, notebook, python, experiments, tutorials]
 description: "Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tutorials; prefer the bundled templates and helper script for reproducible notebook structure and safer editing."
 ---

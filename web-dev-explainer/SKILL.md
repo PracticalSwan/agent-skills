@@ -1,7 +1,7 @@
 ---
 name: web-dev-explainer
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [web, dev, explainer]
 description: "Trigger when the user asks for explanations of web development concepts, code breakdowns, or learning guidance."
 ---

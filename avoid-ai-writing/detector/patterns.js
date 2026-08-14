@@ -1,6 +1,6 @@
 /**
  * Avoid AI Writing — detection engine (canonical source of truth)
- * Implements 45-category pattern detection. This repo's SKILL.md
+ * Implements regex, structural, and stylometric pattern detection. This repo's SKILL.md
  * catalogs the human-editable pattern rules; this engine is the executable
  * expression of the regex-detectable subset and extends it with stylometric and
  * AI-tool-fingerprint detectors that don't make sense as skill prose
@@ -131,17 +131,17 @@ const AIDetector = (() => {
     { pattern: /\bthought\s+leader(?:ship)?\b/gi, replace: 'expert, authority' },
     { pattern: /\bbest\s+practices\b/gi, replace: 'what works, proven methods' },
     { pattern: /\bat\s+its\s+core\b/gi, replace: 'cut, just state it' },
-    { pattern: /\bin\s+order\s+to\b/gi, replace: 'to' },
-    { pattern: /\bdue\s+to\s+the\s+fact\s+that\b/gi, replace: 'because' },
-    { pattern: /\bserves\s+as\b/gi, replace: 'is' },
-    { pattern: /\bfeatures\b/gi, replace: 'has, includes', filter: true },
-    { pattern: /\bboasts\b/gi, replace: 'has' },
-    { pattern: /\butiliz(?:e|es|ing|ed)\b/gi, replace: 'use' },
+    { pattern: /\bin\s+order\s+to\b/gi, replace: 'to', clarity: true },
+    { pattern: /\bdue\s+to\s+the\s+fact\s+that\b/gi, replace: 'because', clarity: true },
+    { pattern: /\bserves\s+as\b/gi, replace: 'is', clarity: true },
+    { pattern: /\bfeatures\b/gi, replace: 'has, includes', filter: true, clarity: true },
+    { pattern: /\bboasts\b/gi, replace: 'has', clarity: true },
+    { pattern: /\butiliz(?:e|es|ing|ed)\b/gi, replace: 'use', clarity: true },
     { pattern: /\bshowcas(?:e|es|ing|ed)\b/gi, replace: 'show, demonstrate' },
     { pattern: /\bembark(?:s|ing|ed)?\b/gi, replace: 'start, begin' },
-    { pattern: /\bcommenc(?:e|es|ing|ed)\b/gi, replace: 'start, begin' },
-    { pattern: /\bascertain(?:s|ing|ed)?\b/gi, replace: 'find out, determine' },
-    { pattern: /\bendeavou?r(?:s|ing|ed)?\b/gi, replace: 'effort, attempt, try' },
+    { pattern: /\bcommenc(?:e|es|ing|ed)\b/gi, replace: 'start, begin', clarity: true },
+    { pattern: /\bascertain(?:s|ing|ed)?\b/gi, replace: 'find out, determine', clarity: true },
+    { pattern: /\bendeavou?r(?:s|ing|ed)?\b/gi, replace: 'effort, attempt, try', clarity: true },
     { pattern: /\bunderscor(?:es|ing|ed)\b/gi, replace: 'highlights, shows' },
     // Hyphen required. The unhyphenated "load bearing" is ordinary English —
     // "the load bearing down on the bridge" — where `bearing` is a participle,
@@ -230,6 +230,11 @@ const AIDetector = (() => {
     'exceptional', 'exceptionally', 'remarkable', 'remarkably',
     'sophisticated', 'instrumental',
     'world-class', 'state-of-the-art', 'best-in-class',
+    // `verbatim` is usually redundant with the verb it modifies ("copies X
+    // verbatim" = "copies X"). It has a genuine term-of-art sense in legal,
+    // research, and QA registers ("verbatim transcript"), so it lives at Tier 3:
+    // density-gated, it only fires on overuse, not on a single legitimate use.
+    'verbatim',
   ];
 
   // Multi-word Tier 3 phrases. Density-gated like single Tier 3 words because
@@ -267,6 +272,9 @@ const AIDetector = (() => {
   // though all three are tagged `critical`.
   const ISSUE_WEIGHTS = {
     tier1: 5,
+    // Wordiness, not an AI-frequency marker. Weighted like tier2 so a
+    // clarity fix cannot push a document toward an AI classification.
+    'tier1-clarity': 3,
     tier2: 3,
     tier3: 2,
     transition: 2,
@@ -281,6 +289,7 @@ const AIDetector = (() => {
     'vague-attribution': 5,
     'hollow-intensifier': 2,
     'emotional-flatline': 2,
+    'lingering-attention': 3,
     'novelty-inflation': 3,
     'cutoff-disclaimer': 10,
     'template-phrase': 3,
@@ -333,6 +342,10 @@ const AIDetector = (() => {
     'ai-placeholder': 10,
     'ai-citation-markup': 15,
     'ai-utm-source': 12,
+    // Curated P2 copyedits, not authorship evidence. Keep them visible in the
+    // issue list without moving the AI score, label, probabilities, or
+    // trinary classification on short documents.
+    'unnecessary-hyphenation': 0,
   };
 
   // ─── Transition phrases ────────────────────────────────────────────
@@ -458,6 +471,30 @@ const AIDetector = (() => {
     /^\s*interesting\s+(?:part|thing|aspect|piece)(?:\s+of\s+(?:the\s+)?\w+)?\s*:/gim,
   ];
 
+  // ─── Lingering-attention claims ────────────────────────────────────
+  // The share-post opener that claims duration of attention instead of
+  // saying anything about the thing ("the line I keep coming back to").
+  //
+  // Precision note: the bare verb phrase "I keep coming back to X" is NOT
+  // matched on its own, because it is legitimate whenever a reason follows
+  // ("I keep coming back to Hirschman because it predicts who quits"), and
+  // the reason clause is not reliably detectable by regex. Only the
+  // noun-anchored frame ("the line/quote/bit ... I keep coming back to")
+  // fires, which is the shape that introduces a subject rather than
+  // asserting something about it. The bare form stays a skill-prose
+  // judgment call. See SKILL.md §Lingering-attention claims carve-out.
+  const LINGERING_ATTENTION = [
+    // "the line I keep coming back to", "the one quote that I keep coming back to"
+    // Noun-anchored frame only. "can't stop thinking about" is deliberately
+    // left to its own pattern below rather than folded into this alternation,
+    // so "the line I can't stop thinking about" scores once, not twice.
+    /\b(?:the|that|this)\s+(?:one\s+)?(?:line|quote|bit|part|idea|point|framing|comment|thing)\s+(?:that\s+)?i\s+keep\s+(?:coming\s+back\s+to|thinking\s+about)\b/gi,
+    /\bi\s+can'?t\s+stop\s+thinking\s+about\b/gi,
+    /\bstill\s+thinking\s+about\s+(?:this|that)\s+one\b/gi,
+    /\b(?:been|be)\s+rattling\s+around\s+(?:in\s+)?my\s+(?:head|brain)\b/gi,
+    /\bi'?ve\s+been\s+chewing\s+on\s+(?:this|that)\b/gi,
+  ];
+
   // ─── Novelty inflation ─────────────────────────────────────────────
   const NOVELTY_INFLATION = [
     /\bthe\s+failure\s+mode\s+nobody'?s?\s+naming\b/gi,
@@ -558,7 +595,12 @@ const AIDetector = (() => {
   // opportunities", "may eventually unlock value." Either word alone is
   // fine; the stack is the tell.
   const HEDGE_STACK = [
-    /\b(?:could|may|might)\s+(?:\w+\s+){0,2}(?:potentially|eventually|ultimately|possibly|conceivably)\b/gi,
+    // At most one intervening word, and never a negator. The old {0,2} gap
+    // matched ordinary English: "could not possibly" (plain emphatic
+    // negation) and inverted questions like "could a savage possibly" both
+    // fired. Measured on the human-control corpus, 3 of 4 hedge-stack flags
+    // were this over-match. See issue #69.
+    /\b(?:could|may|might)\s+(?:(?!not\b|never\b|hardly\b|scarcely\b|barely\b)\w+\s+)?(?:potentially|eventually|ultimately|possibly|conceivably)\b/gi,
     /\b(?:potentially|eventually|ultimately)\s+(?:could|may|might)\b/gi,
   ];
 
@@ -613,12 +655,300 @@ const AIDetector = (() => {
     /\b(?:imagine|picture|envision)(?:\s*,[^,\n]{1,30},)?\s+a\s+(?:world|future|reality)\s+(?:where|in\s+which)\b/gi,
   ];
 
+  // Function words whose presence MID-title marks the AI section-header shape.
+  // Word-anchored: without \b the "A" alternative matches inside any word and
+  // the guard silently degrades to "four tokens".
+  const FUNCTION_WORD = /\b(?:And|Or|Of|The|In|For|To|A|An)\b/;
+
+  // Must accept exactly what TITLE_CASE_HEADER accepts, or the prefix survives
+  // into the token count and reintroduces the ##-as-token bug.
+  const MD_HEADING_PREFIX = /^#{1,6}[ \t]+/;
+
+  /** Byte ranges covered by fenced code blocks, computed once per scan.
+   *
+   * A document that documents Markdown is the normal case for this rule -- a
+   * fenced `## Heading` example is illustration, not the author's own section
+   * header, and flagging it makes every docs page flag itself.
+   *
+   * This tracks the opening delimiter instead of counting them, because a
+   * parity count is wrong on the very case the rule exists for. CommonMark
+   * closes a fence only on the same character at the same length or longer, so
+   * a four-backtick fence wrapping a three-backtick example -- exactly how you
+   * document fences -- nests in practice, and counting delimiters inverts on
+   * it. Up to three spaces of indent are legal. An unclosed fence runs to end
+   * of document, matching how renderers treat it.
+   *
+   * Computed once per scan rather than rescanned per hit: the previous version
+   * sliced the whole document for every candidate, which is quadratic on a
+   * heading-dense file. */
+  function fenceRanges(text) {
+    const re = /^[ \t]{0,3}(`{3,}|~{3,})[^\n]*$/gm;
+    const ranges = [];
+    let open = null;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const marker = m[1];
+      if (!open) {
+        open = { char: marker[0], len: marker.length, start: m.index };
+      } else if (marker[0] === open.char && marker.length >= open.len) {
+        ranges.push([open.start, m.index + m[0].length]);
+        open = null;
+      }
+    }
+    if (open) ranges.push([open.start, text.length]);
+
+    return ranges;
+  }
+
+  function inFenceRange(ranges, index) {
+    return typeof index === 'number' && ranges.some(([a, b]) => index >= a && index < b);
+  }
+
+  function blankRange(chars, start, end) {
+    for (let i = start; i < end && i < chars.length; i += 1) {
+      if (chars[i] !== '\n') chars[i] = ' ';
+    }
+  }
+
+  // Copy of the text with fenced blocks and inline code spans blanked out.
+  // Index-preserving: each masked character becomes a space and newlines are
+  // kept, so offsets into the result still address the same position in the
+  // original. For rules where a character inside code is something the author
+  // is quoting rather than using — a `#fff` in a CSS sample is not a tag.
+  // Fences are blanked first so their backticks cannot pair with a later
+  // inline span and swallow the prose between them.
+  function maskCode(text) {
+    const chars = text.split('');
+    for (const [a, b] of fenceRanges(text)) blankRange(chars, a, b);
+    // Indented code blocks are deliberately NOT masked. Four spaces is a code
+    // block only at top level; under a list marker it is a paragraph
+    // continuation, so blanking it silences real tag blocks. #90 reports
+    // fences and inline spans, and those are what this masks.
+    const withoutFences = chars.join('');
+    const inlineRe = /(`+)(?:(?!\1)[^\n])+\1/g;
+    let m;
+    while ((m = inlineRe.exec(withoutFences)) !== null) blankRange(chars, m.index, m.index + m[0].length);
+    return chars.join('');
+  }
+
+  function maskTopLevelIndentedCode(chars) {
+    const lines = chars.join('').split('\n');
+    let offset = 0;
+    let inBlock = false;
+    for (let i = 0; i < lines.length; i += 1) {
+      const line = lines[i];
+      const indented = /^(?: {4}|\t)\S/.test(line);
+      const previousBlank = i === 0 || lines[i - 1].trim() === '';
+      if (indented && (inBlock || previousBlank)) {
+        blankRange(chars, offset, offset + line.length);
+        inBlock = true;
+      } else if (line.trim() !== '') {
+        inBlock = false;
+      }
+      offset += line.length + 1;
+    }
+  }
+
+  function maskYamlFrontmatter(chars) {
+    const lines = chars.join('').split('\n');
+    const bare = (line) => line.replace(/\r$/, '');
+    const first = bare(lines[0]).replace(/^\uFEFF/, '');
+    if (first !== '---' || lines.length < 2 || /^\s*$/.test(bare(lines[1]))) return;
+
+    let closingLine = -1;
+    for (let i = 1; i < lines.length; i += 1) {
+      if (bare(lines[i]) === '---') {
+        closingLine = i;
+        break;
+      }
+    }
+    if (closingLine === -1) return;
+
+    let end = 0;
+    for (let i = 0; i <= closingLine; i += 1) {
+      end += lines[i].length;
+      if (i < lines.length - 1) end += 1;
+    }
+    blankRange(chars, 0, end);
+  }
+
+  function maskYamlMetadata(chars) {
+    const lines = chars.join('').split('\n');
+    let offset = 0;
+    let nestedAfterIndent = null;
+    for (const line of lines) {
+      const bare = line.replace(/\r$/, '');
+      // Lowercase keys are the common unfenced-YAML shape. Keeping this
+      // case-sensitive prevents prose labels such as "Note: ..." from being
+      // mistaken for metadata and silencing a real copyedit on the line.
+      const key = bare.match(/^([ \t]*)(?:-[ \t]+)?[a-z_][a-z0-9_.-]*[ \t]*:(.*)$/);
+      const indentation = (bare.match(/^[ \t]*/) || [''])[0].length;
+      let shouldMask = false;
+
+      if (key) {
+        shouldMask = true;
+        nestedAfterIndent = key[2].trim() === '' ? key[1].length : null;
+      } else if (nestedAfterIndent !== null && bare.trim() !== '' && indentation > nestedAfterIndent) {
+        shouldMask = true;
+      } else if (bare.trim() === '') {
+        nestedAfterIndent = null;
+      } else {
+        nestedAfterIndent = null;
+      }
+
+      if (shouldMask) blankRange(chars, offset, offset + line.length);
+      offset += line.length + 1;
+    }
+  }
+
+  function maskMarkdownTables(chars) {
+    const lines = chars.join('').split('\n');
+    const delimiter = /^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*\r?$/;
+    const rows = new Set();
+    for (let i = 0; i < lines.length; i += 1) {
+      if (!delimiter.test(lines[i])) continue;
+      if (i > 0 && lines[i - 1].includes('|')) rows.add(i - 1);
+      rows.add(i);
+      for (let j = i + 1; j < lines.length && lines[j].includes('|'); j += 1) rows.add(j);
+    }
+
+    let offset = 0;
+    for (let i = 0; i < lines.length; i += 1) {
+      if (rows.has(i)) blankRange(chars, offset, offset + lines[i].length);
+      offset += lines[i].length + 1;
+    }
+  }
+
+  function maskDelimitedQuotes(chars, open, close, apostropheAware = false) {
+    const isWord = (char) => char !== undefined && /[a-z0-9]/i.test(char);
+    const isEscaped = (index) => {
+      let slashes = 0;
+      for (let i = index - 1; i >= 0 && chars[i] === '\\'; i -= 1) slashes += 1;
+      return slashes % 2 === 1;
+    };
+    let start = -1;
+    for (let i = 0; i < chars.length; i += 1) {
+      if (start === -1) {
+        if (chars[i] === open && !isEscaped(i) && (!apostropheAware || !isWord(chars[i - 1]))) start = i;
+      } else if (chars[i] === close && !isEscaped(i) && (!apostropheAware || !isWord(chars[i + 1]))) {
+        blankRange(chars, start, i + 1);
+        start = -1;
+      }
+    }
+  }
+
+  // Additional protected spans for the hyphenation copyedit. Unlike general
+  // AI-tell matching, this rule must not "correct" a literal spelling in a
+  // quote, URL, path, filename, command flag, or Markdown blockquote.
+  function maskHyphenationProtected(text) {
+    const chars = maskCode(text).split('');
+    maskTopLevelIndentedCode(chars);
+    maskYamlFrontmatter(chars);
+    maskYamlMetadata(chars);
+    maskMarkdownTables(chars);
+    maskDelimitedQuotes(chars, '"', '"');
+    maskDelimitedQuotes(chars, '“', '”');
+    maskDelimitedQuotes(chars, "'", "'", true);
+    maskDelimitedQuotes(chars, '‘', '’', true);
+    const maskMatches = (regex) => {
+      const source = chars.join('');
+      let match;
+      while ((match = regex.exec(source)) !== null) {
+        blankRange(chars, match.index, match.index + match[0].length);
+      }
+    };
+
+    maskMatches(/^[ \t]*>[^\n]*$/gm);
+    maskMatches(/\b(?:https?:\/\/|www\.)[^\s<>]+/gi);
+    maskMatches(/<[!?/]?[a-z][^>\n]*>/gi);
+    maskMatches(/(?<![a-z0-9_-])--?[a-z0-9][a-z0-9-]{0,127}/gi);
+
+    // Paths and filenames use bounded components. Besides preventing
+    // superlinear backtracking on long kebab blobs, the explicit prefix and
+    // trailing-slash forms cover single-component paths such as C:\\code-base,
+    // ~/code-base, /code-base, and code-base/.
+    maskMatches(/(?:[a-z]:[\\/]|\.{1,2}[\\/]|~[\\/]|[\\/])[a-z0-9_.-]{1,255}/gi);
+    maskMatches(/(?:[a-z]:[\\/]|(?:\.\.?[\\/])?)(?:[a-z0-9_.-]{1,64}[\\/]){1,128}[a-z0-9_.-]{1,64}/gi);
+    maskMatches(/\b[a-z0-9_.]{0,63}-[a-z0-9_.-]{1,64}[\\/]/gi);
+    maskMatches(/\b[a-z0-9_.-]{1,64}-[a-z0-9_.-]{1,64}\.[a-z0-9]{1,16}\b/gi);
+
+    // Technical identifiers that are distinguishable from ordinary prose:
+    // selectors, scoped packages, versioned tokens, assignments, and kebab
+    // names next to an explicit identifier cue. Plain lowercase compounds
+    // remain visible to the curated copyedit patterns below.
+    maskMatches(/[.#][a-z_][a-z0-9_.-]{0,63}-[a-z0-9_.-]{1,64}\b/gi);
+    maskMatches(/@[a-z0-9_.-]{1,64}\/[a-z0-9_.-]{1,64}-[a-z0-9_.-]{1,64}(?:@[^\s,;)\]}]{1,32})?/gi);
+    maskMatches(/\b[a-z0-9_.-]{1,64}-[a-z0-9_.-]{1,64}@[~^]?v?\d[a-z0-9*_.+-]{0,31}\b/gi);
+    maskMatches(/\b(?:[a-z0-9_.-]{0,64}\d[a-z0-9_.-]{0,64}-[a-z0-9_.-]{1,64}|[a-z0-9_.-]{1,64}-[a-z0-9_.-]{0,64}\d[a-z0-9_.-]{0,64})\b/gi);
+    maskMatches(/\b[a-z_][a-z0-9_.]{0,63}(?:-[a-z0-9_.]{1,64}){1,8}(?=[ \t]*[=:])/gi);
+    maskMatches(/\b[a-z_][a-z0-9_.]{0,63}(?:-[a-z0-9_.]{1,64}){1,8}(?=[ \t]+(?:npm[ \t]+)?(?:package|module|class|selector|config(?:uration)?[ \t]+key|key|identifier|property|setting|token|slug|command|option)\b)/gi);
+    maskMatches(/\b(?:(?:file(?:name)?|directory|folder|package|module|class|selector|config(?:uration)?[ \t]+key|identifier|property|setting|token|slug|command|option)(?:[ \t]+(?:named|called|is|was))?|key[ \t]+(?:named|called|is|was))[ \t]+(?:@[a-z0-9_.-]{1,64}\/)?[a-z_][a-z0-9_.]{0,63}(?:-[a-z0-9_.]{1,64}){1,8}\b/gi);
+    maskMatches(/\b(?:npm|pnpm|yarn)[ \t]+(?:add|install)[ \t]+(?:@[a-z0-9_.-]{1,64}\/)?[a-z0-9_.]{1,64}(?:-[a-z0-9_.]{1,64}){1,8}/gi);
+
+    return chars.join('');
+  }
+
+  function findUnnecessaryHyphenation(text) {
+    const scanText = maskHyphenationProtected(text);
+    const issues = [];
+    for (const entry of UNNECESSARY_HYPHENATION) {
+      const regex = new RegExp(entry.pattern.source, entry.pattern.flags);
+      let match;
+      while ((match = regex.exec(scanText)) !== null) {
+        issues.push({
+          type: 'unnecessary-hyphenation',
+          text: match[0],
+          severity: 'medium',
+          suggestion: typeof entry.suggestion === 'function'
+            ? entry.suggestion(match[0])
+            : entry.suggestion,
+        });
+      }
+    }
+    return issues;
+  }
+
+  // ─── Forms that open with `#` but are not social tags ──────────────
+  // `#` is overloaded in technical prose and the hashtag rule counts every
+  // `#word` it sees, so these are subtracted before the threshold applies:
+  //   #88, #1234         issue and PR references
+  //   #1a2b3c            CSS hex colours, 6 or 8 chars AND containing a digit
+  //   #include, #ifndef  C preprocessor directives
+  // Deliberately NOT carving out 3- and 4-digit hex: #dad, #cafe, #b2b, #e2e,
+  // #ace, #face and #bad are real tags, and subtracting them cost true
+  // positives on exactly the stuffed-block shape this rule exists to catch.
+  // Real palettes are dominated by 6-digit values, so a CSS paragraph still
+  // lands under the threshold without the short forms.
+  // `owner/repo#88` and URL fragments need no carve-out: the char before `#`
+  // is a word char, so the rule's own anchor already rejects them.
+  // Ambiguous word tags stay counted on purpose. `#general` as a channel and
+  // `#general` as a tag are the same token, and separating them needs a guess
+  // that costs more precision on real tag blocks than the carve-out buys.
+  // Requires at least one digit: #decade, #facade, #deadbeef are a-f words and
+  // real tags. Every actual palette value in the wild carries a digit.
+  const HEX_COLOUR = /^(?=[0-9a-f]*\d)(?:[0-9a-f]{6}|[0-9a-f]{8})$/i;
+  const CPP_DIRECTIVE = /^(?:include|define|undef|if|ifdef|ifndef|elif|else|endif|pragma|error|warning|line)$/;
+
+  function isSocialTag(tag) {
+    return !/^\d+$/.test(tag) && !HEX_COLOUR.test(tag) && !CPP_DIRECTIVE.test(tag);
+  }
+
   // ─── Title Case Section Headers in non-technical prose ─────────────
   // "Strategic Negotiations And Key Partnerships" — every content word
   // capitalized. Acceptable in API docs, ML papers, news headlines. Tell
   // in marketing/personal/blog prose. Gated to "personal" / "marketing"
   // context modes (technical mode skips this check).
-  const TITLE_CASE_HEADER = /^([A-Z][a-z]+(?:\s+(?:[A-Z][a-z]+|and|or|of|the|in|for|to|a|an))+\s+[A-Z][a-z]+)\s*$/gm;
+  //
+  // The optional `#{1,6}` prefix is load-bearing (#62): without it the `^[A-Z]`
+  // anchor required the line to START with a capital, so `## Benefits And
+  // Strategic Considerations` never matched — the first character is `#`. The
+  // rule missed the single most common way a heading is actually written, while
+  // catching the bare-line form it is usually converted from. Reported by a
+  // downstream vendoring the detector.
+  //
+  // Setext headings (`Title`/`=====`) need no prefix: their text line is bare
+  // and already matched by this same pattern.
+  const TITLE_CASE_HEADER = /^(?:#{1,6}[ \t]+)?([A-Z][a-z]+(?:\s+(?:[A-Z][a-z]+|and|or|of|the|in|for|to|a|an))+\s+[A-Z][a-z]+)\s*$/gm;
 
   // ─── Parenthetical hedging asides ──────────────────────────────────
   // "(and increasingly, X)", "(or more precisely, Y)", "(though to be
@@ -673,6 +1003,46 @@ const AIDetector = (() => {
     /\bbookmark\s+this(?:\s+(?:one|post|thread))?(?=\s*(?:[:.!\n]|$))/gi,
     /\bdo\s*n['’]?t\s+sleep\s+on\s+this\b/gi,
     /\btrust\s+me,?\s+(?:on\s+this|you['’]?ll)\b/gi,
+  ];
+
+  // ─── Unnecessary hyphenation (#107) ───────────────────────────────
+  // Precision-first subclasses only. The general question of whether a
+  // compound modifier is established English needs editorial judgment and
+  // remains in SKILL.md; the engine covers only curated open/closed forms and
+  // compounds whose surrounding syntax makes the unhyphenated form clear.
+  const UNNECESSARY_HYPHENATION = [
+    // Welded open noun phrases reported in #107. Match the complete phrase so
+    // a project-specific spelling of the pair in another role is not swept in.
+    { pattern: /\bresearch-impact\s+aggregat(?:or|ion)s?\b/g, suggestion: (match) => match.replace('research-impact', 'research impact') },
+    { pattern: /\bdata-source\s+strateg(?:y|ies)\b/g, suggestion: (match) => match.replace('data-source', 'data source') },
+    { pattern: /\bPython-package\s+usage\b/g, suggestion: (match) => match.replace('Python-package', 'Python package') },
+    { pattern: /\bRust-crate\s+usage\b/g, suggestion: (match) => match.replace('Rust-crate', 'Rust crate') },
+    { pattern: /\bsingle-Project\s+Manifest\b/g, suggestion: (match) => match.replace('single-Project', 'single Project') },
+    { pattern: /\btotal-downloads\s+figures?\b/g, suggestion: (match) => match.replace('total-downloads', 'total downloads') },
+    { pattern: /\blife-sciences-native\s+citation\s+count\b/g, suggestion: 'citation count from a life sciences source' },
+
+    // Compounds whose standard spelling is closed. Kept as a small curated
+    // list rather than guessing that every noun-noun pair should close up.
+    { pattern: /\bcode-base\b/g, suggestion: (match) => match.replace('-', '') },
+    { pattern: /\bdata-set\b/g, suggestion: (match) => match.replace('-', '') },
+    { pattern: /\btime-frame\b/g, suggestion: (match) => match.replace('-', '') },
+    { pattern: /\broad-map\b/g, suggestion: (match) => match.replace('-', '') },
+
+    // Attributive-only forms used adverbially or as nouns. The boundary after
+    // real-time / long-term is intentionally narrow: "real-time analytics"
+    // and "long-term plan" must not fire.
+    {
+      pattern: /\bin\s+real-time(?=\s*(?:[,.!?;:]|$)|\s+(?:(?:across|as|automatically|because|but|continuously|during|dynamically|every|for|from|immediately|instantly|on|simultaneously|through|throughout|until|via|when|while|with|without)\b))/gi,
+      suggestion: 'in real time',
+    },
+    {
+      pattern: /\b(?:for|over)\s+the\s+long-term(?=\s*(?:[,.!?;:]|$)|\s+(?:across|because|but|by|during|for|from|on|through|throughout|until|via|when|while|with|without)\b)/gi,
+      suggestion: (match) => match.replace(/long-term/i, 'long term'),
+    },
+    {
+      pattern: /\b(?:functions?|functioned|functioning|operates?|operated|operating|runs?|ran|running|works?|worked|working)\s+out-of-the-box\b/gi,
+      suggestion: (match) => match.replace(/out-of-the-box/i, 'out of the box'),
+    },
   ];
 
   // ═══ Helpers ═══════════════════════════════════════════════════════
@@ -808,7 +1178,7 @@ const AIDetector = (() => {
     // ── 1. Tier 1 words ──────────────────────────────────────────
     const tier1Found = new Set();
     for (const token of tokens) {
-      if (TIER1[token] && !tier1Found.has(token)) {
+      if (Object.hasOwn(TIER1, token) && !tier1Found.has(token)) {
         tier1Found.add(token);
         issues.push({
           type: 'tier1',
@@ -830,9 +1200,11 @@ const AIDetector = (() => {
         if (tier1Found.has(lower)) continue;
         tier1Found.add(lower);
         issues.push({
-          type: 'tier1',
+          // Clarity-band entries are wordiness edits, not frequency evidence.
+          // Same fix, weaker claim — see the Tier 1A/1B split in SKILL.md.
+          type: phrase.clarity ? 'tier1-clarity' : 'tier1',
           text: match[0],
-          severity: 'high',
+          severity: phrase.clarity ? 'medium' : 'high',
           suggestion: phrase.replace,
         });
       }
@@ -845,7 +1217,7 @@ const AIDetector = (() => {
       const found = [];
       const suggestions = {};
       for (const token of paraTokens) {
-        if (TIER2[token] && !found.includes(token)) {
+        if (Object.hasOwn(TIER2, token) && !found.includes(token)) {
           found.push(token);
           suggestions[token] = TIER2[token];
         }
@@ -905,6 +1277,7 @@ const AIDetector = (() => {
     issues.push(...matchPatterns(text, VAGUE_ATTRIBUTIONS, 'vague-attribution', 'critical'));
     issues.push(...matchPatterns(text, HOLLOW_INTENSIFIERS, 'hollow-intensifier', 'medium'));
     issues.push(...matchPatterns(text, EMOTIONAL_FLATLINE, 'emotional-flatline', 'low'));
+    issues.push(...matchPatterns(text, LINGERING_ATTENTION, 'lingering-attention', 'medium'));
     issues.push(...matchPatterns(text, NOVELTY_INFLATION, 'novelty-inflation', 'medium'));
     issues.push(...matchPatterns(text, CUTOFF_DISCLAIMERS, 'cutoff-disclaimer', 'critical'));
     issues.push(...matchPatterns(text, AI_PLACEHOLDERS, 'ai-placeholder', 'critical'));
@@ -917,6 +1290,7 @@ const AIDetector = (() => {
     issues.push(...matchPatterns(text, FUTURE_NARRATIVE, 'future-narrative', 'high'));
     issues.push(...matchPatterns(text, REAL_ACTUAL_INFLATION, 'real-actual-inflation', 'medium'));
     issues.push(...matchPatterns(text, SOCIAL_CTA_CLOSER, 'social-cta-closer', 'high'));
+    issues.push(...findUnnecessaryHyphenation(text));
 
     // ── Tier 1 v2: formulaic openers + parenthetical hedges ──────────
     issues.push(...matchPatterns(text, FORMULAIC_OPENERS, 'formulaic-opener', 'high'));
@@ -930,11 +1304,34 @@ const AIDetector = (() => {
       // Drop matches that look like proper-noun titles (single line, all
       // tokens capitalized incl. function words) — that's headline style,
       // not the AI-section-header tell which has mid-sentence "And".
+      //
+      // The prefix strip is load-bearing. matchPatterns reports match[0], so a
+      // Markdown hit arrives as "## Terms Of Service" and `##` counts as a
+      // token — silently lowering this guard from four content words to three
+      // for headings only, which is exactly the class it exists to protect.
+      // "## Terms Of Service", "## Bank Of America" and "## Table Of Contents"
+      // all flagged as a result: ordinary human headings, on a detector whose
+      // stated first priority is not firing on human writing.
       const filtered = titleHits.filter((h) => {
-        const tokens = h.text.split(/\s+/);
-        return tokens.length >= 4 && /\b(?:And|Or|Of|The|In|For|To|A|An)\b/.test(h.text);
+        const title = h.text.replace(MD_HEADING_PREFIX, '');
+        const tokens = title.trim().split(/\s+/);
+        if (tokens.length < 4) return false;
+
+        // The function word must be MID-title, which is what the comment above
+        // has always said and what the test never enforced. A leading "The"
+        // satisfied a bare /\bThe\b/, so ordinary human headings flagged:
+        // "## The New Security Landscape", "## The Microsoft Approach to
+        // Identity", "### The Four Keys to a Successful and Secure Modern
+        // Workplace". Measured across 81 files that provably predate LLMs
+        // (2018-19 eBooks, 2020 posts): 13 false positives, every one opening
+        // with "The", against zero on main.
+        //
+        // "## Benefits And Strategic Considerations" -- the actual tell, and
+        // this rule's own fixture -- is untouched: its "And" is interior.
+        return FUNCTION_WORD.test(tokens.slice(1).join(' '));
       });
-      issues.push(...filtered);
+      const fences = filtered.length ? fenceRanges(text) : [];
+      issues.push(...filtered.filter((h) => !inFenceRange(fences, h.index)));
     }
 
     // ── Normalization-trigger flag ───────────────────────────────────
@@ -964,7 +1361,18 @@ const AIDetector = (() => {
     // dash ("- **Term** — desc", "- [label](url) — desc") — are
     // definition-list typography, not prose punctuation. Shared by the
     // smart-punct signature below and the em-dash frequency check (§22).
-    const SEPARATOR_DASH_RE = /^\s*(?:[-*+]|\d+[.)])\s+(?:\*\*[^*\n]+\*\*|\[[^\]\n]+\]\([^)\n]*\))[ \t]*—/gm;
+    // An optional parenthetical or inline-code span may sit between the bold
+    // lead term and the dash — "- **Lingering-attention claims**
+    // (`lingering-attention`) — the share-post frame…" is the same definition
+    // typography as the bare form. Found by the self-scan (see PROOF.md, #67).
+    const SEPARATOR_DASH_RE = /^\s*(?:[-*+]|\d+[.)])\s+(?:\*\*[^*\n]+\*\*|\[[^\]\n]+\]\([^)\n]*\))(?:[ \t]*(?:\([^)\n]*\)|`[^`\n]+`))?[ \t]*—/gm;
+
+    // Keep-a-Changelog version headings (`## [3.21.0] — 2026-07-30`) join a
+    // label to a value exactly as a list separator does. Deliberately narrow:
+    // a bracketed or bare semver token, then a dash, then an ISO date, and
+    // nothing else on the line. Ordinary prose dashes in headings still count,
+    // because SKILL.md applies the em-dash rule to headings too.
+    const VERSION_HEADING_DASH_RE = /^#{1,6}[ \t]+\[?v?\d+\.\d+\.\d+[^\]\n]*\]?[ \t]*—[ \t]*\d{4}-\d{2}-\d{2}[ \t]*$/gm;
 
     // ── Smart-punctuation co-occurrence signature ────────────────────
     // Curly quotes + em-dash + Oxford comma all present + zero typos
@@ -976,7 +1384,8 @@ const AIDetector = (() => {
     {
       const hasCurly = /[“”‘’]/.test(text);
       const totalEmDashes = (text.match(/—/g) || []).length;
-      const separatorEmDashes = (text.match(SEPARATOR_DASH_RE) || []).length;
+      const separatorEmDashes = (text.match(SEPARATOR_DASH_RE) || []).length
+        + (text.match(VERSION_HEADING_DASH_RE) || []).length;
       const hasEmDash = totalEmDashes > separatorEmDashes;
       const oxfordHit = text.match(/\b\w+,\s+\w+,\s+and\s+\w+/g);
       const hasOxford = (oxfordHit?.length || 0) >= 1;
@@ -1182,7 +1591,11 @@ const AIDetector = (() => {
     // Earlier char class `[\s\\]` had a literal backslash and silently
     // missed hashtags after sentence punctuation; an interim `[\s]` fix
     // on origin only caught whitespace-preceded tags.
-    const hashtagMatches = text.match(/(?:^|\W)#\w[\w-]*/g) || [];
+    // Code is masked and non-tag `#` forms are subtracted first — see maskCode
+    // and isSocialTag. Without them a changelog paragraph citing six issue
+    // numbers, or a palette listing six hex colours, scored as a tag block.
+    const hashtagMatches = [...maskCode(text).matchAll(/(?:^|\W)#(\w[\w-]*)/g)]
+      .filter((m) => isSocialTag(m[1]));
     if (hashtagMatches.length >= 6) {
       issues.push({
         type: 'hashtag-stuff',
@@ -1287,7 +1700,8 @@ const AIDetector = (() => {
     // and still counts, as does a mid-sentence "**bold** — like this"
     // splice. Em dash only — the `--` substitute is never carved out.
     const rawEmDashCount = (text.match(/—|(?<=\s)--(?=\s|$)|(?<=^|\s)--(?=\s)/gm) || []).length;
-    const separatorDashCount = (text.match(SEPARATOR_DASH_RE) || []).length;
+    const separatorDashCount = (text.match(SEPARATOR_DASH_RE) || []).length
+      + (text.match(VERSION_HEADING_DASH_RE) || []).length;
     const emDashCount = rawEmDashCount - separatorDashCount;
     const emDashRate = emDashCount / (wordCount / 1000);
     if (emDashRate > 1) {
@@ -1480,13 +1894,17 @@ const AIDetector = (() => {
     }
     if (sentences.length === 0) return [];
 
-    // Map issue.text back to sentence indexes via substring search. Issues
-    // without a meaningful text (e.g. summary signals like "Punctuation
-    // density uniform across paragraphs") have no sentence anchor — they
-    // contribute to the document-level signal but not to highlights.
+    // Map issue.text back to sentence indexes via substring search. Two
+    // kinds of issue stay out of the AI-highlight regions. Summary signals
+    // like "Punctuation density uniform across paragraphs" have no sentence
+    // anchor — they contribute to the document-level signal but not to
+    // highlights. Zero-weight style copyedits (unnecessary-hyphenation) do
+    // have an anchor, but they are P2 grammar cleanup rather than evidence
+    // of machine authorship, so they belong in issues[] and nowhere near a
+    // field reserved for AI sentence highlights.
     // Filter by issue TYPE not text-regex: text-based filtering used to
     // drop legitimate phrase issues containing "across" / "density".
-    const SUMMARY_ONLY_TYPES = new Set([
+    const NON_HIGHLIGHT_TYPES = new Set([
       'punct-distribution',
       'cross-para-burstiness',
       'fnword-trigram-entropy',
@@ -1500,13 +1918,14 @@ const AIDetector = (() => {
       'tier3-phrase-cluster',
       'hashtag-stuff',
       'bullet-np-list',
+      'unnecessary-hyphenation',
     ]);
     const hits = sentences.map(() => ({ count: 0, weight: 0 }));
     const lowerText = text.toLowerCase();
     let unmappedHighlights = 0;
     for (const issue of issues) {
       if (!issue.text || issue.text.length > 200) continue;
-      if (SUMMARY_ONLY_TYPES.has(issue.type)) continue;
+      if (NON_HIGHLIGHT_TYPES.has(issue.type)) continue;
       const needle = issue.text.toLowerCase();
       let idx = 0;
       let matched = false;
@@ -1693,6 +2112,7 @@ const AIDetector = (() => {
 
   const TYPE_LABELS = {
     'tier1': 'AI vocabulary',
+    'tier1-clarity': 'Wordiness',
     'tier2': 'Word cluster',
     'tier3': 'Overused word',
     'transition': 'AI transition',
@@ -1707,6 +2127,7 @@ const AIDetector = (() => {
     'vague-attribution': 'Vague attribution',
     'hollow-intensifier': 'Hollow intensifier',
     'emotional-flatline': 'Emotional flatline',
+    'lingering-attention': 'Lingering-attention claim',
     'novelty-inflation': 'Novelty inflation',
     'cutoff-disclaimer': 'Cutoff disclaimer',
     'template-phrase': 'Template phrase',
@@ -1737,6 +2158,7 @@ const AIDetector = (() => {
     'ai-placeholder': 'Unfilled placeholder',
     'ai-citation-markup': 'Chatbot citation markup leak',
     'ai-utm-source': 'AI-tool URL parameter',
+    'unnecessary-hyphenation': 'Unnecessary hyphenation',
   };
 
   return {

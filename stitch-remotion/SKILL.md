@@ -1,7 +1,7 @@
 ---
 name: stitch-remotion
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, remotion, video, screens, react]
 description: "Create Remotion walkthrough videos from Stitch screen exports with ordered assets, transitions, captions, and render checks."
 license: "Apache-2.0"

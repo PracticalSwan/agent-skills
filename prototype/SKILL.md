@@ -1,7 +1,7 @@
 ---
 name: prototype
 version: "2.0"
-last_updated: 2026-08-08
+last_updated: 2026-08-14
 tags: [prototype]
 description: "Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like."
 license: "MIT"

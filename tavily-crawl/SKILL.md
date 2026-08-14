@@ -1,13 +1,12 @@
 ---
 name: tavily-crawl
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, crawling, documentation, extraction, cli]
 description: "Crawl and extract a bounded set of pages from one website through Tavily. Use for documentation downloads, site-section collection, or semantic multi-page extraction when map plus individual extract calls are insufficient."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI and authenticated Tavily access, or an active Tavily MCP server exposing crawl."
 ---
-
 # tavily crawl
 
 Crawl a website and extract content from multiple pages. Supports saving each page as a local markdown file.
@@ -123,19 +122,22 @@ Before claiming Tavily crawl succeeded:
 5. Pressure test: Start with a shallow low-limit crawl and confirm the boundary before increasing scope.
 6. Success metric: Report root, filters, limits, successful/failed counts, and the verified output location.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- Use an exposed Tavily crawl tool when available; otherwise use `tvly crawl`.
-- Claude Code with the GLM Coding Plan endpoint should rely on the external CLI or a configured Tavily MCP server.
-- Codex and GitHub Copilot can use the CLI or official SDK through their available execution surface.
-- Translate POSIX command syntax for Windows PowerShell and resolve output paths before writing.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-crawl` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

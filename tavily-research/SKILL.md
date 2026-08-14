@@ -1,13 +1,12 @@
 ---
 name: tavily-research
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, research, citations, synthesis, cli]
 description: "Run Tavily's multi-source research workflow for comparisons, market analysis, literature-oriented exploration, or detailed cited reports. Use only when bounded search and extraction are insufficient."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI and authenticated Tavily access, or an active Tavily research surface; research jobs may consume additional time and API credits."
 ---
-
 # tavily research
 
 AI-powered deep research that gathers sources, analyzes them, and produces a cited report. Takes 30-120 seconds.
@@ -123,19 +122,22 @@ Before claiming Tavily research succeeded:
 5. Pressure test: Handle timeout, failed status, contradictory sources, or incomplete citations without fabricating a conclusion.
 6. Success metric: Report job state, selected model, saved artifact if any, checked sources, and remaining uncertainty.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- Use an exposed Tavily research operation when available; otherwise use `tvly research`.
-- Claude Code with the GLM Coding Plan endpoint should rely on the external CLI or a configured Tavily surface, not assumed Anthropic-native browsing.
-- Codex and GitHub Copilot can use the CLI or official SDK through their available execution surface.
-- Use bounded polling rather than a single blocking wait and translate POSIX syntax for Windows PowerShell.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-research` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

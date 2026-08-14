@@ -1,10 +1,10 @@
 ---
 name: frontend-design
 version: "2.0"
-last_updated: 2026-08-02
+last_updated: 2026-08-14
 tags: [frontend, design, ui, ux, accessibility, responsive]
-license: "MIT AND Apache-2.0"
 description: "Design and implement context-fit frontend interfaces with deliberate art direction, accessible interaction, responsive behavior, complete states, and rendered verification. Use when creating or substantially reworking pages, components, product workspaces, dashboards, marketing sites, editorial surfaces, commerce flows, or justified immersive experiences."
+license: "MIT AND Apache-2.0"
 ---
 # Frontend Design
 
@@ -229,9 +229,11 @@ Apply this compact rubric before approving a component in React, Next.js, Vite, 
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the workflow in project instructions when folder discovery is unavailable.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
 - Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into `$CODEX_HOME/skills/frontend-design` and restart Codex after major changes.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/frontend-design` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 

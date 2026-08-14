@@ -1,7 +1,7 @@
 ---
 name: codexer
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [codexer, agents, delegation, workflow, automation]
 description: "Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7."
 ---

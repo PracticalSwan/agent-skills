@@ -1,7 +1,7 @@
 ---
 name: using-superpowers
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [using, superpowers]
 description: "Legacy compatibility entry for prompts or documentation that explicitly name `using-superpowers`. Route new skill-discovery workflows to `using-skills`; do not activate both entrypoints for the same task."
 ---

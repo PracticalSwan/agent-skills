@@ -1,7 +1,7 @@
 ---
 name: linkedin-create-post
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [linkedin, chrome, browser, social-media, publishing]
 description: "Draft, prepare, publish, and verify personal or project LinkedIn posts through the user's signed-in Chrome session, including audience review, public-safe media uploads, links, action-time confirmation, and post-publication checks."
 ---

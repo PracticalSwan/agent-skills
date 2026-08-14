@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 
-DATE_STAMP = "2026-07-29"
+DATE_STAMP = "2026-08-14"
 CATALOG_VERSION = "2.0"
 PORTABILITY_START = "<!-- PORTABILITY:START -->"
 PORTABILITY_END = "<!-- PORTABILITY:END -->"
@@ -240,10 +240,10 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
         text = f"# Changelog\n\nAll notable changes to the `{skill_dir.name}` skill are documented here.\n"
 
     text = re.sub(r"(?m)^### (?:Tested|Verified)\s*$", "### Changed", text)
-    title = f"## [{DATE_STAMP}] - Version {CATALOG_VERSION} Client Support Reset"
+    title = f"## [{DATE_STAMP}] - Catalog Freshness And Source Sync"
     if title not in text:
         added_lines = [
-            "- Added the current GitHub Copilot, Claude Code, and Codex portability baseline."
+            "- Refreshed the catalog metadata and retained-client portability baseline."
         ]
         if skill_dir.name in imported:
             added_lines.insert(
@@ -259,13 +259,12 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
 
 ### Changed
 
-- **BREAKING:** Removed Gemini CLI and Antigravity as supported clients.
-- Refreshed catalog metadata and last-updated state for the 2026-07-29 maintenance pass.
+- Updated the catalog metadata and last-updated state for the 2026-08-14 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
 
 ### Fixed
 
-- Prevented catalog modernization from reintroducing removed Gemini or Antigravity guidance.
+- Preserved explicit no-MCP fallbacks and the catalog's safety, approval, and source-boundary guidance.
 
 """
         first = re.search(r"(?m)^## \[", text)

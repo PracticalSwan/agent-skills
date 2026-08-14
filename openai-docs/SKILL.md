@@ -1,7 +1,7 @@
 ---
 name: openai-docs
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [openai, docs]
 description: "Use when the user asks how to build with OpenAI products or APIs, asks about Codex itself or choosing Codex surfaces, needs up-to-date official documentation with citations, help choosing the latest model for a use case, latest/current/default-model prompting guidance, or model upgrade and prompt-upgrade guidance; use OpenAI docs MCP tools for non-Codex docs questions, use the Codex manual helper first for broad Codex self-knowledge, and restrict fallback browsing to official OpenAI domains."
 ---

@@ -1,7 +1,7 @@
 ---
 name: executing-plans
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [executing, plans]
 description: "Execute detailed plans in batches with review checkpoints"
 ---

@@ -1,7 +1,7 @@
 ---
 name: stitch-enhance-prompt
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, prompting, ui, design, copy]
 description: "Transform rough UI requests into structured Stitch prompts with platform, layout, component, and design-system context."
 license: "Apache-2.0"

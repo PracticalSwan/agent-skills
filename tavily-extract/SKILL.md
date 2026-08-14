@@ -1,13 +1,12 @@
 ---
 name: tavily-extract
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, extraction, urls, markdown, cli]
 description: "Extract clean Markdown or text from one or more known URLs through Tavily. Use when the user supplies specific pages and needs their content, including query-focused chunks or JavaScript-rendered pages."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI and authenticated Tavily access, or an active Tavily MCP server exposing extract."
 ---
-
 # tavily extract
 
 Extract clean markdown or text content from one or more URLs.
@@ -103,19 +102,22 @@ Before claiming Tavily extraction succeeded:
 5. Pressure test: Retry a missing or JavaScript-heavy page with the narrowest appropriate depth change.
 6. Success metric: Report successful and failed URLs separately, along with output format and any saved file.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- Use an exposed Tavily extract tool when available; otherwise use `tvly extract`.
-- Claude Code with a GLM Coding Plan endpoint should use the external CLI or a configured Tavily MCP server and must not assume browser-native extraction.
-- Codex and GitHub Copilot can use the local CLI or official Tavily SDK when their active tool surface permits it.
-- Translate POSIX environment and pipeline examples for Windows PowerShell.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-extract` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

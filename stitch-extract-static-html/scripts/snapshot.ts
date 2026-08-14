@@ -42,6 +42,8 @@ interface Opts {
   removeFixed: boolean;
   fullHeight: boolean;
   title: string | null;
+  authScript: string | null;
+  inlineCanvas: boolean;
   timeout: number;
   concurrency: number;
   json: boolean;
@@ -80,6 +82,8 @@ function parseArgs(): Opts {
     removeFixed: false,
     fullHeight: false,
     title: null,
+    authScript: null,
+    inlineCanvas: false,
     timeout: 60000,
     concurrency: 6,
     json: false,
@@ -114,6 +118,12 @@ function parseArgs(): Opts {
       case '--title':
         opts.title = args[++i];
         break;
+      case '--auth-script':
+        opts.authScript = args[++i];
+        break;
+      case '--inline-canvas':
+        opts.inlineCanvas = true;
+        break;
       case '--timeout':
         opts.timeout = parseInt(args[++i], 10);
         break;
@@ -145,6 +155,8 @@ Options:
   --remove-fixed  Remove fixed/sticky positioned elements (cookie banners, etc.)
   --full-height   Resize viewport to capture full scrollable content
   --title         Override the page title
+  --auth-script   Path to JS/TS script exporting an async function to authenticate before capture
+  --inline-canvas Convert <canvas> elements (charts, graphs) to base64 images
   --timeout       Global timeout in ms (default: 60000)
   --concurrency   Max concurrent resource fetches (default: 6)
   --json          Output machine-readable JSON stats
@@ -296,22 +308,59 @@ async function snapshot(opts: Opts): Promise<void> {
     try {
       await page.goto(opts.url!, {
         waitUntil: 'networkidle0',
-        timeout: Math.min(30000, opts.timeout - 5000),
+        timeout: 10000,
       });
     } catch {
       const msg = 'networkidle0 timed out, falling back to networkidle2';
       console.warn(`⚠️  ${msg}...`);
       stats.warnings.push(msg);
-      await page.goto(opts.url!, {
-        waitUntil: 'networkidle2',
-        timeout: Math.min(30000, opts.timeout - 5000),
-      });
+      try {
+        await page.goto(opts.url!, {
+          waitUntil: 'networkidle2',
+          timeout: 10000,
+        });
+      } catch {
+        const msg2 = 'networkidle2 timed out, falling back to domcontentloaded';
+        console.warn(`⚠️  ${msg2}...`);
+        stats.warnings.push(msg2);
+        await page.goto(opts.url!, {
+          waitUntil: 'domcontentloaded',
+          timeout: 15000,
+        });
+      }
     }
 
     // Extra wait for JS-rendered content (animations, lazy loading, etc.)
     if (opts.wait > 0) {
       console.log(`⏳ Waiting ${opts.wait}ms for rendering to settle...`);
       await new Promise((r) => setTimeout(r, opts.wait));
+    }
+
+    // Execute authentication script if provided
+    if (opts.authScript) {
+      console.log(`🔐 Running authentication script from ${opts.authScript}...`);
+      try {
+        const path = await import('path');
+        const authPath = path.resolve(process.cwd(), opts.authScript);
+        const authModule = await import(authPath);
+        const authFn = authModule.default || authModule;
+        if (typeof authFn === 'function') {
+          await authFn(page);
+          console.log('   ✅ Auth script executed, re-navigating to target URL...');
+          await page.goto(opts.url!, {
+            waitUntil: 'networkidle2',
+            timeout: Math.min(30000, opts.timeout),
+          });
+          if (opts.wait > 0) {
+            await new Promise((r) => setTimeout(r, opts.wait));
+          }
+        } else {
+          console.warn(`⚠️  --auth-script (${opts.authScript}) did not export a function`);
+        }
+      } catch (err: any) {
+        console.warn(`⚠️  Failed to execute --auth-script: ${err.message}`);
+        stats.warnings.push(`auth-script error: ${err.message}`);
+      }
     }
 
     // Perform click interaction if specified
@@ -575,6 +624,35 @@ async function snapshot(opts: Opts): Promise<void> {
     }, opts.concurrency);
 
     // -----------------------------------------------------------------------
+    // -2. Remove dev-overlay / screenshot-ignore elements (e.g. VeloUI)
+    // -----------------------------------------------------------------------
+    const removedCount = await page.evaluate(() => {
+      let count = 0;
+      // Remove any element explicitly marked as screenshot-ignore
+      document.querySelectorAll('[data-screenshot-ignore="true"]').forEach(el => {
+        el.parentNode?.removeChild(el); count++;
+      });
+      // Remove VeloUI overlay elements (pause overlay, probe, root container, etc.)
+      const veloSelectors = [
+        '[data-veloui-pause-overlay]',
+        '[data-veloui-probe]',
+        '[data-veloui-extractor]',
+        '[data-veloui-scan]',
+        '.veloui-root',
+        '.veloui-liquid-glass',
+      ];
+      for (const sel of veloSelectors) {
+        document.querySelectorAll(sel).forEach(el => {
+          el.parentNode?.removeChild(el); count++;
+        });
+      }
+      return count;
+    });
+    if (removedCount > 0) {
+      console.log(`🧹 Removed ${removedCount} dev-overlay / screenshot-ignore element(s) from the DOM.`);
+    }
+
+    // -----------------------------------------------------------------------
     // -1. Inline local iframes (e.g., companion-app test iframe)
     // -----------------------------------------------------------------------
     const iframesCount = await page.evaluate(() => document.querySelectorAll('iframe').length);
@@ -587,6 +665,16 @@ async function snapshot(opts: Opts): Promise<void> {
         const inlineSameOriginIframes = (root: Document | HTMLElement) => {
           const iframes = Array.from(root.querySelectorAll('iframe'));
           for (const iframe of iframes) {
+            if (
+              iframe.getAttribute('data-screenshot-ignore') === 'true' ||
+              iframe.getAttribute('data-veloui-scan') === 'true' ||
+              iframe.getAttribute('data-veloui-probe') === 'true' ||
+              iframe.hasAttribute('data-veloui-extractor')
+            ) {
+              // Remove the hidden crawler/scan iframes completely from DOM
+              try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch { }
+              continue;
+            }
             try {
               const doc = iframe.contentDocument || iframe.contentWindow?.document;
               if (doc && doc.body) {
@@ -738,6 +826,15 @@ async function snapshot(opts: Opts): Promise<void> {
 
               const iframes = Array.from(document.querySelectorAll('iframe'));
               for (const iframe of iframes) {
+                if (
+                  iframe.getAttribute('data-screenshot-ignore') === 'true' ||
+                  iframe.getAttribute('data-veloui-scan') === 'true' ||
+                  iframe.getAttribute('data-veloui-probe') === 'true' ||
+                  iframe.hasAttribute('data-veloui-extractor')
+                ) {
+                  try { iframe.parentNode && iframe.parentNode.removeChild(iframe); } catch { }
+                  continue;
+                }
                 const cleanIframeSrc = iframe.src.split('?')[0].split('#')[0];
                 if (cleanIframeSrc && (url.includes(cleanIframeSrc) || cleanIframeSrc.includes(url))) {
                   const wrapper = document.createElement('div');
@@ -838,44 +935,83 @@ async function snapshot(opts: Opts): Promise<void> {
 
 
 
-    // -----------------------------------------------------------------------
-    // 0. Materialize CSS-in-JS styles into DOM
-    // -----------------------------------------------------------------------
-    // CSS-in-JS libraries (Emotion, styled-components, MUI) inject styles
-    // directly into the CSSOM via insertRule(), leaving <style> tags with
-    // empty textContent. When we serialize the DOM these rules are lost.
-    // This step writes the CSSOM rules back into the <style> element's
-    // textContent so they survive outerHTML serialization.
-    //
-    // We only touch <style> tags whose textContent is empty — normal
-    // stylesheets and text-based <style> blocks are left untouched to
-    // avoid duplication and preserve cascade order.
-    console.log('🎨 Materializing CSS-in-JS styles into DOM...');
-    const cssInJsCount = await page.evaluate(() => {
-      let count = 0;
-      const styleElements = document.querySelectorAll('style');
-      for (const styleEl of styleElements) {
-        // Skip styles that already have text content (not CSS-in-JS)
-        if (styleEl.textContent && styleEl.textContent.trim().length > 0) continue;
-        try {
-          const sheet = styleEl.sheet;
-          if (!sheet?.cssRules) continue;
-          let cssText = '';
-          for (let j = 0; j < sheet.cssRules.length; j++) {
-            cssText += sheet.cssRules[j].cssText + '\n';
-          }
-          if (cssText.length > 0) {
-            // Write the rules as text content so they survive DOM serialization
-            styleEl.textContent = cssText;
+    if (opts.inlineCanvas) {
+      console.log('📊 Converting <canvas> elements to base64 images...');
+      const canvasCount = await page.evaluate(() => {
+        let count = 0;
+        document.querySelectorAll('canvas').forEach((canvas) => {
+          try {
+            const dataUrl = canvas.toDataURL('image/png');
+            const img = document.createElement('img');
+            img.src = dataUrl;
+            img.className = canvas.className;
+            img.style.cssText = canvas.style.cssText;
+            if (canvas.id) img.id = canvas.id;
+            canvas.replaceWith(img);
             count++;
+          } catch (e) {
+            // Tainted canvas or security error
+          }
+        });
+        return count;
+      });
+      console.log(`   ✅ Converted ${canvasCount} canvas element(s)`);
+    }
+
+    // -----------------------------------------------------------------------
+    // 0. Materialize all rules from document.styleSheets into DOM
+    // -----------------------------------------------------------------------
+    // In modern dev servers (e.g. Vite dev mode with Tailwind) and CSS-in-JS
+    // libraries, stylesheets are injected dynamically into CSSOM without being
+    // serialized as clean text in <style> textContent. Additionally, Vite HMR
+    // injects <style> tags containing JS client import syntax that break CSS
+    // parsers. This step extracts all rules across all document.styleSheets,
+    // cleans up dev HMR style tags, and injects a unified style bundle.
+    console.log('🎨 Capturing all CSSOM rules from document.styleSheets...');
+    const cssomCount = await page.evaluate(() => {
+      let totalRules = 0;
+      let extraCssText = '/* --- EXTRACTED CSSOM BUNDLE --- */\n';
+      const extractedNodes = new Set<Node>();
+      for (const sheet of Array.from(document.styleSheets)) {
+        try {
+          let sheetCss = '';
+          for (const rule of Array.from(sheet.cssRules)) {
+            sheetCss += rule.cssText + '\n';
+            totalRules++;
+          }
+          if (sheetCss.trim().length > 0) {
+            extraCssText += sheetCss + '\n';
+            if (sheet.ownerNode) {
+              extractedNodes.add(sheet.ownerNode);
+            }
           }
         } catch (e) {
-          // Cross-origin or security error, ignore
+          // Ignore cross-origin stylesheet security errors
         }
       }
-      return count;
+      if (extraCssText.trim().length > 0) {
+        // Only remove <style data-vite-dev-id> and <link rel="stylesheet"> whose CSSOM rules we successfully captured
+        document.querySelectorAll('style[data-vite-dev-id], link[rel="stylesheet"]').forEach(el => {
+          if (extractedNodes.has(el) || el.hasAttribute('data-vite-dev-id')) {
+            el.remove();
+          }
+        });
+        // Remove any <style> tag containing Vite HMR client syntax (createHotContext / import.meta.hot)
+        document.querySelectorAll('style').forEach(el => {
+          if (el.textContent && (el.textContent.includes('createHotContext') || el.textContent.includes('import.meta.hot'))) {
+            el.remove();
+          }
+        });
+        // Remove relative font preload links that cause 404 errors in static viewers
+        document.querySelectorAll('link[rel="preload"][as="font"]').forEach(el => el.remove());
+        const combinedStyle = document.createElement('style');
+        combinedStyle.id = 'extracted-cssom-bundle';
+        combinedStyle.textContent = extraCssText;
+        document.head.appendChild(combinedStyle);
+      }
+      return totalRules;
     });
-    console.log(`   ✅ Materialized ${cssInJsCount} CSS-in-JS style blocks`);
+    console.log(`   ✅ Captured ${cssomCount} rules from document.styleSheets`);
 
     // -----------------------------------------------------------------------
     // 1. Inline all external stylesheets as <style> blocks
@@ -1075,8 +1211,10 @@ async function snapshot(opts: Opts): Promise<void> {
       } = (window as any).__snapshot;
       let count = 0;
 
-      /** Check if a URL points to a font file (skip — too large, not visual) */
+      /** Check if a URL points to a font file (skip external fonts — too large, not visual) */
       const isFontFile = (url: string): boolean => {
+        const isSameOrigin = url.startsWith('/') || url.startsWith('./') || url.startsWith('../') || url.startsWith(window.location.origin);
+        if (isSameOrigin) return false;
         return /\.(woff2?|ttf|eot|otf)(\?|$)/i.test(url);
       }
 
@@ -1085,11 +1223,14 @@ async function snapshot(opts: Opts): Promise<void> {
         let css = styleEl.textContent!;
         const urlRefs = extractCssUrls(css);
 
-        // Filter to only http(s) URLs that aren't fonts
+        // Filter to http(s), same-origin, or relative URLs that aren't external fonts
         const toInline = urlRefs.filter(
           (ref: any) =>
             (ref.url.startsWith('http://') ||
-              ref.url.startsWith('https://')) &&
+              ref.url.startsWith('https://') ||
+              ref.url.startsWith('/') ||
+              ref.url.startsWith('./') ||
+              ref.url.startsWith('../')) &&
             (!isFontFile(ref.url) || inlineFonts),
         );
 

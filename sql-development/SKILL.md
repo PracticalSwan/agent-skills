@@ -1,7 +1,7 @@
 ---
 name: sql-development
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [sql, development, testing, quality, automation]
 description: "T-SQL, stored procedures, and MS SQL Server DBA practices. Use when writing SQL queries, designing schemas, tuning SQL Server performance, managing backups, configuring security, or using SQL Server 2025+ features."
 ---

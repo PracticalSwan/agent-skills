@@ -1,7 +1,7 @@
 ---
 name: requesting-code-review
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [requesting, code, review]
 description: "Dispatch code-reviewer subagent to review implementation against plan or requirements before proceeding"
 ---

@@ -1,39 +1,100 @@
 ---
 name: stitch-upload-to-stitch
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [stitch, upload, assets, html, mcp]
 description: "Upload approved local HTML, markdown, or image assets to a Stitch project using direct MCP for small DESIGN.md files or the bundled API script for larger files."
 license: "Apache-2.0"
 ---
-# Stitch Upload To Stitch
+# Upload-to-Stitch
 
-This skill is a catalog-normalized import from `https://github.com/google-labs-code/stitch-skills` at commit `7b53207b94e62911777d53d4238b5f8c88c2b519`, source path `plugins/stitch-design/skills/upload-to-stitch`. The upstream control file was corrected for this workspace: the verified Stitch MCP surface here is design-system oriented, so screen lookup, screen generation, and screen editing tools must be used only when the current host explicitly exposes them.
+Upload local assets (images, mockups, HTML, and markdown files) to a Stitch project using the
+provided upload script, which bypasses the MCP tool's base64 output token limits.
 
-## When to Use This Skill
+> [!NOTE]
+> The AI model cannot upload files via MCP tools directly because the base64
+> encoding of even a small file exceeds the model's output token limit (~16K
+> tokens). This script reads the file and sends it directly over HTTP.
 
-- Use when approved local HTML, markdown, image, or mockup files must be uploaded to a Stitch project.
-- The task involves Google Stitch project IDs, `.stitch/` artifacts, DESIGN.md files, Stitch exports, or Stitch-specific validation.
-- The broader `stitch-design` router points here as the narrowest workflow.
+## Steps
 
-## Workflow
+### 1. Identify Target Project
 
-1. List file path, size, MIME type, target project ID, and upload method before uploading.
-2. For small DESIGN.md content, prefer `upload_design_md` followed by `create_design_system_from_design_md` through `stitch-manage-design-system`.
-3. For HTML, markdown, or image uploads, use `scripts/upload_to_stitch.py` only with a user-approved API key source and set `--generated-by` to the calling skill or agent.
-4. Never print, commit, or store the Stitch API key.
-5. Use non-default `--api-url` only when a verified config or user instruction provides it.
-6. Save returned source screen and screen instance IDs in `.stitch/metadata.json`.
+Use `list_projects` to find the correct `projectId`.
 
-## Local Assets
+### 2. Get the API Key
 
-- `examples/`, `resources/`, `references/`, or `reference/` are upstream support material when present. Treat `SKILL.md` as the source of truth if a support file mentions an unavailable MCP tool.
-- `scripts/` are optional helpers. On Windows, prefer PowerShell or Node equivalents unless Git Bash or WSL is actually available.
-- Keep generated `.stitch/` files out of commits unless the user explicitly wants them as durable examples.
+Locate the active Stitch MCP configuration or approved secret store and use
+the configured API key without printing or copying it into chat. Claude Code
+typically keeps its MCP configuration in `~/.claude.json`; Codex and other
+hosts may expose an equivalent active configuration or environment secret.
 
-## Corrected Stitch MCP Surface
+Extract:
+- **API Key**: From the `X-Goog-Api-Key` header or auth argument
+- **MCP URL** (optional): From the `httpUrl` or endpoint argument (defaults to
+  `https://stitch.googleapis.com`)
 
-Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-29 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
+> [!IMPORTANT]
+> If no approved secret source is available, stop and report the blocker. Do
+> not ask the user to paste an API key into chat and do not proceed with a
+> guessed or exposed credential.
+
+### 3. Run Upload Script
+
+> [!WARNING]
+> **Checkpoint — User Confirmation Required.**
+> Before running the upload script, you **MUST** pause and present the file(s)
+> to be uploaded (paths, sizes, and types) to the user and wait for explicit
+> approval. Do **NOT** execute the upload script until the user confirms.
+
+Use `run_command` to execute the Python script:
+
+```bash
+python3 <SKILL_DIR>/scripts/upload_to_stitch.py \
+  --project-id <PROJECT_ID> \
+  --file-path <PATH_TO_FILE> \
+  --api-key <API_KEY> \
+  [--api-url <STITCH_API_URL>] \
+  [--title <SCREEN_TITLE>] \
+  [--generated-by <GENERATED_BY>]
+```
+
+> [!TIP]
+> **macOS / SSL Certificate Troubleshooting:**
+> If the upload fails with `ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] unable to get local issuer certificate`, this means your Python installation does not have root certificate authorities configured.
+>
+> The script automatically attempts to use the `certifi` package to load the CA bundle if it is installed in your python environment. If `certifi` is not installed, you can either install it (`pip install certifi`) or manually supply the `SSL_CERT_FILE` environment variable when running the script:
+> ```bash
+> SSL_CERT_FILE=$(python3 -c "import certifi; print(certifi.where())") python3 <SKILL_DIR>/scripts/upload_to_stitch.py \
+>   --project-id <PROJECT_ID> \
+>   --file-path <PATH_TO_FILE> \
+>   --api-key <API_KEY> \
+>   [--api-url <STITCH_API_URL>] \
+>   [--title <SCREEN_TITLE>] \
+>   [--generated-by <GENERATED_BY>]
+> ```
+
+### Supported File Types
+
+| Extension | MIME Type |
+|:---|:---|
+| `.png` | `image/png` |
+| `.jpg`, `.jpeg` | `image/jpeg` |
+| `.webp` | `image/webp` |
+| `.html`, `.htm` | `text/html` |
+| `.md` | `text/markdown` |
+
+The script auto-detects MIME type from the file extension.
+
+### Script Options
+
+- `--project-id`: **Required**. The Stitch project ID.
+- `--file-path`: **Required**. Path to the local file to upload.
+- `--api-key`: **Required**. API key for Stitch authorization.
+- `--api-url`: Optional. Base URL of the Stitch API. Defaults to `https://stitch.googleapis.com`.
+- `--title`: Optional. Title for the uploaded screen. When uploading extracted HTML from a web app, set this to the **route path** of the page (e.g., `'/dashboard'`, `'/settings/profile'`, `'/inbox'`) so that the screen name/title in Stitch clearly identifies the route.
+- `--generated-by`: Optional. Specify how the uploaded file was generated (for
+  example, `stitch::extract-static-html`, `Claude Code`, or `Codex`).
 
 ## Anti-Patterns
 

@@ -1,13 +1,12 @@
 ---
 name: tavily-search
 version: "2.0"
-last_updated: 2026-07-30
+last_updated: 2026-08-14
 tags: [tavily, web-search, current-information, sources, cli]
 description: "Search the web through Tavily with bounded depth, domains, dates, and result counts. Use when the user needs current information or source discovery and does not already have a specific URL."
 license: "MIT"
 compatibility: "Requires the official Tavily CLI and authenticated Tavily access, or an active Tavily MCP server exposing search."
 ---
-
 # tavily search
 
 Web search returning LLM-optimized results with content snippets and relevance scores.
@@ -114,19 +113,22 @@ Before claiming Tavily search succeeded:
 5. Pressure test: Repeat with a narrower query or trusted-domain filter when initial results are noisy or contradictory.
 6. Success metric: The answer identifies sources, dates where relevant, and any uncertainty or missing evidence.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
+
 ## Cross-Client Portability
 
-This skill is usable across GitHub Copilot, Claude Code, and Codex.
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
 
-- Use an exposed Tavily search tool when available; otherwise use `tvly search`.
-- Claude Code with the GLM Coding Plan endpoint should use its external shell or a healthy Tavily MCP server, not an assumed native browser integration.
-- Codex may use a host-exposed Tavily connector or the local CLI. GitHub Copilot may use a terminal or the official SDK.
-- Translate POSIX pipeline and environment syntax when running from Windows PowerShell.
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/tavily-search` and restart Codex after major changes.
 
 <!-- PORTABILITY:END -->
 
-<!-- MCP:START -->
 ## MCP Availability And Fallback
 
 Preferred MCP Server: Tavily MCP Server

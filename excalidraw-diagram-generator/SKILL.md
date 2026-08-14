@@ -1,7 +1,7 @@
 ---
 name: excalidraw-diagram-generator
 version: "2.0"
-last_updated: 2026-08-02
+last_updated: 2026-08-14
 tags: [excalidraw, diagram, generator, design, frontend]
 description: "Generate .excalidraw diagrams from natural language. Use when creating flowcharts, mind maps, system architecture diagrams, sequence diagrams, ER diagrams, network diagrams, or any visual process visualization."
 ---

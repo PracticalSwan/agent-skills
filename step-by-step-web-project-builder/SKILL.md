@@ -1,7 +1,7 @@
 ---
 name: step-by-step-web-project-builder
 version: "2.0"
-last_updated: 2026-07-29
+last_updated: 2026-08-14
 tags: [step, by, web, project, builder]
 description: "Activate for building or scaffolding web apps when the user is learning (e.g., todo apps, portfolios, dashboards)."
 ---

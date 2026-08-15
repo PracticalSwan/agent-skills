@@ -104,5 +104,8 @@ Before claiming the `supabase-postgres-best-practices` workflow succeeded:
 
 ## Related Skills
 
+- [supabase](../supabase/SKILL.md): Use it for Supabase Auth, SSR, Storage,
+  Realtime, Edge Functions, CLI, MCP, or platform troubleshooting around the
+  database work.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

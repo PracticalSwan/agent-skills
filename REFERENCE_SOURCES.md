@@ -239,6 +239,11 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   router and retains separate `performance`, `core-web-vitals`,
   `accessibility`, `seo`, and `best-practices` leaves; React performance remains
   separate from `react-development`, `nextjs-development`, and `frontend-design`.
+- The 2026-08-16 related-skill consolidation audit compared the maintained
+  parent with plugin-managed Supabase and React copies. The parent remains
+  canonical because it carries catalog metadata, cross-client safeguards,
+  explicit fallbacks, and the maintained support trees; plugin copies remain
+  external rather than becoming duplicate tracked installs.
 - Overlapping upstream TDD, debugging, code review, implementation, planning,
   and skill-authoring workflows remain represented by the stronger existing
   catalog skills rather than being duplicated.

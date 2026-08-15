@@ -11,6 +11,9 @@
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added an explicit route to `supabase-postgres-best-practices` for
+  database-scoped work; the platform and Postgres workflows remain
+  complementary.
 
 ### Fixed
 

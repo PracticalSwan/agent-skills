@@ -84,6 +84,12 @@ skill. Use it instead of the retired `frontend-skill` and
 post-implementation visual QA and keep framework, Figma, and Stitch skills for
 their specialized workflows.
 
+The 2026-08-16 related-skill consolidation audit found no safe content merges.
+Supabase platform/Postgres, Gemini general/Interactions, React implementation/
+performance, and aggregate/focused web-quality workflows remain separate with
+explicit routing links. Plugin-managed Supabase and React copies remain
+external; this parent catalog is canonical for maintained cross-client content.
+
 ## Downstream Sync Targets
 
 The only approved downstream sync destinations are these three personal-global roots:

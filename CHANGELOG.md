@@ -3,6 +3,29 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-16] - Related Skill Consolidation Audit
+
+### Added
+
+- Added explicit cross-skill routing links for the Supabase, Gemini, React, and
+  web-quality groups so related workflows remain discoverable without merging
+  distinct activation boundaries.
+
+### Changed
+
+- Reviewed the parent catalog against plugin-managed Supabase and React copies.
+  The maintained parent versions remain canonical because they include catalog
+  metadata, cross-client safeguards, explicit fallbacks, and maintained support
+  trees; plugin-managed copies remain external.
+- Documented why platform/Postgres, general/Interactions, implementation/
+  performance, aggregate/focused web-quality, browser/general code quality, and
+  language-specific security workflows remain separate.
+
+### Fixed
+
+- Removed ambiguity at the related-skill routing boundary without deleting or
+  collapsing any skill whose evidence path or user-facing scope differs.
+
 ## [2026-08-16] - Promote Installed Platform And Web Skills
 
 ### Added

@@ -13,6 +13,7 @@ All notable changes to the `accessibility` skill are documented here.
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added routes to `web-quality-audit` and `frontend-design`; WCAG review remains distinct from aggregate auditing and UI art direction.
 
 ### Fixed
 

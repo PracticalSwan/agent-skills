@@ -493,5 +493,9 @@ Before claiming the `accessibility` workflow succeeded:
 
 ## Related Skills
 
+- [web-quality-audit](../web-quality-audit/SKILL.md): Use it when accessibility is one dimension of a complete web-quality audit.
+- [frontend-design](../frontend-design/SKILL.md): Use it when accessibility findings
+  must be addressed as part of UI structure, interaction, and rendered
+  verification.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

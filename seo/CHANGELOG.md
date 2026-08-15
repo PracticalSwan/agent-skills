@@ -13,6 +13,8 @@ All notable changes to the `seo` skill are documented here.
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added routes to `web-quality-audit` and `best-practices`; technical SEO
+  remains distinct from the aggregate audit and browser-quality workflow.
 
 ### Fixed
 

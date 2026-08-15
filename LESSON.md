@@ -207,6 +207,19 @@ Codex skill catalog.
   provenance and root counts, then validate and sync only the three approved
   personal-global roots. Project-specific paths remain out of scope.
 
+## 2026-08-16 Related Skill Consolidation Audit
+
+- Compare parent skills with plugin-managed copies before merging. Plugin
+  copies can be older or omit catalog safety, provenance, and cross-client
+  sections; keep them external when the parent is the stronger maintained
+  canonical copy.
+- Keep related skills separate when their activation boundary, input/output
+  shape, or evidence path differs. Add explicit `Related Skills` routes so
+  discoverability improves without collapsing distinct workflows.
+- For this audit, platform/Postgres, general/Interactions, React
+  implementation/performance, and aggregate/focused web-quality workflows
+  remained separate after review.
+
 ## Update Checklist
 
 1. Edit the workspace copy.

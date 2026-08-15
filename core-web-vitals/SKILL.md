@@ -526,5 +526,9 @@ Before claiming the `core-web-vitals` workflow succeeded:
 
 ## Related Skills
 
+- [performance](../performance/SKILL.md): Use it for broader loading, runtime,
+  asset, caching, and measurement work beyond the three Core Web Vitals.
+- [web-quality-audit](../web-quality-audit/SKILL.md): Use it when the request
+  spans performance, accessibility, SEO, and browser best practices.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

@@ -99,6 +99,13 @@ conceptually to `frontend-design`; `web-design-reviewer` remains the separate
 post-implementation visual QA skill. Keep framework, Figma, and Stitch skills
 separate because they own narrower implementation or tool-specific workflows.
 
+The 2026-08-16 related-skill consolidation audit found no safe content merges.
+`supabase` and `supabase-postgres-best-practices`, `gemini-api-dev` and
+`gemini-interactions-api`, and the React/web-quality groups remain separate
+with explicit routing links because their activation boundaries and evidence
+paths differ. Plugin-managed Supabase and React copies remain external; the
+parent catalog is canonical for maintained cross-client content.
+
 ## Source Of Truth
 
 - Edit maintained skill content in `C:\Users\LOQ\.copilot\skills` first.

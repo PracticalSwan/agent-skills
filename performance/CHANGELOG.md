@@ -13,6 +13,7 @@ All notable changes to the `performance` skill are documented here.
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added routes to `web-quality-audit` and `core-web-vitals`; broad performance analysis remains distinct from targeted vitals work.
 
 ### Fixed
 

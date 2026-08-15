@@ -684,5 +684,10 @@ Before claiming the `best-practices` workflow succeeded:
 
 ## Related Skills
 
+- [web-quality-audit](../web-quality-audit/SKILL.md): Use it when browser best practices are one dimension of a complete web-quality audit.
+- [code-quality](../code-quality/SKILL.md): Use it for general maintainability,
+  refactoring, and code-review quality rather than browser-specific guidance.
+- [security-best-practices](../security-best-practices/SKILL.md): Use it for
+  supported-language security reviews and secure-by-default coding help.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

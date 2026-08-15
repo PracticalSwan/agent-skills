@@ -212,5 +212,8 @@ Before claiming the `gemini-api-dev` workflow succeeded:
 
 ## Related Skills
 
+- [gemini-interactions-api](../gemini-interactions-api/SKILL.md): Use it for the
+  narrower Interactions API, managed-agent, stored-state, streaming, and
+  migration workflows.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

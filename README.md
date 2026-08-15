@@ -434,6 +434,31 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `security-threat-model`
 - `x-twitter-scraper`
 
+### Related-Skill Consolidation (2026-08-16)
+
+The related-skill review found no safe content merges. The catalog keeps these
+workflows separate because each has a different activation boundary, input
+shape, output, or verification path:
+
+- `supabase` routes platform work to `supabase-postgres-best-practices` for
+  schema, migration, RLS, query, and Postgres security work; neither replaces
+  the other.
+- `gemini-api-dev` remains the general SDK and model workflow, while
+  `gemini-interactions-api` owns Interactions-specific state, streaming,
+  managed-agent, and migration guidance.
+- `react-best-practices` remains performance guidance alongside, not inside,
+  `react-development`, `nextjs-development`, and `frontend-design`.
+- `web-quality-audit` remains the aggregate router for `performance`,
+  `core-web-vitals`, `accessibility`, `seo`, and `best-practices`. The leaves
+  are not merged because their evidence and remediation paths differ.
+- Browser-focused `best-practices` remains separate from general `code-quality`
+  and language-specific `security-best-practices`.
+
+Plugin-managed Supabase and React copies were reviewed but not vendored or
+merged into the maintained catalog: the parent copies carry catalog metadata,
+cross-client safeguards, explicit fallbacks, and the maintained reference
+trees. Plugin paths remain external deployment inputs.
+
 ## MCP-Aware Skills
 
 These maintained skills are MCP-backed or MCP-aware in this repo:

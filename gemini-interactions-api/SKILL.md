@@ -438,5 +438,8 @@ Before claiming the `gemini-interactions-api` workflow succeeded:
 
 ## Related Skills
 
+- [gemini-api-dev](../gemini-api-dev/SKILL.md): Use it for general Gemini SDK,
+  model-selection, multimodal, function-calling, and structured-output work
+  outside the Interactions-specific boundary.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

@@ -443,5 +443,8 @@ Before claiming the `performance` workflow succeeded:
 
 ## Related Skills
 
+- [web-quality-audit](../web-quality-audit/SKILL.md): Use it when the request is
+  a complete cross-dimension web-quality audit rather than performance alone.
+- [core-web-vitals](../core-web-vitals/SKILL.md): Use it when the investigation is specifically about LCP, INP, or CLS.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

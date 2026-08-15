@@ -570,5 +570,9 @@ Before claiming the `seo` workflow succeeded:
 
 ## Related Skills
 
+- [web-quality-audit](../web-quality-audit/SKILL.md): Use it when SEO is one dimension of a complete web-quality audit.
+- [best-practices](../best-practices/SKILL.md): Use it when search visibility
+  work intersects with browser compatibility, semantic HTML, privacy, or
+  security.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

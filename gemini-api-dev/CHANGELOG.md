@@ -13,6 +13,8 @@ All notable changes to the `gemini-api-dev` skill are documented here.
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added an explicit route to `gemini-interactions-api`; the general SDK
+  workflow remains separate from the narrower Interactions API workflow.
 
 ### Fixed
 

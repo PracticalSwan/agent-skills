@@ -194,5 +194,8 @@ Before claiming the `supabase` workflow succeeded:
 
 ## Related Skills
 
+- [supabase-postgres-best-practices](../supabase-postgres-best-practices/SKILL.md):
+  Load it before any schema, migration, RLS, index, query, or Postgres security
+  work.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

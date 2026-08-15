@@ -220,5 +220,11 @@ Before claiming the `web-quality-audit` workflow succeeded:
 
 ## Related Skills
 
+- [performance](../performance/SKILL.md): Use it for broad loading, runtime, asset, caching, and measurement analysis.
+- [core-web-vitals](../core-web-vitals/SKILL.md): Use it for targeted LCP, INP, and CLS diagnosis and remediation.
+- [accessibility](../accessibility/SKILL.md): Use it for WCAG, keyboard, focus, form, and assistive-technology checks.
+- [seo](../seo/SKILL.md): Use it for metadata, crawlability, canonical URL, and structured-data checks.
+- [best-practices](../best-practices/SKILL.md): Use it for browser security,
+  compatibility, semantic HTML, privacy, and production web-quality checks.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

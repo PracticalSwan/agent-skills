@@ -192,5 +192,14 @@ Before claiming the `react-best-practices` workflow succeeded:
 
 ## Related Skills
 
+- [react-development](../react-development/SKILL.md): Use it for React
+  implementation, hooks, state, data libraries, and general application
+  behavior; use this skill for performance-specific rules.
+- [nextjs-development](../nextjs-development/SKILL.md): Use it for Next.js
+  framework features and project configuration; use this skill for
+  React/Next.js performance review and refactoring.
+- [frontend-design](../frontend-design/SKILL.md): Use it for art direction,
+  responsive UI, interaction design, and rendered verification rather than
+  performance-rule selection alone.
 - [verification-before-completion](../verification-before-completion/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.
 - [documentation-verification](../documentation-verification/SKILL.md): Use it when the task also needs its adjacent verification or quality workflow.

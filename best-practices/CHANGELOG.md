@@ -13,6 +13,9 @@ All notable changes to the `best-practices` skill are documented here.
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added routes to `web-quality-audit`, `code-quality`, and
+  `security-best-practices`; browser-quality guidance remains distinct from
+  general maintainability and language-specific security reviews.
 
 ### Fixed
 

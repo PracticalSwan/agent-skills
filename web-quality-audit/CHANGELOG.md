@@ -13,6 +13,7 @@ All notable changes to the `web-quality-audit` skill are documented here.
 
 - Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Added explicit routes to the five focused audit leaves; this skill remains the aggregate cross-dimension router.
 
 ### Fixed
 

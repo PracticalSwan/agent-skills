@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-08-14`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `155` tracked skill folders
-  - `123` tracked maintained skills
+  - `166` tracked skill folders
+  - `134` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `213` local skill folders detected
-  - `181` local maintained skills detected
+  - `224` local skill folders detected
+  - `192` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,11 +49,12 @@ Snapshot date: `2026-08-14`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `155` tracked skills use catalog `version: "2.0"` and were refreshed to
-  the current `last_updated: 2026-08-14` catalog baseline. The `58`
-  local-only Google Workspace overlays retain their upstream
-  `version: "0.22.5"` while receiving the same retained-client sections and
-  maintenance date.
+- All `166` tracked skills use catalog `version: "2.0"`. The `155`
+  pre-existing tracked skills retain the `last_updated: 2026-08-14` catalog
+  baseline; the eleven newly promoted upstream skills use
+  `last_updated: 2026-08-16`. The `58` local-only Google Workspace overlays
+  retain their upstream `version: "0.22.5"` while receiving the same
+  retained-client sections and maintenance date.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
 - The eight Tavily skills are imported from the official `tavily-ai/skills`
   repository at commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`,
@@ -66,6 +67,12 @@ Snapshot date: `2026-08-14`. Local overlay totals can differ by machine.
 - Existing catalog equivalents remain canonical for upstream `tdd`,
   `diagnosing-bugs`, `code-review`, and `implement` overlap; no project-local
   skill roots receive sync.
+- The 2026-08-16 child reconciliation compared all eleven installed `.codex`
+  skill trees byte-for-byte with their official upstream paths and promoted
+  them without collapsing distinct activation boundaries. `web-quality-audit`
+  remains the aggregate router for `performance`, `core-web-vitals`,
+  `accessibility`, `seo`, and `best-practices`; `react-best-practices` remains
+  separate from `react-development`, `nextjs-development`, and `frontend-design`.
 - The 2026-08-14 child-path reconciliation inspected only the personal
   `.codex` and `.claude` roots. No child-only skills remained to promote;
   Codex system-managed copies remain protected and the three approved
@@ -261,8 +268,9 @@ with the routing policy; it does not prune unknown personal skills.
 ## Upstream-Only Skill Sources
 
 Project-local skill roots under paths such as `C:\Assumption University` are
-neither scanned nor written during normal maintenance. The 2026-08-14 child
-reconciliation was limited to the personal `.codex` and `.claude` roots.
+neither scanned nor written during normal maintenance. The 2026-08-16 child
+reconciliation was limited to the personal `.codex` and `.claude` roots and
+promoted eleven installed skills into this parent catalog.
 
 To bring a skill from such a root into this parent catalog, promote it upstream with `scripts/promote-child-skills.py`, then refresh provenance with `scripts/update-skill-registry.py`.
 
@@ -294,6 +302,8 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `domain-modeling`
 - `improve-codebase-architecture`
 - `mcp-builder`
+- `supabase`
+- `supabase-postgres-best-practices`
 - `vercel-deploy`
 
 ### Frontend, Design, and Testing
@@ -307,6 +317,7 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `legacy-circuit-mockups`
 - `nextjs-development`
 - `playwright`
+- `react-best-practices`
 - `prototype`
 - `react-development`
 - `stitch-design`
@@ -329,6 +340,12 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 - `vite-development`
 - `web-design-reviewer`
 - `web-testing`
+- `accessibility`
+- `best-practices`
+- `core-web-vitals`
+- `performance`
+- `seo`
+- `web-quality-audit`
 
 ### Languages, Backend, and Data
 
@@ -351,6 +368,8 @@ To bring a skill from such a root into this parent catalog, promote it upstream 
 
 - `deepstream-dev`
 - `deepstream-import-vision-model`
+- `gemini-api-dev`
+- `gemini-interactions-api`
 - `nemo-retriever`
 - `rag-blueprint`
 - `rag-eval`
@@ -436,6 +455,8 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `plugin-creator`
 - `powerbi-modeling`
 - `powerpoint-ppt`
+- `gemini-api-dev`
+- `gemini-interactions-api`
 - `secret-scanning`
 - `serena-usage`
 - `stitch-code-to-design`
@@ -454,6 +475,7 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `stitch-shadcn-ui`
 - `stitch-taste-design`
 - `stitch-upload-to-stitch`
+- `supabase`
 - `tavily-best-practices`
 - `tavily-cli`
 - `tavily-crawl`
@@ -480,12 +502,17 @@ scanned or refreshed during the 2026-07-30 pass:
 - `accelerated-computing-cudf`
 - `agentic-eval`
 - `avoid-ai-writing`
+- `accessibility`
+- `best-practices`
 - `cloud-design-patterns`
 - `codebase-to-course`
 - `context-map`
 - `csharp-xunit`
 - `deepstream-dev`
 - `deepstream-import-vision-model`
+- `core-web-vitals`
+- `gemini-api-dev`
+- `gemini-interactions-api`
 - `dotnet-best-practices`
 - `java-docs`
 - `java-junit`
@@ -511,12 +538,18 @@ scanned or refreshed during the 2026-07-30 pass:
 - `skill-installer`
 - `jupyter-notebook`
 - `playwright`
+- `performance`
 - `pptx`
+- `react-best-practices`
+- `seo`
 - `screenshot`
 - `security-best-practices`
 - `security-ownership-map`
 - `security-threat-model`
+- `supabase`
+- `supabase-postgres-best-practices`
 - `vercel-deploy`
+- `web-quality-audit`
 - `xlsx`
 - `competition-submission-checker`
 - `course-content-map`
@@ -555,6 +588,13 @@ scanned or refreshed during the 2026-07-30 pass:
 - `stitch-taste-design`
 - `stitch-upload-to-stitch`
 - `spreadsheet-formula-helper`
+
+The 2026-08-16 child reconciliation imported eleven byte-for-byte verified
+official skills from the personal Codex root: two Supabase workflows, two
+Gemini API workflows, Vercel React performance guidance, and the web-quality
+router plus its five focused leaves. The aggregate router and focused leaves
+remain separate because they have different activation boundaries and output
+shapes.
 
 The Stitch import keeps `stitch-design` as a router for discoverability and
 keeps `stitch-code-to-design` as an end-to-end orchestrator over narrower

@@ -3,10 +3,10 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-08-14)
+## Snapshot (2026-08-16)
 
-- `144` skills have source mappings.
-- `86` source-mapped skills are part of the git-tracked catalog.
+- `155` skills have source mappings.
+- `97` source-mapped skills are part of the git-tracked catalog.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*`).
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
@@ -18,17 +18,21 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/ComposioHQ/awesome-codex-skills`
 - `https://github.com/NVIDIA/skills`
 - `https://github.com/Xquik-dev/x-twitter-scraper`
+- `https://github.com/addyosmani/web-quality-skills`
 - `https://github.com/anthropics/skills`
 - `https://github.com/conorbronsdon/avoid-ai-writing`
 - `https://github.com/github/awesome-copilot`
+- `https://github.com/google-gemini/gemini-skills`
 - `https://github.com/google-labs-code/stitch-skills`
 - `https://github.com/googleworkspace/cli`
 - `https://github.com/mattpocock/skills`
 - `https://github.com/obra/superpowers`
 - `https://github.com/obra/superpowers-skills`
 - `https://github.com/openai/skills`
+- `https://github.com/supabase/agent-skills`
 - `https://github.com/tavily-ai/skills`
 - `https://github.com/travisvn/awesome-claude-skills`
+- `https://github.com/vercel-labs/agent-skills`
 - `https://github.com/zarazhangrui/codebase-to-course`
 
 Local child-workspace imports use `local-workspace://` provenance plus a SHA-256 tree digest when no git commit owns the source folder.
@@ -52,19 +56,26 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `superpowers_legacy` | `https://github.com/obra/superpowers` | `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` |
 | `tavily_skills` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` |
 | `matt_pocock_skills` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` |
+| `supabase_agent_skills` | `https://github.com/supabase/agent-skills` | `8331f910845103c08d51f6ca1d86ebb7d1f745e3` |
+| `gemini_skills` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` |
+| `vercel_agent_skills` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` |
+| `web_quality_skills` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` |
 
 ## Tracked Reference Installs
 
 | Skill | Source Repo | Source Commit | Source Path |
 |-------|-------------|---------------|-------------|
 | `accelerated-computing-cudf` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/accelerated-computing-cudf` |
+| `accessibility` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/accessibility` |
 | `agentic-eval` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/agentic-eval` |
 | `avoid-ai-writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `3c0fd8a2668962df97f0a6771dcd57c84a4be568` | `.` |
+| `best-practices` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/best-practices` |
 | `cloud-design-patterns` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/cloud-design-patterns` |
 | `codebase-design` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/codebase-design` |
 | `codebase-to-course` | `https://github.com/zarazhangrui/codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` | `.` |
 | `competition-submission-checker` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:a42dbd44ac124d8ff639aa9eee834c589527eb66c2742ed1b4fba7444305b1a3` | `.agents/skills/competition-submission-checker` |
 | `context-map` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/context-map` |
+| `core-web-vitals` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/core-web-vitals` |
 | `course-content-map` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:5ef9653ccffaf53b7698df234aa0e60c27f7832e16032a67980e819bb69c0b97` | `.agents/skills/course-content-map` |
 | `csharp-xunit` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/csharp-xunit` |
 | `deepstream-dev` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/deepstream-dev` |
@@ -80,9 +91,11 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `figma-implement-design` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma-implement-design` |
 | `final-assignment-citation-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:48da323567833f9009344e11e50f09406ca5066329cca1543e27c6c1a09ff894` | `.agents/skills/final-assignment-citation-review` |
 | `frontend-design` | `https://github.com/openai/skills` | `30444aed500c00c85294d12074f6e3ee794f808a` | `skills/.curated/frontend-skill` |
+| `gemini-api-dev` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` | `skills/gemini-api-dev` |
+| `gemini-interactions-api` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` | `skills/gemini-interactions-api` |
 | `handoff` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/productivity/handoff` |
 | `homework-notebook-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:6f97c5514c2bac5d6d2bcfb0af09f82cbdf43aeeabd90d9fcf505f023613e0ad` | `.agents/skills/homework-notebook-review` |
-| `imagegen` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:faf51a61d813648f54d0e5c6a0c6aeaf8011e412210b151e5de91abea67072e9` | `imagegen` |
+| `imagegen` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:bf6877b61db77477b039f93a024b7369cce115ff31c2a05f928a81a0a89fc8b8` | `imagegen` |
 | `improve-codebase-architecture` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/improve-codebase-architecture` |
 | `java-docs` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/java-docs` |
 | `java-junit` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/java-junit` |
@@ -92,6 +105,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `notebook-execution-safety` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:41e0a5ed117cd716119fafd29457ba39c1c69cb231adf3520535f0e03c0c8b9b` | `.agents/skills/notebook-execution-safety` |
 | `openai-docs` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:43ba6399569a39bb3a4c42ac1150bae34a3e60098943290c558ac18045aeab1c` | `openai-docs` |
 | `pdf` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` | `Official skill reference -> anthropics/skills/pdf` |
+| `performance` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/performance` |
 | `playwright` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/playwright` |
 | `plugin-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:8e636d04c0e0383d1f1c046a14dea187760218112b1696803dde6dc4a57b433b` | `plugin-creator` |
 | `pptx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/pptx` |
@@ -99,6 +113,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `rag-blueprint` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-blueprint` |
 | `rag-eval` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-eval` |
 | `rag-perf` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-perf` |
+| `react-best-practices` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-best-practices` |
 | `recommender-evaluation` | `local-workspace://C:/Assumption University/CSX4207/Project` | `sha256:e0b96811878f6a18d5f52745da5612b3a9cbcb9f044043388e22600460bb5bd2` | `.claude/skills/recommender-evaluation` |
 | `research` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/research` |
 | `resolving-merge-conflicts` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/resolving-merge-conflicts` |
@@ -109,6 +124,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `security-ownership-map` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-ownership-map` |
 | `security-review` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/security-review` |
 | `security-threat-model` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-threat-model` |
+| `seo` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/seo` |
 | `skill-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:3af8105ffc4f76c1f91c60be8a0b9a4922176b435912b197f37b92ca850f1d4d` | `skill-creator` |
 | `skill-installer` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:0dbac1bd83451923b5933c0a52311a3e27e552ec5f75edae27a78106a53d55e5` | `skill-installer` |
 | `spreadsheet-formula-helper` | `https://github.com/ComposioHQ/awesome-codex-skills` | `0930e1373789d2eda449039f7ac154b33031de89` | `spreadsheet-formula-helper` |
@@ -129,6 +145,8 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `stitch-shadcn-ui` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-build/skills/shadcn-ui` |
 | `stitch-taste-design` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-utilities/skills/taste-design` |
 | `stitch-upload-to-stitch` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/upload-to-stitch` |
+| `supabase` | `https://github.com/supabase/agent-skills` | `8331f910845103c08d51f6ca1d86ebb7d1f745e3` | `skills/supabase` |
+| `supabase-postgres-best-practices` | `https://github.com/supabase/agent-skills` | `8331f910845103c08d51f6ca1d86ebb7d1f745e3` | `skills/supabase-postgres-best-practices` |
 | `tabular-eda-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:0bf5541310d362988bb8af9c50c6c553b8c1a57210fd1b7d273fc0b56903bc7d` | `.agents/skills/tabular-eda-review` |
 | `tavily-best-practices` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-best-practices` |
 | `tavily-cli` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-cli` |
@@ -140,6 +158,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `tavily-search` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-search` |
 | `vercel-deploy` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/vercel-deploy` |
 | `web-dev-explainer` | `local-workspace://C:/Assumption University/Finished/CSX4107/Assignments` | `sha256:64302e7c5f9bd864c4e88cf4d1a8915ad9c69582ec417e1ff097f07f650c5cd0` | `.agent/skills/web_dev_explainer` |
+| `web-quality-audit` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/web-quality-audit` |
 | `writing-for-agents` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/productivity/writing-for-agents` |
 | `x-twitter-scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `cec8d63a5501d2fcc7192628a67e09ac1311a788` | `skills/x-twitter-scraper` |
 | `xlsx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/xlsx` |
@@ -154,11 +173,6 @@ These source-mapped overlays are intentionally local-only in this workspace and 
 Use `scripts/skill-registry.json` for each overlay's exact source path, commit, and rationale.
 
 ## Child-Path Promotion Notes
-
-- The 2026-08-14 maintenance pass compared the parent catalog only with the
-  personal `.codex` and `.claude` skill roots. No child-only skills remained
-  to promote; project-specific roots under `C:\Assumption University` were
-  not scanned or changed.
 
 - The 2026-07-29 maintenance pass compared the parent catalog only with the
   personal Codex and Claude skill roots. Project-specific roots under
@@ -195,9 +209,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   prototypes, primary-source research, conflict resolution, handoffs, and
   agent-document writing. The source MIT license is retained in each imported
   folder.
-- The 2026-08-14 source refresh audited the current Matt Pocock head
-  `8b78b531ab965735c5dc74f6f7a219e1e37326df` and refreshed the changed
-  `domain-modeling` trigger wording while retaining the catalog wrapper.
+- The 2026-08-16 child reconciliation compared the eleven newly installed
+  skill trees byte-for-byte with their exact current paths in the official
+  Supabase, Google Gemini, Vercel, and web-quality repositories. It imported
+  `supabase`, `supabase-postgres-best-practices`, `gemini-api-dev`,
+  `gemini-interactions-api`, `react-best-practices`, and the five web-quality
+  audit leaves without collapsing their distinct activation boundaries.
 
 ## Selection And Refresh Notes
 
@@ -205,22 +222,23 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   downstream roots are deployment targets.
 - Prefer canonical upstream sources over discovery catalogs and compare exact
   recorded paths before changing normalized skill content.
-- Upstream HEAD movement alone is not a reason to rewrite a skill. The
-  2026-08-14 exact-path audit left mapped Awesome Copilot, Anthropic document,
-  NVIDIA, and other unchanged source paths untouched while updating their
-  provenance to the audited heads.
-- Real upstream changes were incorporated for `avoid-ai-writing`, Stitch
-  workflows and capture helpers, `x-twitter-scraper`, Matt Pocock's
-  `domain-modeling`, and the affected copied Superpowers workflows.
-- Imported upstream support was reviewed for removed-client setup paths. The
-  refreshed Stitch, Xquik, and visual-companion material keeps the supported
-  local/manual and no-MCP fallbacks without restoring retired CLI or GUI
-  integrations.
+- Upstream HEAD movement alone is not a reason to rewrite a skill. On
+  2026-07-29, exact-path comparison showed no relevant changes for the tracked
+  Awesome Copilot skills, Awesome Codex formula helper, Anthropic
+  `mcp-builder`, Google Workspace CLI, OpenAI skills, and the current
+  Superpowers catalog.
+- Real upstream changes were incorporated for Anthropic document helpers,
+  `avoid-ai-writing`, two NVIDIA skills, Stitch workflows and validators, and
+  `x-twitter-scraper`.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.
 - Imported skills that handle third-party content retain prompt-injection,
   credential, approval, and private-data boundaries during normalization.
+- The 2026-08-16 web-quality import keeps `web-quality-audit` as the aggregate
+  router and retains separate `performance`, `core-web-vitals`,
+  `accessibility`, `seo`, and `best-practices` leaves; React performance remains
+  separate from `react-development`, `nextjs-development`, and `frontend-design`.
 - Overlapping upstream TDD, debugging, code review, implementation, planning,
   and skill-authoring workflows remain represented by the stronger existing
   catalog skills rather than being duplicated.

@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 
-DATE_STAMP = "2026-08-14"
+DATE_STAMP = "2026-08-16"
 CATALOG_VERSION = "2.0"
 PORTABILITY_START = "<!-- PORTABILITY:START -->"
 PORTABILITY_END = "<!-- PORTABILITY:END -->"
@@ -259,7 +259,7 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
 
 ### Changed
 
-- Updated the catalog metadata and last-updated state for the 2026-08-14 maintenance pass.
+- Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
 
 ### Fixed

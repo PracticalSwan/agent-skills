@@ -25,6 +25,7 @@ BAD_TEXT_MARKERS = {
     "\ufffd": "replacement character",
 }
 STALE_REFERENCES = {"../nestjs/SKILL.md": "removed nestjs skill"}
+REMOVED_CLIENT_RE = re.compile(r"\b(?:Gemini\s+CLI|Antigravity(?:\s+CLI)?)\b", re.IGNORECASE)
 VALID_SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 ACTIVE_ROOT_DOCS = [
     "README.md",
@@ -120,7 +121,7 @@ def main() -> int:
             continue
 
         body = skill_path.read_text(encoding="utf-8")
-        if re.search(r"\b(?:Gemini|Antigravity)(?:\s+CLI)?\b", body, re.IGNORECASE):
+        if REMOVED_CLIENT_RE.search(body):
             issues.append(
                 f"{skill_dir.name}: active SKILL.md still names removed Gemini or Antigravity support."
             )
@@ -196,11 +197,7 @@ def main() -> int:
         if not doc_path.is_file():
             issues.append(f"{doc_path}: required active root documentation is missing.")
             continue
-        if re.search(
-            r"\b(?:Gemini|Antigravity)(?:\s+CLI)?\b",
-            doc_path.read_text(encoding="utf-8"),
-            re.IGNORECASE,
-        ):
+        if REMOVED_CLIENT_RE.search(doc_path.read_text(encoding="utf-8")):
             issues.append(f"{doc_path}: active root documentation still names a removed client.")
 
     sync_script = (repo_root / "scripts" / "sync-skills.ps1").read_text(encoding="utf-8")

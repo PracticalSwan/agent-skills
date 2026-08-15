@@ -33,23 +33,24 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-08-14`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `155` tracked skill folders
-  - `123` tracked maintained skills
+  - `166` tracked skill folders
+  - `134` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `213` local skill folders detected
-  - `181` local maintained skills detected
+  - `224` local skill folders detected
+  - `192` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `155` tracked skills use catalog `version: "2.0"` and were refreshed to
-the current `last_updated: 2026-08-14` catalog baseline. The `58` local-only
-Google Workspace overlays retain upstream `version: "0.22.5"` while receiving
-the same retained-client sections and maintenance date.
+All `166` tracked skills use catalog `version: "2.0"`. The `155` pre-existing
+tracked skills retain the `last_updated: 2026-08-14` catalog baseline; the
+eleven newly promoted upstream skills use `last_updated: 2026-08-16`. The
+`58` local-only Google Workspace overlays retain upstream `version: "0.22.5"`
+while receiving the same retained-client sections and maintenance date.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
 The Tavily suite is sourced from `tavily-ai/skills` at commit
@@ -70,6 +71,12 @@ mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
 workflows, plus the affected copied Superpowers workflows. Exact-path audits
 left unchanged mapped skills untouched, and imported support material was
 reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
+
+The 2026-08-16 child reconciliation promoted eleven byte-for-byte verified
+official skills from the personal Codex root: Supabase, Gemini API, Vercel
+React performance, and the web-quality audit router plus five focused leaves.
+The focused leaves remain separate from one another and from the existing
+React, frontend-design, and visual-review workflows.
 
 `frontend-design` is the only general frontend creation and art-direction
 skill. Use it instead of the retired `frontend-skill` and

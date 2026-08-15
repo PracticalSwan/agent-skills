@@ -22,9 +22,13 @@ SOURCE_COMMITS = {
     "superpowers_legacy": ("https://github.com/obra/superpowers", "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"),
     "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
     "matt_pocock_skills": ("https://github.com/mattpocock/skills", "8b78b531ab965735c5dc74f6f7a219e1e37326df"),
+    "supabase_agent_skills": ("https://github.com/supabase/agent-skills", "8331f910845103c08d51f6ca1d86ebb7d1f745e3"),
+    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "2a698e791f3dabf5b1771892d52490eb2eee8826"),
+    "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "b8caa260a420a73042e35521de4b5c8baf6446cc"),
+    "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "95d6e255afe1596b557d7a8498517884438f5b3a"),
 }
 
-SNAPSHOT_DATE = "2026-08-14"
+SNAPSHOT_DATE = "2026-08-16"
 
 SUPERPOWERS = {
     "brainstorming",
@@ -117,6 +121,64 @@ MATT_POCOCK_SKILLS = {
     "writing-for-agents": (
         "skills/productivity/writing-for-agents",
         "Adds progressive-disclosure guidance for maintaining skills and agent instruction files; retained the catalog's existing writing-skills workflow for test-driven skill authoring.",
+    ),
+}
+
+ADDITIONAL_UPSTREAM_SKILLS = {
+    "supabase": (
+        "supabase_agent_skills",
+        "skills/supabase",
+        "Official Supabase workflow for Auth, SSR, RLS, migrations, security, troubleshooting, and current-documentation verification; normalized for explicit project-change approval.",
+    ),
+    "supabase-postgres-best-practices": (
+        "supabase_agent_skills",
+        "skills/supabase-postgres-best-practices",
+        "Official Supabase PostgreSQL guidance for schema design, indexes, migrations, RLS, query performance, and database security.",
+    ),
+    "gemini-api-dev": (
+        "gemini_skills",
+        "skills/gemini-api-dev",
+        "Official Gemini API workflow for the current google-genai SDKs, structured output, multimodal capabilities, model selection, and documentation fallbacks.",
+    ),
+    "gemini-interactions-api": (
+        "gemini_skills",
+        "skills/gemini-interactions-api",
+        "Official Gemini Interactions API workflow for structured output, stored-state controls, streaming, managed agents, and current API migration guidance.",
+    ),
+    "react-best-practices": (
+        "vercel_agent_skills",
+        "skills/react-best-practices",
+        "Official Vercel React and Next.js performance rules covering waterfalls, bundle size, server/client data flow, rendering, and rerender behavior; complements the catalog's framework and design skills.",
+    ),
+    "web-quality-audit": (
+        "web_quality_skills",
+        "skills/web-quality-audit",
+        "Official consolidated Lighthouse-oriented audit workflow that routes to the retained performance, Core Web Vitals, accessibility, SEO, and browser best-practice leaves.",
+    ),
+    "performance": (
+        "web_quality_skills",
+        "skills/performance",
+        "Official broad web-performance workflow for loading, runtime, assets, caching, and measurement; kept distinct from targeted Core Web Vitals checks.",
+    ),
+    "core-web-vitals": (
+        "web_quality_skills",
+        "skills/core-web-vitals",
+        "Official targeted LCP, INP, and CLS workflow; kept distinct from the broader performance workflow.",
+    ),
+    "accessibility": (
+        "web_quality_skills",
+        "skills/accessibility",
+        "Official WCAG 2.2 and Lighthouse accessibility workflow for keyboard, focus, forms, screen readers, and accessible state changes.",
+    ),
+    "seo": (
+        "web_quality_skills",
+        "skills/seo",
+        "Official technical SEO workflow for metadata, crawlability, canonical URLs, structured data, internationalization, and search audits.",
+    ),
+    "best-practices": (
+        "web_quality_skills",
+        "skills/best-practices",
+        "Official browser security, compatibility, semantic HTML, privacy, and production web-quality workflow; narrower than the catalog's general code-quality review.",
     ),
 }
 
@@ -328,6 +390,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   prototypes, primary-source research, conflict resolution, handoffs, and
   agent-document writing. The source MIT license is retained in each imported
   folder.
+- The 2026-08-16 child reconciliation compared the eleven newly installed
+  skill trees byte-for-byte with their exact current paths in the official
+  Supabase, Google Gemini, Vercel, and web-quality repositories. It imported
+  `supabase`, `supabase-postgres-best-practices`, `gemini-api-dev`,
+  `gemini-interactions-api`, `react-best-practices`, and the five web-quality
+  audit leaves without collapsing their distinct activation boundaries.
 
 ## Selection And Refresh Notes
 
@@ -348,6 +416,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   in the active host before use.
 - Imported skills that handle third-party content retain prompt-injection,
   credential, approval, and private-data boundaries during normalization.
+- The 2026-08-16 web-quality import keeps `web-quality-audit` as the aggregate
+  router and retains separate `performance`, `core-web-vitals`,
+  `accessibility`, `seo`, and `best-practices` leaves; React performance remains
+  separate from `react-development`, `nextjs-development`, and `frontend-design`.
 - Overlapping upstream TDD, debugging, code review, implementation, planning,
   and skill-authoring workflows remain represented by the stronger existing
   catalog skills rather than being duplicated.
@@ -433,6 +505,14 @@ def main() -> int:
             "source_path": source_path,
             "reason": reason,
         }
+    for name, (source_key, source_path, reason) in ADDITIONAL_UPSTREAM_SKILLS.items():
+        source_repo, source_commit = SOURCE_COMMITS[source_key]
+        refs[name] = {
+            "source_repo": source_repo,
+            "source_commit": source_commit,
+            "source_path": source_path,
+            "reason": reason,
+        }
     codex_system_root = Path.home() / ".codex" / "skills" / ".system"
     for name, reason in CODEX_SYSTEM_SKILLS.items():
         source = codex_system_root / name
@@ -510,6 +590,24 @@ def main() -> int:
             "mode": "Preferred",
             "servers": ["Tavily MCP Server"],
             "fallback": tavily_fallback,
+        }
+    mcp_skills["supabase"] = {
+        "mode": "Preferred",
+        "servers": ["Supabase MCP Server"],
+        "fallback": [
+            "Use the official Supabase docs, CLI, or psql when the active host does not expose the Supabase MCP server.",
+            "Do not create project MCP configuration or authenticate a server without explicit user authorization.",
+        ],
+    }
+    gemini_fallback = [
+        "Use the official ai.google.dev documentation and the current google-genai SDK when the active host does not expose a Gemini documentation MCP.",
+        "Treat model names, SDK versions, and API examples as time-sensitive; verify them against current official documentation before implementation.",
+    ]
+    for name in ("gemini-api-dev", "gemini-interactions-api"):
+        mcp_skills[name] = {
+            "mode": "Preferred",
+            "servers": ["Google Gemini documentation MCP"],
+            "fallback": gemini_fallback,
         }
 
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")

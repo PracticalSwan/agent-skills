@@ -186,6 +186,27 @@ Codex skill catalog.
   personal `.codex` and `.claude` roots, report zero extras explicitly, and do
   not scan project-specific paths.
 
+## 2026-08-16 Installed Platform And Web Skills
+
+- Compare each installed child tree with the exact upstream path at a pinned
+  current commit before promotion; this distinguishes a verified source match
+  from an unverified local copy.
+- Keep an aggregate audit router and its focused leaves separate when their
+  activation boundaries, evidence, or output shape differ. The same rule keeps
+  Vercel React performance guidance separate from framework and art-direction
+  skills.
+- Keep official Gemini API terminology allowed in active skills and docs while
+  rejecting retired command-line or provider-specific host support;
+  managed-agent IDs must come from current account/documentation discovery.
+- When a source skill is MCP-aware, name the optional server in the catalog
+  registry and keep an official-doc or CLI fallback. Configuration and
+  authentication remain explicit user-authorized actions.
+- Shell-based helpers need a truthful Windows/manual fallback. Do not claim a
+  POSIX script ran when its shell or `jq` dependency is unavailable.
+- Promote from the personal Codex root into the parent first, update registry
+  provenance and root counts, then validate and sync only the three approved
+  personal-global roots. Project-specific paths remain out of scope.
+
 ## Update Checklist
 
 1. Edit the workspace copy.

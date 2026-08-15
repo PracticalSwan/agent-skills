@@ -3,6 +3,47 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-16] - Promote Installed Platform And Web Skills
+
+### Added
+
+- Audited the eleven newly installed personal-Codex skill trees against the
+  exact current upstream paths in Supabase, Google Gemini, Vercel, and
+  web-quality repositories.
+- Added `supabase`, `supabase-postgres-best-practices`, `gemini-api-dev`,
+  `gemini-interactions-api`, `react-best-practices`, `web-quality-audit`,
+  `performance`, `core-web-vitals`, `accessibility`, `seo`, and
+  `best-practices` with catalog metadata, changelogs, provenance, and retained
+  upstream license texts where available.
+
+### Changed
+
+- Updated the catalog inventory to `166` tracked folders and `134` maintained
+  skills; the live parent workspace now contains `224` folders and `192`
+  maintained skills including the existing local-only overlays.
+- Kept `web-quality-audit` as an aggregate router over five focused leaves,
+  kept broad `performance` separate from targeted Core Web Vitals, and kept
+  browser `best-practices` separate from the general `code-quality` workflow.
+- Kept Vercel `react-best-practices` separate from `react-development`,
+  `nextjs-development`, and `frontend-design`; retained the source's detailed
+  compiled rule files and support metadata.
+- Added current Supabase/Gemini MCP mappings and explicit official-doc or CLI
+  fallbacks, plus a Windows/manual fallback for the POSIX web-quality helper.
+- Refreshed root documentation, the generated source report, and the
+  normalization helper's maintenance date. Downstream routing remains limited
+  to the three approved personal-global roots; no project-local path was used.
+
+### Fixed
+
+- Added explicit authorization gates before creating Supabase project MCP
+  configuration or authenticating a server.
+- Removed provider-specific managed-agent identifiers from the Gemini
+  Interactions workflow and now require a current account/documentation lookup
+  before selecting a managed agent.
+- Narrowed the removed-client validator to reject retired Gemini CLI or
+  Antigravity host support while allowing official Gemini API documentation and
+  skills.
+
 ## [2026-08-14] - Catalog-Wide Freshness And Source Sync
 
 ### Added

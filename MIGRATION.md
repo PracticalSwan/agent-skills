@@ -67,6 +67,16 @@ unreferenced, and unused by running processes. Their surrounding application
 state was preserved. Do not delete neighboring client data when cleaning up
 retired mirror leaves.
 
+## 2026-08-17 Codex-Only Blender Overlay
+
+The `arjun988/blender-skills` pack is intentionally outside the shared catalog even though the parent maintenance agent owns its update workflow.
+
+- Install and update it only in `C:\Users\LOQ\.codex\skills`.
+- Keep its checkout under `C:\Users\LOQ\.codex\vendor\blender-skills`.
+- Never promote its protected skill names into the parent catalog or synchronize them to the shared or Claude roots.
+- Use `scripts/update-codex-local-blender-skills.ps1` for upstream refreshes; it owns only the recorded Blender skill names and shared reference folder.
+- The generic promotion and sync tooling rejects parent leakage for these names.
+
 ## Rollback
 
 To restore the prior support model, revert the version 2.0 catalog commit,

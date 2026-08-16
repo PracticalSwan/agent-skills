@@ -82,6 +82,7 @@ def main() -> int:
     registry = json.loads((repo_root / "scripts" / "skill-registry.json").read_text(encoding="utf-8"))
     superpower_skills = set(registry["copied_official_superpowers"])
     codex_system_managed = registry.get("codex_system_managed_skills")
+    codex_local_only = registry.get("codex_local_only_skill_names")
     skill_dirs = sorted(
         skill_dir
         for skill_dir in repo_root.iterdir()
@@ -111,6 +112,35 @@ def main() -> int:
             + ", ".join(system_superpower_overlap)
             + "."
         )
+
+    if not isinstance(codex_local_only, list) or not codex_local_only:
+        issues.append("scripts/skill-registry.json must define codex_local_only_skill_names.")
+        codex_local_only = []
+    elif codex_local_only != sorted(set(codex_local_only)):
+        issues.append("codex_local_only_skill_names must be unique and sorted.")
+    local_only_parent_overlap = sorted(set(codex_local_only) & skill_names)
+    if local_only_parent_overlap:
+        issues.append(
+            "Codex-local-only skills must not exist in the parent catalog: "
+            + ", ".join(local_only_parent_overlap)
+            + "."
+        )
+    local_sets = registry.get("codex_local_only_skill_sets", {})
+    blender_set = local_sets.get("blender_skills") if isinstance(local_sets, dict) else None
+    if not isinstance(blender_set, dict):
+        issues.append("codex_local_only_skill_sets.blender_skills must be defined.")
+    else:
+        expected = {
+            "checkout": "C:/Users/LOQ/.codex/vendor/blender-skills",
+            "install_root": "C:/Users/LOQ/.codex/skills",
+            "scope": "codex-only",
+            "never_promote_to_parent": True,
+            "never_sync_to_shared": True,
+            "never_sync_to_claude": True,
+        }
+        for key, value in expected.items():
+            if blender_set.get(key) != value:
+                issues.append(f"Blender Codex-local-only policy mismatch for {key}: {blender_set.get(key)!r}.")
 
     for skill_dir in skill_dirs:
         skill_path = skill_dir / "SKILL.md"

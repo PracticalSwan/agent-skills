@@ -190,11 +190,20 @@ if (-not (Test-Path -LiteralPath $registryPath)) {
 $registry = Get-Content -LiteralPath $registryPath -Raw | ConvertFrom-Json
 $copiedOfficialNames = @($registry.copied_official_superpowers)
 $codexSystemManagedNames = @($registry.codex_system_managed_skills)
+$codexLocalOnlyNames = @($registry.codex_local_only_skill_names)
 if ($copiedOfficialNames.Count -eq 0) {
     throw "Skill registry '$registryPath' does not define copied_official_superpowers."
 }
 
 $skillSet = Get-SkillSet -RootPath $workspaceRoot -CopiedOfficialNames $copiedOfficialNames
+$codexLocalOnlyConflicts = @(
+    $skillSet.Maintained |
+        Where-Object { $codexLocalOnlyNames -contains $_.Name } |
+        Select-Object -ExpandProperty Name
+)
+if ($codexLocalOnlyConflicts.Count -gt 0) {
+    throw "Codex-local-only skills must not exist in the parent catalog: $($codexLocalOnlyConflicts -join ', ')"
+}
 $codexMaintained = @(
     $skillSet.Maintained |
         Where-Object { $codexSystemManagedNames -notcontains $_.Name } |

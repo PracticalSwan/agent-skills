@@ -3,7 +3,7 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-08-16)
+## Snapshot (2026-08-17)
 
 - `155` skills have source mappings.
 - `97` source-mapped skills are part of the git-tracked catalog.
@@ -12,6 +12,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
 - `32` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
+- `94` Blender skills are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
 
 ## Source Catalogs
 
@@ -20,6 +21,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/Xquik-dev/x-twitter-scraper`
 - `https://github.com/addyosmani/web-quality-skills`
 - `https://github.com/anthropics/skills`
+- `https://github.com/arjun988/blender-skills`
 - `https://github.com/conorbronsdon/avoid-ai-writing`
 - `https://github.com/github/awesome-copilot`
 - `https://github.com/google-gemini/gemini-skills`
@@ -60,6 +62,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `gemini_skills` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` |
 | `vercel_agent_skills` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` |
 | `web_quality_skills` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` |
+| `blender_skills` | `https://github.com/arjun988/blender-skills` | `8f778d2405a214b508d4c7d80742be8e43acdd52` |
 
 ## Tracked Reference Installs
 
@@ -171,6 +174,12 @@ These source-mapped overlays are intentionally local-only in this workspace and 
 - `recipe-*`: `32` skills sourced from `https://github.com/googleworkspace/cli`.
 
 Use `scripts/skill-registry.json` for each overlay's exact source path, commit, and rationale.
+
+## Codex-Only Blender Overlay
+
+- `arjun988/blender-skills` is installed only under `C:\Users\LOQ\.codex\skills` from the pinned checkout at `C:\Users\LOQ\.codex\vendor\blender-skills`.
+- Its skill names are recorded in `codex_local_only_skill_names` and are excluded from parent promotion. They must never be synchronized into `C:\Users\LOQ\.agents\skills` or `C:\Users\LOQ\.claude\skills`.
+- Parent maintenance runs update this overlay with `scripts/update-codex-local-blender-skills.ps1`; the updater refreshes the local Codex copy, manifest, source commit, and protected-name list.
 
 ## Child-Path Promotion Notes
 

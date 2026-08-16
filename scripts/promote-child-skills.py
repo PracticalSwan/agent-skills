@@ -243,12 +243,21 @@ def main() -> int:
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
+    registry = json.loads((repo_root / "scripts" / "skill-registry.json").read_text(encoding="utf-8"))
+    codex_local_only_names = set(registry.get("codex_local_only_skill_names", []))
     preserve_skill = set(args.preserve_skill)
     requested: list[tuple[Path, str]] = [
         (Path(source).resolve(), destination) for source, destination in args.map
     ]
+    blocked_explicit = sorted(destination for _, destination in requested if destination in codex_local_only_names)
+    if blocked_explicit:
+        raise ValueError("Refusing to promote Codex-local-only skills: " + ", ".join(blocked_explicit))
     for discover_root in args.discover:
-        requested.extend(discover_skills(Path(discover_root).resolve()))
+        requested.extend(
+            (source, name)
+            for source, name in discover_skills(Path(discover_root).resolve())
+            if name not in codex_local_only_names
+        )
 
     unique: dict[str, Path] = {}
     for source, destination in requested:

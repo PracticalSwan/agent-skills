@@ -40,6 +40,14 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
   sync, but they are not maintained the same way as the catalog's maintained
   skills.
 
+## Codex-Only Blender Skills Overlay
+
+- The `arjun988/blender-skills` pack is an explicit exception to normal child promotion.
+- Its 94 current skills must remain installed only under `C:\Users\LOQ\.codex\skills`, with its source checkout under `C:\Users\LOQ\.codex\vendor\blender-skills`.
+- Never promote these skill names into this parent catalog and never sync them to `C:\Users\LOQ\.agents\skills` or `C:\Users\LOQ\.claude\skills`.
+- `scripts/skill-registry.json` records the protected names and the Codex-only source configuration; generic promotion and sync tooling must honor that boundary.
+- During parent source-maintenance or "update all skills" work, run `scripts/update-codex-local-blender-skills.ps1`. It fetches upstream, refreshes only the owned Codex copies and shared Blender references, updates the ownership manifest and source commit, and verifies that no Blender skill escaped to a forbidden root.
+
 ## Current Counts
 
 Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.

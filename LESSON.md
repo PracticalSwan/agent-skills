@@ -15,6 +15,8 @@ Codex skill catalog.
   explicitly scopes them.
 - Preserve Codex `.system` skills as host-managed. Publish normalized catalog
   copies to shared and Claude roots without overwriting those system folders.
+- Treat `arjun988/blender-skills` as a Codex-only exception: its skills remain in `C:\Users\LOQ\.codex\skills`, are never promoted into the parent, and never sync to `.agents` or `.claude`.
+- Parent maintenance still owns freshness for that exception through `scripts/update-codex-local-blender-skills.ps1`, which must run during source-refresh or update-all-skills work.
 
 ## Inventory Lessons
 

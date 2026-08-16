@@ -117,6 +117,14 @@ Host-provided or plugin-managed skills that are not part of this maintained cata
 
 Do not mirror copied official superpowers into `C:\Users\LOQ\.claude\skills` unless you explicitly want local overrides over Claude's plugin-managed copies.
 
+## Codex-Only Blender Skills Overlay
+
+- The `arjun988/blender-skills` pack is an explicit exception to normal child promotion.
+- Its 94 current skills must remain installed only under `C:\Users\LOQ\.codex\skills`, with its source checkout under `C:\Users\LOQ\.codex\vendor\blender-skills`.
+- Never promote these skill names into this parent catalog and never sync them to `C:\Users\LOQ\.agents\skills` or `C:\Users\LOQ\.claude\skills`.
+- `scripts/skill-registry.json` records the protected names and the Codex-only source configuration; generic promotion and sync tooling must honor that boundary.
+- During parent source-maintenance or "update all skills" work, run `scripts/update-codex-local-blender-skills.ps1`. It fetches upstream, refreshes only the owned Codex copies and shared Blender references, updates the ownership manifest and source commit, and verifies that no Blender skill escaped to a forbidden root.
+
 ## Claude Code With GLM Coding Plan
 
 - The GLM Coding Plan endpoint changes the model provider through Claude

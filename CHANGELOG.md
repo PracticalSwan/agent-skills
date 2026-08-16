@@ -3,6 +3,22 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-17] - Codex-Only Blender Skills Overlay
+
+### Added
+
+- Added guarded maintenance automation for the `arjun988/blender-skills` pack, installed only under the personal Codex skill root with a dedicated vendor checkout and ownership manifest.
+- Added registry protection for the 94 current Blender skill names and dynamic upstream commit tracking.
+
+### Changed
+
+- Parent source-maintenance now refreshes the Blender pack through `scripts/update-codex-local-blender-skills.ps1` without treating those skills as shared-catalog imports.
+- Child promotion, validation, and downstream sync now enforce the Codex-only ownership boundary.
+
+### Fixed
+
+- Prevented future maintenance runs from promoting Blender-local skill folders upstream or mirroring them into shared or Claude skill roots.
+
 ## [2026-08-16] - Related Skill Consolidation Audit
 
 ### Added

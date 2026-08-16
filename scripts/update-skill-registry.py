@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 
@@ -28,7 +29,7 @@ SOURCE_COMMITS = {
     "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "95d6e255afe1596b557d7a8498517884438f5b3a"),
 }
 
-SNAPSHOT_DATE = "2026-08-16"
+SNAPSHOT_DATE = "2026-08-17"
 
 SUPERPOWERS = {
     "brainstorming",
@@ -325,6 +326,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
 - `{len(data['copied_official_superpowers'])}` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
+- `{len(data.get('codex_local_only_skill_names', []))}` Blender skills are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
 
 ## Source Catalogs
 
@@ -352,6 +354,12 @@ These source-mapped overlays are intentionally local-only in this workspace and 
 - `recipe-*`: `32` skills sourced from `https://github.com/googleworkspace/cli`.
 
 Use `scripts/skill-registry.json` for each overlay's exact source path, commit, and rationale.
+
+## Codex-Only Blender Overlay
+
+- `arjun988/blender-skills` is installed only under `C:\\Users\\LOQ\\.codex\\skills` from the pinned checkout at `C:\\Users\\LOQ\\.codex\\vendor\\blender-skills`.
+- Its skill names are recorded in `codex_local_only_skill_names` and are excluded from parent promotion. They must never be synchronized into `C:\\Users\\LOQ\\.agents\\skills` or `C:\\Users\\LOQ\\.claude\\skills`.
+- Parent maintenance runs update this overlay with `scripts/update-codex-local-blender-skills.ps1`; the updater refreshes the local Codex copy, manifest, source commit, and protected-name list.
 
 ## Child-Path Promotion Notes
 
@@ -439,10 +447,22 @@ def main() -> int:
     path = repo_root / "scripts" / "skill-registry.json"
     data = json.loads(path.read_text(encoding="utf-8"))
 
-    data["source_commits"] = {
+    source_commits = {
         key: {"repo": repo, "commit": commit}
         for key, (repo, commit) in SOURCE_COMMITS.items()
     }
+    blender_config = data.get("codex_local_only_skill_sets", {}).get("blender_skills")
+    if blender_config:
+        checkout = Path(blender_config["checkout"])
+        if (checkout / ".git").is_dir():
+            blender_commit = subprocess.check_output(
+                ["git", "-C", str(checkout), "rev-parse", "HEAD"], text=True
+            ).strip()
+            source_commits["blender_skills"] = {
+                "repo": "https://github.com/arjun988/blender-skills",
+                "commit": blender_commit,
+            }
+    data["source_commits"] = source_commits
     data["copied_official_superpowers"] = sorted(SUPERPOWERS)
     data["codex_system_managed_skills"] = sorted(CODEX_SYSTEM_SKILLS)
 

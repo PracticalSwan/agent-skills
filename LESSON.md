@@ -222,6 +222,28 @@ Codex skill catalog.
   implementation/performance, and aggregate/focused web-quality workflows
   remained separate after review.
 
+## 2026-08-20 VoltAgent Platform Import And Maintenance
+
+- Treat `VoltAgent/awesome-agent-skills` as a discovery index, then pin and
+  import from each canonical vendor repository; record the exact source commit
+  and selected path in `scripts/platform_skill_manifest.py` and the generated
+  `REFERENCE_SOURCES.md`.
+- Gate CLI-specific imports on commands actually present on the host. This
+  refresh found `vercel`, `netlify`, and `supabase`, but not `hf`,
+  `huggingface-cli`, `mongosh`, `mongo`, or `figma`; omit absent CLI skills
+  rather than documenting an uninstalled executable as available.
+- Audit imported support-file links from their actual nested location. A
+  source-relative `references/...` link can become broken after importing a
+  file that is already inside `references/`; resolve it or replace it with the
+  vendor's stable official documentation URL.
+- Run `scripts/update-codex-local-blender-skills.ps1` during parent source
+  maintenance. On this refresh it completed successfully at upstream commit
+  `8f778d2405a214b508d4c7d80742be8e43acdd52` with 94 Codex-only skills and no
+  promotion to the parent, shared, or Claude roots.
+- Keep the approved sync boundary explicit: only
+  `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and
+  `C:\Users\LOQ\.claude\skills` may receive downstream catalog writes.
+
 ## Update Checklist
 
 1. Edit the workspace copy.

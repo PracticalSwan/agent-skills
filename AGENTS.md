@@ -50,26 +50,26 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-20`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `166` tracked skill folders
-  - `134` tracked maintained skills
+  - `232` tracked skill folders
+  - `200` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `224` local skill folders detected
-  - `192` local maintained skills detected
+  - `290` local skill folders detected
+  - `258` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `166` tracked skills use catalog `version: "2.0"`. The `155` pre-existing
-tracked skills retain the `last_updated: 2026-08-14` catalog baseline; the
-eleven newly promoted upstream skills use `last_updated: 2026-08-16`. The
-`58` local-only Google Workspace overlays keep their upstream `version: "0.22.5"`
+All `232` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+tracked skills retain their prior catalog baselines; the 66 newly imported
+platform skills use `last_updated: 2026-08-20`. The `58` local-only Google
+Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have
@@ -113,6 +113,21 @@ The 2026-08-16 related-skill consolidation audit found no safe content merges.
 with explicit routing links because their activation boundaries and evidence
 paths differ. Plugin-managed Supabase and React copies remain external; the
 parent catalog is canonical for maintained cross-client content.
+
+## 2026-08-20 VoltAgent Platform Import
+
+The VoltAgent repository is a discovery index; canonical vendor repositories
+were pinned before import. The 66-skill selection is recorded in
+`scripts/platform_skill_manifest.py`: 8 Vercel, 15 Netlify, 7 MongoDB, the
+existing current 2-skill Supabase import, 12 Figma, and 24 non-CLI Hugging Face
+skills. Source commits and paths are regenerated into `REFERENCE_SOURCES.md`.
+
+CLI gating was based on commands present on this laptop: `vercel`, `netlify`,
+and `supabase` were present; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and
+`figma` were absent. Therefore Vercel, Netlify, and existing Supabase CLI
+guidance is included, while no Hugging Face, MongoDB, or Figma CLI skill was
+installed. The importer is repeatable with
+`python scripts/import-platform-skills.py --source-root <pinned-clones>`.
 
 ## Source Of Truth
 
@@ -248,7 +263,9 @@ After adding a new maintained skill:
    source was external.
 4. Smoke-test any bundled helper scripts or local fallback workflow.
 5. Update root docs and the relevant changelogs.
-6. Then sync it to the downstream targets.
+6. For source maintenance, run
+   `scripts/update-codex-local-blender-skills.ps1` as well.
+7. Then sync it to the downstream targets.
 
 ## Documentation Rules
 

@@ -3,6 +3,38 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-20] - VoltAgent Platform Skills And Catalog Maintenance
+
+### Added
+
+- Added 66 canonical vendor skills selected from the VoltAgent discovery index:
+  Vercel, Netlify, MongoDB, Figma, Hugging Face, and the retained current
+  Supabase import, with pinned source commits and per-skill provenance.
+- Added `scripts/platform_skill_manifest.py` and
+  `scripts/import-platform-skills.py` for repeatable, reviewed imports from
+  pinned vendor clones.
+- Added explicit CLI gating: Vercel, Netlify, and Supabase CLI guidance is
+  enabled because those commands are installed locally; absent Hugging Face,
+  MongoDB, and Figma CLIs were not imported.
+
+### Changed
+
+- Refreshed the generated registry/source report and root inventory to 232
+  tracked folders (200 maintained) and 290 local folders (258 maintained).
+- Ran the required Codex-only Blender refresh at upstream commit
+  `8f778d2405a214b508d4c7d80742be8e43acdd52`; the 94-skill overlay remains
+  outside the parent catalog and shared/Claude mirrors.
+- Updated all root maintenance documentation with vendor provenance, CLI
+  detection, importer usage, and the approved downstream sync boundary.
+
+### Fixed
+
+- Repaired imported nested Markdown references in MongoDB, Figma, and Hugging
+  Face support files and replaced stale source-tree documentation links with
+  stable official URLs.
+- Corrected the catalog modernization heading check so headings such as
+  `## Anti-Patterns to Avoid` are recognized without breaking validation.
+
 ## [2026-08-17] - Codex-Only Blender Skills Overlay
 
 ### Added

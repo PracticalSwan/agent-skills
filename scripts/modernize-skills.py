@@ -212,7 +212,7 @@ def normalize_sections(body: str, skill_name: str, title: str, registry: dict) -
         "MCP Availability And Fallback",
         render_portability_section(skill_name),
     )
-    if "## Anti-Patterns" not in body:
+    if "Anti-Patterns" not in section_spans(body):
         body += "\n\n" + render_anti_patterns(skill_name)
 
     body, verification = remove_section(body, "Verification Protocol")
@@ -259,7 +259,7 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
 
 ### Changed
 
-- Updated the catalog metadata and last-updated state for the 2026-08-16 maintenance pass.
+- Updated the catalog metadata and last-updated state for the {DATE_STAMP} maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
 
 ### Fixed

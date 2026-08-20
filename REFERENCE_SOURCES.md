@@ -3,16 +3,16 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-08-17)
+## Snapshot (2026-08-20)
 
-- `155` skills have source mappings.
-- `97` source-mapped skills are part of the git-tracked catalog.
+- `221` skills have source mappings.
+- `163` source-mapped skills are part of the git-tracked catalog.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*`).
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
 - `32` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
-- `94` Blender skills are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
+- `95` Blender skills are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
 
 ## Source Catalogs
 
@@ -23,11 +23,15 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/anthropics/skills`
 - `https://github.com/arjun988/blender-skills`
 - `https://github.com/conorbronsdon/avoid-ai-writing`
+- `https://github.com/figma/mcp-server-guide`
 - `https://github.com/github/awesome-copilot`
 - `https://github.com/google-gemini/gemini-skills`
 - `https://github.com/google-labs-code/stitch-skills`
 - `https://github.com/googleworkspace/cli`
+- `https://github.com/huggingface/skills`
 - `https://github.com/mattpocock/skills`
+- `https://github.com/mongodb/agent-skills`
+- `https://github.com/netlify/context-and-tools`
 - `https://github.com/obra/superpowers`
 - `https://github.com/obra/superpowers-skills`
 - `https://github.com/openai/skills`
@@ -62,6 +66,10 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `gemini_skills` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` |
 | `vercel_agent_skills` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` |
 | `web_quality_skills` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` |
+| `netlify_context_and_tools` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` |
+| `mongodb_agent_skills` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` |
+| `figma_mcp_server_guide` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` |
+| `huggingface_skills` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` |
 | `blender_skills` | `https://github.com/arjun988/blender-skills` | `8f778d2405a214b508d4c7d80742be8e43acdd52` |
 
 ## Tracked Reference Installs
@@ -77,12 +85,14 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `codebase-design` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/codebase-design` |
 | `codebase-to-course` | `https://github.com/zarazhangrui/codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` | `.` |
 | `competition-submission-checker` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:a42dbd44ac124d8ff639aa9eee834c589527eb66c2742ed1b4fba7444305b1a3` | `.agents/skills/competition-submission-checker` |
+| `composition-patterns` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/composition-patterns` |
 | `context-map` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/context-map` |
 | `core-web-vitals` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/core-web-vitals` |
 | `course-content-map` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:5ef9653ccffaf53b7698df234aa0e60c27f7832e16032a67980e819bb69c0b97` | `.agents/skills/course-content-map` |
 | `csharp-xunit` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/csharp-xunit` |
 | `deepstream-dev` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/deepstream-dev` |
 | `deepstream-import-vision-model` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/deepstream-import-vision-model` |
+| `deploy-to-vercel` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/deploy-to-vercel` |
 | `doc` | `https://github.com/openai/skills` | `45d05d75363abf13f99d09e899d61e07b8010685` | `skills/.curated/doc` |
 | `document-metadata-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:672f84e342056cf4d7c88b020dcdf96707ff0601ff9a5f15b546b368c166410c` | `.agents/skills/document-metadata-review` |
 | `docx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/docx` |
@@ -91,20 +101,75 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `ds-notebook-strict-code` | `local-workspace://C:/Assumption University/Finished/ITX2007/Assignments` | `sha256:f00f66afa472152180de748df6c54dde0db43d734004e8f79748e494f576f3e7` | `.agent/skills/ds-notebook-strict-code` |
 | `ds-teaching-assistant` | `local-workspace://C:/Assumption University/Finished/ITX2007/Assignments` | `sha256:9bd3ee54bcbd541ab8210013b58313f81e02e5135016ff182806deaad8f511a2` | `.agent/skills/ds-teaching-assistant` |
 | `figma` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma` |
+| `figma-code-connect` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-code-connect` |
+| `figma-create-new-file` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-create-new-file` |
+| `figma-design-to-code` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-design-to-code` |
+| `figma-generate-design` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-generate-design` |
+| `figma-generate-diagram` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-generate-diagram` |
+| `figma-generate-library` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-generate-library` |
 | `figma-implement-design` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma-implement-design` |
+| `figma-implement-motion` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-implement-motion` |
+| `figma-swiftui` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-swiftui` |
+| `figma-use` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-use` |
+| `figma-use-figjam` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-use-figjam` |
+| `figma-use-motion` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-use-motion` |
+| `figma-use-slides` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-use-slides` |
 | `final-assignment-citation-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:48da323567833f9009344e11e50f09406ca5066329cca1543e27c6c1a09ff894` | `.agents/skills/final-assignment-citation-review` |
 | `frontend-design` | `https://github.com/openai/skills` | `30444aed500c00c85294d12074f6e3ee794f808a` | `skills/.curated/frontend-skill` |
 | `gemini-api-dev` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` | `skills/gemini-api-dev` |
 | `gemini-interactions-api` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` | `skills/gemini-interactions-api` |
 | `handoff` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/productivity/handoff` |
+| `hf-cloud-aws-context-discovery` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-aws-context-discovery` |
+| `hf-cloud-python-env-setup` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-python-env-setup` |
+| `hf-cloud-sagemaker-deployment-planner` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-sagemaker-deployment-planner` |
+| `hf-cloud-sagemaker-iam-preflight` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-sagemaker-iam-preflight` |
+| `hf-cloud-sagemaker-production-defaults` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-sagemaker-production-defaults` |
+| `hf-cloud-serving-image-selection` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-serving-image-selection` |
+| `hf-mcp` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `hf-mcp/skills/hf-mcp` |
 | `homework-notebook-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:6f97c5514c2bac5d6d2bcfb0af09f82cbdf43aeeabd90d9fcf505f023613e0ad` | `.agents/skills/homework-notebook-review` |
+| `huggingface-best` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-best` |
+| `huggingface-community-evals` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-community-evals` |
+| `huggingface-datasets` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-datasets` |
+| `huggingface-gradio` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-gradio` |
+| `huggingface-llm-trainer` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-llm-trainer` |
+| `huggingface-local-models` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-local-models` |
+| `huggingface-lora-space-builder` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-lora-space-builder` |
+| `huggingface-paper-publisher` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-paper-publisher` |
+| `huggingface-papers` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-papers` |
+| `huggingface-spaces` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-spaces` |
+| `huggingface-tool-builder` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-tool-builder` |
+| `huggingface-trackio` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-trackio` |
+| `huggingface-vision-trainer` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-vision-trainer` |
+| `huggingface-zerogpu` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-zerogpu` |
 | `imagegen` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:bf6877b61db77477b039f93a024b7369cce115ff31c2a05f928a81a0a89fc8b8` | `imagegen` |
 | `improve-codebase-architecture` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/improve-codebase-architecture` |
 | `java-docs` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/java-docs` |
 | `java-junit` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/java-junit` |
 | `jupyter-notebook` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/jupyter-notebook` |
 | `mcp-builder` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/mcp-builder` |
+| `mongodb-atlas-stream-processing` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-atlas-stream-processing` |
+| `mongodb-connection` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-connection` |
+| `mongodb-mcp-setup` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-mcp-setup` |
+| `mongodb-natural-language-querying` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-natural-language-querying` |
+| `mongodb-query-optimizer` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-query-optimizer` |
+| `mongodb-schema-design` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-schema-design` |
+| `mongodb-search-and-ai` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-search-and-ai` |
 | `nemo-retriever` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/nemo-retriever` |
+| `netlify-access-control` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-access-control` |
+| `netlify-agent-runner` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-agent-runner` |
+| `netlify-ai-gateway` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-ai-gateway` |
+| `netlify-blobs` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-blobs` |
+| `netlify-caching` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-caching` |
+| `netlify-config` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-config` |
+| `netlify-database` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-database` |
+| `netlify-deploy` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-deploy` |
+| `netlify-edge-functions` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-edge-functions` |
+| `netlify-forms` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-forms` |
+| `netlify-frameworks` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-frameworks` |
+| `netlify-functions` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-functions` |
+| `netlify-identity` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-identity` |
+| `netlify-image-cdn` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-image-cdn` |
+| `netlify-mcp-servers` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-mcp-servers` |
 | `notebook-execution-safety` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:41e0a5ed117cd716119fafd29457ba39c1c69cb231adf3520535f0e03c0c8b9b` | `.agents/skills/notebook-execution-safety` |
 | `openai-docs` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:43ba6399569a39bb3a4c42ac1150bae34a3e60098943290c558ac18045aeab1c` | `openai-docs` |
 | `pdf` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` | `Official skill reference -> anthropics/skills/pdf` |
@@ -117,6 +182,8 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `rag-eval` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-eval` |
 | `rag-perf` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-perf` |
 | `react-best-practices` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-best-practices` |
+| `react-native-skills` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-native-skills` |
+| `react-view-transitions` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-view-transitions` |
 | `recommender-evaluation` | `local-workspace://C:/Assumption University/CSX4207/Project` | `sha256:e0b96811878f6a18d5f52745da5612b3a9cbcb9f044043388e22600460bb5bd2` | `.claude/skills/recommender-evaluation` |
 | `research` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/research` |
 | `resolving-merge-conflicts` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/resolving-merge-conflicts` |
@@ -128,7 +195,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `security-review` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/security-review` |
 | `security-threat-model` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-threat-model` |
 | `seo` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/seo` |
-| `skill-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:3af8105ffc4f76c1f91c60be8a0b9a4922176b435912b197f37b92ca850f1d4d` | `skill-creator` |
+| `skill-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:58c915c0b2a301c347808a193a11a6efc14c0e3dad77265432e1e6e2ac54cb41` | `skill-creator` |
 | `skill-installer` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:0dbac1bd83451923b5933c0a52311a3e27e552ec5f75edae27a78106a53d55e5` | `skill-installer` |
 | `spreadsheet-formula-helper` | `https://github.com/ComposioHQ/awesome-codex-skills` | `0930e1373789d2eda449039f7ac154b33031de89` | `spreadsheet-formula-helper` |
 | `step-by-step-web-project-builder` | `local-workspace://C:/Assumption University/Finished/CSX4107/Assignments` | `sha256:cd3e1cf98bfffe548f8804d502a63a8d6fa2d9cc49cbb10f65dca7726131a0a3` | `.agent/skills/step_by_step_web_project_builder` |
@@ -159,10 +226,17 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `tavily-map` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-map` |
 | `tavily-research` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-research` |
 | `tavily-search` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` | `skills/tavily-search` |
+| `train-sentence-transformers` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/train-sentence-transformers` |
+| `transformers-js` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/transformers-js` |
+| `trl-training` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/trl-training` |
+| `vercel-cli-with-tokens` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/vercel-cli-with-tokens` |
 | `vercel-deploy` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/vercel-deploy` |
+| `vercel-optimize` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/vercel-optimize` |
+| `web-design-guidelines` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/web-design-guidelines` |
 | `web-dev-explainer` | `local-workspace://C:/Assumption University/Finished/CSX4107/Assignments` | `sha256:64302e7c5f9bd864c4e88cf4d1a8915ad9c69582ec417e1ff097f07f650c5cd0` | `.agent/skills/web_dev_explainer` |
 | `web-quality-audit` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/web-quality-audit` |
 | `writing-for-agents` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/productivity/writing-for-agents` |
+| `writing-guidelines` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/writing-guidelines` |
 | `x-twitter-scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `cec8d63a5501d2fcc7192628a67e09ac1311a788` | `skills/x-twitter-scraper` |
 | `xlsx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/xlsx` |
 

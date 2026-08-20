@@ -22,7 +22,9 @@ commit = subprocess.check_output(
     text=True,
 ).strip()
 
-data["codex_local_only_skill_names"] = skill_names
+extra_names = sorted(set(config.get("extra_protected_skill_names", [])))
+protected_names = sorted(set(skill_names) | set(extra_names))
+data["codex_local_only_skill_names"] = protected_names
 data["source_commits"]["blender_skills"] = {
     "repo": "https://github.com/arjun988/blender-skills",
     "commit": commit,

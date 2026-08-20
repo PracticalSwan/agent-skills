@@ -6,6 +6,13 @@ import json
 import subprocess
 from pathlib import Path
 
+from platform_skill_manifest import (
+    MCP_FALLBACKS as PLATFORM_MCP_FALLBACKS,
+    PLATFORM_SKILLS,
+    SNAPSHOT_DATE as PLATFORM_SNAPSHOT_DATE,
+    SOURCE_COMMITS as PLATFORM_SOURCE_COMMITS,
+)
+
 
 SOURCE_COMMITS = {
     "awesome_copilot": ("https://github.com/github/awesome-copilot", "3e66ff32306a4c10407c836f62507bca26a6cccf"),
@@ -28,8 +35,9 @@ SOURCE_COMMITS = {
     "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "b8caa260a420a73042e35521de4b5c8baf6446cc"),
     "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "95d6e255afe1596b557d7a8498517884438f5b3a"),
 }
+SOURCE_COMMITS.update(PLATFORM_SOURCE_COMMITS)
 
-SNAPSHOT_DATE = "2026-08-17"
+SNAPSHOT_DATE = PLATFORM_SNAPSHOT_DATE
 
 SUPERPOWERS = {
     "brainstorming",
@@ -538,6 +546,18 @@ def main() -> int:
             "source_path": source_path,
             "reason": reason,
         }
+    for name, spec in PLATFORM_SKILLS.items():
+        source_repo, source_commit = SOURCE_COMMITS[spec["source_key"]]
+        refs[name] = {
+            "source_repo": source_repo,
+            "source_commit": source_commit,
+            "source_path": spec["source_path"],
+            "reason": (
+                f"Official {spec['vendor']} skill selected from the VoltAgent discovery catalog "
+                f"and imported from the canonical vendor repository; the live source was pinned "
+                f"at the recorded commit and normalized for this cross-client catalog."
+            ),
+        }
     codex_system_root = Path.home() / ".codex" / "skills" / ".system"
     for name, reason in CODEX_SYSTEM_SKILLS.items():
         source = codex_system_root / name
@@ -624,6 +644,24 @@ def main() -> int:
             "Do not create project MCP configuration or authenticate a server without explicit user authorization.",
         ],
     }
+    for name, spec in PLATFORM_SKILLS.items():
+        server = spec.get("mcp_server")
+        if not server:
+            continue
+        mcp_skills[name] = {
+            "mode": "Preferred",
+            "servers": [server],
+            "fallback": list(
+                PLATFORM_MCP_FALLBACKS.get(
+                    server,
+                    (
+                        f"Use official {spec['vendor']} documentation, CLI, or SDKs when the "
+                        f"{server} surface is unavailable.",
+                        "Do not claim an MCP operation was used when the active host does not expose it.",
+                    ),
+                )
+            ),
+        }
     gemini_fallback = [
         "Use the official ai.google.dev documentation and the current google-genai SDK when the active host does not expose a Gemini documentation MCP.",
         "Treat model names, SDK versions, and API examples as time-sensitive; verify them against current official documentation before implementation.",

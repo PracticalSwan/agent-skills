@@ -33,23 +33,23 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-20`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `166` tracked skill folders
-  - `134` tracked maintained skills
+  - `232` tracked skill folders
+  - `200` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `224` local skill folders detected
-  - `192` local maintained skills detected
+  - `290` local skill folders detected
+  - `258` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `166` tracked skills use catalog `version: "2.0"`. The `155` pre-existing
-tracked skills retain the `last_updated: 2026-08-14` catalog baseline; the
-eleven newly promoted upstream skills use `last_updated: 2026-08-16`. The
-`58` local-only Google Workspace overlays retain upstream `version: "0.22.5"`
+All `232` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+tracked skills retain their prior catalog baselines; the 66 newly imported
+platform skills use `last_updated: 2026-08-20`. The `58` local-only Google
+Workspace overlays retain upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
 
@@ -89,6 +89,22 @@ Supabase platform/Postgres, Gemini general/Interactions, React implementation/
 performance, and aggregate/focused web-quality workflows remain separate with
 explicit routing links. Plugin-managed Supabase and React copies remain
 external; this parent catalog is canonical for maintained cross-client content.
+
+## 2026-08-20 VoltAgent Platform Import
+
+The VoltAgent repository is a discovery index; canonical vendor repositories
+were pinned before import. `scripts/platform_skill_manifest.py` records 66
+selected skills: 8 Vercel, 15 Netlify, 7 MongoDB, the existing current
+2-skill Supabase import, 12 Figma, and 24 non-CLI Hugging Face skills. The
+source commits and exact paths are regenerated into `REFERENCE_SOURCES.md`.
+
+CLI gating used commands detected on this laptop: `vercel`, `netlify`, and
+`supabase` were present; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and
+`figma` were absent. Vercel, Netlify, and existing Supabase CLI guidance is
+therefore included, with no Hugging Face, MongoDB, or Figma CLI skill imported.
+Authentication, runtime installation, and MCP configuration remain explicit
+user-authorized actions. Repeat imports with
+`python scripts/import-platform-skills.py --source-root <pinned-clones>`.
 
 ## Downstream Sync Targets
 
@@ -223,7 +239,9 @@ After adding a new maintained skill:
 3. Update `REFERENCE_SOURCES.md` and `scripts/skill-registry.json` when the source was external
 4. Smoke-test any bundled helper scripts or local fallback workflow
 5. Update root docs and the relevant changelogs
-6. Then sync it to the downstream targets
+6. During source maintenance, run
+   `scripts/update-codex-local-blender-skills.ps1`
+7. Then sync it to the downstream targets
 
 ## Documentation Rules
 

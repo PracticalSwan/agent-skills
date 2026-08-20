@@ -16,6 +16,10 @@ $sourceRoot = Join-Path $checkout $config.source_subdir
 $installRoot = [System.IO.Path]::GetFullPath($config.install_root)
 $manifestPath = [System.IO.Path]::GetFullPath($config.manifest)
 $sharedReferencesName = $config.shared_references
+$extraProtectedSkillNames = @($config.extra_protected_skill_names)
+foreach ($name in $extraProtectedSkillNames) {
+    if ($name -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') { throw "Invalid protected Blender overlay skill name: $name" }
+}
 
 $expectedCheckout = "C:\Users\LOQ\.codex\vendor\blender-skills"
 $expectedInstallRoot = "C:\Users\LOQ\.codex\skills"
@@ -144,13 +148,19 @@ if ((Get-TreeDigest -Root $sharedSource) -ne (Get-TreeDigest -Root $sharedDestin
     throw "Installed Blender shared references differ from upstream."
 }
 
+$protectedSkillNames = @($skillNames + $extraProtectedSkillNames | Sort-Object -Unique)
+foreach ($name in $extraProtectedSkillNames) {
+    if (-not (Test-Path -LiteralPath (Join-Path (Join-Path $installRoot $name) "SKILL.md"))) {
+        throw "Protected Codex-local Blender overlay is missing: $installRoot\$name"
+    }
+}
 $forbiddenRoots = @(
     $repoRoot,
     "C:\Users\LOQ\.agents\skills",
     "C:\Users\LOQ\.claude\skills"
 )
 foreach ($root in $forbiddenRoots) {
-    foreach ($name in $skillNames) {
+    foreach ($name in $protectedSkillNames) {
         if (Test-Path -LiteralPath (Join-Path (Join-Path $root $name) "SKILL.md")) {
             throw "Codex-local-only Blender skill escaped into forbidden root: $root\$name"
         }

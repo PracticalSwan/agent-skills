@@ -110,6 +110,22 @@
       "repo": "https://github.com/addyosmani/web-quality-skills",
       "commit": "95d6e255afe1596b557d7a8498517884438f5b3a"
     },
+    "netlify_context_and_tools": {
+      "repo": "https://github.com/netlify/context-and-tools",
+      "commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc"
+    },
+    "mongodb_agent_skills": {
+      "repo": "https://github.com/mongodb/agent-skills",
+      "commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f"
+    },
+    "figma_mcp_server_guide": {
+      "repo": "https://github.com/figma/mcp-server-guide",
+      "commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3"
+    },
+    "huggingface_skills": {
+      "repo": "https://github.com/huggingface/skills",
+      "commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364"
+    },
     "blender_skills": {
       "repo": "https://github.com/arjun988/blender-skills",
       "commit": "8f778d2405a214b508d4c7d80742be8e43acdd52"
@@ -626,6 +642,206 @@
       "fallback": [
         "Use the official ai.google.dev documentation and the current google-genai SDK when the active host does not expose a Gemini documentation MCP.",
         "Treat model names, SDK versions, and API examples as time-sensitive; verify them against current official documentation before implementation."
+      ]
+    },
+    "mongodb-atlas-stream-processing": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "mongodb-connection": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "mongodb-mcp-setup": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "mongodb-natural-language-querying": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "mongodb-query-optimizer": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "mongodb-schema-design": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "mongodb-search-and-ai": {
+      "mode": "Preferred",
+      "servers": [
+        "MongoDB MCP Server"
+      ],
+      "fallback": [
+        "Use the official MongoDB documentation, drivers, Atlas UI, or local read-only fixtures when the MongoDB MCP Server is unavailable.",
+        "Do not request, paste, or commit connection strings, service-account secrets, or API keys."
+      ]
+    },
+    "figma-code-connect": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-create-new-file": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-design-to-code": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-generate-design": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-generate-diagram": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-generate-library": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-implement-motion": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-swiftui": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-use": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-use-figjam": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-use-motion": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "figma-use-slides": {
+      "mode": "Preferred",
+      "servers": [
+        "Figma MCP Server"
+      ],
+      "fallback": [
+        "Use user-provided Figma exports, screenshots, variables, local design-system files, or official Figma documentation when Figma MCP is unavailable.",
+        "Do not claim node metadata, screenshots, assets, or canvas writes unless the active host exposed and completed those calls."
+      ]
+    },
+    "hf-mcp": {
+      "mode": "Preferred",
+      "servers": [
+        "Hugging Face MCP Server"
+      ],
+      "fallback": [
+        "Use official huggingface.co documentation, APIs, and local fixtures when the Hugging Face MCP Server is unavailable.",
+        "Keep Hub tokens in an approved secret store and never paste or commit them."
       ]
     }
   },
@@ -1385,7 +1601,7 @@
     },
     "skill-creator": {
       "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
-      "source_commit": "sha256:3af8105ffc4f76c1f91c60be8a0b9a4922176b435912b197f37b92ca850f1d4d",
+      "source_commit": "sha256:58c915c0b2a301c347808a193a11a6efc14c0e3dad77265432e1e6e2ac54cb41",
       "source_path": "skill-creator",
       "reason": "Promoted from the Codex system bundle with separate Codex and Claude Code skill installation paths."
     },
@@ -1562,6 +1778,402 @@
       "source_commit": "95d6e255afe1596b557d7a8498517884438f5b3a",
       "source_path": "skills/best-practices",
       "reason": "Official browser security, compatibility, semantic HTML, privacy, and production web-quality workflow; narrower than the catalog's general code-quality review."
+    },
+    "composition-patterns": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/composition-patterns",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "deploy-to-vercel": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/deploy-to-vercel",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "react-native-skills": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/react-native-skills",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "react-view-transitions": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/react-view-transitions",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "vercel-cli-with-tokens": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/vercel-cli-with-tokens",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "vercel-optimize": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/vercel-optimize",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "web-design-guidelines": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/web-design-guidelines",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "writing-guidelines": {
+      "source_repo": "https://github.com/vercel-labs/agent-skills",
+      "source_commit": "b8caa260a420a73042e35521de4b5c8baf6446cc",
+      "source_path": "skills/writing-guidelines",
+      "reason": "Official Vercel skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-access-control": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-access-control",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-agent-runner": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-agent-runner",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-ai-gateway": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-ai-gateway",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-blobs": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-blobs",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-caching": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-caching",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-config": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-config",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-database": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-database",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-deploy": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-deploy",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-edge-functions": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-edge-functions",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-forms": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-forms",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-frameworks": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-frameworks",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-functions": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-functions",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-identity": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-identity",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-image-cdn": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-image-cdn",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "netlify-mcp-servers": {
+      "source_repo": "https://github.com/netlify/context-and-tools",
+      "source_commit": "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+      "source_path": "skills/netlify-mcp-servers",
+      "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-atlas-stream-processing": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-atlas-stream-processing",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-connection": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-connection",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-mcp-setup": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-mcp-setup",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-natural-language-querying": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-natural-language-querying",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-query-optimizer": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-query-optimizer",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-schema-design": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-schema-design",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "mongodb-search-and-ai": {
+      "source_repo": "https://github.com/mongodb/agent-skills",
+      "source_commit": "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+      "source_path": "skills/mongodb-search-and-ai",
+      "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-code-connect": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-code-connect",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-create-new-file": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-create-new-file",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-design-to-code": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-design-to-code",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-generate-design": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-generate-design",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-generate-diagram": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-generate-diagram",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-generate-library": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-generate-library",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-implement-motion": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-implement-motion",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-swiftui": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-swiftui",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-use": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-use",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-use-figjam": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-use-figjam",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-use-motion": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-use-motion",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "figma-use-slides": {
+      "source_repo": "https://github.com/figma/mcp-server-guide",
+      "source_commit": "7f6562c4900fafb46e5e8fd3cc8ced954779bab3",
+      "source_path": "skills/figma-use-slides",
+      "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-cloud-aws-context-discovery": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/hf-cloud-aws-context-discovery",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-cloud-python-env-setup": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/hf-cloud-python-env-setup",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-cloud-sagemaker-deployment-planner": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/hf-cloud-sagemaker-deployment-planner",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-cloud-sagemaker-iam-preflight": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/hf-cloud-sagemaker-iam-preflight",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-cloud-sagemaker-production-defaults": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/hf-cloud-sagemaker-production-defaults",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-cloud-serving-image-selection": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/hf-cloud-serving-image-selection",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-best": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-best",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-community-evals": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-community-evals",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-datasets": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-datasets",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-gradio": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-gradio",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-llm-trainer": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-llm-trainer",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-local-models": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-local-models",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-lora-space-builder": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-lora-space-builder",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-paper-publisher": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-paper-publisher",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-papers": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-papers",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-spaces": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-spaces",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-tool-builder": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-tool-builder",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-trackio": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-trackio",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-vision-trainer": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-vision-trainer",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "huggingface-zerogpu": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/huggingface-zerogpu",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "train-sentence-transformers": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/train-sentence-transformers",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "transformers-js": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/transformers-js",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "trl-training": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "skills/trl-training",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
+    },
+    "hf-mcp": {
+      "source_repo": "https://github.com/huggingface/skills",
+      "source_commit": "020194918dc4a27d5a5d9a154b6b56cc2bd21364",
+      "source_path": "hf-mcp/skills/hf-mcp",
+      "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     }
   },
   "codex_system_managed_skills": [
@@ -1645,6 +2257,7 @@
     "prop-artist",
     "psx-horror-style",
     "qa-review",
+    "raw-scan-to-aaa-preserve-texture",
     "realistic-style",
     "rendering",
     "retopology",
@@ -1677,6 +2290,9 @@
       "install_root": "C:/Users/LOQ/.codex/skills",
       "manifest": "C:/Users/LOQ/.codex/vendor/blender-skills-install.json",
       "shared_references": "references",
+      "extra_protected_skill_names": [
+        "raw-scan-to-aaa-preserve-texture"
+      ],
       "scope": "codex-only",
       "never_promote_to_parent": true,
       "never_sync_to_shared": true,

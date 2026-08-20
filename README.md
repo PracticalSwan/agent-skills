@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-20`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `166` tracked skill folders
-  - `134` tracked maintained skills
+  - `232` tracked skill folders
+  - `200` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `224` local skill folders detected
-  - `192` local maintained skills detected
+  - `290` local skill folders detected
+  - `258` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,10 +49,10 @@ Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `166` tracked skills use catalog `version: "2.0"`. The `155`
-  pre-existing tracked skills retain the `last_updated: 2026-08-14` catalog
-  baseline; the eleven newly promoted upstream skills use
-  `last_updated: 2026-08-16`. The `58` local-only Google Workspace overlays
+- All `232` tracked skills use catalog `version: "2.0"`. The `166`
+  pre-existing tracked skills retain their prior catalog baselines; the 66
+  newly imported platform skills use `last_updated: 2026-08-20`. The `58`
+  local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
   retained-client sections and maintenance date.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
@@ -77,6 +77,33 @@ Snapshot date: `2026-08-16`. Local overlay totals can differ by machine.
   `.codex` and `.claude` roots. No child-only skills remained to promote;
   Codex system-managed copies remain protected and the three approved
   downstream roots are the only sync destinations.
+
+## 2026-08-20 VoltAgent Platform Import
+
+The VoltAgent `awesome-agent-skills` repository is a discovery index, so each
+selected entry was checked against its canonical vendor repository and imported
+at a pinned commit. The catalog now contains 66 new maintained skills:
+
+- Vercel: 8 skills from `vercel-labs/agent-skills` at
+  `b8caa260a420a73042e35521de4b5c8baf6446cc`.
+- Netlify: 15 skills from `netlify/context-and-tools` at
+  `5a62a5694417640a2bba11a0701c8995ecc40bcc`.
+- MongoDB: 7 skills from `mongodb/agent-skills` at
+  `b4ea8150a020b9babaddc6c271c6dc177c06a83f`.
+- Supabase: the existing current 2-skill import is retained from
+  `supabase/agent-skills` at `8331f910845103c08d51f6ca1d86ebb7d1f745e3`.
+- Figma: 12 skills from `figma/mcp-server-guide` at
+  `7f6562c4900fafb46e5e8fd3cc8ced954779bab3`.
+- Hugging Face: 24 non-CLI skills from `huggingface/skills` at
+  `020194918dc4a27d5a5d9a154b6b56cc2bd21364`.
+
+CLI-specific additions are gated by commands detected on this laptop:
+`vercel`, `netlify`, and `supabase` are installed, so their CLI workflows are
+included; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and `figma` were absent,
+so no Hugging Face, MongoDB, or Figma CLI skill was installed. Authentication,
+runtime installation, deployment, and external MCP configuration remain
+explicit user-authorized actions. The repeatable importer is
+`scripts/import-platform-skills.py --source-root <pinned-clone-root>`.
 
 The 2026-08-14 source refresh audited current upstream heads and updated the
 mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
@@ -262,6 +289,18 @@ Refresh source commits, provenance mappings, copied-official classification, and
 python scripts/update-skill-registry.py
 ```
 
+Import the reviewed platform selection from pinned read-only vendor clones:
+
+```powershell
+python scripts/import-platform-skills.py --source-root C:\path\to\pinned-clones
+```
+
+During parent source maintenance, refresh the Codex-only Blender overlay:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\update-codex-local-blender-skills.ps1
+```
+
 Sync maintained skills to Codex, the shared mirror, and Claude, while syncing
 copied official Superpowers only to the shared mirror `superpowers` subfolder:
 
@@ -283,6 +322,43 @@ promoted eleven installed skills into this parent catalog.
 To bring a skill from such a root into this parent catalog, promote it upstream with `scripts/promote-child-skills.py`, then refresh provenance with `scripts/update-skill-registry.py`.
 
 ## Maintained Skill Catalog
+
+### Vendor Platform Imports (2026-08-20)
+
+The current platform selection is grouped below; exact source paths and pinned
+commits are in `scripts/platform_skill_manifest.py` and
+`REFERENCE_SOURCES.md`.
+
+- Vercel: `composition-patterns`, `deploy-to-vercel`, `react-native-skills`,
+  `react-view-transitions`, `vercel-cli-with-tokens`, `vercel-optimize`,
+  `web-design-guidelines`, `writing-guidelines` (with the existing
+  `react-best-practices` and `vercel-deploy` equivalents retained).
+- Netlify: `netlify-access-control`, `netlify-agent-runner`,
+  `netlify-ai-gateway`, `netlify-blobs`, `netlify-caching`, `netlify-config`,
+  `netlify-database`, `netlify-deploy`, `netlify-edge-functions`,
+  `netlify-forms`, `netlify-frameworks`, `netlify-functions`,
+  `netlify-identity`, `netlify-image-cdn`, `netlify-mcp-servers`.
+- MongoDB: `mongodb-atlas-stream-processing`, `mongodb-connection`,
+  `mongodb-mcp-setup`, `mongodb-natural-language-querying`,
+  `mongodb-query-optimizer`, `mongodb-schema-design`,
+  `mongodb-search-and-ai` (separate from the existing `mongodb-mongoose`
+  workflow).
+- Figma: `figma-code-connect`, `figma-create-new-file`,
+  `figma-design-to-code`, `figma-generate-design`, `figma-generate-diagram`,
+  `figma-generate-library`, `figma-implement-motion`, `figma-swiftui`,
+  `figma-use`, `figma-use-figjam`, `figma-use-motion`, `figma-use-slides`.
+- Hugging Face: `hf-cloud-aws-context-discovery`,
+  `hf-cloud-python-env-setup`, `hf-cloud-sagemaker-deployment-planner`,
+  `hf-cloud-sagemaker-iam-preflight`, `hf-cloud-sagemaker-production-defaults`,
+  `hf-cloud-serving-image-selection`, `hf-mcp`, `huggingface-best`,
+  `huggingface-community-evals`, `huggingface-datasets`, `huggingface-gradio`,
+  `huggingface-llm-trainer`, `huggingface-local-models`,
+  `huggingface-lora-space-builder`, `huggingface-paper-publisher`,
+  `huggingface-papers`, `huggingface-spaces`, `huggingface-tool-builder`,
+  `huggingface-trackio`, `huggingface-vision-trainer`, `huggingface-zerogpu`,
+  `train-sentence-transformers`, `transformers-js`, `trl-training`.
+- Supabase: the existing current `supabase` and
+  `supabase-postgres-best-practices` imports remain canonical.
 
 ### Workflow and Delivery
 
@@ -523,6 +599,11 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `word-document`
 
 The registry for MCP mappings and no-MCP fallback guidance is stored in [scripts/skill-registry.json](c:\Users\LOQ\.copilot\skills\scripts\skill-registry.json).
+
+The 2026-08-20 vendor imports add explicit MongoDB MCP, Figma MCP, and
+Hugging Face MCP mappings. Their skills retain official-doc, CLI, SDK, export,
+or fixture fallbacks when the named MCP server is unavailable; the registry is
+the authoritative list of those mapped skills.
 
 ## Reference Skill Imports
 

@@ -1,7 +1,7 @@
 ---
 name: tavily-cli
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, cli, web-search, extraction, crawling, research]
 description: "Route Tavily web-search, extraction, mapping, crawling, and cited-research requests to the narrowest `tvly` command. Use for command-line Tavily work, installation checks, authentication setup, or choosing among the specialized Tavily skills."
 license: "MIT"

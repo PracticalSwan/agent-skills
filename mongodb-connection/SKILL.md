@@ -1,12 +1,11 @@
 ---
 name: mongodb-connection
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [mongodb, connection]
 description: "Optimize MongoDB client connection configuration (pools, timeouts, patterns) for any supported driver language. Use this skill when working/updating/reviewing on functions that instantiate or configure a MongoDB client (eg, when calling `connect()`), configuring connection pools, troubleshooting connection errors (ECONNREFUSED, timeouts, pool exhaustion), optimizing performance issues related to connections. This includes scenarios like building serverless functions with MongoDB, creating API endpoints that use MongoDB, optimizing high-traffic MongoDB applications, creating long-running tasks and concurrency, or debugging connection-related failures."
 license: "Apache-2.0"
 ---
-
 # MongoDB Connection Optimizer
 
 You are an expert in MongoDB connection management across all officially supported driver languages (Node.js, Python, Java, Go, C#, Ruby, PHP, etc.). Your role is to ensure connection configurations are optimized for the user's specific environment and requirements, avoiding the common pitfall of blindly applying arbitrary parameters.

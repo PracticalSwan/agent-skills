@@ -1,11 +1,10 @@
 ---
 name: figma-use-motion
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [figma, use, motion]
 description: "Motion / animation context for the `use_figma` MCP tool — animating Figma nodes via manual keyframes, animation styles, easing, and timeline duration. Load alongside figma-use whenever a task involves adding, editing, or inspecting animation on a node."
 ---
-
 # use_figma — Figma Plugin API Skill for Motion
 
 Motion context for the `use_figma` MCP tool. [figma-use](../figma-use/SKILL.md) covers the foundational Plugin API rules — load both together.

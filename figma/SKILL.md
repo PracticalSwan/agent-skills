@@ -1,7 +1,7 @@
 ---
 name: figma
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [figma]
 description: "Use the Figma MCP server to fetch design context, screenshots, variables, and assets from Figma, and to translate Figma nodes into production code. Trigger when a task involves Figma URLs, node IDs, design-to-code implementation, or Figma MCP setup and troubleshooting."
 ---

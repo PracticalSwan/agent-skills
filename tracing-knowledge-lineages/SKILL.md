@@ -1,7 +1,7 @@
 ---
 name: tracing-knowledge-lineages
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tracing, knowledge, lineages]
 description: "Understand how ideas evolved over time to find old solutions for new problems and avoid repeating past failures"
 ---

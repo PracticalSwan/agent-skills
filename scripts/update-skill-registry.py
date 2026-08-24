@@ -15,24 +15,24 @@ from platform_skill_manifest import (
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "3e66ff32306a4c10407c836f62507bca26a6cccf"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "4742f265959bf025882314564b364d9d7af6e2d5"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
-    "anthropic_skills": ("https://github.com/anthropics/skills", "f6656c1256d5a8adfa37db9110046ef20bac644c"),
+    "anthropic_skills": ("https://github.com/anthropics/skills", "3b3fad96af16a10759d930941b4520ba0c40edae"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "3c0fd8a2668962df97f0a6771dcd57c84a4be568"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "a8e297c18654af82559f1d29e4d13204a96b3ee3"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "e1b747ed9fc0492342f97cc6ba7ac954279ac48f"),
-    "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "535b0889a46868c9b08f8a7f7084db3c1958a2b6"),
-    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "cec8d63a5501d2fcc7192628a67e09ac1311a788"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "3a38625bf3e863eb9f26ea0d985130ddfb5c66ae"),
+    "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "0337446dadde6f8c94210444e2aa9d546126480f"),
+    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "e7f8a3890daaacd0b009c7a0acb7f42f35263a79"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
     "superpowers_skills": ("https://github.com/obra/superpowers-skills", "cdcd624ad3fd8026deb692e565351854569798dd"),
     "superpowers_legacy": ("https://github.com/obra/superpowers", "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"),
     "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
-    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "8b78b531ab965735c5dc74f6f7a219e1e37326df"),
+    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"),
     "supabase_agent_skills": ("https://github.com/supabase/agent-skills", "8331f910845103c08d51f6ca1d86ebb7d1f745e3"),
-    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "2a698e791f3dabf5b1771892d52490eb2eee8826"),
-    "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "b8caa260a420a73042e35521de4b5c8baf6446cc"),
+    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "b40dd8d9c771ba6e84c0ff6502875e3f42b4ec14"),
+    "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "dd089a8c752c966dee8bf0f27cb625ba193ffd9e"),
     "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "95d6e255afe1596b557d7a8498517884438f5b3a"),
 }
 SOURCE_COMMITS.update(PLATFORM_SOURCE_COMMITS)
@@ -273,6 +273,36 @@ LOCAL_IMPORTS = {
         ".agents/skills/tabular-eda-review",
         "Promotes a concise tabular-data quality, leakage, and modeling-readiness review workflow.",
     ),
+    "codex-app-threads": (
+        "local-workspace://C:/Users/LOQ/.codex/skills",
+        "sha256:76448b85d49f671eae1143aed4e977f57a9f8e26d906b9c0bb9c9aa68ba44488",
+        "codex-app-threads",
+        "Promotes the Codex Router-managed app-thread workflow from package 0.4.0-beta.4 at source commit a21e2e69dd3f6665d0fa09a4d08958765b184463; the parent copy is portable documentation, not a replacement for host-provided tools.",
+    ),
+    "codex-computer-use": (
+        "local-workspace://C:/Users/LOQ/.codex/skills",
+        "sha256:84334e3fa919ee99ebecf1b23bb3f6fb98c82c95a19a79d769f5d6894fa704ac",
+        "codex-computer-use",
+        "Promotes the Codex Router-managed Computer Use workflow from package 0.4.0-beta.4 at source commit a21e2e69dd3f6665d0fa09a4d08958765b184463; @oai/sky remains an explicit Codex-only runtime dependency.",
+    ),
+    "codex-in-app-browser": (
+        "local-workspace://C:/Users/LOQ/.codex/skills",
+        "sha256:3d0d53c7bc8c4ec5edf63e91e3427a95d29f4020096f705e46f6c619bb4870c5",
+        "codex-in-app-browser",
+        "Promotes the Codex Router-managed in-app-browser workflow from package 0.4.0-beta.4 at source commit a21e2e69dd3f6665d0fa09a4d08958765b184463; the active browser runtime must still be rediscovered before use.",
+    ),
+    "codex-router": (
+        "local-workspace://C:/Users/LOQ/.codex/skills",
+        "sha256:ab31386aa02537d45d7cd37b693eb7ff318a16eef2cc3a0361619a1bc2509af9",
+        "codex-router",
+        "Promotes the Codex Router orientation workflow from package 0.4.0-beta.4 at source commit a21e2e69dd3f6665d0fa09a4d08958765b184463; native OpenAI/Codex routing remains authoritative.",
+    ),
+    "codex-router-media": (
+        "local-workspace://C:/Users/LOQ/.codex/skills",
+        "sha256:e3bbe2397d7c5b240ab98c3e6fab6d4afa40ab77468062d1e5076b03bcc87e06",
+        "codex-router-media",
+        "Promotes the Codex Router-managed MiniMax media workflow from package 0.4.0-beta.4 at source commit a21e2e69dd3f6665d0fa09a4d08958765b184463; paid generation remains explicit and credential-free to the agent.",
+    ),
 }
 
 
@@ -309,6 +339,17 @@ def write_reference_sources(repo_root: Path, data: dict) -> None:
         {metadata["source_repo"] for metadata in refs.values() if metadata["source_repo"].startswith("https://")}
         | {metadata["repo"] for metadata in data["source_commits"].values()}
     )
+    blender_config = data.get("codex_local_only_skill_sets", {}).get("blender_skills", {})
+    blender_extra_count = len(set(blender_config.get("extra_protected_skill_names", [])))
+    blender_protected_count = len(data.get("codex_local_only_skill_names", []))
+    blender_upstream_count = max(0, blender_protected_count - blender_extra_count)
+    blender_summary = (
+        f"`{blender_upstream_count}` upstream Blender skills plus "
+        f"`{blender_extra_count}` separately protected local entry "
+        f"(`{blender_protected_count}` protected names total)"
+        if blender_extra_count
+        else f"`{blender_upstream_count}` Blender skills"
+    )
 
     source_rows = "\n".join(
         f"| `{key}` | `{metadata['repo']}` | `{metadata['commit']}` |"
@@ -334,7 +375,7 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
 - `{len(data['copied_official_superpowers'])}` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
-- `{len(data.get('codex_local_only_skill_names', []))}` Blender skills are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
+- {blender_summary} are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
 
 ## Source Catalogs
 
@@ -371,6 +412,17 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-08-24 maintenance pass compared only the personal `.codex`,
+  `.agents`, and `.claude` skill roots. It promoted five Codex Router-managed
+  skills (`codex-app-threads`, `codex-computer-use`, `codex-in-app-browser`,
+  `codex-router`, and `codex-router-media`) after omitting their local
+  `.codex-router-managed` marker files. Their source package and tree-digest
+  provenance is recorded in `scripts/skill-registry.json`.
+- Codex `.system` skills, the `{blender_upstream_count}`-skill Blender overlay
+  plus `{blender_extra_count}` separately protected local entry, copied official
+  Superpowers, and all project-specific paths under `C:\\Assumption University`
+  remain excluded from promotion and shared-catalog ownership. No eligible
+  child-only skills were found in `.agents` or `.claude` after promotion.
 - The 2026-07-29 maintenance pass compared the parent catalog only with the
   personal Codex and Claude skill roots. Project-specific roots under
   `C:\\Assumption University` were not scanned or changed.
@@ -427,6 +479,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 - Real upstream changes were incorporated for Anthropic document helpers,
   `avoid-ai-writing`, two NVIDIA skills, Stitch workflows and validators, and
   `x-twitter-scraper`.
+- The 2026-08-24 source audit compared every recorded source head with its
+  exact mapped path. Material mapped changes were refreshed for
+  `avoid-ai-writing`, the eight selected Matt Pocock skills, and
+  `x-twitter-scraper`; unrelated upstream movement was recorded in the source
+  table without rewriting unchanged mapped paths. The catalog baseline and
+  per-skill changelogs now use `2026-08-24`.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.
@@ -642,6 +700,46 @@ def main() -> int:
         "fallback": [
             "Use the official Supabase docs, CLI, or psql when the active host does not expose the Supabase MCP server.",
             "Do not create project MCP configuration or authenticate a server without explicit user authorization.",
+        ],
+    }
+    mcp_skills["codex-app-threads"] = {
+        "mode": "Host-specific",
+        "servers": ["Codex app thread tools"],
+        "fallback": [
+            "Use the active Codex app thread surface only when the current tool list exposes it; otherwise provide a manual handoff or local status report.",
+            "Do not claim that a thread, task, automation, archive, or navigation action completed without a direct host result.",
+        ],
+    }
+    mcp_skills["codex-computer-use"] = {
+        "mode": "Host-specific",
+        "servers": ["Codex Computer Use / @oai/sky"],
+        "fallback": [
+            "Prefer a purpose-built connector, API, or CLI; if the active host does not expose the Computer Use runtime, stop at a manual handoff instead of inventing tool calls.",
+            "Do not claim a desktop action or screenshot was completed without direct runtime evidence.",
+        ],
+    }
+    mcp_skills["codex-in-app-browser"] = {
+        "mode": "Host-specific",
+        "servers": ["Codex in-app browser runtime"],
+        "fallback": [
+            "Use an approved browser connector or a manual browser handoff when the active host does not expose the documented in-app runtime.",
+            "Do not claim page state, clicks, typing, or screenshots without direct browser evidence.",
+        ],
+    }
+    mcp_skills["codex-router"] = {
+        "mode": "Host-specific",
+        "servers": ["codex-router proxy"],
+        "fallback": [
+            "Use the active native model and tool surfaces when codex-router is absent; do not rewrite provider configuration to simulate the proxy.",
+            "Treat router usage, model selection, and health state as unverified until the local router status or direct tool result confirms them.",
+        ],
+    }
+    mcp_skills["codex-router-media"] = {
+        "mode": "Host-specific",
+        "servers": ["codex-router media CLI"],
+        "fallback": [
+            "Use an explicitly available image, audio, or video tool only when the user requested generation; otherwise stop without spending quota.",
+            "Never expose, search for, or edit router credentials, and do not claim a downloaded artifact without a verified output path.",
         ],
     }
     for name, spec in PLATFORM_SKILLS.items():

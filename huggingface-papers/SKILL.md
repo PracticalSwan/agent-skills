@@ -1,11 +1,10 @@
 ---
 name: huggingface-papers
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, huggingface, papers]
 description: "Look up and read Hugging Face paper pages in markdown, and use the papers API for structured metadata such as authors, linked models/datasets/spaces, Github repo and project page. Use when the user shares a Hugging Face paper page URL, an arXiv URL or ID, or asks to summarize, explain, or analyze an AI research paper."
 ---
-
 # Hugging Face Paper Pages
 
 Hugging Face Paper pages (hf.co/papers) is a platform built on top of arXiv (arxiv.org), specifically for research papers in the field of artificial intelligence (AI) and computer science. Hugging Face users can submit their paper at hf.co/papers/submit, which features it on the Daily Papers feed (hf.co/papers). Each day, users can upvote papers and comment on papers. Each paper page allows authors to:

@@ -1,7 +1,7 @@
 ---
 name: competition-submission-checker
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [competition, submission, checker]
 description: "Validate GCI competition predictions and notebook outputs against expected schema, metric, and submission constraints."
 ---

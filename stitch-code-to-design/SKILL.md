@@ -1,7 +1,7 @@
 ---
 name: stitch-code-to-design
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, design, frontend, html, migration]
 description: "Convert an existing frontend into Stitch-ready design assets by extracting static HTML, writing DESIGN.md, creating the design system, and uploading approved files."
 license: "Apache-2.0"

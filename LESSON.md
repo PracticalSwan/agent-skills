@@ -10,9 +10,9 @@ Codex skill catalog.
 - Treat only three personal-global roots as deployment targets:
   `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and
   `C:\Users\LOQ\.claude\skills`.
-- Keep normal child promotion limited to personal `.codex` and `.claude`
-  roots. Do not scan or sync project-local skill roots unless the user
-  explicitly scopes them.
+- Keep normal child promotion limited to personal `.codex`, `.agents`, and
+  `.claude` roots. Do not scan or sync project-local skill roots unless the
+  user explicitly scopes them.
 - Preserve Codex `.system` skills as host-managed. Publish normalized catalog
   copies to shared and Claude roots without overwriting those system folders.
 - Treat `arjun988/blender-skills` as a Codex-only exception: its skills remain in `C:\Users\LOQ\.codex\skills`, are never promoted into the parent, and never sync to `.agents` or `.claude`.
@@ -185,8 +185,8 @@ Codex skill catalog.
   the generated source report in the same change, even when skill counts stay
   unchanged.
 - Child reconciliation is a separate check from upstream refresh: compare only
-  personal `.codex` and `.claude` roots, report zero extras explicitly, and do
-  not scan project-specific paths.
+  personal `.codex`, `.agents`, and `.claude` roots, report eligible extras
+  explicitly, and do not scan project-specific paths.
 
 ## 2026-08-16 Installed Platform And Web Skills
 
@@ -238,11 +238,28 @@ Codex skill catalog.
   vendor's stable official documentation URL.
 - Run `scripts/update-codex-local-blender-skills.ps1` during parent source
   maintenance. On this refresh it completed successfully at upstream commit
-  `8f778d2405a214b508d4c7d80742be8e43acdd52` with 94 Codex-only skills and no
-  promotion to the parent, shared, or Claude roots.
+  `8f778d2405a214b508d4c7d80742be8e43acdd52` with 94 upstream skills plus one
+  separately protected local entry and no promotion to the parent, shared, or
+  Claude roots.
 - Keep the approved sync boundary explicit: only
   `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and
   `C:\Users\LOQ\.claude\skills` may receive downstream catalog writes.
+
+## 2026-08-24 Catalog Freshness And Personal Child Promotion
+
+- Compare every recorded upstream head with the exact mapped skill path before
+  rewriting content. This pass found material changes in `avoid-ai-writing`,
+  the eight selected Matt Pocock workflows, and `x-twitter-scraper`; unrelated
+  repository movement was recorded in provenance without broad rewrites.
+- A personal Codex root can contain plugin-managed skills that are not in the
+  parent catalog. Promote only the eligible five Codex Router skills, omit
+  their host marker files, and retain package plus tree-digest provenance.
+- Keep `.codex`, `.agents`, and `.claude` child reconciliation separate from
+  project-specific paths. Codex `.system`, Blender, copied Superpowers, and
+  unknown personal skills remain protected from parent ownership and sync.
+- When an upstream skill deletes a reference file, apply that deletion while
+  preserving catalog changelogs and reviewed provenance sidecars. Run the
+  complete validator after the catalog-wide modernization pass.
 
 ## Update Checklist
 

@@ -1,7 +1,7 @@
 ---
 name: tavily-map
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, url-discovery, site-map, web, cli]
 description: "Discover and filter URLs on a known website through Tavily without extracting every page. Use to locate a specific subpage, inspect site structure, or prepare a bounded map-then-extract workflow."
 license: "MIT"

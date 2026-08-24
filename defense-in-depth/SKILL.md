@@ -1,7 +1,7 @@
 ---
 name: defense-in-depth
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [defense, in, depth]
 description: "Validate at every layer data passes through to make bugs impossible"
 ---

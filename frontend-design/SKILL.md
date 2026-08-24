@@ -1,7 +1,7 @@
 ---
 name: frontend-design
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [frontend, design, ui, ux, accessibility, responsive]
 description: "Design and implement context-fit frontend interfaces with deliberate art direction, accessible interaction, responsive behavior, complete states, and rendered verification. Use when creating or substantially reworking pages, components, product workspaces, dashboards, marketing sites, editorial surfaces, commerce flows, or justified immersive experiences."
 license: "MIT AND Apache-2.0"

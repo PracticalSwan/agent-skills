@@ -3,6 +3,36 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-24] - Catalog Freshness And Personal Child Promotion
+
+### Added
+
+- Promoted five eligible Codex Router-managed child skills into the parent
+  catalog: `codex-app-threads`, `codex-computer-use`, `codex-in-app-browser`,
+  `codex-router`, and `codex-router-media`.
+- Added host-specific MCP/fallback routing and local tree-digest provenance for
+  the promoted Codex Router skills without copying their `.codex-router-managed`
+  marker files.
+
+### Changed
+
+- Refreshed the catalog-wide metadata and changelog baseline to `2026-08-24`.
+- Compared recorded upstream heads with exact mapped paths and refreshed
+  material changes in `avoid-ai-writing`, the eight selected Matt Pocock
+  workflows, and `x-twitter-scraper` while leaving unrelated changed paths
+  untouched.
+- Updated source manifests and `REFERENCE_SOURCES.md` to current verified
+  upstream heads, and retained the required 94 upstream Blender skills plus
+  one separately protected local entry outside the parent and shared/Claude
+  mirrors.
+
+### Fixed
+
+- Kept project-specific paths, Codex `.system`, copied official Superpowers,
+  and the Blender overlay outside normal promotion and sync ownership.
+- Preserved catalog changelog/provenance sidecars while applying upstream
+  support-file deletions and additions.
+
 ## [2026-08-20] - VoltAgent Platform Skills And Catalog Maintenance
 
 ### Added

@@ -1,7 +1,7 @@
 ---
 name: testing-anti-patterns
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [testing, anti, patterns]
 description: "Never test mock behavior. Never add test-only methods to production classes. Understand dependencies before mocking."
 ---

@@ -1,7 +1,7 @@
 ---
 name: deepstream-import-vision-model
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [nvidia, deepstream, vision, model-import, tensorrt, onnx]
 description: "NVIDIA DeepStream model-import guidance for bringing vision models from Hugging Face or NVIDIA NGC into DeepStream pipelines with export, TensorRT build, and benchmark steps."
 license: "CC-BY-4.0 AND Apache-2.0"

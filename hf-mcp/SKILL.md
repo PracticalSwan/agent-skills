@@ -1,11 +1,10 @@
 ---
 name: hf-mcp
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, hf, mcp]
 description: "Use Hugging Face Hub via MCP server tools. Search models, datasets, Spaces, papers. Get repo details, fetch documentation, run compute jobs, and use Gradio Spaces as AI tools. Available when connected to the HF MCP server."
 ---
-
 # Hugging Face MCP Server
 
 Connect AI assistants to the Hugging Face Hub. Setup: https://huggingface.co/settings/mcp

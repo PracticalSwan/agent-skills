@@ -1,7 +1,7 @@
 ---
 name: microsoft-development
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [microsoft, cloud, architecture, operations, quality]
 description: "Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval."
 ---

@@ -1,11 +1,10 @@
 ---
 name: huggingface-spaces
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, huggingface, spaces]
 description: "Build, deploy, and maintain applications on Hugging Face Spaces — Gradio / Docker / Static SDKs, ZeroGPU and dedicated hardware, model loading, debugging, buckets, inference providers, community grants. Use whenever the user asks to create or host an app on Hugging Face, port code onto ZeroGPU, fix a Space that won't build or run, or otherwise work with `hf spaces …`, `@spaces.GPU`, Space README frontmatter, or the `spaces` Python package."
 ---
-
 # Hugging Face Spaces
 
 Hugging Face Spaces host machine-learning applications. There are 1M+ today; each Space is a git repo. This skill covers creating, building, debugging, and maintaining them.

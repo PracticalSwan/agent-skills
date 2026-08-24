@@ -1,7 +1,7 @@
 ---
 name: writing-plans
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [writing, plans]
 description: "Create detailed implementation plans with bite-sized tasks for engineers with zero codebase context"
 ---

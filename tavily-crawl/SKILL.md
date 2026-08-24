@@ -1,7 +1,7 @@
 ---
 name: tavily-crawl
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, crawling, documentation, extraction, cli]
 description: "Crawl and extract a bounded set of pages from one website through Tavily. Use for documentation downloads, site-section collection, or semantic multi-page extraction when map plus individual extract calls are insufficient."
 license: "MIT"

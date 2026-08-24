@@ -1,7 +1,7 @@
 ---
 name: when-stuck
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [when, stuck]
 description: "Dispatch to the right problem-solving technique based on how you're stuck"
 ---

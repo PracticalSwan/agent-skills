@@ -1,7 +1,7 @@
 ---
 name: azure-integrations
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [azure, integrations, cloud, architecture, operations]
 description: "Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps."
 ---

@@ -1,11 +1,10 @@
 ---
 name: web-design-guidelines
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [vercel, web, design, guidelines]
 description: "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\"."
 ---
-
 # Web Interface Guidelines
 
 Review files for compliance with Web Interface Guidelines.

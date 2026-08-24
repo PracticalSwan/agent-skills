@@ -1,7 +1,7 @@
 ---
 name: pdf
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [pdf, docs, writing, quality, templates]
 description: "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
 ---

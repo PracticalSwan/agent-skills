@@ -1,7 +1,7 @@
 ---
 name: rag-perf
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [nvidia, rag, performance, latency, throughput, profiling]
 description: "NVIDIA RAG Blueprint performance-tuning guidance for profiling retrieval stacks, comparing bottlenecks, and validating latency or throughput improvements."
 license: "Apache-2.0"

@@ -1,7 +1,7 @@
 ---
 name: cloud-design-patterns
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [cloud, design, patterns, architecture, operations]
 description: "Choose and compare cloud design patterns for distributed systems. Use when reviewing architecture, selecting workload patterns, or mapping reliability, performance, messaging, security, and migration concerns to concrete design options."
 ---

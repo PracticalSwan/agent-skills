@@ -1,11 +1,10 @@
 ---
 name: netlify-edge-functions
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, edge, functions]
 description: "Write, configure, and deploy Netlify Edge Functions (Deno runtime at the network edge) in TypeScript/JavaScript. Use when adding request/response manipulation at the edge — auth middleware, geolocation redirects, A/B testing and personalization, content localization, redirects/rewrites, SSR at the edge, or transforming responses — or when configuring path routing, response caching, or edge error handling. Triggers on tasks like \"add auth middleware\", \"geo-based redirect\", \"A/B testing at the edge\", \"rewrite requests\", or editing files in netlify/edge-functions."
 ---
-
 # Netlify Edge Functions
 
 **Reach for this (modern):** default-export handler + inline `config` export with a narrowly-scoped `path`. Import types from `@netlify/edge-functions`.

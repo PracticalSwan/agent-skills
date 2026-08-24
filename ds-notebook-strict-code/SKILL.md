@@ -1,7 +1,7 @@
 ---
 name: ds-notebook-strict-code
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [ds, notebook, strict, code]
 description: "Use only when the user explicitly requests strict code-cell-only output for a Jupyter or undergraduate data-science task, or when an ITX2007 assignment requires that format. Do not activate for ordinary data analysis or explanation requests."
 ---

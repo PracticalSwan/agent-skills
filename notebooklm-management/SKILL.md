@@ -1,7 +1,7 @@
 ---
 name: notebooklm-management
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [research, management, documents, automation, productivity]
 description: "NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks."
 ---

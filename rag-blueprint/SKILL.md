@@ -1,7 +1,7 @@
 ---
 name: rag-blueprint
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [nvidia, rag, deployment, retrieval, blueprint, ops]
 description: "NVIDIA RAG Blueprint deployment, configuration, troubleshooting, and shutdown guidance for Docker, Helm, and library-based RAG stacks."
 license: "Apache-2.0"

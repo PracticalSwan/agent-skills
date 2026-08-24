@@ -1,11 +1,10 @@
 ---
 name: netlify-identity
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, identity]
 description: "Add authentication and user management to a Netlify site with @netlify/identity — signup/login/logout, OAuth social login (Google/GitHub/GitLab/Bitbucket), server-side user verification in Functions, role-based access control (RBAC), admin user management, and Identity event hooks. Use when adding a login/signup flow, \"add social login\", gating content by user role, protecting a function or page behind auth, assigning roles at signup, customizing auth emails, or handling OAuth/confirmation/recovery callbacks. Not for locking an entire site to a company/team — that is netlify-access-control."
 ---
-
 # Netlify Identity
 
 Auth and user management for a Netlify site without requiring visitors to be Netlify users. Package: `@netlify/identity`.

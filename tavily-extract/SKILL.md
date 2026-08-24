@@ -1,7 +1,7 @@
 ---
 name: tavily-extract
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, extraction, urls, markdown, cli]
 description: "Extract clean Markdown or text from one or more known URLs through Tavily. Use when the user supplies specific pages and needs their content, including query-focused chunks or JavaScript-rendered pages."
 license: "MIT"

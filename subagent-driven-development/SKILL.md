@@ -1,7 +1,7 @@
 ---
 name: subagent-driven-development
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [subagent, driven, development]
 description: "Execute implementation plan by dispatching fresh subagent for each task, with code review between tasks"
 ---

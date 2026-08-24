@@ -1,7 +1,7 @@
 ---
 name: code-quality
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [code, quality, workflow, planning, delivery]
 description: "two-stage review (spec compliance first, then code quality), refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."
 ---

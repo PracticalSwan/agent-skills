@@ -1,7 +1,7 @@
 ---
 name: preserving-productive-tensions
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [preserving, productive, tensions]
 description: "Recognize when disagreements reveal valuable context, preserve multiple valid approaches instead of forcing premature resolution"
 ---

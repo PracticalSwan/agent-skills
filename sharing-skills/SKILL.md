@@ -1,7 +1,7 @@
 ---
 name: sharing-skills
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [sharing, skills]
 description: "Contribute skills back to upstream via branch and PR"
 ---

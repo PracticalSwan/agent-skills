@@ -10,20 +10,20 @@ from __future__ import annotations
 from typing import TypedDict
 
 
-SNAPSHOT_DATE = "2026-08-20"
+SNAPSHOT_DATE = "2026-08-24"
 
 SOURCE_COMMITS = {
     "vercel_agent_skills": (
         "https://github.com/vercel-labs/agent-skills",
-        "b8caa260a420a73042e35521de4b5c8baf6446cc",
+        "dd089a8c752c966dee8bf0f27cb625ba193ffd9e",
     ),
     "netlify_context_and_tools": (
         "https://github.com/netlify/context-and-tools",
-        "5a62a5694417640a2bba11a0701c8995ecc40bcc",
+        "32a261b6b2437464aca7e51bf9b48bcac1e2835c",
     ),
     "mongodb_agent_skills": (
         "https://github.com/mongodb/agent-skills",
-        "b4ea8150a020b9babaddc6c271c6dc177c06a83f",
+        "03740fc6092ba0865b88ed37ad58f931f15af0cc",
     ),
     "supabase_agent_skills": (
         "https://github.com/supabase/agent-skills",

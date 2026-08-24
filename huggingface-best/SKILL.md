@@ -1,11 +1,10 @@
 ---
 name: huggingface-best
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, huggingface, best]
 description: "Use when the user asks about finding the best, top, or recommended model for a task, wants to know what AI model to use, or wants to compare models by benchmark scores. Triggers on: \"best model for X\", \"what model should I use for\", \"top models for [task]\", \"which model runs on my laptop/machine/device\", \"recommend a model for\", \"what LLM should I use for\", \"compare models for\", \"what's state of the art for\", or any question about choosing an AI model for a specific use case. Always use this skill when the user wants model recommendations or comparisons, even if they don't explicitly mention HuggingFace or benchmarks."
 ---
-
 # HuggingFace Best Model Finder
 
 Finds the best models for a task by querying official HF benchmark leaderboards, enriching

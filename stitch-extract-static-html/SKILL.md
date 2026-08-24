@@ -1,7 +1,7 @@
 ---
 name: stitch-extract-static-html
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, html, frontend, snapshot, assets]
 description: "Capture a self-contained static HTML snapshot from a running app or mock component so it can be reviewed or uploaded to Stitch."
 license: "Apache-2.0"

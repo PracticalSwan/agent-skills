@@ -1,11 +1,10 @@
 ---
 name: figma-implement-motion
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [figma, implement, motion]
 description: "Translates Figma motion and animations into production-ready application code. Use when implementing animation/motion from a Figma design — user mentions \"implement this motion\", \"add animation from Figma\", \"animate this component\", provides a Figma URL whose node is animated, or when `get_design_context` returns motion data or instructs you to call `get_motion_context`."
 ---
-
 # Implement Motion
 
 ## Overview

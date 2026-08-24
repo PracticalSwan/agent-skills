@@ -1,7 +1,7 @@
 ---
 name: stitch-react-native
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, react-native, mobile, components, frontend]
 description: "Convert Stitch HTML designs into React Native screens, or sync existing native components to updated Stitch designs, using native primitives, StyleSheet rules, and mobile platform checks."
 license: "Apache-2.0"

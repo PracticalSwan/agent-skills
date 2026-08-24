@@ -1,7 +1,7 @@
 ---
 name: gemini-api-dev
 version: "2.0"
-last_updated: 2026-08-16
+last_updated: 2026-08-24
 tags: [gemini, api, dev]
 description: "Use this skill when building applications with Gemini API hosted models, including Gemini and Gemma 4, working with multimodal content (text, images, audio, video), implementing function calling, using structured outputs, or needing current model specifications. Covers SDK usage (google-genai for Python, @google/genai for JavaScript/TypeScript, com.google.genai:google-genai for Java, google.golang.org/genai for Go), model selection, and API capabilities."
 license: "Apache-2.0"

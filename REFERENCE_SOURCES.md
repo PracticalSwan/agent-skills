@@ -3,16 +3,16 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-08-20)
+## Snapshot (2026-08-24)
 
-- `221` skills have source mappings.
-- `163` source-mapped skills are part of the git-tracked catalog.
+- `226` skills have source mappings.
+- `168` source-mapped skills are part of the git-tracked catalog.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*`).
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
 - `0` source mappings are missing required fields (`source_repo`, `source_commit`, `source_path`).
 - `32` copied official Superpowers are tracked separately through `copied_official_superpowers`; they are intentionally excluded from `reference_installs`.
-- `95` Blender skills are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
+- `94` upstream Blender skills plus `1` separately protected local entry (`95` protected names total) are a Codex-only external overlay sourced from `arjun988/blender-skills`; they are not parent-catalog imports and must not sync to shared or Claude roots.
 
 ## Source Catalogs
 
@@ -47,27 +47,27 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 
 | Source | Repository | Commit |
 |--------|------------|--------|
-| `awesome_copilot` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` |
+| `awesome_copilot` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` |
 | `awesome_claude_skills` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` |
-| `anthropic_skills` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` |
+| `anthropic_skills` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` |
 | `awesome_codex_skills` | `https://github.com/ComposioHQ/awesome-codex-skills` | `0930e1373789d2eda449039f7ac154b33031de89` |
 | `googleworkspace_cli` | `https://github.com/googleworkspace/cli` | `a3768d0e82ad83cca2da97724e46bea4ff0e6dbd` |
-| `avoid_ai_writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `3c0fd8a2668962df97f0a6771dcd57c84a4be568` |
+| `avoid_ai_writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `a8e297c18654af82559f1d29e4d13204a96b3ee3` |
 | `codebase_to_course` | `https://github.com/zarazhangrui/codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` |
-| `nvidia_skills` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` |
-| `stitch_skills` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` |
-| `xquik_x_twitter_scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `cec8d63a5501d2fcc7192628a67e09ac1311a788` |
+| `nvidia_skills` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` |
+| `stitch_skills` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` |
+| `xquik_x_twitter_scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `e7f8a3890daaacd0b009c7a0acb7f42f35263a79` |
 | `openai_skills` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` |
 | `superpowers_skills` | `https://github.com/obra/superpowers-skills` | `cdcd624ad3fd8026deb692e565351854569798dd` |
 | `superpowers_legacy` | `https://github.com/obra/superpowers` | `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` |
 | `tavily_skills` | `https://github.com/tavily-ai/skills` | `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2` |
-| `matt_pocock_skills` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` |
+| `matt_pocock_skills` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` |
 | `supabase_agent_skills` | `https://github.com/supabase/agent-skills` | `8331f910845103c08d51f6ca1d86ebb7d1f745e3` |
-| `gemini_skills` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` |
-| `vercel_agent_skills` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` |
+| `gemini_skills` | `https://github.com/google-gemini/gemini-skills` | `b40dd8d9c771ba6e84c0ff6502875e3f42b4ec14` |
+| `vercel_agent_skills` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` |
 | `web_quality_skills` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` |
-| `netlify_context_and_tools` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` |
-| `mongodb_agent_skills` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` |
+| `netlify_context_and_tools` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` |
+| `mongodb_agent_skills` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` |
 | `figma_mcp_server_guide` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` |
 | `huggingface_skills` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` |
 | `blender_skills` | `https://github.com/arjun988/blender-skills` | `8f778d2405a214b508d4c7d80742be8e43acdd52` |
@@ -76,28 +76,33 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 
 | Skill | Source Repo | Source Commit | Source Path |
 |-------|-------------|---------------|-------------|
-| `accelerated-computing-cudf` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/accelerated-computing-cudf` |
+| `accelerated-computing-cudf` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/accelerated-computing-cudf` |
 | `accessibility` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/accessibility` |
-| `agentic-eval` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/agentic-eval` |
-| `avoid-ai-writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `3c0fd8a2668962df97f0a6771dcd57c84a4be568` | `.` |
+| `agentic-eval` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/agentic-eval` |
+| `avoid-ai-writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `a8e297c18654af82559f1d29e4d13204a96b3ee3` | `.` |
 | `best-practices` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/best-practices` |
-| `cloud-design-patterns` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/cloud-design-patterns` |
-| `codebase-design` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/codebase-design` |
+| `cloud-design-patterns` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/cloud-design-patterns` |
+| `codebase-design` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/codebase-design` |
 | `codebase-to-course` | `https://github.com/zarazhangrui/codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` | `.` |
+| `codex-app-threads` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:76448b85d49f671eae1143aed4e977f57a9f8e26d906b9c0bb9c9aa68ba44488` | `codex-app-threads` |
+| `codex-computer-use` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:84334e3fa919ee99ebecf1b23bb3f6fb98c82c95a19a79d769f5d6894fa704ac` | `codex-computer-use` |
+| `codex-in-app-browser` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:3d0d53c7bc8c4ec5edf63e91e3427a95d29f4020096f705e46f6c619bb4870c5` | `codex-in-app-browser` |
+| `codex-router` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:ab31386aa02537d45d7cd37b693eb7ff318a16eef2cc3a0361619a1bc2509af9` | `codex-router` |
+| `codex-router-media` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:e3bbe2397d7c5b240ab98c3e6fab6d4afa40ab77468062d1e5076b03bcc87e06` | `codex-router-media` |
 | `competition-submission-checker` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:a42dbd44ac124d8ff639aa9eee834c589527eb66c2742ed1b4fba7444305b1a3` | `.agents/skills/competition-submission-checker` |
-| `composition-patterns` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/composition-patterns` |
-| `context-map` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/context-map` |
+| `composition-patterns` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/composition-patterns` |
+| `context-map` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/context-map` |
 | `core-web-vitals` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/core-web-vitals` |
 | `course-content-map` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:5ef9653ccffaf53b7698df234aa0e60c27f7832e16032a67980e819bb69c0b97` | `.agents/skills/course-content-map` |
-| `csharp-xunit` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/csharp-xunit` |
-| `deepstream-dev` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/deepstream-dev` |
-| `deepstream-import-vision-model` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/deepstream-import-vision-model` |
-| `deploy-to-vercel` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/deploy-to-vercel` |
+| `csharp-xunit` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/csharp-xunit` |
+| `deepstream-dev` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/deepstream-dev` |
+| `deepstream-import-vision-model` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/deepstream-import-vision-model` |
+| `deploy-to-vercel` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/deploy-to-vercel` |
 | `doc` | `https://github.com/openai/skills` | `45d05d75363abf13f99d09e899d61e07b8010685` | `skills/.curated/doc` |
 | `document-metadata-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:672f84e342056cf4d7c88b020dcdf96707ff0601ff9a5f15b546b368c166410c` | `.agents/skills/document-metadata-review` |
-| `docx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/docx` |
-| `domain-modeling` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/domain-modeling` |
-| `dotnet-best-practices` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/dotnet-best-practices` |
+| `docx` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/docx` |
+| `domain-modeling` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/domain-modeling` |
+| `dotnet-best-practices` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/dotnet-best-practices` |
 | `ds-notebook-strict-code` | `local-workspace://C:/Assumption University/Finished/ITX2007/Assignments` | `sha256:f00f66afa472152180de748df6c54dde0db43d734004e8f79748e494f576f3e7` | `.agent/skills/ds-notebook-strict-code` |
 | `ds-teaching-assistant` | `local-workspace://C:/Assumption University/Finished/ITX2007/Assignments` | `sha256:9bd3ee54bcbd541ab8210013b58313f81e02e5135016ff182806deaad8f511a2` | `.agent/skills/ds-teaching-assistant` |
 | `figma` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma` |
@@ -116,9 +121,9 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `figma-use-slides` | `https://github.com/figma/mcp-server-guide` | `7f6562c4900fafb46e5e8fd3cc8ced954779bab3` | `skills/figma-use-slides` |
 | `final-assignment-citation-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:48da323567833f9009344e11e50f09406ca5066329cca1543e27c6c1a09ff894` | `.agents/skills/final-assignment-citation-review` |
 | `frontend-design` | `https://github.com/openai/skills` | `30444aed500c00c85294d12074f6e3ee794f808a` | `skills/.curated/frontend-skill` |
-| `gemini-api-dev` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` | `skills/gemini-api-dev` |
-| `gemini-interactions-api` | `https://github.com/google-gemini/gemini-skills` | `2a698e791f3dabf5b1771892d52490eb2eee8826` | `skills/gemini-interactions-api` |
-| `handoff` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/productivity/handoff` |
+| `gemini-api-dev` | `https://github.com/google-gemini/gemini-skills` | `b40dd8d9c771ba6e84c0ff6502875e3f42b4ec14` | `skills/gemini-api-dev` |
+| `gemini-interactions-api` | `https://github.com/google-gemini/gemini-skills` | `b40dd8d9c771ba6e84c0ff6502875e3f42b4ec14` | `skills/gemini-interactions-api` |
+| `handoff` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/productivity/handoff` |
 | `hf-cloud-aws-context-discovery` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-aws-context-discovery` |
 | `hf-cloud-python-env-setup` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-python-env-setup` |
 | `hf-cloud-sagemaker-deployment-planner` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/hf-cloud-sagemaker-deployment-planner` |
@@ -142,79 +147,79 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `huggingface-vision-trainer` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-vision-trainer` |
 | `huggingface-zerogpu` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/huggingface-zerogpu` |
 | `imagegen` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:bf6877b61db77477b039f93a024b7369cce115ff31c2a05f928a81a0a89fc8b8` | `imagegen` |
-| `improve-codebase-architecture` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/improve-codebase-architecture` |
-| `java-docs` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/java-docs` |
-| `java-junit` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/java-junit` |
+| `improve-codebase-architecture` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/improve-codebase-architecture` |
+| `java-docs` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/java-docs` |
+| `java-junit` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/java-junit` |
 | `jupyter-notebook` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/jupyter-notebook` |
-| `mcp-builder` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/mcp-builder` |
-| `mongodb-atlas-stream-processing` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-atlas-stream-processing` |
-| `mongodb-connection` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-connection` |
-| `mongodb-mcp-setup` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-mcp-setup` |
-| `mongodb-natural-language-querying` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-natural-language-querying` |
-| `mongodb-query-optimizer` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-query-optimizer` |
-| `mongodb-schema-design` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-schema-design` |
-| `mongodb-search-and-ai` | `https://github.com/mongodb/agent-skills` | `b4ea8150a020b9babaddc6c271c6dc177c06a83f` | `skills/mongodb-search-and-ai` |
-| `nemo-retriever` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/nemo-retriever` |
-| `netlify-access-control` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-access-control` |
-| `netlify-agent-runner` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-agent-runner` |
-| `netlify-ai-gateway` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-ai-gateway` |
-| `netlify-blobs` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-blobs` |
-| `netlify-caching` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-caching` |
-| `netlify-config` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-config` |
-| `netlify-database` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-database` |
-| `netlify-deploy` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-deploy` |
-| `netlify-edge-functions` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-edge-functions` |
-| `netlify-forms` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-forms` |
-| `netlify-frameworks` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-frameworks` |
-| `netlify-functions` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-functions` |
-| `netlify-identity` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-identity` |
-| `netlify-image-cdn` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-image-cdn` |
-| `netlify-mcp-servers` | `https://github.com/netlify/context-and-tools` | `5a62a5694417640a2bba11a0701c8995ecc40bcc` | `skills/netlify-mcp-servers` |
+| `mcp-builder` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/mcp-builder` |
+| `mongodb-atlas-stream-processing` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-atlas-stream-processing` |
+| `mongodb-connection` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-connection` |
+| `mongodb-mcp-setup` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-mcp-setup` |
+| `mongodb-natural-language-querying` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-natural-language-querying` |
+| `mongodb-query-optimizer` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-query-optimizer` |
+| `mongodb-schema-design` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-schema-design` |
+| `mongodb-search-and-ai` | `https://github.com/mongodb/agent-skills` | `03740fc6092ba0865b88ed37ad58f931f15af0cc` | `skills/mongodb-search-and-ai` |
+| `nemo-retriever` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/nemo-retriever` |
+| `netlify-access-control` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-access-control` |
+| `netlify-agent-runner` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-agent-runner` |
+| `netlify-ai-gateway` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-ai-gateway` |
+| `netlify-blobs` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-blobs` |
+| `netlify-caching` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-caching` |
+| `netlify-config` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-config` |
+| `netlify-database` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-database` |
+| `netlify-deploy` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-deploy` |
+| `netlify-edge-functions` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-edge-functions` |
+| `netlify-forms` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-forms` |
+| `netlify-frameworks` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-frameworks` |
+| `netlify-functions` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-functions` |
+| `netlify-identity` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-identity` |
+| `netlify-image-cdn` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-image-cdn` |
+| `netlify-mcp-servers` | `https://github.com/netlify/context-and-tools` | `32a261b6b2437464aca7e51bf9b48bcac1e2835c` | `skills/netlify-mcp-servers` |
 | `notebook-execution-safety` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:41e0a5ed117cd716119fafd29457ba39c1c69cb231adf3520535f0e03c0c8b9b` | `.agents/skills/notebook-execution-safety` |
 | `openai-docs` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:43ba6399569a39bb3a4c42ac1150bae34a3e60098943290c558ac18045aeab1c` | `openai-docs` |
 | `pdf` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` | `Official skill reference -> anthropics/skills/pdf` |
 | `performance` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/performance` |
 | `playwright` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/playwright` |
-| `plugin-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:8e636d04c0e0383d1f1c046a14dea187760218112b1696803dde6dc4a57b433b` | `plugin-creator` |
-| `pptx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/pptx` |
-| `prototype` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/prototype` |
-| `rag-blueprint` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-blueprint` |
-| `rag-eval` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-eval` |
-| `rag-perf` | `https://github.com/NVIDIA/skills` | `e1b747ed9fc0492342f97cc6ba7ac954279ac48f` | `skills/rag-perf` |
-| `react-best-practices` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-best-practices` |
-| `react-native-skills` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-native-skills` |
-| `react-view-transitions` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/react-view-transitions` |
+| `plugin-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:98b50f9092b509e29bbeda92c8427443e89817edd2512c85404ee435e415e9d8` | `plugin-creator` |
+| `pptx` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/pptx` |
+| `prototype` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/prototype` |
+| `rag-blueprint` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/rag-blueprint` |
+| `rag-eval` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/rag-eval` |
+| `rag-perf` | `https://github.com/NVIDIA/skills` | `3a38625bf3e863eb9f26ea0d985130ddfb5c66ae` | `skills/rag-perf` |
+| `react-best-practices` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/react-best-practices` |
+| `react-native-skills` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/react-native-skills` |
+| `react-view-transitions` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/react-view-transitions` |
 | `recommender-evaluation` | `local-workspace://C:/Assumption University/CSX4207/Project` | `sha256:e0b96811878f6a18d5f52745da5612b3a9cbcb9f044043388e22600460bb5bd2` | `.claude/skills/recommender-evaluation` |
-| `research` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/research` |
-| `resolving-merge-conflicts` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/engineering/resolving-merge-conflicts` |
+| `research` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/research` |
+| `resolving-merge-conflicts` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/resolving-merge-conflicts` |
 | `review-agent` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:8e74c25fd7d12521b1196c0bbc4790dcbd90520630a19da512f9c806c817cdd8` | `review-agent` |
 | `screenshot` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/screenshot` |
-| `secret-scanning` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/secret-scanning` |
+| `secret-scanning` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/secret-scanning` |
 | `security-best-practices` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-best-practices` |
 | `security-ownership-map` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-ownership-map` |
-| `security-review` | `https://github.com/github/awesome-copilot` | `3e66ff32306a4c10407c836f62507bca26a6cccf` | `skills/security-review` |
+| `security-review` | `https://github.com/github/awesome-copilot` | `4742f265959bf025882314564b364d9d7af6e2d5` | `skills/security-review` |
 | `security-threat-model` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-threat-model` |
 | `seo` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/seo` |
 | `skill-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:58c915c0b2a301c347808a193a11a6efc14c0e3dad77265432e1e6e2ac54cb41` | `skill-creator` |
-| `skill-installer` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:0dbac1bd83451923b5933c0a52311a3e27e552ec5f75edae27a78106a53d55e5` | `skill-installer` |
+| `skill-installer` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:e1c6b6ce82a779080284a89f0578482913cf8eb865be0620c95a0ce795fc1f8c` | `skill-installer` |
 | `spreadsheet-formula-helper` | `https://github.com/ComposioHQ/awesome-codex-skills` | `0930e1373789d2eda449039f7ac154b33031de89` | `spreadsheet-formula-helper` |
 | `step-by-step-web-project-builder` | `local-workspace://C:/Assumption University/Finished/CSX4107/Assignments` | `sha256:cd3e1cf98bfffe548f8804d502a63a8d6fa2d9cc49cbb10f65dca7726131a0a3` | `.agent/skills/step_by_step_web_project_builder` |
-| `stitch-code-to-design` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/code-to-design` |
-| `stitch-design` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `local router for plugins/stitch-design, plugins/stitch-build, and plugins/stitch-utilities` |
-| `stitch-design-md` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-utilities/skills/design-md` |
-| `stitch-enhance-prompt` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-utilities/skills/enhance-prompt` |
-| `stitch-extract-design-md` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/extract-design-md` |
-| `stitch-extract-static-html` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/extract-static-html` |
-| `stitch-generate-design` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/generate-design` |
-| `stitch-loop` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-utilities/skills/stitch-loop` |
-| `stitch-manage-design-system` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/manage-design-system` |
-| `stitch-react-components` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-build/skills/react-components` |
-| `stitch-react-native` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-build/skills/react-native` |
-| `stitch-react-vite-dashboard` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-build/skills/react-vite-dashboard` |
-| `stitch-remotion` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-build/skills/remotion` |
-| `stitch-shadcn-ui` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-build/skills/shadcn-ui` |
-| `stitch-taste-design` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-utilities/skills/taste-design` |
-| `stitch-upload-to-stitch` | `https://github.com/google-labs-code/stitch-skills` | `535b0889a46868c9b08f8a7f7084db3c1958a2b6` | `plugins/stitch-design/skills/upload-to-stitch` |
+| `stitch-code-to-design` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-design/skills/code-to-design` |
+| `stitch-design` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `local router for plugins/stitch-design, plugins/stitch-build, and plugins/stitch-utilities` |
+| `stitch-design-md` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-utilities/skills/design-md` |
+| `stitch-enhance-prompt` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-utilities/skills/enhance-prompt` |
+| `stitch-extract-design-md` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-design/skills/extract-design-md` |
+| `stitch-extract-static-html` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-design/skills/extract-static-html` |
+| `stitch-generate-design` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-design/skills/generate-design` |
+| `stitch-loop` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-utilities/skills/stitch-loop` |
+| `stitch-manage-design-system` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-design/skills/manage-design-system` |
+| `stitch-react-components` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-build/skills/react-components` |
+| `stitch-react-native` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-build/skills/react-native` |
+| `stitch-react-vite-dashboard` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-build/skills/react-vite-dashboard` |
+| `stitch-remotion` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-build/skills/remotion` |
+| `stitch-shadcn-ui` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-build/skills/shadcn-ui` |
+| `stitch-taste-design` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-utilities/skills/taste-design` |
+| `stitch-upload-to-stitch` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` | `plugins/stitch-design/skills/upload-to-stitch` |
 | `supabase` | `https://github.com/supabase/agent-skills` | `8331f910845103c08d51f6ca1d86ebb7d1f745e3` | `skills/supabase` |
 | `supabase-postgres-best-practices` | `https://github.com/supabase/agent-skills` | `8331f910845103c08d51f6ca1d86ebb7d1f745e3` | `skills/supabase-postgres-best-practices` |
 | `tabular-eda-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:0bf5541310d362988bb8af9c50c6c553b8c1a57210fd1b7d273fc0b56903bc7d` | `.agents/skills/tabular-eda-review` |
@@ -229,16 +234,16 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `train-sentence-transformers` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/train-sentence-transformers` |
 | `transformers-js` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/transformers-js` |
 | `trl-training` | `https://github.com/huggingface/skills` | `020194918dc4a27d5a5d9a154b6b56cc2bd21364` | `skills/trl-training` |
-| `vercel-cli-with-tokens` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/vercel-cli-with-tokens` |
+| `vercel-cli-with-tokens` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/vercel-cli-with-tokens` |
 | `vercel-deploy` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/vercel-deploy` |
-| `vercel-optimize` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/vercel-optimize` |
-| `web-design-guidelines` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/web-design-guidelines` |
+| `vercel-optimize` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/vercel-optimize` |
+| `web-design-guidelines` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/web-design-guidelines` |
 | `web-dev-explainer` | `local-workspace://C:/Assumption University/Finished/CSX4107/Assignments` | `sha256:64302e7c5f9bd864c4e88cf4d1a8915ad9c69582ec417e1ff097f07f650c5cd0` | `.agent/skills/web_dev_explainer` |
 | `web-quality-audit` | `https://github.com/addyosmani/web-quality-skills` | `95d6e255afe1596b557d7a8498517884438f5b3a` | `skills/web-quality-audit` |
-| `writing-for-agents` | `https://github.com/mattpocock/skills` | `8b78b531ab965735c5dc74f6f7a219e1e37326df` | `skills/productivity/writing-for-agents` |
-| `writing-guidelines` | `https://github.com/vercel-labs/agent-skills` | `b8caa260a420a73042e35521de4b5c8baf6446cc` | `skills/writing-guidelines` |
-| `x-twitter-scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `cec8d63a5501d2fcc7192628a67e09ac1311a788` | `skills/x-twitter-scraper` |
-| `xlsx` | `https://github.com/anthropics/skills` | `f6656c1256d5a8adfa37db9110046ef20bac644c` | `skills/xlsx` |
+| `writing-for-agents` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/productivity/writing-for-agents` |
+| `writing-guidelines` | `https://github.com/vercel-labs/agent-skills` | `dd089a8c752c966dee8bf0f27cb625ba193ffd9e` | `skills/writing-guidelines` |
+| `x-twitter-scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `e7f8a3890daaacd0b009c7a0acb7f42f35263a79` | `skills/x-twitter-scraper` |
+| `xlsx` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/xlsx` |
 
 ## Local-Only Overlay Reference Installs
 
@@ -257,6 +262,17 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-08-24 maintenance pass compared only the personal `.codex`,
+  `.agents`, and `.claude` skill roots. It promoted five Codex Router-managed
+  skills (`codex-app-threads`, `codex-computer-use`, `codex-in-app-browser`,
+  `codex-router`, and `codex-router-media`) after omitting their local
+  `.codex-router-managed` marker files. Their source package and tree-digest
+  provenance is recorded in `scripts/skill-registry.json`.
+- Codex `.system` skills, the `94`-skill Blender overlay
+  plus `1` separately protected local entry, copied official
+  Superpowers, and all project-specific paths under `C:\Assumption University`
+  remain excluded from promotion and shared-catalog ownership. No eligible
+  child-only skills were found in `.agents` or `.claude` after promotion.
 - The 2026-07-29 maintenance pass compared the parent catalog only with the
   personal Codex and Claude skill roots. Project-specific roots under
   `C:\Assumption University` were not scanned or changed.
@@ -313,6 +329,12 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 - Real upstream changes were incorporated for Anthropic document helpers,
   `avoid-ai-writing`, two NVIDIA skills, Stitch workflows and validators, and
   `x-twitter-scraper`.
+- The 2026-08-24 source audit compared every recorded source head with its
+  exact mapped path. Material mapped changes were refreshed for
+  `avoid-ai-writing`, the eight selected Matt Pocock skills, and
+  `x-twitter-scraper`; unrelated upstream movement was recorded in the source
+  table without rewriting unchanged mapped paths. The catalog baseline and
+  per-skill changelogs now use `2026-08-24`.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.

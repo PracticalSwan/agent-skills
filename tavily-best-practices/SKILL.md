@@ -1,7 +1,7 @@
 ---
 name: tavily-best-practices
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, web-search, extraction, crawling, research, sdk]
 description: "Build or review production-ready Tavily SDK and API integrations for web search, extraction, crawling, mapping, and research. Use when implementing Tavily in an agent, RAG pipeline, or application rather than only running one CLI command."
 license: "MIT"

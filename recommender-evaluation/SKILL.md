@@ -1,7 +1,7 @@
 ---
 name: recommender-evaluation
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [recommender, evaluation]
 description: "Evaluate recommender system quality for the CSX4207 Vinyl Record Store. Use whenever you must compute or report recommender metrics (Precision@k, Recall@k, HitRate@k, MRR, MAP@k, NDCG@k, coverage, diversity, novelty, serendipity, personalization), design an evaluation protocol/split, run a baseline comparison, or write the evaluation section of a course deliverable. Covers formulas, JavaScript reference implementations, and the reporting checklist."
 ---

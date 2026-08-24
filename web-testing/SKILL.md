@@ -1,7 +1,7 @@
 ---
 name: web-testing
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [web, testing, workflow, automation, guidance]
 description: "Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications."
 ---

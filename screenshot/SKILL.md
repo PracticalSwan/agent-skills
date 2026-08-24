@@ -1,7 +1,7 @@
 ---
 name: screenshot
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [screenshot]
 description: "Use when the user explicitly asks for a desktop or system screenshot (full screen, specific app or window, or a pixel region), or when tool-specific capture capabilities are unavailable and an OS-level capture is needed."
 ---

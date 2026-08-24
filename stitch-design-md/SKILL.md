@@ -1,7 +1,7 @@
 ---
 name: stitch-design-md
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, design-system, design-md, tokens, mcp]
 description: "Analyze existing Stitch project evidence and synthesize a semantic DESIGN.md for consistent future Stitch generation."
 license: "Apache-2.0"

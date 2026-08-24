@@ -1,7 +1,7 @@
 ---
 name: skill-installer
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [skill, installer]
 description: "Install audited skills from a curated list or GitHub repo path into Codex or Claude Code after selecting the target host. Use when a user asks to list or install a skill, including from a private repo; preserve Codex system-skill boundaries and use an explicit Claude destination for Claude Code."
 ---

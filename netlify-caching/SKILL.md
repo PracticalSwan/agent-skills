@@ -1,11 +1,10 @@
 ---
 name: netlify-caching
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, caching]
 description: "Cache dynamic and static responses on Netlify's CDN from Functions, Edge Functions, and proxies. Use when you add caching or cache-control headers to a function response, tune cache TTL or stale-while-revalidate, set up the durable cache, vary a cache key by query/header/cookie/country/language, purge or invalidate the cache by site or cache tag, use the programmatic Cache API (caches.open/match/put) or @netlify/cache helpers (fetchWithCache/cacheHeaders/getCacheStatus), speed up an expensive API call, add ISR or on-demand revalidation, or debug why a response is or isn't cached via the Cache-Status header."
 ---
-
 # Netlify caching
 
 ## Cache-control header to reach for

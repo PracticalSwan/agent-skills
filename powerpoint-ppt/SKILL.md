@@ -1,7 +1,7 @@
 ---
 name: powerpoint-ppt
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [slides, ppt, docs, writing, quality]
 description: "PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files."
 ---

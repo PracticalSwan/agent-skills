@@ -1,7 +1,7 @@
 ---
 name: performance
 version: "2.0"
-last_updated: 2026-08-16
+last_updated: 2026-08-24
 tags: [performance]
 description: "Optimize web performance for faster loading and better user experience. Use when asked to \"speed up my site\", \"optimize performance\", \"reduce load time\", \"fix slow loading\", \"improve page speed\", or \"performance audit\"."
 license: "MIT"

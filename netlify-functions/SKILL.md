@@ -1,11 +1,10 @@
 ---
 name: netlify-functions
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, functions]
 description: "Write, configure, and deploy Netlify serverless functions in TypeScript, JavaScript, or Go. Use this when adding an API endpoint or backend route, adding a contact form handler, wiring auth or Identity signup/login hooks, building streaming or AI-proxy responses, scheduling cron jobs, running long background jobs (batch processing/scraping), reacting to deploy or form events, setting up rate limiting or region/memory config, or reading environment variables and secrets inside a function. Covers file locations, the Request/Context/Response handler shape, path routing, config options, and local testing with netlify dev."
 ---
-
 # Netlify Functions
 
 Reach for the modern default-handler API (`.mts` TypeScript). Export a default async handler taking a web `Request` and a Netlify `Context`, returning a web `Response`. Avoid the legacy AWS Lambda handler shape unless writing Go or migrating old code (see Legacy at the end).

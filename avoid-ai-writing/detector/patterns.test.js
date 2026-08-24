@@ -1282,6 +1282,34 @@ test('#62: fences that a parity count gets wrong', () => {
   );
 });
 
+test('#77: only spaces and tabs may follow a closing fence', () => {
+  const intro = 'Documentation about writing Markdown, long enough to clear the word gate.';
+  const title = '## Benefits And Strategic Considerations';
+
+  for (const fence of ['```', '~~~']) {
+    assert.equal(
+      titleCaseHits([intro, fence, fence + 'js', title, fence].join('\n') + HEADING_BODY).length,
+      0,
+      'trailing text cannot close the outer fence',
+    );
+    assert.equal(
+      titleCaseHits([intro, fence, 'code', fence + ' \t', title].join('\n') + HEADING_BODY).length,
+      1,
+      'spaces and tabs may follow a closing fence',
+    );
+    assert.equal(
+      titleCaseHits([intro, fence, 'code', fence + '\u00a0', title].join('\n') + HEADING_BODY).length,
+      0,
+      'non-breaking space is fence content, not an allowed closing-fence suffix',
+    );
+    assert.equal(
+      titleCaseHits([intro, fence, 'code', fence, title].join('\r\n') + HEADING_BODY).length,
+      1,
+      'CRLF line endings still allow a closing fence',
+    );
+  }
+});
+
 test('#62: MD_HEADING_PREFIX accepts what the pattern accepts', () => {
   // The two must stay coupled: TITLE_CASE_HEADER matches `#{1,6}[ \t]+`, so if
   // the prefix strip stops accepting a tab, `##` survives into the token list

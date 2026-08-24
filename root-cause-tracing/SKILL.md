@@ -1,7 +1,7 @@
 ---
 name: root-cause-tracing
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [root, cause, tracing]
 description: "Systematically trace bugs backward through call stack to find original trigger"
 ---

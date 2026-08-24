@@ -1,11 +1,10 @@
 ---
 name: netlify-frameworks
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, frameworks]
 description: "Deploy and configure web frameworks on Netlify — build settings and SSR/edge adapters plus local platform emulation and env vars. Use when setting up or fixing a framework deploy (Next.js / Astro / Nuxt / SvelteKit / Remix / React Router / TanStack Start / SolidStart / Gatsby / Angular / Vite / Express / Hydrogen / Hugo / Eleventy / Vue / React), adding SSR or edge functions or middleware wired to Netlify context, fixing SPA redirect and catch-all rules, setting a build command or publish directory, or debugging \"why isn't my env var updating\" and framework build failures."
 ---
-
 Route framework-specific deep work to the guides in this skill: `references/astro.md`, `references/nextjs.md`, `references/nuxt.md`, `references/sveltekit.md`, `references/tanstack.md`, `references/vite.md`.
 
 ## Env vars: modern rules (read first)

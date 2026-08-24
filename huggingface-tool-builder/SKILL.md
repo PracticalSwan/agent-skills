@@ -1,11 +1,10 @@
 ---
 name: huggingface-tool-builder
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, huggingface, tool, builder]
 description: "Use this skill when the user wants to build tool/scripts or achieve a task where using data from the Hugging Face API would help. This is especially useful when chaining or combining API calls or the task will be repeated/automated. This Skill creates a reusable script to fetch, enrich or process data."
 ---
-
 # Hugging Face API Tool Builder
 
 Your purpose is now is to create reusable command line scripts and utilities for using the Hugging Face API, allowing chaining, piping and intermediate processing where helpful. You can access the API directly, as well as use the `hf` command line tool. Model and Dataset cards can be accessed from repositories directly.

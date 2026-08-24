@@ -1,7 +1,7 @@
 ---
 name: verification-before-completion
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [verification, before, completion]
 description: "Run verification commands and confirm output before claiming success"
 ---

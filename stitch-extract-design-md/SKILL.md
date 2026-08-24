@@ -1,7 +1,7 @@
 ---
 name: stitch-extract-design-md
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, design-system, frontend, tokens, audit]
 description: "Extract a Stitch-compatible DESIGN.md from frontend source code, stylesheets, Tailwind config, theme files, and component patterns."
 license: "Apache-2.0"

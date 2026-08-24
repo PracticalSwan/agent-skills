@@ -1,7 +1,7 @@
 ---
 name: devops-tooling
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [devops, tooling, workflow, quality, planning]
 description: "Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows."
 ---

@@ -1,7 +1,7 @@
 ---
 name: figma-implement-design
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [figma, implement, design]
 description: "Translate Figma designs into production-ready application code with 1:1 visual fidelity. Use for Figma URLs, node IDs, implementation requests, or components that must match Figma specs; use the local `figma` skill for general Figma MCP context and setup."
 ---

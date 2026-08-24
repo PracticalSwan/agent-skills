@@ -1,24 +1,20 @@
 ---
 name: handoff
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [handoff]
 description: "Compact the current conversation into a handoff document for another agent to pick up."
 license: "MIT"
 ---
 Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
 
-Use an OS-resolved temporary path and keep the document free of credentials, raw private data, and unnecessary personal details. If no safe temporary directory is available, stop and report the blocker rather than writing into the project.
-
-Include a "suggested skills" section in the document, which suggests skills that the agent should invoke.
+Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
 
 Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
 
 Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
 
 If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
-
-<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

@@ -1,7 +1,7 @@
 ---
 name: rag-eval
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [nvidia, rag, evaluation, retrieval, quality, benchmark]
 description: "NVIDIA RAG Blueprint evaluation guidance for measuring retrieval and answer quality with stable datasets, baselines, and reproducible scoring workflows."
 license: "Apache-2.0"

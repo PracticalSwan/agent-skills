@@ -1,7 +1,7 @@
 ---
 name: accelerated-computing-cudf
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [nvidia, cudf, rapids, pandas, gpu, etl]
 description: "Official NVIDIA-authored guidance for NVIDIA cuDF GPU DataFrames, pandas acceleration, dask-cuDF, ETL, joins, groupby, CSV/Parquet I/O, nullable semantics, and multi-GPU DataFrame workloads."
 license: "CC-BY-4.0 AND Apache-2.0"

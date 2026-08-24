@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [test, driven, development]
 description: "Write the test first, watch it fail, write minimal code to pass"
 ---

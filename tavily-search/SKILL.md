@@ -1,7 +1,7 @@
 ---
 name: tavily-search
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, web-search, current-information, sources, cli]
 description: "Search the web through Tavily with bounded depth, domains, dates, and result counts. Use when the user needs current information or source discovery and does not already have a specific URL."
 license: "MIT"

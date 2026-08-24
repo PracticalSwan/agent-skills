@@ -1,7 +1,7 @@
 ---
 name: stitch-react-vite-dashboard
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, react, vite, dashboard, typescript]
 description: "Convert approved Stitch exports into accessible React and Vite dashboards with DESIGN.md tokens, TanStack Query data boundaries, responsive layouts, and optional read-only Web3 integrations."
 license: "Apache-2.0"

@@ -1,7 +1,7 @@
 ---
 name: stitch-react-components
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, react, typescript, components, frontend]
 description: "Convert Stitch HTML and screenshots into modular Vite/React/TypeScript components, or sync existing components to updated Stitch designs, with local architecture and validation checks."
 license: "Apache-2.0"

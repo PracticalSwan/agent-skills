@@ -1,7 +1,7 @@
 ---
 name: skill-creator
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [skill, creator]
 description: "Guide for creating or updating effective portable skills with specialized knowledge, workflows, or tool integrations. Use for Codex, Claude Code, GitHub Copilot, or shared-catalog skill work after selecting the target host and installation path."
 ---

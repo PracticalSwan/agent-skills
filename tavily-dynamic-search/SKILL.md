@@ -1,7 +1,7 @@
 ---
 name: tavily-dynamic-search
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, programmatic-search, context-isolation, python, research]
 description: "Run programmatic Tavily search and extraction while filtering raw results outside the main agent context. Use for multi-step or high-volume research where titles, snippets, and selected passages should be curated before synthesis."
 license: "MIT"

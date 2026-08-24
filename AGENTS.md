@@ -43,32 +43,37 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 ## Codex-Only Blender Skills Overlay
 
 - The `arjun988/blender-skills` pack is an explicit exception to normal child promotion.
-- Its 94 current skills must remain installed only under `C:\Users\LOQ\.codex\skills`, with its source checkout under `C:\Users\LOQ\.codex\vendor\blender-skills`.
+- Its 94 upstream skills plus the separately protected local
+  `raw-scan-to-aaa-preserve-texture` entry (95 protected names total) must
+  remain installed only under `C:\Users\LOQ\.codex\skills`, with its source
+  checkout under `C:\Users\LOQ\.codex\vendor\blender-skills`.
 - Never promote these skill names into this parent catalog and never sync them to `C:\Users\LOQ\.agents\skills` or `C:\Users\LOQ\.claude\skills`.
 - `scripts/skill-registry.json` records the protected names and the Codex-only source configuration; generic promotion and sync tooling must honor that boundary.
 - During parent source-maintenance or "update all skills" work, run `scripts/update-codex-local-blender-skills.ps1`. It fetches upstream, refreshes only the owned Codex copies and shared Blender references, updates the ownership manifest and source commit, and verifies that no Blender skill escaped to a forbidden root.
 
 ## Current Counts
 
-Snapshot date: `2026-08-20`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-24`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `232` tracked skill folders
-  - `200` tracked maintained skills
+  - `237` tracked skill folders
+  - `205` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `290` local skill folders detected
-  - `258` local maintained skills detected
+  - `295` local skill folders detected
+  - `263` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `232` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
-tracked skills retain their prior catalog baselines; the 66 newly imported
-platform skills use `last_updated: 2026-08-20`. The `58` local-only Google
+All `237` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+tracked skills retain their prior catalog baselines; the 66 platform skills
+retain their import provenance, and five Codex Router skills were promoted
+from the personal Codex root. The catalog-wide maintenance baseline is
+`last_updated: 2026-08-24`. The `58` local-only Google
 Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
@@ -82,8 +87,9 @@ The Tavily suite is sourced from `tavily-ai/skills` at commit
 self-contained, retain the local secret and prompt-injection safeguards, and
 do not reintroduce removed-client integrations from upstream references.
 
-The selected Matt Pocock skills are sourced from `mattpocock/skills` at commit
-`8b78b531ab965735c5dc74f6f7a219e1e37326df`. The import keeps only eight
+The selected Matt Pocock skills are sourced from `mattpocock/skills` at the
+current audited commit `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76`. The import
+keeps only eight
 cross-client workflows that fill gaps for the user's OCR, storefront,
 Three.js, and multi-repository work. Existing TDD, debugging, review,
 implementation, planning, and skill-authoring equivalents remain canonical.
@@ -129,6 +135,26 @@ guidance is included, while no Hugging Face, MongoDB, or Figma CLI skill was
 installed. The importer is repeatable with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
 
+## 2026-08-24 Catalog Refresh And Child Promotion
+
+- Compared every recorded upstream source head with its exact mapped skill
+  path. Refreshed material changes in `avoid-ai-writing`, the eight selected
+  Matt Pocock workflows, and `x-twitter-scraper`; unrelated source head
+  movement was recorded without rewriting unchanged mapped paths.
+- Promoted five eligible personal-Codex child skills: `codex-app-threads`,
+  `codex-computer-use`, `codex-in-app-browser`, `codex-router`, and
+  `codex-router-media`. Their host marker files remain outside the parent;
+  package and tree-digest provenance is recorded in the registry.
+- Child reconciliation scanned only `.codex`, `.agents`, and `.claude` skill
+  roots. It excluded Codex `.system`, the 94-skill Blender overlay plus the
+  separately protected local entry, copied
+  official Superpowers, and all project-specific `C:\Assumption University`
+  paths. No additional eligible skills remained in `.agents` or `.claude`.
+- The required Blender refresh completed at upstream commit
+  `8f778d2405a214b508d4c7d80742be8e43acdd52` with 94 upstream skills plus one
+  separately protected local entry and no promotion to the parent, shared, or
+  Claude roots.
+
 ## Source Of Truth
 
 - Edit maintained skill content in `C:\Users\LOQ\.copilot\skills` first.
@@ -171,8 +197,8 @@ repo.
 
 ## Upstream-Only Skill Sources
 
-Normal child discovery is limited to the personal `.codex` and `.claude`
-skill roots. Project-local roots under paths such as
+Normal child discovery is limited to the personal `.codex`, `.agents`, and
+`.claude` skill roots. Project-local roots under paths such as
 `C:\Assumption University` must not be scanned or used as sync destinations
 unless a later user request explicitly puts them in scope.
 

@@ -1,7 +1,7 @@
 ---
 name: stitch-upload-to-stitch
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, upload, assets, html, mcp]
 description: "Upload approved local HTML, markdown, or image assets to a Stitch project using direct MCP for small DESIGN.md files or the bundled API script for larger files."
 license: "Apache-2.0"

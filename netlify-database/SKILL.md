@@ -1,11 +1,10 @@
 ---
 name: netlify-database
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, database]
 description: "Zero-config Postgres for Netlify apps via @netlify/database — querying data from Functions/Edge Functions, writing schema migrations, setting up Drizzle ORM, local dev with netlify dev, database branches for deploy previews, and migrating an existing Postgres project onto Netlify. Use when adding a database, building a contact form or CRUD API, writing SQL migrations, wiring up Drizzle, running netlify database commands, testing with a local Postgres, or switching from Neon/Supabase/RDS to Netlify Database."
 ---
-
 # Netlify Database
 
 Zero-config managed Postgres. Install `@netlify/database`, write migrations under `netlify/database/migrations/`, deploy — Netlify provisions the DB and applies migrations automatically. Queryable from Functions, Edge Functions, Builds, and Agent Runners.

@@ -1,7 +1,7 @@
 ---
 name: mongodb-mongoose
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [mongodb, mongoose, development, testing, quality]
 description: "MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps."
 ---

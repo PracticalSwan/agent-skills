@@ -1,7 +1,7 @@
 ---
 name: stitch-manage-design-system
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [stitch, design-system, mcp, tokens, ui]
 description: "Create, list, and apply Stitch design systems from DESIGN.md using the verified Stitch MCP design-system tools and safe upload fallbacks."
 license: "Apache-2.0"

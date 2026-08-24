@@ -1,11 +1,10 @@
 ---
 name: huggingface-datasets
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, huggingface, datasets]
 description: "Use this skill for Hugging Face Dataset Viewer API workflows that fetch subset/split metadata, paginate rows, search text, apply filters, download parquet URLs, and read size or statistics."
 ---
-
 # Hugging Face Dataset Viewer
 
 Use this skill to execute read-only Dataset Viewer API calls for dataset exploration and extraction.

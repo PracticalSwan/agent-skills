@@ -1,11 +1,10 @@
 ---
 name: netlify-blobs
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, blobs]
 description: "Store and retrieve unstructured objects, file uploads, and cache-like state on Netlify using the @netlify/blobs key/value API from Functions, Edge Functions, and Build Plugins. Use when a task involves saving user file or image uploads, persisting form or contact-form submissions, storing generated output from Background Functions (sitemaps/processed media/bulk-email results), building read-only asset stores, adding client-side blob expiration, or wiring file-based blob uploads at deploy time. Not for per-user, transactional, or relational data (counters/balances/sessions) — reach for Netlify DB there instead."
 ---
-
 # Netlify Blobs
 
 Modern import — reach for this:

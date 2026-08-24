@@ -1,7 +1,7 @@
 ---
 name: scale-game
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [scale, game]
 description: "Test at extremes (1000x bigger/smaller, instant/year-long) to expose fundamental truths hidden at normal scales"
 ---

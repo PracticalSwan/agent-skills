@@ -1,11 +1,10 @@
 ---
 name: netlify-forms
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, forms]
 description: "Serverless form handling on Netlify-hosted sites — detects HTML forms at deploy time, stores submissions, filters spam, and sends notifications. Use when adding a contact form, lead-capture form, file-upload form, or newsletter signup to a Netlify site; wiring AJAX form submission; setting up a custom thank-you page; adding a honeypot or reCAPTCHA to a form; getting forms working in Next.js, Nuxt, SvelteKit, Astro, or Gatsby; reading form submissions via the Netlify API; or debugging missing submissions and forms that silently fail to register."
 ---
-
 # Netlify Forms
 
 Mark a form for detection with `data-netlify="true"` (or the bare `netlify` attribute — equivalent) on the `<form>` tag. Forms are detected by **parsing the final built HTML at deploy time** — there is no runtime API call or backend code. Client-side/JS-rendered/SSR forms are NOT in the built HTML and are never detected on their own; they require a static skeleton file (see below).

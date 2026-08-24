@@ -1,11 +1,10 @@
 ---
 name: netlify-ai-gateway
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, ai, gateway]
 description: "Use OpenAI, Anthropic, Google Gemini, or OpenRouter models from Netlify Functions or Edge Functions without managing provider API keys or accounts — the gateway injects credentials automatically. Reach for this when you add an AI chatbot or completion endpoint, generate images or text with Gemini/GPT/Claude, summarize form submissions with AI, build an LLM-backed API route, stream a long AI generation, or wire up any server-side AI provider call on Netlify. Covers provider SDK setup, injected env vars, model availability, rate limits, credit costs, streaming for long generations, and local dev with netlify dev or the Vite plugin."
 ---
-
 # Netlify AI Gateway
 
 Call AI providers from Netlify server-side compute using each provider's **official SDK** with zero credential config — the gateway injects the API keys and base URLs the SDKs already read. Instantiate the client with no args (except OpenRouter, which needs an explicit base URL).

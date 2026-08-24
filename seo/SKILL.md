@@ -1,7 +1,7 @@
 ---
 name: seo
 version: "2.0"
-last_updated: 2026-08-16
+last_updated: 2026-08-24
 tags: [seo]
 description: "Optimize for search engine visibility and ranking. Use when asked to \"improve SEO\", \"optimize for search\", \"fix meta tags\", \"add structured data\", \"sitemap optimization\", or \"search engine optimization\"."
 license: "MIT"

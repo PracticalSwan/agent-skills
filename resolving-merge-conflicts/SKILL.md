@@ -1,7 +1,7 @@
 ---
 name: resolving-merge-conflicts
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [resolving, merge, conflicts]
 description: "Use when you need to resolve an in-progress git merge/rebase conflict."
 license: "MIT"
@@ -10,13 +10,11 @@ license: "MIT"
 
 2. **Find the primary sources** for each conflict. Understand deeply why each change was made, and what the original intent was. Read the commit messages, check the PRs, check original issues/tickets.
 
-3. **Resolve each hunk.** Preserve both intents where possible. Where incompatible, pick the one matching the merge's stated goal and note the trade-off. Do **not** invent new behaviour. Do not abort, reset, clean, or rewrite history unless the user explicitly authorizes that exact action.
+3. **Resolve each hunk.** Preserve both intents where possible. Where incompatible, pick the one matching the merge's stated goal and note the trade-off. Do **not** invent new behaviour. Always resolve; never `--abort`.
 
-4. Discover the project's **automated checks** and run them — typically typecheck, then tests, then format. Fix anything the merge broke.
+4. Discover the project's **automated checks** and run them, typically typecheck, then tests, then format. Fix anything the merge broke.
 
-5. **Finish the merge/rebase only with authorization.** Once the conflict set is clean and the relevant checks pass, stage only the reviewed paths and complete the repository's normal merge/rebase command. If rebasing, continue only when the user has authorized the history-changing operation. Otherwise stop at the verified clean conflict state and report the exact remaining command.
-
-<!-- MCP:START -->
+5. **Finish the merge/rebase.** Stage everything and commit. If rebasing, continue the rebase process until all commits are rebased.
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

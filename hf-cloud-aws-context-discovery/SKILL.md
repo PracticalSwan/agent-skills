@@ -1,11 +1,10 @@
 ---
 name: hf-cloud-aws-context-discovery
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, hf, cloud, aws, context, discovery]
 description: "Discover the user's local AWS context (active profile, region, account ID, caller identity) at the start of any AWS task. Use this skill before any other AWS work — deploying to SageMaker, creating resources, calling AWS APIs, or anything that touches an AWS account. Use it especially when the user has not specified a region or profile explicitly, when they say things like \"use my AWS account\", \"deploy to AWS\", \"use my profile\", or when about to make any AWS CLI or SDK call. Never guess the region or account ID — always use this skill to read it from the local configuration first."
 ---
-
 # AWS Context Discovery
 
 Before doing any AWS work, read the user's local AWS config. Don't guess the region, and don't ask the user for things their config already answers.

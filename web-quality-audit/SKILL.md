@@ -1,7 +1,7 @@
 ---
 name: web-quality-audit
 version: "2.0"
-last_updated: 2026-08-16
+last_updated: 2026-08-24
 tags: [web, quality, audit]
 description: "Comprehensive web quality audit covering performance, accessibility, SEO, and best practices. Use when asked to \"audit my site\", \"review web quality\", \"run lighthouse audit\", \"check page quality\", or \"optimize my website\"."
 license: "MIT"

@@ -1,7 +1,7 @@
 ---
 name: imagegen
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [imagegen]
 description: "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when the active client should create a new image, transform an existing image, or derive visual variants from references, and route through only the image tool or approved API actually exposed by that host."
 ---

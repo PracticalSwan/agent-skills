@@ -1,11 +1,10 @@
 ---
 name: netlify-access-control
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, access, control]
 description: "Picks the right Netlify protection layer for a deployed site and disambiguates the three unrelated things people call \"auth\". Use when a developer wants to password-protect a site or previews, restrict a project to their team, make a project public/private, set team visibility defaults, require SSO to view a site, or debug SSO-session symptoms like being logged out mid-session / getting 401s on an SSO-protected site / token expiry or refresh. Routes app-user login (\"who is this user in my app\") to the netlify-identity skill and dashboard/team SSO SSO elsewhere; this skill only chooses the perimeter layer for site/preview access."
 ---
-
 # Netlify access control (picking the protection layer)
 
 This skill ROUTES. Its job is choosing the correct protection layer for loading a site, not implementing app auth. Before recommending anything, disambiguate — three unrelated layers get called "auth":

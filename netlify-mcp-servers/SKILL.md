@@ -1,11 +1,10 @@
 ---
 name: netlify-mcp-servers
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [netlify, mcp, servers]
 description: "Build, deploy, and secure Model Context Protocol (MCP) servers on Netlify. Use whenever the task involves creating an MCP server, exposing an app or API to AI agents as MCP tools, letting Claude / Cursor / Claude Code call a custom remote server, or adding MCP tools to an existing Netlify site. Covers the MCP SDK + Streamable HTTP transport on a Netlify Function, authentication (single shared secret vs per-user API keys with Netlify Identity), read/write safety, file uploads, and connecting clients. Use even when the user just says \"MCP\", \"tool server for an agent\", or \"let an AI use my API\"."
 ---
-
 # Netlify MCP Servers
 
 An MCP server exposes **tools** (and optionally resources/prompts) that an AI client — Claude Desktop, Claude Code, Cursor — can call. On Netlify, a remote MCP server is just **one Netlify Function** that speaks the MCP protocol over HTTP. This skill gets you a working, secure server and connects a client to it.

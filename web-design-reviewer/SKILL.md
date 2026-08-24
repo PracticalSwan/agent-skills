@@ -1,7 +1,7 @@
 ---
 name: web-design-reviewer
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [web, design, reviewer, frontend, ui]
 description: "Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing."
 ---

@@ -1,7 +1,7 @@
 ---
 name: gardening-skills-wiki
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [gardening, skills, wiki]
 description: "Maintain skills wiki health - check links, naming, cross-references, and coverage"
 ---

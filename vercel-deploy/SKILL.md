@@ -1,7 +1,7 @@
 ---
 name: vercel-deploy
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [vercel, deploy]
 description: "Deploy applications and websites to Vercel. Use when the user requests deployment actions like \"deploy my app\", \"deploy and give me the link\", \"push this live\", or \"create a preview deployment\"."
 ---

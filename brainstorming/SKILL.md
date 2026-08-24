@@ -1,7 +1,7 @@
 ---
 name: brainstorming
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [brainstorming]
 description: "Interactive idea refinement using Socratic method to develop fully-formed designs"
 ---

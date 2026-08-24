@@ -1,11 +1,10 @@
 ---
 name: figma-use-slides
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [figma, use, slides]
 description: "This skill helps agents use Figma's use_figma MCP tool in the Slides context. Can be used alongside figma-use which has foundational context for using the use_figma tool."
 ---
-
 # use_figma — Figma Plugin API Skill for Slides
 
 This skill contains Slides-specific context for the `use_figma` MCP tool. The [figma-use](../figma-use/SKILL.md) skill provides foundational context for plugin API execution via MCP as well as the full Figma plugin API for more advanced use-cases that are not described here.

@@ -1,7 +1,7 @@
 ---
 name: tavily-research
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [tavily, research, citations, synthesis, cli]
 description: "Run Tavily's multi-source research workflow for comparisons, market analysis, literature-oriented exploration, or detailed cited reports. Use only when bounded search and extraction are insufficient."
 license: "MIT"

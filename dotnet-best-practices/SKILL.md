@@ -1,7 +1,7 @@
 ---
 name: dotnet-best-practices
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [dotnet, development, testing, quality, automation]
 description: "Ensure .NET/C# code follows maintainable, modern best practices. Use when reviewing or improving C# code, solution structure, async patterns, dependency injection, or testability."
 ---

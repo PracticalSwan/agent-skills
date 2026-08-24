@@ -1,11 +1,10 @@
 ---
 name: writing-guidelines
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [vercel, writing, guidelines]
 description: "Review docs/prose for Writing Guidelines compliance. Use when asked to \"review my docs\", \"check writing style\", \"audit prose\", \"review docs voice and tone\", or \"check this page against the writing handbook\"."
 ---
-
 # Writing Guidelines
 
 Review files for compliance with Writing Guidelines.

@@ -1,7 +1,7 @@
 ---
 name: receiving-code-review
 version: "2.0"
-last_updated: 2026-08-14
+last_updated: 2026-08-24
 tags: [receiving, code, review]
 description: "Receive and act on code review feedback with technical rigor, not performative agreement or blind implementation"
 ---

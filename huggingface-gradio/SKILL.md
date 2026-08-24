@@ -1,11 +1,10 @@
 ---
 name: huggingface-gradio
 version: "2.0"
-last_updated: 2026-08-20
+last_updated: 2026-08-24
 tags: [hugging-face, huggingface, gradio]
 description: "Build Gradio web UIs and demos in Python. Use when creating or editing Gradio apps, components, event listeners, layouts, or chatbots."
 ---
-
 # Gradio
 
 Gradio is a Python library for building interactive web UIs and ML demos. This skill covers the core API, patterns, and examples.

@@ -15,25 +15,25 @@ from platform_skill_manifest import (
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "4742f265959bf025882314564b364d9d7af6e2d5"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "f11a4e441c5ff061b4f8ae37952be8c602e4034e"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
     "anthropic_skills": ("https://github.com/anthropics/skills", "3b3fad96af16a10759d930941b4520ba0c40edae"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "a8e297c18654af82559f1d29e4d13204a96b3ee3"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "3bd64f19f41ae941d44e8261fe575624a2b1b8f6"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "3a38625bf3e863eb9f26ea0d985130ddfb5c66ae"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae"),
     "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "0337446dadde6f8c94210444e2aa9d546126480f"),
-    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "e7f8a3890daaacd0b009c7a0acb7f42f35263a79"),
+    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "dc5fa6037d700eb3a7721155e92dabeeb9e56894"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
     "superpowers_skills": ("https://github.com/obra/superpowers-skills", "cdcd624ad3fd8026deb692e565351854569798dd"),
     "superpowers_legacy": ("https://github.com/obra/superpowers", "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"),
     "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
     "matt_pocock_skills": ("https://github.com/mattpocock/skills", "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"),
     "supabase_agent_skills": ("https://github.com/supabase/agent-skills", "8331f910845103c08d51f6ca1d86ebb7d1f745e3"),
-    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "b40dd8d9c771ba6e84c0ff6502875e3f42b4ec14"),
-    "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "dd089a8c752c966dee8bf0f27cb625ba193ffd9e"),
-    "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "95d6e255afe1596b557d7a8498517884438f5b3a"),
+    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "d89e731a59ea7e9bf623e6358effe76458dd7f29"),
+    "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "063bee94c3f4df8453406c830b0a7df0f2860278"),
+    "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "afa8da942115f2961fdbfa80807ea0b232ff6c00"),
 }
 SOURCE_COMMITS.update(PLATFORM_SOURCE_COMMITS)
 
@@ -412,6 +412,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-08-29 continuation re-audited only the personal `.codex`, `.agents`,
+  and `.claude` skill roots. No eligible child-only skills remained. A missing
+  top-level Codex `doc` mirror was restored by the approved sync script; the
+  protected Blender/local-only set and Codex `.system` remained untouched.
 - The 2026-08-24 maintenance pass compared only the personal `.codex`,
   `.agents`, and `.claude` skill roots. It promoted five Codex Router-managed
   skills (`codex-app-threads`, `codex-computer-use`, `codex-in-app-browser`,
@@ -485,6 +489,16 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   `x-twitter-scraper`; unrelated upstream movement was recorded in the source
   table without rewriting unchanged mapped paths. The catalog baseline and
   per-skill changelogs now use `2026-08-24`.
+- The 2026-08-29 source audit refreshed exact mapped paths for
+  `avoid-ai-writing`, `x-twitter-scraper`, `gemini-api-dev`,
+  `gemini-interactions-api`, `react-view-transitions`, and the current
+  web-quality support trees. `awesome-copilot`, NVIDIA, Netlify, MongoDB,
+  and Hugging Face heads moved outside installed paths and were recorded in
+  provenance without broad rewrites. The catalog baseline now uses
+  `2026-08-29`.
+- The current Xquik source removed its MCP setup documents and metadata. The
+  registry therefore removes the stale preferred Xquik MCP mapping and lets
+  the normalized skill state its REST/SDK fallback honestly.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.
@@ -573,6 +587,12 @@ def main() -> int:
                 "source_path": "skills/xlsx",
                 "reason": "Matches the current Anthropic XLSX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper.",
             },
+            "x-twitter-scraper": {
+                "source_repo": "https://github.com/Xquik-dev/x-twitter-scraper",
+                "source_commit": SOURCE_COMMITS["xquik_x_twitter_scraper"][1],
+                "source_path": "skills/x-twitter-scraper",
+                "reason": "Refreshes guarded X/Twitter data workflows with explicit approval gates and untrusted-content handling; current upstream MCP setup files are intentionally absent.",
+            },
         }
     )
     for name, source_path in OPENAI_CURRENT.items():
@@ -647,6 +667,10 @@ def main() -> int:
         }
 
     mcp_skills = data.setdefault("mcp_skills", {})
+    # The current Xquik source no longer documents an MCP setup surface. Keep
+    # the normalized skill's no-MCP fallback truthful instead of retaining the
+    # stale preferred-server mapping from an older release.
+    mcp_skills.pop("x-twitter-scraper", None)
     mcp_skills["linkedin-create-post"] = {
         "mode": "Primary",
         "servers": [

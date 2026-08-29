@@ -261,6 +261,22 @@ Codex skill catalog.
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
 
+## 2026-08-29 Catalog Freshness And Mirror Repair
+
+- Recheck live source heads on every continuation. A clean published parent can
+  still have stale pins within days, while most repository movement remains
+  outside the installed mappings.
+- Compare exact mapped paths before copying current source content. This pass
+  refreshed `avoid-ai-writing`, `x-twitter-scraper`, Gemini, React View
+  Transitions, and web-quality references while leaving unrelated paths alone.
+- A downstream mirror can drift independently after publication. Compare the
+  expected maintained set against each target and restore only evidence-backed
+  missing skills such as the Codex `doc` copy.
+- Treat source removals as current behavior: when Xquik dropped MCP setup files,
+  remove the stale registry mapping and regenerate the normalized no-MCP tail.
+- The current protected set is 94 upstream Blender skills plus one explicitly
+  configured local entry. Keep that distinction in generated documentation.
+
 ## Update Checklist
 
 1. Edit the workspace copy.

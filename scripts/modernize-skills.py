@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 
-DATE_STAMP = "2026-08-24"
+DATE_STAMP = "2026-08-29"
 CATALOG_VERSION = "2.0"
 PORTABILITY_START = "<!-- PORTABILITY:START -->"
 PORTABILITY_END = "<!-- PORTABILITY:END -->"

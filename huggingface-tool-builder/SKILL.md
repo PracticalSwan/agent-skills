@@ -1,7 +1,7 @@
 ---
 name: huggingface-tool-builder
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [hugging-face, huggingface, tool, builder]
 description: "Use this skill when the user wants to build tool/scripts or achieve a task where using data from the Hugging Face API would help. This is especially useful when chaining or combining API calls or the task will be repeated/automated. This Skill creates a reusable script to fetch, enrich or process data."
 ---

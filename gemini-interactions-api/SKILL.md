@@ -1,7 +1,7 @@
 ---
 name: gemini-interactions-api
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [gemini, interactions, api]
 description: "Use this skill when writing code that calls the Gemini API for text generation, multi-turn chat, multimodal understanding, image generation, video generation, streaming responses, background research tasks, function calling, structured output, or migrating from the old generateContent API. This skill covers the Interactions API, the recommended way to use Gemini models and agents in Python and TypeScript."
 license: "Apache-2.0"
@@ -19,13 +19,16 @@ license: "Apache-2.0"
 - `gemini-3.5-flash-lite`: 1M tokens, fastest, lowest-cost 3.5 model for high-throughput execution
 - `gemini-3.1-pro-preview`: 1M tokens, complex reasoning, coding, research
 - `gemini-3.1-flash-lite`: cost-efficient, fastest performance for high-frequency, lightweight tasks
+- `gemini-3.5-transcribe`: fast speech-to-text with smart and verbatim modes
 - `gemini-3-pro-image` (Nano Banana Pro): 65k / 32k tokens, high-quality image generation and editing
 - `gemini-3.1-flash-image` (Nano Banana 2): 65k / 32k tokens, fast, efficient image generation and editing
 - `gemini-3.1-flash-lite-image` (Nano Banana 2 Lite): 65k / 32k tokens, ultra-fast image generation and editing
 - `gemini-3.1-flash-tts-preview`: expressive text-to-speech with Director's Chair prompting
-- `gemini-omni-flash-preview`: video generation, image-referenced video generation, first-frame-to-video, and video editing
+- `gemini-omni-1.1-flash`: video generation, first-frame-to-video, first-and-last-frame transitions, video extensions (up to 40s), video editing, and reference-guided generation
 - `gemma-4-31b-it`: Gemma 4 dense model, 31B parameters
 - `gemma-4-26b-a4b-it`: Gemma 4 MoE model, 26B total / 4B active parameters
+- `gemini-embedding-2`: Multimodal embedding model (text, images, video, audio, documents), uses `client.models.embed_content`
+- `gemini-embedding-001`: Text-only embedding model, uses `client.models.embed_content`
 
 > [!WARNING]
 > Models like `gemini-2.5-*`, `gemini-2.0-*`, `gemini-1.5-*` are **legacy and deprecated**. Never use them.
@@ -33,6 +36,8 @@ license: "Apache-2.0"
 
 ### Current Agents
 
+- Managed-agent identifiers must come from current official documentation and
+  the user's account; do not assume a provider-specific agent is exposed.
 - `deep-research-preview-04-2026`: Deep Research — fast, interactive
 - `deep-research-max-preview-04-2026`: Deep Research Max — maximum exhaustiveness
 - **Custom agents**: Create your own via `client.agents.create()`
@@ -183,13 +188,48 @@ Advanced features: collaborative planning, native visualization, MCP integration
 
 Managed agents run inside a sandboxed Linux environment hosted by Google. Fetch the [Managed Agents Quickstart](https://ai.google.dev/gemini-api/docs/managed-agents-quickstart.md.txt) before writing agent code.
 
+### Managed agent environments
+
+Use a managed-agent identifier returned by the current Gemini documentation and
+account. Do not assume a provider-specific identifier or managed environment is
+exposed by the active host. See the [Managed Agents Quickstart](https://ai.google.dev/gemini-api/docs/managed-agents-quickstart.md.txt)
+before writing agent code.
+
+#### Python
+```python
+from google import genai
+
+client = genai.Client()
+
+interaction = client.interactions.create(
+    agent="available-managed-agent-id",
+    input="Write a Python script that generates the first 20 Fibonacci numbers and saves them to fibonacci.txt. Then read the file and print its contents.",
+    environment="remote",
+)
+
+print(f"Environment ID: {interaction.environment_id}")
+print(interaction.output_text)
+```
+
+#### JavaScript/TypeScript
+```typescript
+import { GoogleGenAI } from "@google/genai";
+
+const client = new GoogleGenAI({});
+
+const interaction = await client.interactions.create({
+    agent: "available-managed-agent-id",
+    input: "Write a Python script that generates the first 20 Fibonacci numbers and saves them to fibonacci.txt. Then read the file and print its contents.",
+    environment: "remote",
+});
+
+console.log(`Environment ID: {interaction.environment_id}`);
+console.log(interaction.output_text);
+```
+
 ### Custom Agents
 
 See [Building Custom Agents docs](https://ai.google.dev/gemini-api/docs/custom-agents.md.txt).
-
-Set `base_agent` to a managed-agent identifier returned by the current Gemini
-documentation and account. Do not assume that a provider-specific identifier
-or managed environment is exposed by the active host.
 
 #### Python
 ```python
@@ -314,11 +354,14 @@ For streaming with tools, thinking, agents, and image generation see the full [S
 - [Thought Signatures](https://ai.google.dev/gemini-api/docs/interactions/thought-signatures.md.txt)
 - [Image Generation](https://ai.google.dev/gemini-api/docs/interactions/image-generation.md.txt)
 - [Image Understanding](https://ai.google.dev/gemini-api/docs/interactions/image-understanding.md.txt)
+- [Video Generation & Editing (Omni Flash)](https://ai.google.dev/gemini-api/docs/omni.md.txt)
 - [Speech Generation](https://ai.google.dev/gemini-api/docs/interactions/speech-generation.md.txt)
 - [Music Generation](https://ai.google.dev/gemini-api/docs/interactions/music-generation.md.txt)
+- [Embeddings](https://ai.google.dev/gemini-api/docs/embeddings.md.txt)
 
 **Multimodal Understanding:**
 - [Audio](https://ai.google.dev/gemini-api/docs/interactions/audio.md.txt)
+- [Audio Transcription](https://ai.google.dev/gemini-api/docs/transcribe.md.txt)
 - [Video Understanding](https://ai.google.dev/gemini-api/docs/interactions/video-understanding.md.txt)
 - [Document Processing](https://ai.google.dev/gemini-api/docs/interactions/document-processing.md.txt)
 
@@ -391,8 +434,6 @@ An `Interaction` response contains `steps`, an array of typed step objects repre
 | `thought_signature` | `thought` | Opaque signature for thought verification. |
 
 **Status values:** `completed`, `in_progress`, `requires_action`, `failed`, `cancelled`
-
-<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

@@ -3,6 +3,34 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-29] - Catalog Freshness And Mirror Repair
+
+### Added
+
+- Added current web-quality field/agentic-browsing references, React View
+  Transitions troubleshooting guidance, and the latest Gemini model guidance
+  for transcription, Omni video, and embeddings.
+
+### Changed
+
+- Refreshed exact mapped paths for `avoid-ai-writing` 3.28.0,
+  `x-twitter-scraper`, `gemini-api-dev`, `gemini-interactions-api`,
+  `react-view-transitions`, and the changed web-quality skills.
+- Updated all 24 source pins and the catalog-wide maintenance baseline to
+  `2026-08-29`; repository movement outside installed mappings was recorded
+  without broad rewrites.
+- Removed the stale preferred Xquik MCP mapping because the current source no
+  longer documents an MCP setup surface; the normalized skill now exposes its
+  REST/SDK fallback honestly.
+
+### Fixed
+
+- Repaired the missing top-level Codex `doc` mirror through the approved sync
+  script while preserving `.system`, Blender/local-only, Superpowers, and
+  project-specific boundaries.
+- Re-audited `.codex`, `.agents`, and `.claude`; no eligible child-only skills
+  remain to promote.
+
 ## [2026-08-24] - Catalog Freshness And Personal Child Promotion
 
 ### Added

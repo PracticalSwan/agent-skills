@@ -1,7 +1,7 @@
 ---
 name: writing-for-agents
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [writing, for, agents]
 description: "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md."
 license: "MIT"

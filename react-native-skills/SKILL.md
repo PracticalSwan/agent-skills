@@ -1,7 +1,7 @@
 ---
 name: react-native-skills
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [vercel, react, native, skills]
 description: "React Native and Expo best practices for building performant mobile apps. Use when building React Native components, optimizing list performance, implementing animations, or working with native modules. Triggers on tasks involving React Native, Expo, mobile performance, or native platform APIs."
 license: "MIT"

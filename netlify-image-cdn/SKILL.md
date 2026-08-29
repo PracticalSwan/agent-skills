@@ -1,7 +1,7 @@
 ---
 name: netlify-image-cdn
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [netlify, image, cdn]
 description: "Transform, resize, crop, reformat, and optimize images on demand via Netlify Image CDN's /.netlify/images endpoint. Use when adding responsive images, generating thumbnails, converting formats (avif/webp/png), cropping to aspect ratios, tuning image quality, creating blurred placeholders, allowlisting remote image domains, serving user-uploaded images, or wiring framework image components (Next.js, Astro, Nuxt, Angular, Gatsby) to Netlify. Triggers on tasks like \"optimize images\", \"add image thumbnails\", \"resize images on the fly\", \"serve images from an external domain\", or \"add blur placeholders\"."
 ---

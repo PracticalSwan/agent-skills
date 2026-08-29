@@ -1,7 +1,7 @@
 ---
 name: pulling-updates-from-skills-repository
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [pulling, updates, from, skills, repository]
 description: "Sync local skills repository with upstream changes from obra/superpowers-skills"
 ---

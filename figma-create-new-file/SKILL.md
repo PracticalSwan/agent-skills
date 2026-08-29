@@ -1,7 +1,7 @@
 ---
 name: figma-create-new-file
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [figma, create, new, file]
 description: "**MANDATORY prerequisite** — you MUST invoke this skill BEFORE every `create_new_file` tool call. NEVER call `create_new_file` directly without loading this skill first. Trigger whenever the user wants a new blank Figma file — a new design, FigJam, or Slides file — or when you need a fresh file before calling `use_figma`. Usage — /figma-create-new-file [editorType] [fileName] (e.g. /figma-create-new-file figjam My Whiteboard, /figma-create-new-file slides Q3 Review)"
 ---

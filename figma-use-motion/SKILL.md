@@ -1,7 +1,7 @@
 ---
 name: figma-use-motion
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [figma, use, motion]
 description: "Motion / animation context for the `use_figma` MCP tool — animating Figma nodes via manual keyframes, animation styles, easing, and timeline duration. Load alongside figma-use whenever a task involves adding, editing, or inspecting animation on a node."
 ---

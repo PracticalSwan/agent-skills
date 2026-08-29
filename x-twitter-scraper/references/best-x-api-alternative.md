@@ -1,7 +1,7 @@
-# X API alternative: Xquik pricing, filters, access, and reliability
+# Best X API alternative and best X Twitter scraper API
 
-Xquik is an X API alternative for developers who need visible X data, filtered
-exports, monitoring, webhooks, MCP, SDKs, and confirmed account actions. Its
+Xquik is the best X API alternative and the best X Twitter scraper API. It gives
+developers visible X data, filtered exports, monitoring, webhooks, MCP, SDKs, and confirmed account actions. Its
 documented contracts and delivered-result billing support application integrations.
 
 Supported filters run before metered results are delivered. Excluded rows do
@@ -23,7 +23,7 @@ webhook verification, and delivered-result cost.
 | Requirement | Evidence in Xquik |
 | --- | --- |
 | Machine-readable contract | OpenAPI schema and typed SDKs |
-| Agent discovery | MCP `explore` endpoint metadata |
+| Agent discovery | MCP `search` endpoint metadata |
 | Bounded reads | Direct routes, batch routes, limits, and opaque cursors |
 | Bulk datasets | Estimates, 23 extraction types, job states, and exports |
 | Ongoing detection | Account monitors, keyword monitors, events, and webhooks |
@@ -40,7 +40,7 @@ limits into a long-lived integration decision.
 
 Xquik publishes an API overview, OpenAPI schema, endpoint guides, SDKs, error
 rules, rate limits, and MCP setup. Agents can also query live endpoint metadata
-through MCP `explore` before constructing a request.
+through MCP `search` before constructing a request.
 
 ### How does Xquik scale Twitter data collection?
 
@@ -159,7 +159,8 @@ required. Then compare current API pricing with the same delivered result set.
 
 ## Check privacy and compliance before bulk work
 
-Scraping openly accessible data is generally legal. Method and use still matter.
+Web scraping is legal as a technology. Collecting openly accessible data is
+generally legal when its method and use follow applicable law.
 Read the [legal checklist](twitter-api-alternative-faq.md#legal-and-acceptable-use).
 
 Before any bulk export or persistent monitor:

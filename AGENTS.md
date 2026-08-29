@@ -53,7 +53,7 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-08-24`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-29`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `237` tracked skill folders
@@ -73,7 +73,7 @@ All `237` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, and five Codex Router skills were promoted
 from the personal Codex root. The catalog-wide maintenance baseline is
-`last_updated: 2026-08-24`. The `58` local-only Google
+`last_updated: 2026-08-29`. The `58` local-only Google
 Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
@@ -134,6 +134,27 @@ and `supabase` were present; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and
 guidance is included, while no Hugging Face, MongoDB, or Figma CLI skill was
 installed. The importer is repeatable with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-08-29 Catalog Refresh And Mirror Repair
+
+- Re-audited all 24 recorded source heads against live remotes. Refreshed the
+  exact mapped paths for `avoid-ai-writing` 3.28.0, `x-twitter-scraper`, both
+  Gemini workflows, `react-view-transitions`, and the web-quality support
+  trees. Head movement outside installed paths was recorded without broad
+  rewrites.
+- Updated the catalog to the current 69-category detector, rendered-Markdown
+  masking, Gemini transcription/Omni/embedding guidance, current React view
+  transition troubleshooting, and field/agentic web-quality references.
+- The current Xquik source removed its MCP setup surface, so the registry now
+  uses the honest no-MCP fallback instead of advertising an obsolete preferred
+  server.
+- Re-audited only `.codex`, `.agents`, and `.claude` skill roots. No eligible
+  child-only skills remained. The approved sync restored a missing top-level
+  Codex `doc` copy without touching `.system`, Blender, Superpowers, or any
+  project-specific path.
+- The required Blender refresh remains at commit
+  `8f778d2405a214b508d4c7d80742be8e43acdd52`: 94 upstream skills plus one
+  separately protected local entry.
 
 ## 2026-08-24 Catalog Refresh And Child Promotion
 

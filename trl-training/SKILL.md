@@ -1,7 +1,7 @@
 ---
 name: trl-training
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [hugging-face, trl, training]
 description: "Train and fine-tune transformer language models using TRL (Transformers Reinforcement Learning). Supports SFT, DPO, GRPO, KTO, RLOO and Reward Model training via CLI commands."
 license: "Apache-2.0"

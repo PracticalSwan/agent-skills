@@ -77,6 +77,19 @@ The `arjun988/blender-skills` pack is intentionally outside the shared catalog e
 - Use `scripts/update-codex-local-blender-skills.ps1` for upstream refreshes; it owns only the recorded Blender skill names and shared reference folder.
 - The generic promotion and sync tooling rejects parent leakage for these names.
 
+## 2026-08-29 Catalog Source Refresh
+
+The catalog was rechecked against all recorded upstream heads and refreshed only
+the installed paths that changed. `avoid-ai-writing` is now at detector 3.28.0;
+the Gemini workflows include current transcription, Omni video, and embedding
+guidance; `react-view-transitions` includes troubleshooting guidance; and the
+web-quality workflows include current field-data and agentic-browsing checks.
+
+The current Xquik source removed its MCP setup documents and metadata. The
+normalized catalog therefore removes the stale preferred Xquik MCP mapping and
+uses the documented REST/SDK fallback. Do not rely on the retired
+`mcp-setup.md` or `mcp-tools.md` files in that skill.
+
 ## Rollback
 
 To restore the prior support model, revert the version 2.0 catalog commit,

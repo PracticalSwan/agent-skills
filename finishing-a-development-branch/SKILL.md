@@ -1,7 +1,7 @@
 ---
 name: finishing-a-development-branch
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [finishing, a, development, branch]
 description: "Complete feature development with structured options for merge, PR, or cleanup"
 ---

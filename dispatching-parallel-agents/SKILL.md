@@ -1,7 +1,7 @@
 ---
 name: dispatching-parallel-agents
 version: "2.0"
-last_updated: 2026-08-24
+last_updated: 2026-08-29
 tags: [dispatching, parallel, agents]
 description: "Use multiple Claude agents to investigate and fix independent problems concurrently"
 ---

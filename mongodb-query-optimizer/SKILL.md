@@ -1,7 +1,7 @@
 ---
 name: mongodb-query-optimizer
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [mongodb, query, optimizer]
 description: "Help with MongoDB query optimization and indexing. Use only when the user asks for optimization or performance: \"How do I optimize this query?\", \"How do I index this?\", \"Why is this query slow?\", \"Can you fix my slow queries?\", \"What are the slow queries on my cluster?\", etc. Do not invoke for general MongoDB query writing unless user asks for performance or index help. Prefer indexing as optimization strategy. Use MongoDB MCP when available."
 license: "Apache-2.0"

@@ -36,7 +36,7 @@
   "source_commits": {
     "awesome_copilot": {
       "repo": "https://github.com/github/awesome-copilot",
-      "commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e"
+      "commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1"
     },
     "awesome_claude_skills": {
       "repo": "https://github.com/travisvn/awesome-claude-skills",
@@ -56,7 +56,7 @@
     },
     "avoid_ai_writing": {
       "repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "commit": "3bd64f19f41ae941d44e8261fe575624a2b1b8f6"
+      "commit": "58a95fc9971d7af95f1f1324b8a6bc991eb8004d"
     },
     "codebase_to_course": {
       "repo": "https://github.com/zarazhangrui/codebase-to-course",
@@ -64,7 +64,7 @@
     },
     "nvidia_skills": {
       "repo": "https://github.com/NVIDIA/skills",
-      "commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae"
+      "commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2"
     },
     "stitch_skills": {
       "repo": "https://github.com/google-labs-code/stitch-skills",
@@ -888,25 +888,25 @@
   "reference_installs": {
     "avoid-ai-writing": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "3bd64f19f41ae941d44e8261fe575624a2b1b8f6",
+      "source_commit": "58a95fc9971d7af95f1f1324b8a6bc991eb8004d",
       "source_path": ".",
       "reason": "Portable writing cleanup skill for auditing and rewriting content that has obvious AI-generated phrasing."
     },
     "agentic-eval": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/agentic-eval",
       "reason": "Evaluator-optimizer and rubric workflows are broadly useful across code, documentation, and planning tasks."
     },
     "cloud-design-patterns": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/cloud-design-patterns",
       "reason": "Distributed-system and cloud architecture trade-offs are common enough to justify a reusable shortlist skill."
     },
     "accelerated-computing-cudf": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/accelerated-computing-cudf",
       "reason": "The active Assumption University workspace includes pandas, scikit-learn, and PyTorch coursework where GPU dataframe guidance is a realistic next step."
     },
@@ -918,43 +918,43 @@
     },
     "context-map": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/context-map",
       "reason": "A dedicated pre-edit scoping skill is useful for safer multi-file changes and bug investigations."
     },
     "csharp-xunit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/csharp-xunit",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "dotnet-best-practices": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/dotnet-best-practices",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "deepstream-dev": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/deepstream-dev",
       "reason": "The active Computer Vision coursework already uses OpenCV, making DeepStream pipeline guidance a relevant next-stage NVIDIA workflow."
     },
     "deepstream-import-vision-model": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/deepstream-import-vision-model",
       "reason": "The active Computer Vision coursework can grow from OpenCV demos into real detector deployment, export, and TensorRT integration work."
     },
     "java-docs": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/java-docs",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java documentation guidance."
     },
     "java-junit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/java-junit",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java testing guidance."
     },
@@ -968,7 +968,7 @@
     },
     "nemo-retriever": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/nemo-retriever",
       "reason": "The IBM RAG and Agentic AI workshop repo makes local retriever setup and corpus-grounded QA workflows directly relevant."
     },
@@ -981,31 +981,31 @@
     },
     "rag-blueprint": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/rag-blueprint",
       "reason": "The IBM RAG and Agentic AI workshop repo makes end-to-end RAG deployment and configuration guidance directly relevant."
     },
     "rag-eval": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/rag-eval",
       "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable evaluation workflow for retrieval and answer quality checks."
     },
     "rag-perf": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae",
+      "source_commit": "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2",
       "source_path": "skills/rag-perf",
       "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable latency and throughput tuning workflow once the stack is running."
     },
     "secret-scanning": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/secret-scanning",
       "reason": "Local pre-commit secret hygiene and GitHub alert workflows are broadly useful and safe to ship in a shared catalog."
     },
     "security-review": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f11a4e441c5ff061b4f8ae37952be8c602e4034e",
+      "source_commit": "c956566a35c3c2e635f019e7a1bfa59d9497e8b1",
       "source_path": "skills/security-review",
       "reason": "The workspace includes multiple web apps and APIs that benefit from repeatable security review guidance."
     },

@@ -1,7 +1,7 @@
 ---
 name: codex-in-app-browser
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [codex, in, app, browser]
 description: "Drive the Codex in-app browser (open, navigate, click, type, screenshot, read page state) through the app's own node_repl runtime. Use when the session uses a custom (non-OpenAI) model, for example deepseek-v4-flash or mimo-v2.5, and the user asks to use the in-app browser, open or navigate a page in it, test a local app in a browser, or click, type, or take a screenshot in the Codex browser panel."
 ---

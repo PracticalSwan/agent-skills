@@ -1,7 +1,7 @@
 ---
 name: figma-use-figjam
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [figma, use, figjam]
 description: "This skill helps agents use Figma's use_figma MCP tool in the FigJam context. Can be used alongside figma-use which has foundational context for using the use_figma tool."
 ---

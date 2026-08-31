@@ -30,7 +30,7 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-08-29`. Local overlay totals can differ by machine.
+Snapshot date: `2026-08-31`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `237` tracked skill folders
@@ -53,7 +53,7 @@ Snapshot date: `2026-08-29`. Local overlay totals can differ by machine.
   pre-existing tracked skills retain their prior catalog baselines; the 66
   platform skills retain their import provenance, and five Codex Router skills
   were promoted from the personal Codex root. The catalog-wide maintenance
-  baseline is `last_updated: 2026-08-29`. The `58`
+  baseline is `last_updated: 2026-08-31`. The `58`
   local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
   retained-client sections and maintenance date.
@@ -113,6 +113,18 @@ mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
 workflows, plus the affected copied Superpowers workflows. Exact-path audits
 left unchanged mapped skills untouched, and imported support material was
 reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
+
+## 2026-08-31 Catalog Freshness And Corpus Refresh
+
+- Rechecked all 24 recorded source heads against live remotes. Only
+  `avoid-ai-writing` had a new installed-path change: its corpus manifest now
+  records small documentation and conversational pre-LLM seeds, and its
+  selector-aware extraction helper and tests were refreshed.
+- `awesome-copilot` and NVIDIA moved only outside the installed mappings, so
+  their provenance pins were updated without broad content rewrites.
+- Re-audited `.codex`, `.agents`, and `.claude`; no eligible child-only skills
+  remained. The protected Blender/local-only set, Codex `.system`, Superpowers,
+  and project-specific paths were not promoted or overwritten.
 
 ## 2026-08-29 Catalog Refresh And Mirror Repair
 
@@ -362,7 +374,7 @@ with the routing policy; it does not prune unknown personal skills.
 ## Upstream-Only Skill Sources
 
 Project-local skill roots under paths such as `C:\Assumption University` are
-neither scanned nor written during normal maintenance. The 2026-08-29 child
+neither scanned nor written during normal maintenance. The 2026-08-31 child
 re-audit scanned only the personal `.codex`, `.agents`, and `.claude` roots,
 confirmed that the five previously promoted Codex Router skills are current,
 and found no other unprotected child-only skills. Codex `.system`, the Blender

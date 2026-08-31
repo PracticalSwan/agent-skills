@@ -1,7 +1,7 @@
 ---
 name: documentation-patterns
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [documentation, patterns, docs, writing, quality]
 description: "Templates and structural patterns for API docs, feature docs, config guides, and REST endpoint documentation. Use when structuring docs, applying Markdown templates, or standardizing doc formats."
 ---

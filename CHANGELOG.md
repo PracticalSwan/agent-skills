@@ -3,6 +3,27 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-08-31] - Catalog Freshness And Corpus Refresh
+
+### Added
+
+- Added the current `avoid-ai-writing` corpus documentation and conversational
+  seed entries with explicit under-sampling limits.
+
+### Changed
+
+- Refreshed `avoid-ai-writing/corpus/manifest.json`, `corpus/README.md`,
+  `scripts/corpus.js`, and `scripts/corpus.test.js` from source commit
+  `58a95fc9971d7af95f1f1324b8a6bc991eb8004d`.
+- Updated the remaining source provenance pins and catalog baseline to
+  `2026-08-31`; `awesome-copilot` and NVIDIA changed only outside installed
+  mappings.
+
+### Fixed
+
+- Re-audited the three scoped child roots and confirmed no eligible child-only
+  skills remain; protected and project-specific boundaries stayed intact.
+
 ## [2026-08-29] - Catalog Freshness And Mirror Repair
 
 ### Added

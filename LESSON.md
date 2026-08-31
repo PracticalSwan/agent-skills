@@ -261,6 +261,20 @@ Codex skill catalog.
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
 
+## 2026-08-31 Catalog Freshness And Corpus Refresh
+
+- Recheck live source heads at each continuation. This pass found one new
+  installed-path delta in `avoid-ai-writing` corpus support; repository head
+  movement alone was not evidence that the other mapped skills changed.
+- Preserve corpus lineage when adding public seeds: record register, selector,
+  rights status, hash, and sample-size limits in the manifest and README.
+- Smoke-test source helpers after a support refresh. The selector-aware corpus
+  extractor now has regression coverage for authored semantic elements and
+  page chrome outside the selected container.
+- Keep child reconciliation limited to `.codex`, `.agents`, and `.claude` and
+  keep protected Blender, `.system`, Superpowers, and project paths outside
+  promotion and sync ownership.
+
 ## 2026-08-29 Catalog Freshness And Mirror Repair
 
 - Recheck live source heads on every continuation. A clean published parent can

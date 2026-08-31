@@ -1,7 +1,7 @@
 ---
 name: avoid-ai-writing
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [avoid, ai, writing, docs, quality]
 description: "Audit and rewrite content to remove AI writing patterns (\"AI-isms\"). Supports detect-only audits, edit-in-place file cleanup, voice and context profiles, and an iterate-to-convergence pass."
 license: "MIT"

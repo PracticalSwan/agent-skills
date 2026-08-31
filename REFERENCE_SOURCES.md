@@ -3,7 +3,7 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-08-29)
+## Snapshot (2026-08-31)
 
 - `226` skills have source mappings.
 - `168` source-mapped skills are part of the git-tracked catalog.
@@ -47,14 +47,14 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 
 | Source | Repository | Commit |
 |--------|------------|--------|
-| `awesome_copilot` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` |
+| `awesome_copilot` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` |
 | `awesome_claude_skills` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` |
 | `anthropic_skills` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` |
 | `awesome_codex_skills` | `https://github.com/ComposioHQ/awesome-codex-skills` | `0930e1373789d2eda449039f7ac154b33031de89` |
 | `googleworkspace_cli` | `https://github.com/googleworkspace/cli` | `a3768d0e82ad83cca2da97724e46bea4ff0e6dbd` |
-| `avoid_ai_writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `3bd64f19f41ae941d44e8261fe575624a2b1b8f6` |
+| `avoid_ai_writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `58a95fc9971d7af95f1f1324b8a6bc991eb8004d` |
 | `codebase_to_course` | `https://github.com/zarazhangrui/codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` |
-| `nvidia_skills` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` |
+| `nvidia_skills` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` |
 | `stitch_skills` | `https://github.com/google-labs-code/stitch-skills` | `0337446dadde6f8c94210444e2aa9d546126480f` |
 | `xquik_x_twitter_scraper` | `https://github.com/Xquik-dev/x-twitter-scraper` | `dc5fa6037d700eb3a7721155e92dabeeb9e56894` |
 | `openai_skills` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` |
@@ -76,12 +76,12 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 
 | Skill | Source Repo | Source Commit | Source Path |
 |-------|-------------|---------------|-------------|
-| `accelerated-computing-cudf` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/accelerated-computing-cudf` |
+| `accelerated-computing-cudf` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/accelerated-computing-cudf` |
 | `accessibility` | `https://github.com/addyosmani/web-quality-skills` | `afa8da942115f2961fdbfa80807ea0b232ff6c00` | `skills/accessibility` |
-| `agentic-eval` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/agentic-eval` |
-| `avoid-ai-writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `3bd64f19f41ae941d44e8261fe575624a2b1b8f6` | `.` |
+| `agentic-eval` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/agentic-eval` |
+| `avoid-ai-writing` | `https://github.com/conorbronsdon/avoid-ai-writing` | `58a95fc9971d7af95f1f1324b8a6bc991eb8004d` | `.` |
 | `best-practices` | `https://github.com/addyosmani/web-quality-skills` | `afa8da942115f2961fdbfa80807ea0b232ff6c00` | `skills/best-practices` |
-| `cloud-design-patterns` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/cloud-design-patterns` |
+| `cloud-design-patterns` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/cloud-design-patterns` |
 | `codebase-design` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/codebase-design` |
 | `codebase-to-course` | `https://github.com/zarazhangrui/codebase-to-course` | `ff8837ecf8e9f6ce9874ffa42e42633394a52a00` | `.` |
 | `codex-app-threads` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:76448b85d49f671eae1143aed4e977f57a9f8e26d906b9c0bb9c9aa68ba44488` | `codex-app-threads` |
@@ -91,18 +91,18 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `codex-router-media` | `local-workspace://C:/Users/LOQ/.codex/skills` | `sha256:e3bbe2397d7c5b240ab98c3e6fab6d4afa40ab77468062d1e5076b03bcc87e06` | `codex-router-media` |
 | `competition-submission-checker` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:a42dbd44ac124d8ff639aa9eee834c589527eb66c2742ed1b4fba7444305b1a3` | `.agents/skills/competition-submission-checker` |
 | `composition-patterns` | `https://github.com/vercel-labs/agent-skills` | `063bee94c3f4df8453406c830b0a7df0f2860278` | `skills/composition-patterns` |
-| `context-map` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/context-map` |
+| `context-map` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/context-map` |
 | `core-web-vitals` | `https://github.com/addyosmani/web-quality-skills` | `afa8da942115f2961fdbfa80807ea0b232ff6c00` | `skills/core-web-vitals` |
 | `course-content-map` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:5ef9653ccffaf53b7698df234aa0e60c27f7832e16032a67980e819bb69c0b97` | `.agents/skills/course-content-map` |
-| `csharp-xunit` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/csharp-xunit` |
-| `deepstream-dev` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/deepstream-dev` |
-| `deepstream-import-vision-model` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/deepstream-import-vision-model` |
+| `csharp-xunit` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/csharp-xunit` |
+| `deepstream-dev` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/deepstream-dev` |
+| `deepstream-import-vision-model` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/deepstream-import-vision-model` |
 | `deploy-to-vercel` | `https://github.com/vercel-labs/agent-skills` | `063bee94c3f4df8453406c830b0a7df0f2860278` | `skills/deploy-to-vercel` |
 | `doc` | `https://github.com/openai/skills` | `45d05d75363abf13f99d09e899d61e07b8010685` | `skills/.curated/doc` |
 | `document-metadata-review` | `local-workspace://C:/Assumption University/Outside Courses/GCI World 2026` | `sha256:672f84e342056cf4d7c88b020dcdf96707ff0601ff9a5f15b546b368c166410c` | `.agents/skills/document-metadata-review` |
 | `docx` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/docx` |
 | `domain-modeling` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/domain-modeling` |
-| `dotnet-best-practices` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/dotnet-best-practices` |
+| `dotnet-best-practices` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/dotnet-best-practices` |
 | `ds-notebook-strict-code` | `local-workspace://C:/Assumption University/Finished/ITX2007/Assignments` | `sha256:f00f66afa472152180de748df6c54dde0db43d734004e8f79748e494f576f3e7` | `.agent/skills/ds-notebook-strict-code` |
 | `ds-teaching-assistant` | `local-workspace://C:/Assumption University/Finished/ITX2007/Assignments` | `sha256:9bd3ee54bcbd541ab8210013b58313f81e02e5135016ff182806deaad8f511a2` | `.agent/skills/ds-teaching-assistant` |
 | `figma` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/figma` |
@@ -148,8 +148,8 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `huggingface-zerogpu` | `https://github.com/huggingface/skills` | `cead19e10754e773bad24fecef83cb64be24094e` | `skills/huggingface-zerogpu` |
 | `imagegen` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:bf6877b61db77477b039f93a024b7369cce115ff31c2a05f928a81a0a89fc8b8` | `imagegen` |
 | `improve-codebase-architecture` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/improve-codebase-architecture` |
-| `java-docs` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/java-docs` |
-| `java-junit` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/java-junit` |
+| `java-docs` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/java-docs` |
+| `java-junit` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/java-junit` |
 | `jupyter-notebook` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/jupyter-notebook` |
 | `mcp-builder` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/mcp-builder` |
 | `mongodb-atlas-stream-processing` | `https://github.com/mongodb/agent-skills` | `47cc46148f53145eb9b880d2bf1aa89bc9097818` | `skills/mongodb-atlas-stream-processing` |
@@ -159,7 +159,7 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `mongodb-query-optimizer` | `https://github.com/mongodb/agent-skills` | `47cc46148f53145eb9b880d2bf1aa89bc9097818` | `skills/mongodb-query-optimizer` |
 | `mongodb-schema-design` | `https://github.com/mongodb/agent-skills` | `47cc46148f53145eb9b880d2bf1aa89bc9097818` | `skills/mongodb-schema-design` |
 | `mongodb-search-and-ai` | `https://github.com/mongodb/agent-skills` | `47cc46148f53145eb9b880d2bf1aa89bc9097818` | `skills/mongodb-search-and-ai` |
-| `nemo-retriever` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/nemo-retriever` |
+| `nemo-retriever` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/nemo-retriever` |
 | `netlify-access-control` | `https://github.com/netlify/context-and-tools` | `4645e4c47ae4a42a3955c96c1389bbc16f10d457` | `skills/netlify-access-control` |
 | `netlify-agent-runner` | `https://github.com/netlify/context-and-tools` | `4645e4c47ae4a42a3955c96c1389bbc16f10d457` | `skills/netlify-agent-runner` |
 | `netlify-ai-gateway` | `https://github.com/netlify/context-and-tools` | `4645e4c47ae4a42a3955c96c1389bbc16f10d457` | `skills/netlify-ai-gateway` |
@@ -183,9 +183,9 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `plugin-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:98b50f9092b509e29bbeda92c8427443e89817edd2512c85404ee435e415e9d8` | `plugin-creator` |
 | `pptx` | `https://github.com/anthropics/skills` | `3b3fad96af16a10759d930941b4520ba0c40edae` | `skills/pptx` |
 | `prototype` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/prototype` |
-| `rag-blueprint` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/rag-blueprint` |
-| `rag-eval` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/rag-eval` |
-| `rag-perf` | `https://github.com/NVIDIA/skills` | `73a7813441fe714f9cfcb84755cf9ad4bb8e8cae` | `skills/rag-perf` |
+| `rag-blueprint` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/rag-blueprint` |
+| `rag-eval` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/rag-eval` |
+| `rag-perf` | `https://github.com/NVIDIA/skills` | `0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2` | `skills/rag-perf` |
 | `react-best-practices` | `https://github.com/vercel-labs/agent-skills` | `063bee94c3f4df8453406c830b0a7df0f2860278` | `skills/react-best-practices` |
 | `react-native-skills` | `https://github.com/vercel-labs/agent-skills` | `063bee94c3f4df8453406c830b0a7df0f2860278` | `skills/react-native-skills` |
 | `react-view-transitions` | `https://github.com/vercel-labs/agent-skills` | `063bee94c3f4df8453406c830b0a7df0f2860278` | `skills/react-view-transitions` |
@@ -194,10 +194,10 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `resolving-merge-conflicts` | `https://github.com/mattpocock/skills` | `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` | `skills/engineering/resolving-merge-conflicts` |
 | `review-agent` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:8e74c25fd7d12521b1196c0bbc4790dcbd90520630a19da512f9c806c817cdd8` | `review-agent` |
 | `screenshot` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/screenshot` |
-| `secret-scanning` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/secret-scanning` |
+| `secret-scanning` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/secret-scanning` |
 | `security-best-practices` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-best-practices` |
 | `security-ownership-map` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-ownership-map` |
-| `security-review` | `https://github.com/github/awesome-copilot` | `f11a4e441c5ff061b4f8ae37952be8c602e4034e` | `skills/security-review` |
+| `security-review` | `https://github.com/github/awesome-copilot` | `c956566a35c3c2e635f019e7a1bfa59d9497e8b1` | `skills/security-review` |
 | `security-threat-model` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/security-threat-model` |
 | `seo` | `https://github.com/addyosmani/web-quality-skills` | `afa8da942115f2961fdbfa80807ea0b232ff6c00` | `skills/seo` |
 | `skill-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:58c915c0b2a301c347808a193a11a6efc14c0e3dad77265432e1e6e2ac54cb41` | `skill-creator` |
@@ -262,6 +262,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-08-31 continuation re-audited the personal `.codex`, `.agents`,
+  and `.claude` skill roots and found no eligible child-only skills. Protected
+  Blender/local-only names, Codex `.system`, copied Superpowers, and project
+  paths remained outside promotion and sync ownership.
 - The 2026-08-29 continuation re-audited only the personal `.codex`, `.agents`,
   and `.claude` skill roots. No eligible child-only skills remained. A missing
   top-level Codex `doc` mirror was restored by the approved sync script; the
@@ -349,6 +353,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 - The current Xquik source removed its MCP setup documents and metadata. The
   registry therefore removes the stale preferred Xquik MCP mapping and lets
   the normalized skill state its REST/SDK fallback honestly.
+- The 2026-08-31 source audit refreshed the changed `avoid-ai-writing` corpus
+  manifest and extraction helper/tests at its current head. `awesome-copilot`
+  and NVIDIA heads moved outside installed paths and received provenance-only
+  updates.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.

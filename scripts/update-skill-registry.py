@@ -15,14 +15,14 @@ from platform_skill_manifest import (
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "f11a4e441c5ff061b4f8ae37952be8c602e4034e"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "c956566a35c3c2e635f019e7a1bfa59d9497e8b1"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
     "anthropic_skills": ("https://github.com/anthropics/skills", "3b3fad96af16a10759d930941b4520ba0c40edae"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "3bd64f19f41ae941d44e8261fe575624a2b1b8f6"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "58a95fc9971d7af95f1f1324b8a6bc991eb8004d"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "73a7813441fe714f9cfcb84755cf9ad4bb8e8cae"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2"),
     "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "0337446dadde6f8c94210444e2aa9d546126480f"),
     "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "dc5fa6037d700eb3a7721155e92dabeeb9e56894"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
@@ -412,6 +412,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-08-31 continuation re-audited the personal `.codex`, `.agents`,
+  and `.claude` skill roots and found no eligible child-only skills. Protected
+  Blender/local-only names, Codex `.system`, copied Superpowers, and project
+  paths remained outside promotion and sync ownership.
 - The 2026-08-29 continuation re-audited only the personal `.codex`, `.agents`,
   and `.claude` skill roots. No eligible child-only skills remained. A missing
   top-level Codex `doc` mirror was restored by the approved sync script; the
@@ -499,6 +503,10 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 - The current Xquik source removed its MCP setup documents and metadata. The
   registry therefore removes the stale preferred Xquik MCP mapping and lets
   the normalized skill state its REST/SDK fallback honestly.
+- The 2026-08-31 source audit refreshed the changed `avoid-ai-writing` corpus
+  manifest and extraction helper/tests at its current head. `awesome-copilot`
+  and NVIDIA heads moved outside installed paths and received provenance-only
+  updates.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.

@@ -1,7 +1,7 @@
 ---
 name: huggingface-paper-publisher
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [hugging-face, huggingface, paper, publisher]
 description: "Publish and manage research papers on Hugging Face Hub. Supports creating paper pages, linking papers to models/datasets, claiming authorship, and generating professional markdown-based research articles."
 ---

@@ -1,7 +1,7 @@
 ---
 name: huggingface-trackio
 version: "2.0"
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 tags: [hugging-face, huggingface, trackio]
 description: "Track and visualize ML training experiments with Trackio. Use when logging metrics during training (Python API), firing alerts for training diagnostics, or retrieving/analyzing logged metrics (CLI). Supports real-time dashboard visualization, alerts with webhooks, HF Space syncing, and JSON output for automation."
 ---

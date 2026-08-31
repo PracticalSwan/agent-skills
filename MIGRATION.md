@@ -90,6 +90,13 @@ normalized catalog therefore removes the stale preferred Xquik MCP mapping and
 uses the documented REST/SDK fallback. Do not rely on the retired
 `mcp-setup.md` or `mcp-tools.md` files in that skill.
 
+## 2026-08-31 Catalog Corpus Refresh
+
+The current `avoid-ai-writing` corpus includes small `docs` and
+`conversational` pre-LLM seeds. They improve extraction-path coverage but do
+not establish a register-level rate; keep the manifest's under-sampling limits
+visible and do not treat the seeds as a publishable benchmark.
+
 ## Rollback
 
 To restore the prior support model, revert the version 2.0 catalog commit,

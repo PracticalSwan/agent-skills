@@ -100,6 +100,11 @@ Codex skill catalog.
   for extra confirmation. Escalate before commit or push only when work is
   incomplete, validation/sync failed, a required command was rejected,
   security or privacy risk remains, or staging is unsafe.
+- The five Codex Router skills can be digest-approved external copies in the
+  Codex mirror. When parent sync changes one of those exact folders, review the
+  synced content and re-approve only that changed external skill before relying
+  on router doctor; do not overwrite it with router-owned content just to clear
+  a stale approval.
 - When a maintained skill is deliberately retired, add only its reviewed exact
   name to the sync cleanup and verify it is removed from all three approved
   personal-global roots. Never expand that cleanup into unknown personal or

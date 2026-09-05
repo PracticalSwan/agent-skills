@@ -1,7 +1,7 @@
 ---
 name: codex-router
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-06
 tags: [codex, router]
 description: "Orientation for custom (non-OpenAI) models running in the Codex app through the codex-router proxy. Explains that the app's native tools arrive as flattened codex_app__ and mcp__ names, that the router restores them so the app executes them, which companion skills to read before threads, browser, or computer-use work, and that a turn with no tool call ends the task. Use when the session uses a custom (non-OpenAI) model, for example deepseek-v4-flash or mimo-v2.5, when codex_app__ or mcp__ tool names appear in the tool list, when a tool result just arrived and more work remains, or when thread, browser, or computer-use work is requested."
 ---
@@ -49,9 +49,12 @@ turns.
 ## Spawned threads and model inheritance
 
 For a new local Codex thread, omit the `model` field unless the user
-explicitly requested one. The router selects the parent routed model. An
-explicit model is never overridden. Follow-up messages retain the target
-thread's settings, and cloud tasks choose their model outside this relay.
+explicitly requested one. The router selects the parent routed model, while an
+explicit model remains a separate user-visible task choice. In-session
+subagents are always pinned to the routed parent's model because their tool
+arguments are model-generated and must not silently cross a provider or billing
+boundary. Follow-up messages retain the target thread's settings, and cloud
+tasks choose their model outside this relay.
 
 ## What the token and usage numbers mean
 

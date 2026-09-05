@@ -2,6 +2,16 @@
 
 All notable changes to the `codex-router` skill are documented here.
 
+## [2026-09-06] - Routed Subagent Provider Affinity
+
+### Changed
+
+- Clarified that explicit models on new local threads remain user-visible choices, while in-session subagents stay on the routed parent model.
+
+### Fixed
+
+- Removed stale guidance that allowed model-generated subagent overrides to cross provider and billing boundaries.
+
 ## [2026-09-05] - Catalog Freshness And Source Sync
 
 ### Added

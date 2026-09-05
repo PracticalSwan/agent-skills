@@ -33,24 +33,25 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-08-31`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `237` tracked skill folders
-  - `205` tracked maintained skills
+  - `245` tracked skill folders
+  - `213` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `295` local skill folders detected
-  - `263` local maintained skills detected
+  - `303` local skill folders detected
+  - `271` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `237` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+All `245` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
-retain their import provenance, and five Codex Router skills were promoted
-from the personal Codex root. The catalog-wide maintenance baseline is
-`last_updated: 2026-08-31`. The `58` local-only Google
+retain their import provenance, five Codex Router skills were promoted from
+the personal Codex root, and one reviewed Codex plugin scanner was vendored.
+The catalog-wide maintenance baseline is
+`last_updated: 2026-09-05`. The `58` local-only Google
 Workspace overlays retain upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
@@ -88,7 +89,7 @@ post-implementation visual QA and keep framework, Figma, and Stitch skills for
 their specialized workflows.
 
 The 2026-08-16 related-skill consolidation audit found no safe content merges.
-Supabase platform/Postgres, Gemini general/Interactions, React implementation/
+Supabase platform/Postgres, Gemini API/Live/Omni, React implementation/
 performance, and aggregate/focused web-quality workflows remain separate with
 explicit routing links. Plugin-managed Supabase and React copies remain
 external; this parent catalog is canonical for maintained cross-client content.
@@ -108,6 +109,26 @@ therefore included, with no Hugging Face, MongoDB, or Figma CLI skill imported.
 Authentication, runtime installation, and MCP configuration remain explicit
 user-authorized actions. Repeat imports with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
+
+- Rechecked all 24 source heads against their exact mapped paths. Refreshed
+  Avoid AI Writing v3.29 and six focused leaves, both NVIDIA DeepStream
+  workflows, seven Tavily workflows, Gemini API/Live/Omni, and changed Figma
+  support; unrelated head movement remains provenance-only.
+- Retired `gemini-interactions-api` after its migration content was confirmed
+  in `gemini-api-dev`. The exact name is now in the sync retirement list.
+- Re-audited only the personal `.codex`, `.agents`, and `.claude` roots. No
+  eligible child-only skills remained after protected/system/project
+  exclusions. Of the reviewed Codex plugin skills, only the self-contained
+  read-only `agent-skillguard` scanner was vendored; its absent upstream rule
+  corpus helper is documented as unavailable.
+- Current inventory: `245` tracked folders (`213` maintained and `32` copied
+  Superpowers) and `303` live folders (`271` maintained plus `58` local-only
+  overlays). Validation, helper checks, Blender refresh, and three-root sync
+  are required before publishing.
+- Nineteen CRLF shell helpers were normalized to LF after WSL parsing exposed
+  portability failures; no shell logic was changed.
 
 ## 2026-08-31 Catalog Freshness And Corpus Refresh
 

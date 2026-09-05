@@ -1,7 +1,7 @@
 ---
 name: remembering-conversations
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [remembering, conversations]
 description: "Search previous Claude Code conversations for facts, patterns, decisions, and context using semantic or text search"
 ---

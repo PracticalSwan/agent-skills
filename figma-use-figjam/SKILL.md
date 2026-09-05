@@ -1,7 +1,7 @@
 ---
 name: figma-use-figjam
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [figma, use, figjam]
 description: "This skill helps agents use Figma's use_figma MCP tool in the FigJam context. Can be used alongside figma-use which has foundational context for using the use_figma tool."
 ---
@@ -42,7 +42,7 @@ Every FigJam text mutation (sticky/shape/label/table cell/connector text, standa
 
 ## Adding Images to a FigJam Board
 
-**`upload_assets` is the ONLY supported way to add images to a FigJam file.** Do NOT use `figma.createImage()` or `figma.createImageAsync()` from inside `use_figma` — they are unsupported as image-upload entry points in FigJam. Call `upload_assets` with the FigJam `fileKey`; the tool returns single-use upload URLs that you POST raw image bytes to, and the image is committed and placed automatically. Pass `nodeId` (with `count: 1`) to attach the upload to an existing FigJam node as a fill; omit `nodeId` to drop the image onto the board as a new layer.
+**`upload_assets` is the ONLY supported way to add images to a FigJam file.** Call `upload_assets` with the FigJam `fileKey`; the tool returns single-use upload URLs that you POST raw image bytes to, and the image is committed and placed automatically. Pass `nodeIds` (with one entry per upload) to attach uploads to existing FigJam nodes as fills; omit `nodeIds` to drop the images onto the board as new layers.
 
 For the full request/response shape, see [figma-use → api-reference.md → Images](../figma-use/references/api-reference.md#images).
 
@@ -63,8 +63,6 @@ For the full request/response shape, see [figma-use → api-reference.md → Ima
 - [create-label](references/create-label.md) — Create and configure FigJam label nodes (small numbered/lettered circle callout markers, sequences, positioning)
 - [batch-modify](references/batch-modify.md) — Patterns for modifying many existing nodes at once (bulk style changes, repositioning, property updates)
 - [figjam-colors](references/figjam-colors.md) — Canonical FigJam color palettes for every node type (sticky, section, connector, shape, label) plus the `hex/255` notation rule and the `h()` helper
-
-<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

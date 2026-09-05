@@ -3,6 +3,49 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-09-05] - Catalog Source Refresh, Plugin Review, And Gemini Consolidation
+
+### Added
+
+- Added the current Avoid AI Writing v3.29 focused suite:
+  `ai-writing-detector`, `avoid-ai-writing-router`, `false-positive-reviewer`,
+  `file-edit-in-place`, `preservation-verifier`, and
+  `voice-preserving-rewriter`.
+- Added current Gemini `gemini-live-api-dev` and
+  `gemini-omni-flash-api` workflows and their official migration/support
+  material.
+- Added the reviewed Codex plugin skill `agent-skillguard` with its
+  self-contained scanner, rules, schemas, and public fixture corpus.
+
+### Changed
+
+- Refreshed exact mapped upstream paths for Avoid AI Writing, NVIDIA
+  DeepStream, Tavily, Gemini API/Live/Omni, and the changed Figma support trees;
+  updated all source pins and the generated reference report to the
+  2026-09-05 heads.
+- Modernized all `303` live catalog skills to the `2.0` metadata, portability,
+  MCP fallback, Anti-Patterns, Verification Protocol, Related Skills, and
+  per-skill changelog baseline. The tracked catalog is now `245` folders
+  (`213` maintained plus `32` copied official Superpowers); `58` live overlays
+  remain local-only.
+- Adapted the promoted Avoid AI Writing graph validator/tests to run from both
+  the upstream nested package layout and this flattened parent catalog.
+
+### Fixed
+
+- Retired `gemini-interactions-api` after confirming its migration guidance is
+  covered by `gemini-api-dev`, and added exact-name mirror cleanup without
+  affecting unknown personal skills or protected Codex `.system`/Blender
+  folders.
+- Removed the unsupported canonical-package test command from the flattened
+  Avoid AI Writing package test script and corrected its detector category
+  count contract to the current 54 engine types.
+- Normalized 19 catalog shell helpers from CRLF to LF after WSL parsing exposed
+  portability failures; no shell logic was changed.
+- Documented that the installed `agent-skillguard` package lacks
+  `tools/verify_rule_corpus.py`; fixture scans are the supported local smoke
+  test and do not certify a target as safe.
+
 ## [2026-08-31] - Catalog Freshness And Corpus Refresh
 
 ### Added

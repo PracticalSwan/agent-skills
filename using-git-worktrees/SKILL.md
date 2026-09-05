@@ -1,7 +1,7 @@
 ---
 name: using-git-worktrees
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [using, git, worktrees]
 description: "Create isolated git worktrees with smart directory selection and safety verification"
 ---

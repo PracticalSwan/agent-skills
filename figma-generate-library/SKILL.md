@@ -1,7 +1,7 @@
 ---
 name: figma-generate-library
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [figma, generate, library]
 description: "Build or update a professional-grade design system in Figma from a codebase. Use when the user wants to create variables/tokens, build component libraries, create individual components with proper variant sets and variable bindings, set up theming (light/dark modes), document foundations, or reconcile gaps between code and Figma. Also use when the user asks to create or generate any component in Figma — even a single one — since components require proper variable foundations, variant states, and design token bindings to be production-quality. This skill teaches WHAT to build and in WHAT ORDER — it complements the `figma-use` skill which teaches HOW to call the Plugin API. Both skills should be loaded together."
 ---
@@ -24,7 +24,6 @@ Before starting a phase:
 - Include every task/subtask that will be attempted in that phase.
 - Include the phase exit criteria.
 - Do not begin mutating work for the phase until this checklist has been posted.
-- If the phase requires explicit approval, ask for approval after the checklist and wait.
 
 During execution:
 - Before each major subsection, post a short update naming the exact section being worked on, using this format:
@@ -40,7 +39,6 @@ At the end of each phase:
   - Decisions or conflicts resolved
   - Remaining risks or follow-ups
 - Then show the required phase artifact for that phase and continue automatically.
-- Only ask for explicit approval after Phase 0 or if a genuine decision fork arises (see [Section 6](#6-decision-forks)). For Phases 1–4, the default is to continue automatically after the summary.
 
 ### Stable Task IDs
 
@@ -306,7 +304,6 @@ Collection: "Spacing"       modes: ["Value"]
 ## 9. Per-Phase Anti-Patterns
 
 **Phase 0 anti-patterns:**
-- ❌ Starting to create anything before scope is locked with user
 - ❌ Ignoring existing file conventions and imposing new ones
 - ❌ Skipping `search_design_system` before planning component creation
 
@@ -329,7 +326,7 @@ Collection: "Spacing"       modes: ["Value"]
 - ❌ Importing remote components then immediately detaching them
 
 **General anti-patterns:**
-- ❌ Retrying a failed script without understanding the error first
+- ❌ Retrying when `safeToRetryWithoutCanvasRead` is `false` before reading the canvas
 - ❌ Using name-prefix matching for cleanup (deletes user-owned nodes)
 - ❌ Building on unvalidated work from the previous step
 - ❌ Parallelizing use_figma calls (always sequential)
@@ -371,8 +368,6 @@ Reusable Plugin API helper functions. Embed in `use_figma` calls:
 | [createDocumentationPage.js](scripts/createDocumentationPage.js) | Create a page with title + description + section structure |
 | [validateCreation.js](scripts/validateCreation.js) | Verify created nodes match expected counts, names, structure |
 | [cleanupOrphans.js](scripts/cleanupOrphans.js) | Remove only the exact node, variable, and collection IDs supplied from the state ledger |
-
-<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

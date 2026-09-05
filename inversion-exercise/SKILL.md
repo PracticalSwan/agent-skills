@@ -1,7 +1,7 @@
 ---
 name: inversion-exercise
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [inversion, exercise]
 description: "Flip core assumptions to reveal hidden constraints and alternative approaches - \"what if the opposite were true?"
 ---

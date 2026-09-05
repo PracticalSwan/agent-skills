@@ -22,12 +22,13 @@ $script:allowedDownstreamRoots = @(
     'C:\Users\LOQ\.claude\skills'
 )
 
-# These exact maintained-skill names were retired by the 2026-08-02 frontend
-# consolidation. Prune only these known catalog-owned copies; preserve unknown
+# These exact maintained-skill names were retired by reviewed catalog
+# consolidations. Prune only these known catalog-owned copies; preserve unknown
 # personal skills and all host-managed folders.
 $script:retiredCatalogSkills = @(
     'frontend-skill',
-    'premium-frontend-ui'
+    'premium-frontend-ui',
+    'gemini-interactions-api'
 )
 
 function Get-NormalizedPath {

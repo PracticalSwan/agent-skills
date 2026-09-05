@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "corpus_version": "1.0.0",
+  "fixtures": [
+    {"id":"positive-sg001","class":"positive","path":"positive/sg001.md","expected_rule_ids":["SG001"],"description":"Remote content piped directly to a shell."},
+    {"id":"positive-sg002","class":"positive","path":"positive/sg002.sh","expected_rule_ids":["SG002"],"description":"Broad recursive destructive command."},
+    {"id":"positive-sg003","class":"positive","path":"positive/sg003.json","expected_rule_ids":["SG003"],"description":"Wildcard permission request."},
+    {"id":"positive-sg004","class":"positive","path":"positive/sg004.md","expected_rule_ids":["SG004"],"description":"Instruction to upload a credential."},
+    {"id":"positive-sg005","class":"positive","path":"positive/sg005.ps1","expected_rule_ids":["SG005"],"description":"Encoded PowerShell command execution."},
+    {"id":"positive-sg006","class":"positive","path":"positive/sg006.ps1","expected_rule_ids":["SG006"],"description":"Persistence-sensitive scheduled task."},
+    {"id":"positive-sg007","class":"positive","path":"positive/sg007.sh","expected_rule_ids":["SG007"],"description":"Unpinned remote VCS package source."},
+    {"id":"positive-sg008","class":"positive","path":"positive/sg008.md","expected_rule_ids":["SG008"],"description":"Authority-override instruction."},
+    {"id":"negative-reviewed-download","class":"negative","path":"negative/reviewed-download.md","expected_rule_ids":[],"description":"Download, inspect, and verify before execution."},
+    {"id":"negative-narrow-delete","class":"negative","path":"negative/narrow-delete.ps1","expected_rule_ids":[],"description":"Narrow workspace-local cleanup without a broad target."},
+    {"id":"negative-least-privilege","class":"negative","path":"negative/least-privilege.json","expected_rule_ids":[],"description":"Named read-only permission rather than a wildcard."},
+    {"id":"negative-hierarchy","class":"negative","path":"negative/hierarchy.md","expected_rule_ids":[],"description":"Instruction to preserve higher-priority authority."}
+  ]
+}

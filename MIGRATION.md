@@ -97,6 +97,30 @@ The current `avoid-ai-writing` corpus includes small `docs` and
 not establish a register-level rate; keep the manifest's under-sampling limits
 visible and do not treat the seeds as a publishable benchmark.
 
+## 2026-09-05 Source Refresh And Gemini Consolidation
+
+The source-maintenance pass refreshed only exact mapped paths at the current
+heads: Avoid AI Writing v3.29 (including its six focused detector/router and
+preservation leaves), two NVIDIA DeepStream workflows, seven Tavily workflows,
+Gemini API/Live/Omni, and the affected Figma support trees. Other source-head
+movement was recorded in provenance without broad imports.
+
+- `gemini-interactions-api` is retired because its migration guidance is now
+  carried by `gemini-api-dev`; use `gemini-live-api-dev` for bidirectional
+  streaming and `gemini-omni-flash-api` for bounded media generation.
+- The approved sync script prunes only the exact retired folder name from the
+  Codex, shared, and Claude mirrors. Unknown personal skills and Codex
+  `.system` folders remain untouched.
+- The reviewed Codex plugin selection adds only `agent-skillguard`, a
+  self-contained read-only scanner. Its public fixtures intentionally contain
+  risky examples; a full bundle scan therefore returns review findings. The
+  package does not ship `tools/verify_rule_corpus.py`, so the catalog documents
+  the supported positive/negative fixture smoke tests instead of claiming that
+  helper ran.
+- The live catalog is now `303` folders and the tracked catalog is `245`; see
+  `README.md`, `AGENTS.md`, `CLAUDE.md`, and `REFERENCE_SOURCES.md` for the
+  synchronized inventory and exact provenance.
+
 ## Rollback
 
 To restore the prior support model, revert the version 2.0 catalog commit,

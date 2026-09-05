@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SpannDaMan/agent-skillguard/blob/main/plugins/agent-skillguard/report.schema.json",
+  "title": "Skill Risk Check report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tool", "claim_boundary", "scan", "summary", "findings"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {"name": {"const": "agent-skillguard"}, "version": {"type": "string"}}
+    },
+    "claim_boundary": {"type": "string", "minLength": 20},
+    "scan": {"type": "object"},
+    "summary": {"type": "object"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "rule_version", "severity", "uncertainty", "path", "line", "fingerprint", "suppressed"]
+      }
+    }
+  }
+}

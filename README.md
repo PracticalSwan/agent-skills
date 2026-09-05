@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-08-31`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `237` tracked skill folders
-  - `205` tracked maintained skills
+  - `245` tracked skill folders
+  - `213` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `295` local skill folders detected
-  - `263` local maintained skills detected
+  - `303` local skill folders detected
+  - `271` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,11 +49,12 @@ Snapshot date: `2026-08-31`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `237` tracked skills use catalog `version: "2.0"`. The `166`
+- All `245` tracked skills use catalog `version: "2.0"`. The `166`
   pre-existing tracked skills retain their prior catalog baselines; the 66
-  platform skills retain their import provenance, and five Codex Router skills
-  were promoted from the personal Codex root. The catalog-wide maintenance
-  baseline is `last_updated: 2026-08-31`. The `58`
+  platform skills retain their import provenance, five Codex Router skills were
+  promoted from the personal Codex root, and one reviewed Codex plugin scanner
+  was vendored. The catalog-wide maintenance baseline is
+  `last_updated: 2026-09-05`. The `58`
   local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
   retained-client sections and maintenance date.
@@ -113,6 +114,29 @@ mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
 workflows, plus the affected copied Superpowers workflows. Exact-path audits
 left unchanged mapped skills untouched, and imported support material was
 reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
+
+## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
+
+- Rechecked all 24 recorded upstream heads against their exact mapped paths.
+  Refreshed Avoid AI Writing v3.29 and six focused leaves, both NVIDIA
+  DeepStream workflows, seven Tavily workflows, Gemini API/Live/Omni, and the
+  affected Figma support trees. Head movement outside installed mappings was
+  recorded in provenance without broad imports.
+- Retired `gemini-interactions-api` after confirming its migration guidance is
+  present in `gemini-api-dev`; the sync script prunes only that exact known
+  catalog-owned name.
+- Reviewed installed Codex plugin skills and vendored only `agent-skillguard`,
+  a self-contained read-only scanner that fills a real catalog gap. Routekit,
+  shipproof, agentproof, and thin Riqor wrappers were omitted as overlapping,
+  host-coupled, or unnecessary; specialized Xquik, Hugging Face, and Figma
+  additions were also omitted to avoid bloat.
+- The complete parent catalog now contains `303` live skill folders (`271`
+  maintained plus `32` copied Superpowers), of which `58` are local-only
+  overlays; the tracked set is `245` folders (`213` maintained plus `32`
+  copied Superpowers).
+- Normalized the 19 catalog shell helpers that carried CRLF endings; all 53
+  shell files now pass `bash -n` through WSL, while native PowerShell, Python,
+  JavaScript, and JSON syntax checks cover their corresponding helper sets.
 
 ## 2026-08-31 Catalog Freshness And Corpus Refresh
 
@@ -374,12 +398,12 @@ with the routing policy; it does not prune unknown personal skills.
 ## Upstream-Only Skill Sources
 
 Project-local skill roots under paths such as `C:\Assumption University` are
-neither scanned nor written during normal maintenance. The 2026-08-31 child
+neither scanned nor written during normal maintenance. The 2026-09-05 child
 re-audit scanned only the personal `.codex`, `.agents`, and `.claude` roots,
-confirmed that the five previously promoted Codex Router skills are current,
-and found no other unprotected child-only skills. Codex `.system`, the Blender
-overlay, copied official Superpowers, and project-specific paths remain
-excluded.
+confirmed that the previously promoted Codex Router skills are current, and
+found no other eligible child-only skills. Codex `.system`, the protected
+Blender overlay, copied official Superpowers, and project-specific paths
+remain excluded.
 
 For an explicitly authorized future personal-root promotion, use
 `scripts/promote-child-skills.py`, then refresh provenance with
@@ -517,7 +541,8 @@ commits are in `scripts/platform_skill_manifest.py` and
 - `deepstream-dev`
 - `deepstream-import-vision-model`
 - `gemini-api-dev`
-- `gemini-interactions-api`
+- `gemini-live-api-dev`
+- `gemini-omni-flash-api`
 - `nemo-retriever`
 - `rag-blueprint`
 - `rag-eval`
@@ -543,6 +568,13 @@ commits are in `scripts/platform_skill_manifest.py` and
 
 - `agent-task-mapping`
 - `avoid-ai-writing`
+- `ai-writing-detector`
+- `avoid-ai-writing-router`
+- `false-positive-reviewer`
+- `file-edit-in-place`
+- `preservation-verifier`
+- `voice-preserving-rewriter`
+- `agent-skillguard`
 - `codex-app-threads`
 - `codex-computer-use`
 - `codex-in-app-browser`
@@ -578,6 +610,8 @@ commits are in `scripts/platform_skill_manifest.py` and
 The five `codex-*` entries are host-specific workflow documentation promoted
 from the Codex child root. They describe routing and safe fallbacks; they do
 not replace host-provided tools or make unavailable runtime surfaces appear.
+`agent-skillguard` is the only vendored plugin skill in this refresh; it is a
+local, read-only scanner and does not certify a target as safe.
 
 ### Security and Specialized
 
@@ -600,9 +634,10 @@ shape, output, or verification path:
 - `supabase` routes platform work to `supabase-postgres-best-practices` for
   schema, migration, RLS, query, and Postgres security work; neither replaces
   the other.
-- `gemini-api-dev` remains the general SDK and model workflow, while
-  `gemini-interactions-api` owns Interactions-specific state, streaming,
-  managed-agent, and migration guidance.
+- `gemini-api-dev` remains the general SDK/model and migration workflow;
+  `gemini-live-api-dev` owns bidirectional streaming and session behavior, and
+  `gemini-omni-flash-api` owns bounded media-generation workflows. The removed
+  `gemini-interactions-api` path is no longer a separately maintained skill.
 - `react-best-practices` remains performance guidance alongside, not inside,
   `react-development`, `nextjs-development`, and `frontend-design`.
 - `web-quality-audit` remains the aggregate router for `performance`,
@@ -638,7 +673,8 @@ These maintained skills are MCP-backed or MCP-aware in this repo:
 - `powerbi-modeling`
 - `powerpoint-ppt`
 - `gemini-api-dev`
-- `gemini-interactions-api`
+- `gemini-live-api-dev`
+- `gemini-omni-flash-api`
 - `secret-scanning`
 - `serena-usage`
 - `stitch-code-to-design`
@@ -689,6 +725,13 @@ scanned or refreshed during the 2026-07-30 pass:
 - `accelerated-computing-cudf`
 - `agentic-eval`
 - `avoid-ai-writing`
+- `ai-writing-detector`
+- `avoid-ai-writing-router`
+- `false-positive-reviewer`
+- `file-edit-in-place`
+- `preservation-verifier`
+- `voice-preserving-rewriter`
+- `agent-skillguard`
 - `accessibility`
 - `best-practices`
 - `cloud-design-patterns`
@@ -699,7 +742,8 @@ scanned or refreshed during the 2026-07-30 pass:
 - `deepstream-import-vision-model`
 - `core-web-vitals`
 - `gemini-api-dev`
-- `gemini-interactions-api`
+- `gemini-live-api-dev`
+- `gemini-omni-flash-api`
 - `dotnet-best-practices`
 - `java-docs`
 - `java-junit`
@@ -782,6 +826,13 @@ Gemini API workflows, Vercel React performance guidance, and the web-quality
 router plus its five focused leaves. The aggregate router and focused leaves
 remain separate because they have different activation boundaries and output
 shapes.
+
+The 2026-09-05 plugin review selected only `agent-skillguard` from the
+installed Codex plugin cache. It is vendored with its scanner, rule pack,
+schemas, and public fixtures; host metadata, large assets, and the package's
+missing `tools/verify_rule_corpus.py` helper are intentionally not copied.
+Run its bundled Python scanner directly and treat the positive fixture findings
+as expected review signals, not as a safety certification.
 
 The Stitch import keeps `stitch-design` as a router for discoverability and
 keeps `stitch-code-to-design` as an end-to-end orchestrator over narrower

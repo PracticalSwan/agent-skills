@@ -1,7 +1,7 @@
 ---
 name: collision-zone-thinking
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [collision, zone, thinking]
 description: "Force unrelated concepts together to discover emergent properties - \"What if we treated X like Y?"
 ---

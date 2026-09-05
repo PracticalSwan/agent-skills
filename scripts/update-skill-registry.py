@@ -15,23 +15,23 @@ from platform_skill_manifest import (
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "c956566a35c3c2e635f019e7a1bfa59d9497e8b1"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "7b1ebe6333397841ca918dec904d24d4695fe953"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
-    "anthropic_skills": ("https://github.com/anthropics/skills", "3b3fad96af16a10759d930941b4520ba0c40edae"),
+    "anthropic_skills": ("https://github.com/anthropics/skills", "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "58a95fc9971d7af95f1f1324b8a6bc991eb8004d"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "4b92218961138396b390d7b2ec5caf39209b17c3"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "0bdc8f7f08afe9ac0f288c8d2c2de6e77df110a2"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "c3168ca798561c5aef7f69e6f99c4a874485ca24"),
     "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "0337446dadde6f8c94210444e2aa9d546126480f"),
-    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "dc5fa6037d700eb3a7721155e92dabeeb9e56894"),
+    "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "98260596503409589f727b839e5bd3e2cff910e1"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
     "superpowers_skills": ("https://github.com/obra/superpowers-skills", "cdcd624ad3fd8026deb692e565351854569798dd"),
     "superpowers_legacy": ("https://github.com/obra/superpowers", "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"),
-    "tavily_skills": ("https://github.com/tavily-ai/skills", "ea5e8201b0d3ed9c10b70b71187589bd761fe2d2"),
-    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"),
+    "tavily_skills": ("https://github.com/tavily-ai/skills", "778122e5f9c680f541eeceda5a5b36405eb7980c"),
+    "matt_pocock_skills": ("https://github.com/mattpocock/skills", "3cca18b368ae95cdbdebbff572ccafa662551015"),
     "supabase_agent_skills": ("https://github.com/supabase/agent-skills", "8331f910845103c08d51f6ca1d86ebb7d1f745e3"),
-    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "d89e731a59ea7e9bf623e6358effe76458dd7f29"),
+    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8"),
     "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "063bee94c3f4df8453406c830b0a7df0f2860278"),
     "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "afa8da942115f2961fdbfa80807ea0b232ff6c00"),
 }
@@ -134,6 +134,36 @@ MATT_POCOCK_SKILLS = {
 }
 
 ADDITIONAL_UPSTREAM_SKILLS = {
+    "ai-writing-detector": (
+        "avoid_ai_writing",
+        "skills/ai-writing-detector",
+        "Current Avoid AI Writing v3.29 detector leaf for scanning prose with the catalog's local corpus and preservation safeguards; kept separate from the router and rewriting workflows.",
+    ),
+    "avoid-ai-writing-router": (
+        "avoid_ai_writing",
+        "skills/avoid-ai-writing-router",
+        "Current Avoid AI Writing v3.29 routing workflow that selects detector, review, preservation, and rewriting leaves without collapsing their activation boundaries.",
+    ),
+    "false-positive-reviewer": (
+        "avoid_ai_writing",
+        "skills/false-positive-reviewer",
+        "Current Avoid AI Writing v3.29 false-positive review leaf for evidence-backed human-voice decisions after detection; no automated accusation or authorship claim.",
+    ),
+    "file-edit-in-place": (
+        "avoid_ai_writing",
+        "skills/file-edit-in-place",
+        "Current Avoid AI Writing v3.29 preservation-first editing leaf for in-place changes, bounded diffs, and rollback-safe user approval.",
+    ),
+    "preservation-verifier": (
+        "avoid_ai_writing",
+        "skills/preservation-verifier",
+        "Current Avoid AI Writing v3.29 preservation verifier for checking voice, meaning, formatting, and file-boundary invariants after edits.",
+    ),
+    "voice-preserving-rewriter": (
+        "avoid_ai_writing",
+        "skills/voice-preserving-rewriter",
+        "Current Avoid AI Writing v3.29 voice-preserving rewrite leaf with explicit meaning, tone, and provenance checks; complements the detector rather than replacing review.",
+    ),
     "supabase": (
         "supabase_agent_skills",
         "skills/supabase",
@@ -149,10 +179,15 @@ ADDITIONAL_UPSTREAM_SKILLS = {
         "skills/gemini-api-dev",
         "Official Gemini API workflow for the current google-genai SDKs, structured output, multimodal capabilities, model selection, and documentation fallbacks.",
     ),
-    "gemini-interactions-api": (
+    "gemini-live-api-dev": (
         "gemini_skills",
-        "skills/gemini-interactions-api",
-        "Official Gemini Interactions API workflow for structured output, stored-state controls, streaming, managed agents, and current API migration guidance.",
+        "skills/gemini-live-api-dev",
+        "Official Gemini Live API workflow for bidirectional audio, video, text, VAD, ephemeral tokens, translation, transcription, and session recovery.",
+    ),
+    "gemini-omni-flash-api": (
+        "gemini_skills",
+        "skills/gemini-omni-flash-api",
+        "Official Gemini Omni Flash workflow for bounded text-to-video, image-to-video, video editing, extensions, references, and local media preprocessing.",
     ),
     "react-best-practices": (
         "vercel_agent_skills",
@@ -303,6 +338,12 @@ LOCAL_IMPORTS = {
         "codex-router-media",
         "Promotes the Codex Router-managed MiniMax media workflow from package 0.4.0-beta.4 at source commit a21e2e69dd3f6665d0fa09a4d08958765b184463; paid generation remains explicit and credential-free to the agent.",
     ),
+    "agent-skillguard": (
+        "local-workspace://C:/Users/LOQ/.codex/plugins/cache/openai-curated-remote/agent-skillguard/0.1.5",
+        "sha256:af0520942d912ff03629943bce4c409de51459edc106555913181a795457afd8",
+        "skills/agent-skillguard",
+        "Vendors the installed Codex plugin's standalone read-only skill-risk scanner as a self-contained catalog skill; host metadata, examples, large assets, and the package's absent tools/verify_rule_corpus.py helper are intentionally omitted, and the catalog SKILL.md documents the supported fixture smoke test.",
+    ),
 }
 
 
@@ -412,6 +453,13 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-09-05 audit rechecked only the personal `.codex`, `.agents`, and
+  `.claude` skill roots. No eligible child-only skills remained after applying
+  the protected Blender/local-only, Codex `.system`, copied Superpowers, and
+  project-path exclusions. One high-value plugin skill, `agent-skillguard`,
+  was intentionally vendored from the installed Codex plugin cache as a
+  self-contained read-only scanner; its packaging normalization and missing
+  upstream rule-corpus helper are documented in its skill file.
 - The 2026-08-31 continuation re-audited the personal `.codex`, `.agents`,
   and `.claude` skill roots and found no eligible child-only skills. Protected
   Blender/local-only names, Codex `.system`, copied Superpowers, and project
@@ -475,6 +523,21 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Selection And Refresh Notes
 
+- The 2026-09-05 source audit compared all recorded source heads with their
+  exact mapped paths. Material mapped changes were refreshed for the Avoid AI
+  Writing v3.29 detector/router suite, two NVIDIA DeepStream skills, seven
+  Tavily workflows, Gemini API/Live/Omni workflows, and the affected Figma
+  support trees. Awesome Copilot, Anthropic, Xquik, Matt Pocock, Netlify,
+  MongoDB, and Hugging Face head movement outside installed paths was recorded
+  in provenance without broad imports. The removed upstream
+  `gemini-interactions-api` path was retired after its migration content was
+  confirmed in `gemini-api-dev`.
+- The same pass reviewed installed Codex plugin skills for useful, non-
+  overlapping workflows. Only `agent-skillguard` was selected: its standalone
+  Python scanner fills a catalog gap, while routekit, shipproof, agentproof,
+  and thin Riqor wrappers were omitted as overlapping, host-coupled, or
+  unnecessarily large. Specialized Xquik MCP/social, Hugging Face CLI/memory,
+  and Figma generative/shader additions were also omitted to avoid bloat.
 - Import new or refreshed skills into `C:\\Users\\LOQ\\.copilot\\skills` first;
   downstream roots are deployment targets.
 - Prefer canonical upstream sources over discovery catalogs and compare exact
@@ -558,6 +621,9 @@ def main() -> int:
     refs = data.setdefault("reference_installs", {})
     for retired_name in ("frontend-skill", "premium-frontend-ui"):
         refs.pop(retired_name, None)
+    # The upstream Gemini package consolidated the Interactions workflow into
+    # gemini-api-dev and removed this standalone path at its current head.
+    refs.pop("gemini-interactions-api", None)
     for metadata in refs.values():
         source_repo = metadata.get("source_repo")
         if source_repo in current_by_repo:
@@ -796,7 +862,8 @@ def main() -> int:
         "Use the official ai.google.dev documentation and the current google-genai SDK when the active host does not expose a Gemini documentation MCP.",
         "Treat model names, SDK versions, and API examples as time-sensitive; verify them against current official documentation before implementation.",
     ]
-    for name in ("gemini-api-dev", "gemini-interactions-api"):
+    mcp_skills.pop("gemini-interactions-api", None)
+    for name in ("gemini-api-dev", "gemini-live-api-dev", "gemini-omni-flash-api"):
         mcp_skills[name] = {
             "mode": "Preferred",
             "servers": ["Google Gemini documentation MCP"],

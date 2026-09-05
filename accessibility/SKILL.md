@@ -1,7 +1,7 @@
 ---
 name: accessibility
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [accessibility]
 description: "Audit and improve web accessibility following WCAG 2.2 guidelines. Use when asked to \"improve accessibility\", \"a11y audit\", \"WCAG compliance\", \"screen reader support\", \"keyboard navigation\", or \"make accessible\"."
 license: "MIT"

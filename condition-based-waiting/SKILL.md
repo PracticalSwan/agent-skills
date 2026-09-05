@@ -1,7 +1,7 @@
 ---
 name: condition-based-waiting
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [condition, based, waiting]
 description: "Replace arbitrary timeouts with condition polling for reliable async tests"
 ---

@@ -1,7 +1,7 @@
 ---
 name: tabular-eda-review
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [tabular, eda, review]
 description: "Inspect CSV datasets for schema, quality, modeling readiness, and feature analysis."
 ---

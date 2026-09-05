@@ -53,27 +53,28 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-08-31`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `237` tracked skill folders
-  - `205` tracked maintained skills
+  - `245` tracked skill folders
+  - `213` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `295` local skill folders detected
-  - `263` local maintained skills detected
+  - `303` local skill folders detected
+  - `271` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `237` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+All `245` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, and five Codex Router skills were promoted
-from the personal Codex root. The catalog-wide maintenance baseline is
-`last_updated: 2026-08-31`. The `58` local-only Google
+from the personal Codex root, and one standalone Codex plugin scanner was
+vendored after review. The catalog-wide maintenance baseline is
+`last_updated: 2026-09-05`. The `58` local-only Google
 Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
@@ -114,8 +115,8 @@ post-implementation visual QA skill. Keep framework, Figma, and Stitch skills
 separate because they own narrower implementation or tool-specific workflows.
 
 The 2026-08-16 related-skill consolidation audit found no safe content merges.
-`supabase` and `supabase-postgres-best-practices`, `gemini-api-dev` and
-`gemini-interactions-api`, and the React/web-quality groups remain separate
+`supabase` and `supabase-postgres-best-practices`, the Gemini API/Live/Omni
+workflows, and the React/web-quality groups remain separate
 with explicit routing links because their activation boundaries and evidence
 paths differ. Plugin-managed Supabase and React copies remain external; the
 parent catalog is canonical for maintained cross-client content.
@@ -134,6 +135,30 @@ and `supabase` were present; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and
 guidance is included, while no Hugging Face, MongoDB, or Figma CLI skill was
 installed. The importer is repeatable with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
+
+- Rechecked all 24 recorded upstream heads and refreshed only exact mapped
+  paths that changed: Avoid AI Writing v3.29 (including its six-skill
+  detector/router suite), both NVIDIA DeepStream workflows, seven Tavily
+  workflows, Gemini API/Live/Omni, and the affected Figma support trees.
+  Head movement outside mapped paths was recorded in provenance without broad
+  imports.
+- Retired `gemini-interactions-api` after confirming its migration guidance is
+  carried by `gemini-api-dev`; the sync retirement list removes only that exact
+  catalog-owned folder from approved mirrors.
+- Re-audited only `.codex`, `.agents`, and `.claude`. No eligible child-only
+  skills remained after the protected Blender/local-only, Codex `.system`,
+  copied Superpowers, and project-path exclusions. Reviewed Codex plugin
+  skills and vendored only `agent-skillguard`, a self-contained read-only
+  scanner whose missing upstream `tools/verify_rule_corpus.py` helper is
+  documented rather than invented.
+- The current inventory is `245` tracked folders (`213` maintained and `32`
+  copied Superpowers) and `303` live folders (`271` maintained and `58`
+  local-only overlays). Validation, helper checks, Blender refresh, and the
+  three-root sync remain required before publication.
+- Nineteen CRLF shell helpers were normalized to LF after WSL parsing exposed
+  portability failures; the logic was not changed.
 
 ## 2026-08-31 Catalog Freshness And Corpus Refresh
 

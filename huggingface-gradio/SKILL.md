@@ -1,7 +1,7 @@
 ---
 name: huggingface-gradio
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [hugging-face, huggingface, gradio]
 description: "Build Gradio web UIs and demos in Python. Use when creating or editing Gradio apps, components, event listeners, layouts, or chatbots."
 ---

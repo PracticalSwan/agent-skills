@@ -1,7 +1,7 @@
 ---
 name: netlify-config
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [netlify, config]
 description: "Configure Netlify projects via netlify.toml and the _headers/_redirects files — covering build settings and deploy contexts alongside environment variables/scopes and the Secrets Controller plus redirect/rewrite/proxy and custom-header rules. Use when setting a build command or publish directory, adding redirect or rewrite or proxy rules, configuring custom headers or basic auth, setting or scoping environment variables and secrets, wiring up a monorepo or SPA fallback, or skipping unnecessary builds. Reach for this whenever you touch netlify.toml or ask \"why is my env var undefined in a function\" or \"how do I redirect this path\"."
 ---

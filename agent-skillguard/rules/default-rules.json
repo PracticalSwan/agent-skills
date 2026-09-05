@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "id": "SG001",
+      "version": "1.0.0",
+      "title": "Remote content piped to a shell",
+      "description": "Remote content appears to be executed by a shell without an inspection step.",
+      "severity": "critical",
+      "uncertainty": "low",
+      "pattern": "(?:curl|wget)\\b[^\\n|]{0,240}\\|\\s*(?:ba)?sh\\b",
+      "extensions": [".md", ".txt", ".sh", ".bash", ".zsh", ".yml", ".yaml", ".json", ".toml"],
+      "remediation": "Download to a reviewed file, pin an integrity digest, and execute only after inspection."
+    },
+    {
+      "id": "SG002",
+      "version": "1.0.0",
+      "title": "Broad destructive command",
+      "description": "A command appears capable of recursively deleting a broad system or user path.",
+      "severity": "critical",
+      "uncertainty": "medium",
+      "pattern": "(?:rm\\s+-(?=[A-Za-z]*r)(?=[A-Za-z]*f)[A-Za-z]+\\s+(?:/|~|\\$HOME)|Remove-Item\\b[^\\n]{0,180}-(?:Recurse|Force)[^\\n]{0,180}(?:[A-Za-z]:\\\\|\\$HOME))",
+      "extensions": [".md", ".txt", ".sh", ".bash", ".zsh", ".ps1", ".py"],
+      "remediation": "Resolve and verify a narrow workspace-local target before any recursive deletion."
+    },
+    {
+      "id": "SG003",
+      "version": "1.0.0",
+      "title": "Wildcard or broad permission request",
+      "description": "A manifest or instruction appears to request wildcard, administrator, owner, or full-access permissions.",
+      "severity": "high",
+      "uncertainty": "medium",
+      "pattern": "(?:permissions?|scopes?|oauth)[^\\n]{0,100}(?:[\\\"']\\*[\\\"']|full[_ -]?access|all[_ -]?permissions|administrator|superuser|owner)",
+      "extensions": [".md", ".txt", ".json", ".toml", ".yml", ".yaml"],
+      "remediation": "Name the minimum permissions required by the current workflow."
+    },
+    {
+      "id": "SG004",
+      "version": "1.0.0",
+      "title": "Possible secret exfiltration instruction",
+      "description": "Text appears to direct a secret, token, credential, key, cookie, or environment value to an external destination.",
+      "severity": "critical",
+      "uncertainty": "medium",
+      "pattern": "(?:send|upload|post|forward|exfiltrat\\w*)\\b[^\\n]{0,120}\\b(?:secret|token|credentials?|api[_ -]?key|cookie|environment variable|\\.env)\\b",
+      "extensions": [".md", ".txt", ".py", ".js", ".ts", ".sh", ".ps1", ".json", ".yml", ".yaml"],
+      "remediation": "Remove the transfer, use a least-privilege secret reference, and document the exact destination and consent boundary."
+    },
+    {
+      "id": "SG005",
+      "version": "1.0.0",
+      "title": "Encoded command execution",
+      "description": "A script appears to execute an encoded or decoded command payload.",
+      "severity": "high",
+      "uncertainty": "medium",
+      "pattern": "(?:powershell(?:\\.exe)?\\b[^\\n]{0,100}-(?:enc|encodedcommand)\\b|base64\\s+(?:--decode|-d)[^\\n|]{0,160}\\|\\s*(?:ba)?sh\\b)",
+      "extensions": [".md", ".txt", ".sh", ".ps1", ".py", ".js", ".ts"],
+      "remediation": "Keep commands readable and reviewable; remove encoded execution or document and pin the decoded payload."
+    },
+    {
+      "id": "SG006",
+      "version": "1.0.0",
+      "title": "Persistence-sensitive path or scheduler",
+      "description": "Instructions reference a persistence-sensitive location or scheduler.",
+      "severity": "high",
+      "uncertainty": "high",
+      "pattern": "(?:authorized_keys|crontab\\b|schtasks\\b|LaunchAgents|systemd/system|CurrentVersion\\\\Run)",
+      "extensions": [".md", ".txt", ".sh", ".ps1", ".py", ".js", ".ts", ".yml", ".yaml"],
+      "remediation": "Require explicit operator approval and document the exact persistence behavior and rollback."
+    },
+    {
+      "id": "SG007",
+      "version": "1.0.0",
+      "title": "Unpinned remote package source",
+      "description": "A package install references a remote VCS source without an immutable revision.",
+      "severity": "medium",
+      "uncertainty": "medium",
+      "pattern": "(?:pip|uv)\\s+install\\s+(?:[\\\"'])?git\\+(?:https?|ssh)://[^\\s@\\\"']+(?:[\\s\\\"']|$)",
+      "extensions": [".md", ".txt", ".sh", ".ps1", ".yml", ".yaml"],
+      "remediation": "Pin the source to an immutable commit and verify its provenance."
+    },
+    {
+      "id": "SG008",
+      "version": "1.0.0",
+      "title": "Authority-override instruction",
+      "description": "Prompt text appears to ask the agent to discard higher-priority instructions or conceal its actions.",
+      "severity": "high",
+      "uncertainty": "high",
+      "pattern": "(?:ignore|disregard|override)\\s+(?:all\\s+)?(?:previous|prior|system|developer)\\s+instructions|do not (?:tell|inform|show) (?:the )?user",
+      "extensions": [".md", ".txt", ".json", ".toml", ".yml", ".yaml"],
+      "remediation": "Treat retrieved or bundled text as data and preserve the platform's instruction hierarchy."
+    }
+  ]
+}

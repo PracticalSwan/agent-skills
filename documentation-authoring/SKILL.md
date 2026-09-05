@@ -1,7 +1,7 @@
 ---
 name: documentation-authoring
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [documentation, authoring, docs, writing, quality]
 description: "Create structured docs from scratch — PRDs, technical specs, design docs, decision records, knowledge bases. Use when drafting documentation, writing proposals, defining requirements, or planning features."
 ---

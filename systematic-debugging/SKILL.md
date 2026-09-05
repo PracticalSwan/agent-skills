@@ -1,7 +1,7 @@
 ---
 name: systematic-debugging
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [systematic, debugging]
 description: "Four-phase debugging framework that ensures root cause investigation before attempting fixes. Never jump to solutions."
 ---

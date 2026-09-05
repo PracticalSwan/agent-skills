@@ -1,7 +1,7 @@
 ---
 name: word-document
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [docs, document, writing, quality, templates]
 description: "Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion."
 ---

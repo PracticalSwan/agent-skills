@@ -1,7 +1,7 @@
 ---
 name: vercel-cli-with-tokens
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [vercel, cli, with, tokens]
 description: "Deploy and manage projects on Vercel using token-based authentication. Use when working with Vercel CLI using access tokens rather than interactive login — e.g. \"deploy to vercel\", \"set up vercel\", \"add environment variables to vercel\"."
 ---

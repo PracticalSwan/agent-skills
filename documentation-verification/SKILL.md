@@ -1,7 +1,7 @@
 ---
 name: documentation-verification
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [documentation, verification, docs, writing, quality]
 description: "Validate documentation before merging - check completeness, broken links, code example accuracy, and factual correctness. Use when reviewing docs for quality gates or running pre-merge doc validation."
 ---

@@ -1,7 +1,7 @@
 ---
 name: codex-computer-use
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [codex, computer, use]
 description: "Control local apps through Computer Use (the @oai/sky runtime) inside the Codex app. Use when the session uses a custom (non-OpenAI) model, for example deepseek-v4-flash or mimo-v2.5, and the user asks to control the computer, operate a desktop app's UI, use Safari or Chrome through computer use, click or type in an app, or take a screenshot of an app. Prefer purpose-built connectors, APIs, or CLIs when they exist."
 ---

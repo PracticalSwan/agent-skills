@@ -1,7 +1,7 @@
 ---
 name: document-metadata-review
 version: "2.0"
-last_updated: 2026-08-31
+last_updated: 2026-09-05
 tags: [document, metadata, review]
 description: "Inspect PDFs, DOCX, PPTX, and XLSX files for share-readiness, metadata, links, comments, and hidden content."
 ---

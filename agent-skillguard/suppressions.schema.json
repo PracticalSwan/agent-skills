@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SpannDaMan/agent-skillguard/blob/main/plugins/agent-skillguard/suppressions.schema.json",
+  "title": "Skill Risk Check reviewed suppressions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "suppressions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "suppressions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fingerprint", "rule_id", "rule_version", "reason"],
+        "properties": {
+          "fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "rule_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9_-]{2,31}$"},
+          "rule_version": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

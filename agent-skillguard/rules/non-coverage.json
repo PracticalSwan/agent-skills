@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.0.0",
+  "items": [
+    {"id": "runtime-behavior", "statement": "Static inspection does not observe behavior after installation or execution."},
+    {"id": "malware-certainty", "statement": "A finding does not establish that an artifact is malicious, and no finding does not establish safety."},
+    {"id": "sandbox-proof", "statement": "Skill Risk Check does not execute targets in a sandbox or prove containment."},
+    {"id": "remote-scanning", "statement": "Targets are not uploaded to or evaluated by a remote scanning service."},
+    {"id": "certification", "statement": "Reports are review aids, not safety, security, or compliance certifications."},
+    {"id": "automatic-remediation", "statement": "The scanner explains remediation but does not modify the target automatically."}
+  ]
+}

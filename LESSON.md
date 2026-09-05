@@ -261,6 +261,32 @@ Codex skill catalog.
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
 
+## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
+
+- Recheck every recorded upstream head, but refresh only exact mapped paths.
+  This pass changed Avoid AI Writing v3.29 and its six focused leaves, two
+  NVIDIA DeepStream workflows, seven Tavily workflows, Gemini API/Live/Omni,
+  and the affected Figma support trees; repository movement outside those
+  paths remains provenance-only.
+- Treat upstream removals as current behavior. `gemini-interactions-api` was
+  retired only after its migration guidance was confirmed in
+  `gemini-api-dev`; add exact retired names to sync cleanup rather than
+  deleting unknown personal folders.
+- Review installed plugin skills for a concrete gap before importing. This
+  pass selected only `agent-skillguard` because it is a standalone stdlib
+  scanner with no maintained equivalent. Keep its rule corpus and fixtures,
+  omit host metadata/large assets, and document that the package's
+  `tools/verify_rule_corpus.py` helper is absent instead of recreating it.
+- Flattened catalog promotion can invalidate source tests and relative paths.
+  Adapt imported validators to accept both the upstream `skills/` layout and
+  the parent root, then run the normalized validator from the parent. On
+  Windows, execute POSIX shell syntax checks through WSL; report Bash runtime
+  tests as platform-unverified when the required Linux environment is absent.
+- The 2026-09-05 inventory is `303` live folders (`271` maintained and `32`
+  copied Superpowers, including `58` local-only overlays) and `245` tracked
+  folders (`213` maintained and `32` copied Superpowers). Regenerate root docs
+  and provenance after modernization so counts and retired mappings agree.
+
 ## 2026-08-31 Catalog Freshness And Corpus Refresh
 
 - Recheck live source heads at each continuation. This pass found one new

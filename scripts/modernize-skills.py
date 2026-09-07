@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 
-DATE_STAMP = "2026-09-05"
+DATE_STAMP = "2026-09-08"
 CATALOG_VERSION = "2.0"
 PORTABILITY_START = "<!-- PORTABILITY:START -->"
 PORTABILITY_END = "<!-- PORTABILITY:END -->"
@@ -198,15 +198,25 @@ def insert_before(body: str, heading: str, section: str) -> str:
 def normalize_sections(body: str, skill_name: str, title: str, registry: dict) -> str:
     body = body.strip()
     managed_portability = re.compile(
-        rf"\s*{re.escape(PORTABILITY_START)}.*?{re.escape(PORTABILITY_END)}\s*",
-        re.DOTALL,
+        rf"(?ms)^\s*{re.escape(PORTABILITY_START)}.*?{re.escape(PORTABILITY_END)}\s*",
     )
     if managed_portability.search(body):
         body = managed_portability.sub("\n\n", body).strip()
     else:
         body, _ = remove_section(body, "Cross-Client Portability")
-    if "## MCP Availability And Fallback" not in body:
-        body = insert_before(body, "Anti-Patterns", render_mcp_section(skill_name, title, registry))
+    # Older generated passes could leave marker-only lines outside the owned
+    # sections (especially before Verification Protocol or after Related
+    # Skills). Remove those orphans before rebuilding the registry-owned block.
+    body = re.sub(
+        r"(?m)^\s*<!-- (?:MCP|PORTABILITY):(?:START|END) -->\s*\r?\n?",
+        "",
+        body,
+    ).strip()
+    # MCP routing is registry-owned. Replace an existing generated section as
+    # well as inserting a missing one so removed helpers or changed servers do
+    # not linger in a normalized skill after a source refresh.
+    body, _ = remove_section(body, "MCP Availability And Fallback")
+    body = insert_before(body, "Anti-Patterns", render_mcp_section(skill_name, title, registry))
     body = insert_before(
         body,
         "MCP Availability And Fallback",

@@ -1,7 +1,7 @@
 ---
 name: deepstream-import-vision-model
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nvidia, deepstream, vision, model-import, tensorrt, onnx]
 description: "NVIDIA DeepStream model-import guidance for bringing vision models from Hugging Face or NVIDIA NGC into DeepStream pipelines with export, TensorRT build, and benchmark steps."
 license: "CC-BY-4.0 AND Apache-2.0"
@@ -240,6 +240,8 @@ Installed into `.claude/skills/deepstream-import-vision-model/scripts/` by `inst
 | Zero detections | Wrong `net-scale-factor` — check model family table in references/pipeline-run.md |
 | `No module named 'pyservicemaker'` | Install into venv: `pip install /opt/nvidia/deepstream/.../pyservicemaker*.whl` |
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -257,9 +259,9 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the deepstream-import-vision-model skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the DeepStream Import Vision Model skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
 

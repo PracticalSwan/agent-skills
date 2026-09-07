@@ -1,7 +1,7 @@
 ---
 name: notebooklm-management
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [research, management, documents, automation, productivity]
 description: "NotebookLM MCP server management - query notebooks, add from share links, handle auth, reset sessions. Use when working with Google NotebookLM notebooks for conversational research tasks."
 ---
@@ -56,6 +56,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 - Wrong context: `reset_session` or switch notebooks
 - Ambiguous notebook choice: search the library before creating a new one
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/notebooklm-management` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: NotebookLM MCP
+
+- Fallback prompt: "Use the NotebookLM MCP Management skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use the NotebookLM web UI directly, capture answers in Markdown, and store session notes locally when the MCP server is unavailable.
+- Preserve notebook URLs, prompt history, and manual research notes so the workflow remains reproducible.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
@@ -87,31 +113,6 @@ Before claiming "skill applied successfully":
 - [simple-query.py](./examples/simple-query.py) - Basic query pattern
 - [multi-turn-conversation.py](./examples/multi-turn-conversation.py) - Session reuse pattern
 - [library-management.py](./examples/library-management.py) - Library search and organization
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/notebooklm-management` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: NotebookLM MCP
-
-- Fallback prompt: "Use the NotebookLM MCP Management skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use the NotebookLM web UI directly, capture answers in Markdown, and store session notes locally when the MCP server is unavailable.
-- Preserve notebook URLs, prompt history, and manual research notes so the workflow remains reproducible.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

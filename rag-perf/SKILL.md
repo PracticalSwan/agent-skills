@@ -1,7 +1,7 @@
 ---
 name: rag-perf
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nvidia, rag, performance, latency, throughput, profiling]
 description: "NVIDIA RAG Blueprint performance-tuning guidance for profiling retrieval stacks, comparing bottlenecks, and validating latency or throughput improvements."
 license: "Apache-2.0"
@@ -153,26 +153,9 @@ uv run --project scripts/rag-perf python -m pytest tests/unit/test_rag_perf/
 7. **Tune retrieval / reranker:** flip to `quick_profile.yaml` or `aiperf.enabled: false` for fast iteration, then return to `single_run.yaml` / `sweep.yaml` when characterising under load.
 8. **Triage failures:** see Troubleshooting above and [`references/output-and-analysis.md`](references/output-and-analysis.md) for empty-citation / bottleneck=N/A patterns.
 
-## Anti-Patterns
-
-- Optimizing before recording a baseline: Without a starting point, there is no trustworthy performance story.
-- Using toy traffic to justify production tuning: Tiny prompts or empty corpora hide the real bottleneck.
-- Accepting lower answer quality as an untracked side effect of a latency win.
-
-## Verification Protocol
-
-Before claiming "skill applied successfully":
-
-1. Pass/fail: The performance investigation starts from a named baseline and a concrete bottleneck hypothesis.
-2. Pass/fail: The workload shape, corpus size, and concurrency assumptions match the path being optimized.
-3. Pass/fail: Any latency or throughput claim is paired with a correctness or quality guardrail.
-4. Pressure-test scenario: Re-run the workflow on a retrieval stack that speeds up only because caching masked a stale index.
-5. Success metric: The user gets a reproducible benchmark path and a tuning change that improves the intended metric without hidden regressions.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -189,11 +172,27 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the rag-perf skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the RAG-Perf — config-driven perf benchmark CLI skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Optimizing before recording a baseline: Without a starting point, there is no trustworthy performance story.
+- Using toy traffic to justify production tuning: Tiny prompts or empty corpora hide the real bottleneck.
+- Accepting lower answer quality as an untracked side effect of a latency win.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The performance investigation starts from a named baseline and a concrete bottleneck hypothesis.
+2. Pass/fail: The workload shape, corpus size, and concurrency assumptions match the path being optimized.
+3. Pass/fail: Any latency or throughput claim is paired with a correctness or quality guardrail.
+4. Pressure-test scenario: Re-run the workflow on a retrieval stack that speeds up only because caching masked a stale index.
+5. Success metric: The user gets a reproducible benchmark path and a tuning change that improves the intended metric without hidden regressions.
 
 ## Related Skills
 

@@ -1,7 +1,7 @@
 ---
 name: figma-use-figjam
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [figma, use, figjam]
 description: "This skill helps agents use Figma's use_figma MCP tool in the FigJam context. Can be used alongside figma-use which has foundational context for using the use_figma tool."
 ---
@@ -63,6 +63,8 @@ For the full request/response shape, see [figma-use → api-reference.md → Ima
 - [create-label](references/create-label.md) — Create and configure FigJam label nodes (small numbered/lettered circle callout markers, sequences, positioning)
 - [batch-modify](references/batch-modify.md) — Patterns for modifying many existing nodes at once (bulk style changes, repositioning, property updates)
 - [figjam-colors](references/figjam-colors.md) — Canonical FigJam color palettes for every node type (sticky, section, connector, shape, label) plus the `hex/255` notation rule and the `h()` helper
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

@@ -1,7 +1,7 @@
 ---
 name: docx
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [docx, word, documents, office, formatting]
 description: "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Covers polished document output, tracked changes, comments, image updates, XML-level repairs, and safe conversion workflows."
 license: "Proprietary. LICENSE.txt has complete terms"
@@ -92,6 +92,8 @@ The script writes `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `co
 
 `docx` (npm, preinstalled — install only if `require('docx')` fails) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -107,10 +109,13 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
-
 Preferred MCP Server: None required
-Fallback prompt: Use the bundled Office scripts, unpack/validate workflows, and a local reopen or render pass to confirm the final `.docx` behavior when no dedicated MCP surface exists.
+
+- Fallback prompt: "Use the DOCX creation, editing, and analysis skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 

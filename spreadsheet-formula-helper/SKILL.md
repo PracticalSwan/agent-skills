@@ -1,7 +1,7 @@
 ---
 name: spreadsheet-formula-helper
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [spreadsheet, formula, helper, documents, automation]
 description: "Write and debug spreadsheet formulas (Excel/Google Sheets), pivot tables, and array formulas; translate between dialects; use when users need working formulas with examples and edge-case checks."
 ---
@@ -31,27 +31,9 @@ Produce reliable spreadsheet formulas with explanations.
 
 When MCP is unavailable, use native automation: local spreadsheet formulas, `openpyxl` for workbook inspection, CSV fixtures for examples, and manual recalculation notes for functions the local engine cannot evaluate. Preserve locale separators, absolute references, dynamic arrays, and Excel-vs-Sheets differences before claiming success.
 
-## Anti-Patterns
-
-- Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
-- Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
-- Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
-## Verification Protocol
-
-Before claiming the `spreadsheet-formula-helper` workflow succeeded:
-
-1. Pass/fail: The request matches this skill's documented activation boundary.
-2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
-3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
-4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
-5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
-6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -68,11 +50,28 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the Spreadsheet Formula Helper skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the Spreadsheet Formula Helper skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
+- Skipping an open-file verification pass: Documents and spreadsheets often fail in the destination app, not in the script output.
+- Automating irreversible edits without checkpoints: A small mapping mistake can affect an entire workbook or document.
+
+## Verification Protocol
+
+Before claiming the `spreadsheet-formula-helper` workflow succeeded:
+
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## Related Skills
 

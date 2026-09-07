@@ -1,7 +1,7 @@
 ---
 name: gemini-omni-flash-api
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [gemini, omni, flash, api]
 description: "Use this skill for generative video editing, text-to-video, image-referenced video generation, first-frame-to-video, first-and-last-frame transitions, and video extensions using Gemini Omni 1.1 Flash (gemini-omni-1.1-flash) via the official google-genai SDK. Includes workflows for pre-processing/optimizing high-resolution or long source videos with ffmpeg, stripping audio for full sound regeneration, and handling turn-by-turn video editing and parallel execution."
 ---

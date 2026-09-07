@@ -1,7 +1,7 @@
 ---
 name: nextjs-development
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nextjs, development, testing, quality, automation]
 description: "Next.js 16.2.4 with TypeScript — App Router, Server Components, use cache directive, Turbopack dev, Server Actions, ISR, SSR, SSG, MCP devtools, metadata API, route handlers, instrumentation."
 ---
@@ -17,6 +17,32 @@ Comprehensive reference for [Next.js](https://nextjs.org/docs) (latest: **16.2.4
 ## Component Review Rubric Reference
 
 Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component-review-rubric) before approving Next.js components, then run the Next.js-specific checks below.
+
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/nextjs-development` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Next.js MCP
+
+- Fallback prompt: "Use the Next.js Development skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use `next dev`, `next build`, `next lint`, browser console output, and local server logs when live MCP diagnostics are unavailable.
+- Verify routing, rendering mode, and data-fetching behavior with the bundled examples and a running dev server.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 
@@ -904,31 +930,6 @@ test('dashboard has no critical accessibility issues', async ({ page }) => {
 - Mixing server and client responsibilities: It bloats bundles and makes caching or auth decisions harder to reason about.
 - Using old synchronous request APIs: Current Next.js releases expect async `params`, `searchParams`, `cookies()`, and `headers()`.
 - Skipping error and loading states: Streaming routes feel broken when only the happy path is modeled.
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/nextjs-development` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Next.js MCP
-
-- Fallback prompt: "Use the Next.js Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use `next dev`, `next build`, `next lint`, browser console output, and local server logs when live MCP diagnostics are unavailable.
-- Verify routing, rendering mode, and data-fetching behavior with the bundled examples and a running dev server.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

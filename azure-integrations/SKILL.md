@@ -1,7 +1,7 @@
 ---
 name: azure-integrations
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [azure, integrations, cloud, architecture, operations]
 description: "Azure deployment for web apps — Static Web Apps, App Service, Blob Storage, Bicep/ARM, GitHub Actions CI/CD. Use when deploying Next.js/Vite to Azure or configuring Azure resources for full-stack apps."
 ---
@@ -26,6 +26,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 - Setting up Application Insights for monitoring
 - Writing Bicep or ARM templates for infrastructure as code
 - Integrating Azure Cosmos DB (MongoDB API) with applications
+
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/azure-integrations` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Azure MCP
+
+- Fallback prompt: "Use the Azure Integrations skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use Azure CLI (`az`), Bicep or ARM templates, and the bundled PowerShell deployment scripts in this skill when the MCP server is unavailable.
+- Validate resources with `az` queries, deployment logs, and portal checks before closing the task.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 
@@ -402,31 +428,6 @@ jobs:
 
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/azure-integrations` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Azure MCP
-
-- Fallback prompt: "Use the Azure Integrations skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use Azure CLI (`az`), Bicep or ARM templates, and the bundled PowerShell deployment scripts in this skill when the MCP server is unavailable.
-- Validate resources with `az` queries, deployment logs, and portal checks before closing the task.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

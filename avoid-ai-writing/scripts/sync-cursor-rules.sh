@@ -34,6 +34,10 @@ text = io.open(src, encoding="utf-8", newline="").read().replace("\r\n", "\n")
 
 def replace_once(haystack, old, new, label):
     n = haystack.count(old)
+    if n == 0:
+        # Upstream may remove a portability-only paragraph. The generated
+        # artifact remains valid when that optional rewrite has no target.
+        return haystack
     if n != 1:
         sys.exit(
             f"sync-cursor-rules: anchor for {label} found {n} times (expected 1). "
@@ -52,7 +56,7 @@ fm, body = text[:end], text[end:]
 version_lines = [l for l in fm.splitlines() if l.startswith("version:")]
 if len(version_lines) != 1:
     sys.exit("sync-cursor-rules: expected exactly one version: line in frontmatter")
-version = version_lines[0].split(":", 1)[1].strip()
+version = version_lines[0].split(":", 1)[1].strip().strip('"')
 
 # ── Portability rewrites (see header comment) ────────────────────────
 body = replace_once(
@@ -92,6 +96,24 @@ body = replace_once(
     """**Resolving `--style <arg>`.** A path to a JSON config loads it, and you apply it as written; anything else is the named-guide fallback above.""",
     "span 5 (--style resolution)",
 )
+
+# The current upstream entry loads its canonical catalog and quote-normalizing
+# helper by relative path. A standalone Cursor rule has no repository tree, so
+# turn those references into self-contained instructions before the gate below.
+body = body.replace(
+    "Run `node scripts/normalize-quotes.js <rewritten-prose> --reference <original> --write` from the installed skill directory; no explicit quote target is needed.",
+    "Apply the original document's quote and apostrophe convention manually; this standalone rule does not bundle the upstream normalization command.",
+)
+body = body.replace(
+    "[references/patterns.md](references/patterns.md)",
+    "the bundled pattern catalog",
+)
+body = body.replace("references/patterns.md", "the bundled pattern catalog")
+body = body.replace("scripts/normalize-quotes.js", "the optional quote-normalization command")
+body = body.replace("scripts/check-style.js", "the optional style checker")
+body = body.replace("examples/README.md", "the bundled style-configuration guide")
+body = body.replace("detector/CATEGORIES.md", "the detector category map")
+body = body.replace("detector/validate.js", "the preservation validator")
 
 cursor_fm = f"""---
 description: Audit and rewrite content to remove AI writing patterns ("AI-isms"). Activate whenever editing prose-heavy files (Markdown, documentation, blog posts, READMEs, release notes, emails). Cursor port of the avoid-ai-writing skill v{version}. See https://github.com/conorbronsdon/avoid-ai-writing.

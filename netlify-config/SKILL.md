@@ -1,7 +1,7 @@
 ---
 name: netlify-config
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [netlify, config]
 description: "Configure Netlify projects via netlify.toml and the _headers/_redirects files — covering build settings and deploy contexts alongside environment variables/scopes and the Secrets Controller plus redirect/rewrite/proxy and custom-header rules. Use when setting a build command or publish directory, adding redirect or rewrite or proxy rules, configuring custom headers or basic auth, setting or scoping environment variables and secrets, wiring up a monorepo or SPA fallback, or skipping unnecessary builds. Reach for this whenever you touch netlify.toml or ask \"why is my env var undefined in a function\" or \"how do I redirect this path\"."
 ---
@@ -302,9 +302,6 @@ ctx-gen and never generated. Owned by the skills maintainer.
    Builds does not shadow the shared variable for other scopes — precedence
    resolves independently per scope (site beats shared only within the
    scopes the site variable actually carries).
-
-<!-- MCP:START -->
-
 ## Windows CLI Compatibility
 
 - Resolve `netlify` with PowerShell `Get-Command` before invoking it; use the
@@ -314,6 +311,8 @@ ctx-gen and never generated. Owned by the skills maintainer.
 - Treat an unavailable CLI or unauthenticated session as a reported blocker;
   use the documented manual or API fallback instead of installing a runtime
   implicitly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

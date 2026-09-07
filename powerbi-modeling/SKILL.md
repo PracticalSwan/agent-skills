@@ -1,7 +1,7 @@
 ---
 name: powerbi-modeling
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [powerbi, modeling, documents, automation, productivity]
 description: "Power BI semantic models - DAX measures, star schemas, relationships, RLS, and performance tuning via MCP. Use when creating data models, writing DAX, or configuring table relationships in Power BI."
 ---
@@ -41,6 +41,32 @@ For Microsoft documentation, the Microsoft Learn MCP server is a good companion.
 - `microsoft_docs_search_by_product` with `power-bi`
 - `microsoft_docs_fetch` for the final page
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/powerbi-modeling` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Power BI MCP
+
+- Fallback prompt: "Use the Power BI Modeling skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use Power BI Desktop, Tabular Editor, DAX Studio, and exported model metadata when the MCP surface is unavailable.
+- Validate measures, relationships, and performance with local model tools before completion.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
@@ -71,31 +97,6 @@ Before claiming "skill applied successfully":
 
 ### Examples
 - [Model Examples](./examples/model-examples.md) - Example modeling patterns and DAX structure
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/powerbi-modeling` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Power BI MCP
-
-- Fallback prompt: "Use the Power BI Modeling skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use Power BI Desktop, Tabular Editor, DAX Studio, and exported model metadata when the MCP surface is unavailable.
-- Validate measures, relationships, and performance with local model tools before completion.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

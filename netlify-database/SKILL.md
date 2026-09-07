@@ -1,7 +1,7 @@
 ---
 name: netlify-database
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [netlify, database]
 description: "Zero-config Postgres for Netlify apps via @netlify/database — querying data from Functions/Edge Functions, writing schema migrations, setting up Drizzle ORM, local dev with netlify dev, database branches for deploy previews, and migrating an existing Postgres project onto Netlify. Use when adding a database, building a contact form or CRUD API, writing SQL migrations, wiring up Drizzle, running netlify database commands, testing with a local Postgres, or switching from Neon/Supabase/RDS to Netlify Database."
 ---
@@ -388,9 +388,6 @@ ctx-gen and never generated. Owned by the skills maintainer.
 10. Pin: `drizzle-orm` and `drizzle-kit` must be installed from `@beta` —
     `latest` lacks the `drizzle-orm/netlify-db` adapter and will fail. The
     body may not soften this to a recommendation.
-
-<!-- MCP:START -->
-
 ## Windows CLI Compatibility
 
 - Resolve `netlify` with PowerShell `Get-Command` before invoking it; use the
@@ -400,6 +397,8 @@ ctx-gen and never generated. Owned by the skills maintainer.
 - Treat an unavailable CLI or unauthenticated session as a reported blocker;
   use the documented manual or API fallback instead of installing a runtime
   implicitly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

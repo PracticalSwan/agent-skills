@@ -1,7 +1,7 @@
 ---
 name: web-testing
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [web, testing, workflow, automation, guidance]
 description: "Playwright automation, Chrome DevTools debugging, and browser interaction testing. Use for E2E/unit tests, capturing screenshots, inspecting network/console logs, or validating user flows in web applications."
 ---
@@ -580,6 +580,32 @@ npx playwright codegen https://example.com
 
 ---
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/web-testing` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Playwright MCP, Chrome DevTools MCP (optional)
+
+- Fallback prompt: "Use the Web Application Testing & Debugging skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use Playwright CLI (`npx playwright test`, headed mode, or codegen) and browser devtools when MCP browser tools are unavailable.
+- Keep screenshots, console logs, and network traces as test evidence when reproducing issues manually.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Starting without a clear success condition: The skill becomes advice-shaped instead of workflow-shaped.
@@ -654,31 +680,6 @@ Before claiming "skill applied successfully":
 - [E2E Recipe App Tests](./examples/e2e-recipe-app-tests.md) — Kitchen Odyssey test suite with Page Objects and CI configuration
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/web-testing` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Playwright MCP
-
-- Fallback prompt: "Use the Web Application Testing & Debugging skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use Playwright CLI (`npx playwright test`, headed mode, or codegen) and browser devtools when MCP browser tools are unavailable.
-- Keep screenshots, console logs, and network traces as test evidence when reproducing issues manually.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

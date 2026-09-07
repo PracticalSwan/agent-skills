@@ -1,7 +1,7 @@
 ---
 name: imagegen
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [imagegen]
 description: "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when the active client should create a new image, transform an existing image, or derive visual variants from references, and route through only the image tool or approved API actually exposed by that host."
 ---
@@ -378,6 +378,8 @@ If installation is not possible in this environment, tell the user which depende
 - `scripts/image_gen.py`: fallback-only CLI implementation. Do not load or use it unless the user explicitly chooses CLI mode or explicitly confirms a transparent request's true CLI transparency fallback.
 - `$CODEX_HOME/skills/.system/imagegen/scripts/remove_chroma_key.py`: local post-processing helper for built-in transparent-image requests.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -393,11 +395,12 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 ## MCP Availability And Fallback
 
-Preferred MCP Server: None required
+Preferred MCP Server: Host image-generation tool or approved image API
 
-- Fallback prompt: "Use the Image Generation Skill skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Fallback prompt: "Use the Image Generation Skill skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use Codex's built-in image generation path when exposed. Other clients must use an explicitly available image tool, MCP server, or approved API credential path.
+- Do not claim a host-native image tool exists in Claude Code or GitHub Copilot unless it is present in the active tool list.
 - Do not claim an MCP operation was used when the active host does not expose it.
-- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
 

@@ -1,7 +1,7 @@
 ---
 name: performance
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [performance]
 description: "Optimize web performance for faster loading and better user experience. Use when asked to \"speed up my site\", \"optimize performance\", \"reduce load time\", \"fix slow loading\", \"improve page speed\", or \"performance audit\"."
 license: "MIT"
@@ -396,6 +396,8 @@ Raw `PerformanceObserver` snippets are useful for the current browser session bu
 ## References
 
 For Core Web Vitals specific optimizations, see [Core Web Vitals](../core-web-vitals/SKILL.md).
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

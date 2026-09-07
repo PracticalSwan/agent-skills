@@ -1,7 +1,7 @@
 ---
 name: devops-tooling
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [devops, tooling, workflow, quality, planning]
 description: "Git operations, shell scripting, CI/CD pipelines, and terminal automation. Use for conventional commits, PowerShell/Bash scripting, configuring GitHub Actions, or automating development tooling workflows."
 ---
@@ -1013,6 +1013,32 @@ stages:
 
 ---
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/devops-tooling` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: GitHub MCP
+
+- Fallback prompt: "Use the Devops Tooling skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use standard local tools such as `git`, `gh`, CI logs, and shell automation scripts for repository and pipeline work.
+- Prefer the bundled repo scripts or direct YAML edits when the MCP host does not expose GitHub operations.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
@@ -1043,31 +1069,6 @@ Before claiming "skill applied successfully":
 
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/devops-tooling` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: GitHub MCP
-
-- Fallback prompt: "Use the Devops Tooling skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use standard local tools such as `git`, `gh`, CI logs, and shell automation scripts for repository and pipeline work.
-- Prefer the bundled repo scripts or direct YAML edits when the MCP host does not expose GitHub operations.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

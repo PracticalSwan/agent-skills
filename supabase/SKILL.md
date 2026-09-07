@@ -1,7 +1,7 @@
 ---
 name: supabase
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [supabase]
 description: "Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-js, @supabase/ssr) in Next.js, React, SvelteKit, Astro, Remix; auth issues (login, logout, sessions, JWT, cookies, getSession, getUser, getClaims, RLS); Supabase CLI or MCP server; schema changes, migrations, declarative schemas, security audits, Postgres extensions (pg_graphql, pg_cron, pg_vector); debugging and troubleshooting errors or unexpected behavior on Supabase projects (HTTP errors, Postgres errors, RLS surprises, permission denied, schema cache issues, timeouts, Edge Function crashes, Realtime drops, Storage failures) and reading or querying logs (Logs Explorer, ClickHouse)."
 license: "MIT"
@@ -167,7 +167,7 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: Supabase MCP Server
 
-- Fallback prompt: "Use the Supabase skill without MCP. Follow the official documentation, CLI, or psql fallback, show the selected tool surface, and report the verification evidence."
+- Fallback prompt: "Use the Supabase skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
 - Use the official Supabase docs, CLI, or psql when the active host does not expose the Supabase MCP server.
 - Do not create project MCP configuration or authenticate a server without explicit user authorization.
 - Do not claim an MCP operation was used when the active host does not expose it.

@@ -1,7 +1,7 @@
 ---
 name: react-development
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [react, development, testing, quality, automation]
 description: "React 19+ with TypeScript — hooks, custom hooks, state management (useState/useReducer/useContext), React Query/SWR, Tailwind CSS, performance. Use when building React components, apps, or optimizing renders."
 ---
@@ -17,6 +17,31 @@ Expert guidance for building high-quality React applications with React 19+, mod
 ## Component Review Rubric Reference
 
 Apply the shared [Component Review Rubric](../frontend-design/SKILL.md#component-review-rubric) before approving React components, then run the React-specific checks below.
+
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/react-development` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: None required
+
+- Fallback prompt: "Use the React Development skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 
@@ -1157,31 +1182,6 @@ test('dialog passes axe checks', async () => {
 - [Custom Hooks Gallery](./examples/custom-hooks-gallery.md) — 12 production-ready custom hooks with full implementations and tests
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/react-development` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: None required
-
-- Fallback prompt: "Use the React Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

@@ -1,7 +1,7 @@
 ---
 name: powerpoint-ppt
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [slides, ppt, docs, writing, quality]
 description: "PowerPoint (.pptx) manipulation via MCP server. Use for creating slides, formatting presentations, managing placeholders, adding images, applying templates, or extracting text from .pptx files."
 ---
@@ -38,6 +38,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 
 When MCP is unavailable, use native automation: `python-pptx` for `.pptx`, image export or screenshot checks for visual validation, and manual review for animations or speaker notes. Preserve slide order, layouts, theme fonts, media, notes, and aspect ratio, then reopen or render the deck before claiming success.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/powerpoint-ppt` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: PowerPoint MCP
+
+- Fallback prompt: "Use the PowerPoint Presentation Workflows skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use `python-pptx`, PowerPoint desktop, or a scriptable slide generator when the MCP surface is unavailable.
+- Render the final deck and manually verify layout, overflow, and speaker-facing notes before delivery.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
@@ -69,31 +95,6 @@ Before claiming "skill applied successfully":
 
 ### Examples
 - [Presentation Examples](./examples/presentation-examples.md) - Example deck structures and content patterns
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/powerpoint-ppt` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: PowerPoint MCP
-
-- Fallback prompt: "Use the PowerPoint Presentation Workflows skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use `python-pptx`, PowerPoint desktop, or a scriptable slide generator when the MCP surface is unavailable.
-- Render the final deck and manually verify layout, overflow, and speaker-facing notes before delivery.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

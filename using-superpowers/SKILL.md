@@ -1,7 +1,7 @@
 ---
 name: using-superpowers
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [using, superpowers]
 description: "Legacy compatibility entry for prompts or documentation that explicitly name `using-superpowers`. Route new skill-discovery workflows to `using-skills`; do not activate both entrypoints for the same task."
 ---
@@ -88,7 +88,7 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the Using Superpowers skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Fallback prompt: "Use the Legacy Compatibility Entry skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
 - Do not claim an MCP operation was used when the active host does not expose it.
 - Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 

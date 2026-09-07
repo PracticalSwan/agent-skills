@@ -1,7 +1,7 @@
 ---
 name: web-quality-audit
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [web, quality, audit]
 description: "Comprehensive web quality audit covering performance, accessibility, SEO, and best practices. Use when asked to \"audit my site\", \"review web quality\", \"run lighthouse audit\", \"check page quality\", or \"optimize my website\"."
 license: "MIT"
@@ -206,6 +206,8 @@ For detailed guidelines on specific areas:
 - [Accessibility](../accessibility/SKILL.md)
 - [SEO](../seo/SKILL.md)
 - [Best Practices](../best-practices/SKILL.md)
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

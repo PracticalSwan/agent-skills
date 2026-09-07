@@ -1,7 +1,7 @@
 ---
 name: file-edit-in-place
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [file, edit, in, place]
 description: "Use when the user names a local file and explicitly asks to clean, rewrite, humanize, or remove AI-writing patterns in that file itself, with minimal targeted edits and post-edit verification."
 ---

@@ -1,7 +1,7 @@
 ---
 name: xlsx
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [xlsx, spreadsheet, excel, data, formulas]
 description: "Use this skill any time a spreadsheet file is the primary input or output. Covers reading, editing, cleaning, modeling, formula repair, workbook generation, and converting tabular data into validated spreadsheet deliverables."
 license: "Proprietary. LICENSE.txt has complete terms"
@@ -100,6 +100,8 @@ lone edited cell mid-row is the commonest silent error · guard denominators tha
 
 `openpyxl`, `pandas`, `markitdown` (pip, preinstalled — install only if an import fails or the command is missing) · LibreOffice (`soffice`, auto-configured for sandboxed environments via `scripts/office/soffice.py`)
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -115,10 +117,13 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
-
 Preferred MCP Server: None required
-Fallback prompt: Use `openpyxl`, `pandas`, the bundled Excel helper scripts, and a local workbook reopen or recalculation pass when no spreadsheet MCP surface is available.
+
+- Fallback prompt: "Use the XLSX creation, editing, and analysis skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 

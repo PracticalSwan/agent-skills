@@ -30,7 +30,7 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-08`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `245` tracked skill folders
@@ -54,7 +54,7 @@ Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
   platform skills retain their import provenance, five Codex Router skills were
   promoted from the personal Codex root, and one reviewed Codex plugin scanner
   was vendored. The catalog-wide maintenance baseline is
-  `last_updated: 2026-09-05`. The `58`
+  `last_updated: 2026-09-08`. The `58`
   local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
   retained-client sections and maintenance date.
@@ -114,6 +114,28 @@ mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
 workflows, plus the affected copied Superpowers workflows. Exact-path audits
 left unchanged mapped skills untouched, and imported support material was
 reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
+
+## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
+
+- Rechecked all 24 recorded upstream heads. The only mapped-path changes were
+  the nine selected Awesome Copilot workflows and the Avoid AI Writing v3.33.2
+  root plus six focused leaves; unrelated head movement stayed in provenance.
+- Refreshed the Avoid AI Writing pattern catalog to `references/patterns.md`,
+  updated the detector and quote-normalization helpers, and retained the
+  flattened-parent router compatibility checks. Removed support files that the
+  current upstream no longer ships.
+- Re-audited only the personal `.codex`, `.agents`, and `.claude` roots. No
+  eligible child-only skills remained after excluding Codex `.system`, the
+  protected Blender overlay, copied Superpowers, and project-specific paths.
+  The reviewed plugin selection remains intentionally limited to
+  `agent-skillguard` to avoid bloat.
+- Installed a repository-local CodeGraph index. Commit only
+  `.codegraph/.gitignore`; the generated database stays ignored and local to
+  this checkout. Use `codegraph status`, `codegraph explore`, and
+  `codegraph sync` for repository-structure questions before broad text
+  searches.
+- Modernized all `303` live skill folders to the catalog baseline and updated
+  the generated provenance report and source pins.
 
 ## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
 
@@ -394,6 +416,28 @@ powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 The script refuses to write anywhere outside the three approved downstream
 roots. It also removes only known catalog-owned top-level copies that conflict
 with the routing policy; it does not prune unknown personal skills.
+
+## CodeGraph Repository Index
+
+This repository keeps a local CodeGraph index for fast, relationship-aware
+navigation of the maintenance scripts. The committed marker is
+`.codegraph/.gitignore`; `codegraph.db` is generated, ignored, and must not be
+published or synchronized to downstream skill roots.
+
+When `.codegraph/` exists, use CodeGraph before broad `grep`, `find`, or file
+reads for code-structure questions:
+
+```powershell
+$env:CODEGRAPH_TELEMETRY = "0"
+codegraph status
+codegraph explore "How does update-skill-registry.py route provenance into sync-skills.ps1?"
+codegraph sync .
+```
+
+Run `codegraph init -y .` only when initializing this repository's local index.
+Do not initialize or sync project-specific skill roots. CodeGraph navigation is
+an evidence aid, not a replacement for running the validator, helper tests, or
+the real downstream sync.
 
 ## Upstream-Only Skill Sources
 

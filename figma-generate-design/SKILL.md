@@ -1,7 +1,7 @@
 ---
 name: figma-generate-design
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [figma, generate, design]
 description: "Use this skill alongside figma-use when the task involves translating an application page, view, or multi-section layout into Figma. Triggers: 'write to Figma', 'create in Figma from code', 'push page to Figma', 'take this app/page and build it in Figma', 'create a screen', 'build a landing page in Figma', 'update the Figma screen to match code', 'convert this modal/dialog/drawer/panel to Figma'. This is the preferred workflow skill whenever the user wants to build or update a full page, modal, dialog, drawer, sidebar, panel, or any composed multi-section view in Figma from code or a description. Discovers design system components, variables, and styles from Code Connect files, existing screens, and library search, then imports them and assembles views incrementally section-by-section using design system tokens instead of hardcoded values."
 ---
@@ -474,6 +474,8 @@ Because this skill works incrementally (one section per call), errors are natura
 - **Validate visually after each section.** Use `get_screenshot` to catch issues early.
 - **Assert the font family, not just a successful load.** A script can load the wrong font without error. After building, verify rendered text uses the product font identified in Step 1 (see Step 5).
 - **Match existing conventions.** If the file already has screens, match their naming, sizing, and layout patterns.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

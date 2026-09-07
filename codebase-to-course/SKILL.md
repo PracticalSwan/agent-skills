@@ -1,7 +1,7 @@
 ---
 name: codebase-to-course
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [codebase, to, course, docs, writing]
 description: "Turn any codebase into a beautiful, interactive single-page HTML course that teaches how the code works to non-technical people. Use this skill whenever someone wants to create an interactive course, tutorial, or educational walkthrough from a codebase or project. Also trigger when users mention 'turn this into a course,' 'explain this codebase interactively,' 'teach this code,' 'interactive tutorial from code,' 'codebase walkthrough,' 'learn from this codebase,' or 'make a course from this project.' This skill produces a stunning, self-contained HTML file with scroll-based navigation, animated visualizations, embedded quizzes, and code-with-plain-English side-by-side translations."
 ---
@@ -225,27 +225,9 @@ The `references/` directory contains detailed specs. **Read them only when you r
 - **`references/design-system.md`** — Complete CSS custom properties, color palette, typography scale, spacing system, shadows, animations, scrollbar styling. Read during Phase 3 when writing module HTML.
 - **`references/interactive-elements.md`** — Implementation patterns for every interactive element: drag-and-drop quizzes, multiple-choice quizzes, code↔English translations, group chat animations, message flow visualizations, architecture diagrams, pattern cards, callout boxes. Read the relevant sections during Phase 3.
 
-## Anti-Patterns
-
-- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
-- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
-- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
-## Verification Protocol
-
-Before claiming the `codebase-to-course` workflow succeeded:
-
-1. Pass/fail: The request matches this skill's documented activation boundary.
-2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
-3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
-4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
-5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
-6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -262,11 +244,28 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the Codebase-to-Course skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the Codebase-to-Course skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming the `codebase-to-course` workflow succeeded:
+
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## Related Skills
 

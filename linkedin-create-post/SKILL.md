@@ -1,7 +1,7 @@
 ---
 name: linkedin-create-post
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [linkedin, chrome, browser, social-media, publishing]
 description: "Draft, prepare, publish, and verify personal or project LinkedIn posts through the user's signed-in Chrome session, including audience review, public-safe media uploads, links, action-time confirmation, and post-publication checks."
 ---
@@ -144,6 +144,8 @@ publication.
 - Z.ai GLM Coding Plan setup for Claude Code:
   `https://docs.z.ai/devpack/tool/claude`
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -159,13 +161,15 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 ## MCP Availability And Fallback
 
-Preferred MCP Server: Chrome browser control through the host-provided browser-client and node_repl
+Preferred MCP Server: Codex Chrome browser control, Claude Code external browser MCP
 
-- Fallback prompt: "Use the LinkedIn Create Post skill without Chrome browser control. Prepare the verified final post text, audience, links, and public-safe media handoff, but do not claim publication. Show the checks completed and the exact remaining manual LinkedIn steps."
-- If Chrome control is unavailable, use another user-approved browser surface
-  only when the user did not explicitly require Chrome.
-- Treat a prepared draft, checked links, and inspected media as handoff
-  evidence, not proof that LinkedIn received or published the post.
+- Fallback prompt: "Use the Create a LinkedIn post skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- On Codex, use the host-exposed Chrome control workflow when it is available.
+- On Claude Code with a third-party API endpoint such as the GLM Coding Plan, do not assume native Claude in Chrome is available; use an explicitly configured and healthy external browser MCP, or stop at a manual publishing handoff.
+- Require action-time confirmation before any media upload or final LinkedIn Post action, and never claim publication without finding the live post.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 

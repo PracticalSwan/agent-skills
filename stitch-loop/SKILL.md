@@ -1,7 +1,7 @@
 ---
 name: stitch-loop
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [stitch, workflow, websites, iteration, frontend]
 description: "Run an iterative Stitch website-building loop using `.stitch/next-prompt.md`, SITE.md, DESIGN.md, generated pages, and verification checkpoints."
 license: "Apache-2.0"
@@ -35,6 +35,32 @@ This skill is a catalog-normalized import from `https://github.com/google-labs-c
 
 Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. This 2026-07-29 source refresh did not re-verify a broader live MCP surface. Do not claim `list_projects`, `list_screens`, `get_project`, `get_screen`, `generate_screen_from_text`, `edit_screens`, or `generate_variants` were used unless the current host exposes those exact tools in the active tool list.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/stitch-loop` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Stitch MCP
+
+- Fallback prompt: "Use the Stitch Build Loop skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.
+- Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Claiming a Stitch screen-generation, screen-editing, or screen-retrieval MCP call succeeded when the active host does not expose that tool.
@@ -53,32 +79,6 @@ Before claiming this skill was applied successfully:
 4. Pass/fail: The loop leaves a next baton for the following session.
 5. Pressure-test scenario: Repeat the workflow with Stitch MCP screen tools unavailable and confirm the fallback path remains honest and actionable.
 6. Success metric: The user can identify the exact artifact, project/design-system target, and verification evidence without relying on unstated MCP behavior.
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/stitch-loop` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Stitch MCP
-
-- Fallback prompt: "Use the Stitch Build Loop skill without Stitch MCP. Use the Stitch web UI plus local site integration when MCP generation tools are unavailable. Show the exact files, commands, manual Stitch UI steps, and verification evidence used before concluding."
-- Verified Stitch MCP tools in this workspace are design-system/project oriented; use broader screen tools only when the current host exposes them.
-- Use local scripts, exported HTML/screenshots, the Stitch web UI, and project metadata files as the fallback evidence path.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

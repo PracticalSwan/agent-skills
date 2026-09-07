@@ -1,7 +1,7 @@
 ---
 name: pptx
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [pptx, presentations, slides, office, design]
 description: "Use this skill any time a `.pptx` file is involved as input, output, or both. Covers reading decks, editing existing presentations, creating slides from scratch, visual QA, notes, layouts, and presentation-safe file transforms."
 license: "Proprietary. LICENSE.txt has complete terms"
@@ -239,6 +239,8 @@ ls -1 "$PWD"/slide-*.jpg
 
 `pptxgenjs` (npm, preinstalled — install only if `require('pptxgenjs')` fails) · `markitdown[pptx]`, `Pillow`, `defusedxml`, `lxml` (pip — text dump, thumbnail, clean, validate) · LibreOffice (`soffice`, auto-configured for sandboxed environments via `scripts/office/soffice.py`) · `pdftoppm` (Poppler)
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -254,10 +256,13 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
-
 Preferred MCP Server: None required
-Fallback prompt: Use the bundled PowerPoint, LibreOffice, and thumbnail scripts together with rendered slide images when no dedicated MCP presentation surface is available.
+
+- Fallback prompt: "Use the PPTX creation, editing, and analysis skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 

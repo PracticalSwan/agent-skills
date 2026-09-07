@@ -1,7 +1,7 @@
 ---
 name: false-positive-reviewer
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [false, positive, reviewer]
 description: "Use when a user asks what AI-writing flags mean, whether detector output proves AI authorship, or wants a careful interpretation of possible false positives, especially for academic, hiring, publication, disciplinary, or other consequential decisions."
 ---

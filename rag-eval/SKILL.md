@@ -1,7 +1,7 @@
 ---
 name: rag-eval
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nvidia, rag, evaluation, retrieval, quality, benchmark]
 description: "NVIDIA RAG Blueprint evaluation guidance for measuring retrieval and answer quality with stable datasets, baselines, and reproducible scoring workflows."
 license: "Apache-2.0"
@@ -105,26 +105,9 @@ Full signal table: [`references/benchmark-execution.md#common-error-cases-and-si
 4. **Analyze results** — [`references/result-analysis.md`](references/result-analysis.md); quick scan: `python3 -m json.tool results/<dataset>/rag_<dataset>_evaluation_summary.json`.
 5. **Error triage** — [`references/benchmark-execution.md#common-error-cases-and-signals`](references/benchmark-execution.md#common-error-cases-and-signals).
 
-## Anti-Patterns
-
-- Changing the eval dataset while comparing runs: It destroys the baseline and makes improvements meaningless.
-- Confusing latency smoke tests with answer-quality evaluation: Fast responses can still be wrong or ungrounded.
-- Claiming gains without showing the baseline, scorer, and prompt or config deltas that changed the outcome.
-
-## Verification Protocol
-
-Before claiming "skill applied successfully":
-
-1. Pass/fail: The evaluation plan names the dataset, scorer, and baseline run before comparing variants.
-2. Pass/fail: Retrieval and generation quality are separated so failures are attributed to the correct stage.
-3. Pass/fail: Reported improvements include reproducible commands, configs, or artifacts that another maintainer can rerun.
-4. Pressure-test scenario: Re-evaluate a RAG change where latency improves but groundedness falls on the held-out set.
-5. Success metric: Quality claims survive a rerun on the same eval slice with no hidden configuration drift.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -141,11 +124,27 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the rag-eval skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the On-disk RAG evaluation (`corpus/` + `train.json`) skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Changing the eval dataset while comparing runs: It destroys the baseline and makes improvements meaningless.
+- Confusing latency smoke tests with answer-quality evaluation: Fast responses can still be wrong or ungrounded.
+- Claiming gains without showing the baseline, scorer, and prompt or config deltas that changed the outcome.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The evaluation plan names the dataset, scorer, and baseline run before comparing variants.
+2. Pass/fail: Retrieval and generation quality are separated so failures are attributed to the correct stage.
+3. Pass/fail: Reported improvements include reproducible commands, configs, or artifacts that another maintainer can rerun.
+4. Pressure-test scenario: Re-evaluate a RAG change where latency improves but groundedness falls on the held-out set.
+5. Success metric: Quality claims survive a rerun on the same eval slice with no hidden configuration drift.
 
 ## Related Skills
 

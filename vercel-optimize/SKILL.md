@@ -1,7 +1,7 @@
 ---
 name: vercel-optimize
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [vercel, optimize]
 description: "Use for Vercel cost and performance optimization on deployed projects, especially Next.js, SvelteKit, Nuxt, and limited Astro apps. Collect Vercel metrics, usage, project config, and code scan results first; investigate only metric-backed candidates; produce ranked recommendations grounded in verified files and version-aware Vercel/framework docs. Trigger for Vercel bill reduction, slow or expensive routes, caching opportunities, Function Invocations, Build Minutes, Fast Data Transfer, Core Web Vitals, Bot Management, Fluid compute, or cost breakdown requests."
 ---
@@ -320,9 +320,6 @@ Use these messages without adding sales copy or process detail.
 **Most route-to-file mappings failed:**
 
 > The route inventory matched fewer than half of the routes we saw in observability. This is common in monorepos with custom routing. I've surfaced what I can match; the rest appear in the "Not investigated in this run" section.
-
-<!-- MCP:START -->
-
 ## Windows CLI Compatibility
 
 - Resolve `vercel` with PowerShell `Get-Command` before invoking it; use the
@@ -332,6 +329,8 @@ Use these messages without adding sales copy or process detail.
 - Treat an unavailable CLI or unauthenticated session as a reported blocker;
   use the documented manual or API fallback instead of installing a runtime
   implicitly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

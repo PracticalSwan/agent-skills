@@ -1,7 +1,7 @@
 ---
 name: best-practices
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [best, practices]
 description: "Apply modern web development best practices for security, compatibility, and code quality. Use when asked to \"apply best practices\", \"security audit\", \"modernize code\", \"code quality review\", or \"check for vulnerabilities\"."
 license: "MIT"
@@ -477,6 +477,8 @@ findNearbyButton.addEventListener('click', async () => {
 - [MDN Web Security](https://developer.mozilla.org/en-US/docs/Web/Security)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [Web Quality Audit](../web-quality-audit/SKILL.md)
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

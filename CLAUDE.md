@@ -33,7 +33,7 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-08`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `245` tracked skill folders
@@ -51,7 +51,7 @@ tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, five Codex Router skills were promoted from
 the personal Codex root, and one reviewed Codex plugin scanner was vendored.
 The catalog-wide maintenance baseline is
-`last_updated: 2026-09-05`. The `58` local-only Google
+`last_updated: 2026-09-08`. The `58` local-only Google
 Workspace overlays retain upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
@@ -109,6 +109,20 @@ therefore included, with no Hugging Face, MongoDB, or Figma CLI skill imported.
 Authentication, runtime installation, and MCP configuration remain explicit
 user-authorized actions. Repeat imports with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
+
+- Refreshed the nine mapped Awesome Copilot workflows and the Avoid AI Writing
+  v3.33.2 root plus six leaves after exact-path upstream comparison.
+- Added the current pattern reference and quote-normalization helpers while
+  retaining the flattened-parent router compatibility tests and removing
+  upstream-deleted support files.
+- Re-audited only `.codex`, `.agents`, and `.claude`; no eligible child-only
+  skills or useful non-overlapping Codex plugin additions were found beyond
+  the existing `agent-skillguard` scanner.
+- The local CodeGraph index lives under `.codegraph`; commit only its
+  `.gitignore`, keep the generated database ignored, and use `codegraph status`,
+  `codegraph explore`, and `codegraph sync .` for repository-structure work.
 
 ## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
 
@@ -254,6 +268,20 @@ The only downstream sync call is to the three approved personal-global roots:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
+
+## CodeGraph Repository Index
+
+When `.codegraph/` exists, use CodeGraph before broad text searches or source
+reads for repository-structure questions. `codegraph explore "<question>"`
+provides symbol and call-path context; it does not replace direct file review,
+the validator, helper tests, or the real mirror sync.
+
+Commit only `.codegraph/.gitignore`. The generated `codegraph.db` is ignored,
+machine-local, and must not be copied to any downstream skill root. Use
+`codegraph status` to check freshness and `codegraph sync .` after source
+changes. Initialize only this catalog with `codegraph init -y .`; do not index
+project-specific `C:\Assumption University` paths. Set
+`CODEGRAPH_TELEMETRY=0` for a no-telemetry local run.
 
 ## Catalog Skill Expectations
 

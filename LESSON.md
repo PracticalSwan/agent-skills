@@ -159,6 +159,20 @@ Codex skill catalog.
   compare inventories and digests, confirm that no configuration or process
   uses it, and preserve all surrounding application state.
 
+## CodeGraph Lessons
+
+- A local CodeGraph index is useful for repository-structure questions, but it
+  is navigation evidence rather than validation. Use `codegraph status` and
+  `codegraph explore "<question>"` before broad text searches when
+  `.codegraph/` exists, then verify the observed path directly and run the
+  real helper or validator.
+- Commit only `.codegraph/.gitignore`. Keep the generated `codegraph.db`
+  machine-local and ignored; never sync it to `.codex`, `.agents`, `.claude`,
+  or project-specific paths.
+- Run `codegraph sync .` after source edits and use `CODEGRAPH_TELEMETRY=0`
+  when the local index should not emit telemetry. Initialize only the parent
+  catalog with `codegraph init -y .`.
+
 ## 2026-08-08 Matt Pocock Skill Import
 
 - When importing from a categorized upstream catalog, audit every live
@@ -265,6 +279,31 @@ Codex skill catalog.
 - When an upstream skill deletes a reference file, apply that deletion while
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
+
+## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
+
+- Compare every recorded source head with its exact mapped path before
+  refreshing. This pass updated nine Awesome Copilot workflows and Avoid AI
+  Writing v3.33.2 plus six focused leaves; head movement outside those paths
+  stays provenance-only.
+- When an upstream package moves its canonical catalog from `SKILL.md` to a
+  reference file, carry the reference and executable helpers forward, update
+  count checks, and keep flattened-parent compatibility adaptations intact.
+- If upstream removes support files, remove only the exact stale files after
+  checking references, while preserving the catalog changelog and provenance.
+- Install CodeGraph at the repository boundary only. Commit its ignore marker,
+  keep the database local, and use its symbol/call-path query before broad
+  searches without confusing navigation output for execution proof.
+- When refreshing registry-owned sections, remove orphaned marker lines before
+  rebuilding them; audit that every skill has exactly one matched portability
+  and MCP marker pair before syncing downstream.
+- Re-audit personal `.codex`, `.agents`, and `.claude` roots independently;
+  protected `.system`, Blender, Superpowers, and project paths remain outside
+  promotion and sync ownership. Do not add plugin skills without a concrete
+  non-overlapping gap.
+- The 2026-09-08 inventory remains `303` live folders (`271` maintained and
+  `32` copied Superpowers, including `58` local-only overlays) and `245`
+  tracked folders (`213` maintained and `32` copied Superpowers).
 
 ## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
 

@@ -3,6 +3,36 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-09-08] - Catalog Refresh, CodeGraph Index, And Mirror Preparation
+
+### Added
+
+- Added the latest Avoid AI Writing `references/patterns.md` catalog,
+  Markdown-prose masking, quote-normalization helper, and regression tests.
+- Added a repository-local CodeGraph marker at `.codegraph/.gitignore`; its
+  generated database remains ignored and machine-local.
+
+### Changed
+
+- Refreshed the nine mapped Awesome Copilot workflows and the Avoid AI Writing
+  v3.33.2 root plus six focused leaves from their exact upstream paths.
+- Modernized all `303` live skill folders, regenerated provenance and source
+  pins, updated the root maintenance docs, and retained the flattened-router
+  compatibility adaptations.
+- Re-audited only `.codex`, `.agents`, and `.claude`; no eligible child-only
+  skills or useful non-overlapping Codex plugin additions were found beyond
+  the existing `agent-skillguard` import.
+
+### Fixed
+
+- Removed seven exact support files that the current Awesome Copilot or Avoid
+  AI Writing upstream trees no longer ship, while preserving catalog
+  changelog history.
+- Updated the Avoid AI Writing package test and pattern-count checks for the
+  current canonical reference file and quote-normalization workflow.
+- Normalized orphaned portability and MCP marker lines left by earlier imports
+  so every skill now has one matched registry-owned block.
+
 ## [2026-09-05] - Catalog Source Refresh, Plugin Review, And Gemini Consolidation
 
 ### Added

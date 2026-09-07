@@ -1,7 +1,7 @@
 ---
 name: gemini-api-dev
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [gemini, api, dev]
 description: "Use this skill when building applications with Gemini API hosted models, including Gemini and Gemma 4, working with multimodal content (text, images, audio, video), implementing function calling, using structured outputs, or needing current model specifications. Covers SDK usage (google-genai for Python, @google/genai for JavaScript/TypeScript, com.google.genai:google-genai for Java, google.golang.org/genai for Go), model selection, and API capabilities."
 license: "Apache-2.0"
@@ -440,6 +440,8 @@ An `Interaction` response contains `steps`, an array of typed step objects repre
 
 For real-time, bidirectional audio/video/text streaming with the Gemini Live API, install the **`google-gemini/gemini-live-api-dev`** skill. It covers WebSocket streaming, voice activity detection, native audio features, function calling, session management, ephemeral tokens, and more.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -457,7 +459,7 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: Google Gemini documentation MCP
 
-- Fallback prompt: "Use the Gemini API Development Skill skill without MCP. Follow the official ai.google.dev documentation and current google-genai SDK fallback, show the selected tool surface, and report the verification evidence."
+- Fallback prompt: "Use the Gemini API Development Skill skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
 - Use the official ai.google.dev documentation and the current google-genai SDK when the active host does not expose a Gemini documentation MCP.
 - Treat model names, SDK versions, and API examples as time-sensitive; verify them against current official documentation before implementation.
 - Do not claim an MCP operation was used when the active host does not expose it.

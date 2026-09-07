@@ -1,7 +1,7 @@
 ---
 name: seo
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [seo]
 description: "Optimize for search engine visibility and ranking. Use when asked to \"improve SEO\", \"optimize for search\", \"fix meta tags\", \"add structured data\", \"sitemap optimization\", or \"search engine optimization\"."
 license: "MIT"
@@ -406,6 +406,8 @@ body {
 - [Schema.org](https://schema.org/)
 - [Core Web Vitals](../core-web-vitals/SKILL.md)
 - [Web Quality Audit](../web-quality-audit/SKILL.md)
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

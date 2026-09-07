@@ -5,6 +5,12 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+if [ ! -d "$repo_root/plugins/avoid-ai-writing" ]; then
+  echo "skipped: optional plugin tree is not vendored in this flattened catalog"
+  exit 0
+fi
+
 src="$repo_root/SKILL.md"
 dest="$repo_root/plugins/avoid-ai-writing/skills/avoid-ai-writing/SKILL.md"
 

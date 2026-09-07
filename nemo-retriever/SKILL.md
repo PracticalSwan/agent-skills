@@ -1,7 +1,7 @@
 ---
 name: nemo-retriever
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nvidia, nemo, retriever, rag, indexing, qa]
 description: "NVIDIA NeMo Retriever deployment and usage guidance for local retrieval services, corpus ingestion, and grounded question-answering workflows."
 license: "CC-BY-4.0 AND Apache-2.0"
@@ -38,26 +38,9 @@ Before ingesting a mixed folder, inventory extensions (`find <dir> -name '*.*' |
 
 Long query turns (5+ tool calls, 1M+ cache-read tokens) cost ~5× a disciplined turn and almost always still produce the wrong answer. **Answering partially beats timing out.**
 
-## Anti-Patterns
-
-- Indexing content before clarifying corpus boundaries, freshness, or ownership: Retrieval quality collapses when the source of truth is unstable.
-- Treating embedding, chunking, and backend choices as invisible defaults: They change recall, latency, and storage cost in user-visible ways.
-- Claiming grounded answers without checking the retrieved passages that supported them.
-
-## Verification Protocol
-
-Before claiming "skill applied successfully":
-
-1. Pass/fail: The workflow names the corpus, index or backend choice, and the query path before answering deployment or QA questions.
-2. Pass/fail: Retrieval checks include at least one real query and inspection of the supporting passages or scores.
-3. Pass/fail: Ingestion or indexing advice keeps corpus freshness and reindex cost visible instead of implicit.
-4. Pressure-test scenario: Apply the workflow to a retriever that answers quickly but returns stale passages after a corpus update.
-5. Success metric: The user gets a reproducible retriever setup or debugging path with live retrieval evidence.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -74,11 +57,27 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the nemo-retriever skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the nemo-retriever skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Indexing content before clarifying corpus boundaries, freshness, or ownership: Retrieval quality collapses when the source of truth is unstable.
+- Treating embedding, chunking, and backend choices as invisible defaults: They change recall, latency, and storage cost in user-visible ways.
+- Claiming grounded answers without checking the retrieved passages that supported them.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The workflow names the corpus, index or backend choice, and the query path before answering deployment or QA questions.
+2. Pass/fail: Retrieval checks include at least one real query and inspection of the supporting passages or scores.
+3. Pass/fail: Ingestion or indexing advice keeps corpus freshness and reindex cost visible instead of implicit.
+4. Pressure-test scenario: Apply the workflow to a retriever that answers quickly but returns stale passages after a corpus update.
+5. Success metric: The user gets a reproducible retriever setup or debugging path with live retrieval evidence.
 
 ## Related Skills
 

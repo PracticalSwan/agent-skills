@@ -1,7 +1,7 @@
 ---
 name: domain-modeling
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [domain, modeling]
 description: "Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model."
 license: "MIT"
@@ -75,6 +75,8 @@ Only offer to create an ADR when all three are true:
 3. **The result of a real trade-off**: there were genuine alternatives and you picked one for specific reasons
 
 If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

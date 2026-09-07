@@ -1,7 +1,7 @@
 ---
 name: serena-usage
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [serena, usage, workflow, automation, guidance]
 description: "Serena MCP for project memory and code navigation. Use when managing Serena memories, navigating symbols, performing intelligent refactoring, or maintaining context/continuity across AI agent sessions."
 ---
@@ -506,6 +506,32 @@ Serena provides reflection tools to maintain focus:
 
 ---
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/serena-usage` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Serena MCP
+
+- Fallback prompt: "Use the Serena Usage skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use `rg`, `git diff`, targeted file reads, and local Markdown memory files when Serena is unavailable.
+- Keep a lightweight Memory Bank in repo docs or notes so project continuity still survives across sessions.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Starting without a clear success condition: The skill becomes advice-shaped instead of workflow-shaped.
@@ -670,31 +696,6 @@ edit_memory(
 ```
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/serena-usage` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Serena MCP
-
-- Fallback prompt: "Use the Serena Usage skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use `rg`, `git diff`, targeted file reads, and local Markdown memory files when Serena is unavailable.
-- Keep a lightweight Memory Bank in repo docs or notes so project continuity still survives across sessions.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

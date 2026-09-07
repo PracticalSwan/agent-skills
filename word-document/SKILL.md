@@ -1,7 +1,7 @@
 ---
 name: word-document
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [docs, document, writing, quality, templates]
 description: "Word (.docx) manipulation via MCP server. Use for reading, creating, editing, formatting Word documents including tables, footnotes, comments, images, headers, styles, and PDF conversion."
 ---
@@ -39,6 +39,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 
 When MCP is unavailable, use native automation: `python-docx` for `.docx`, direct OOXML inspection for unsupported structures, and PDF export checks when layout matters. Preserve styles, tables, headers, footers, comments, tracked-change expectations, and metadata, then reopen or parse the document before claiming success.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/word-document` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Word Document MCP
+
+- Fallback prompt: "Use the Word Document Workflows skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use `python-docx`, Word desktop, or document export scripts when the MCP surface is unavailable.
+- Re-open or render the document locally so formatting, comments, and pagination are verified before delivery.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
@@ -73,31 +99,6 @@ Before claiming "skill applied successfully":
 
 ### Examples
 - [Report Generation Example](./examples/report-generation-example.md) - Example report workflow for `.docx` output
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/word-document` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Word Document MCP
-
-- Fallback prompt: "Use the Word Document Workflows skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use `python-docx`, Word desktop, or document export scripts when the MCP surface is unavailable.
-- Re-open or render the document locally so formatting, comments, and pagination are verified before delivery.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

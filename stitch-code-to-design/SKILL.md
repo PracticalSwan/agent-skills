@@ -1,7 +1,7 @@
 ---
 name: stitch-code-to-design
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [stitch, design, frontend, html, migration]
 description: "Convert an existing frontend into Stitch-ready design assets by extracting static HTML, writing DESIGN.md, creating the design system, and uploading approved files."
 license: "Apache-2.0"
@@ -72,6 +72,32 @@ You will need:
 - The `--generated-by` argument set to `'stitch::extract-static-html'`.
 - The `--title` argument set to the **route path** of the page (e.g., `'/dashboard'`, `'/settings/profile'`, `'/inbox'`) so that the screen name/title in Stitch clearly identifies its route in the application.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/stitch-code-to-design` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Stitch MCP
+
+- Fallback prompt: "Use the Code to Design skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.
+- Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Claiming a Stitch screen-generation, screen-editing, or screen-retrieval MCP call succeeded when the active host does not expose that tool.
@@ -90,32 +116,6 @@ Before claiming this skill was applied successfully:
 4. Pass/fail: No API key, token, cookie, or credential-bearing config was copied into durable files.
 5. Pressure-test scenario: Repeat the workflow with Stitch MCP screen tools unavailable and confirm the fallback path remains honest and actionable.
 6. Success metric: The user can identify the exact artifact, project/design-system target, and verification evidence without relying on unstated MCP behavior.
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/stitch-code-to-design` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Stitch MCP
-
-- Fallback prompt: "Use the Stitch Code To Design skill without Stitch MCP. Use local extraction, source-code design-system synthesis, and manual Stitch web UI upload when MCP upload tools are unavailable. Show the exact files, commands, manual Stitch UI steps, and verification evidence used before concluding."
-- Verified Stitch MCP tools in this workspace are design-system/project oriented; use broader screen tools only when the current host exposes them.
-- Use local scripts, exported HTML/screenshots, the Stitch web UI, and project metadata files as the fallback evidence path.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

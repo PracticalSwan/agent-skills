@@ -53,7 +53,7 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-09-05`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-08`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
   - `245` tracked skill folders
@@ -74,7 +74,7 @@ tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, and five Codex Router skills were promoted
 from the personal Codex root, and one standalone Codex plugin scanner was
 vendored after review. The catalog-wide maintenance baseline is
-`last_updated: 2026-09-05`. The `58` local-only Google
+`last_updated: 2026-09-08`. The `58` local-only Google
 Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
@@ -135,6 +135,27 @@ and `supabase` were present; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and
 guidance is included, while no Hugging Face, MongoDB, or Figma CLI skill was
 installed. The importer is repeatable with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
+
+- Rechecked all 24 recorded upstream heads and refreshed only the mapped paths
+  that changed: nine Awesome Copilot workflows and Avoid AI Writing v3.33.2
+  with its six focused leaves.
+- Added the current Avoid AI Writing `references/patterns.md` catalog,
+  detector updates, and quote-normalization helpers while preserving the
+  flattened-parent router validator/test adaptations. Removed seven support
+  files that the current upstream no longer ships.
+- Re-audited only personal `.codex`, `.agents`, and `.claude` roots. No
+  eligible child-only skills remained after the protected `.system`, Blender,
+  Superpowers, and project-path exclusions. No new plugin skill met the
+  catalog's usefulness-without-bloat bar beyond the existing
+  `agent-skillguard` import.
+- Installed a local CodeGraph index in `.codegraph`; commit only its generated
+  `.gitignore`, keep `codegraph.db` ignored, and use `codegraph explore` before
+  broad text searches for repository-structure questions. CodeGraph is local
+  navigation evidence, not a substitute for validation or mirror sync.
+- Modernized all `303` live folders and regenerated provenance at the
+  `2026-09-08` baseline.
 
 ## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
 
@@ -272,6 +293,25 @@ The only downstream sync call is to the three approved personal-global roots:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
 ```
+
+## CodeGraph Repository Index
+
+When `.codegraph/` exists, use the local CodeGraph index before broad `grep`,
+`find`, or file reads for code-structure questions. It exposes symbols and
+call paths for the maintenance scripts without replacing direct inspection or
+execution evidence.
+
+- Commit only `.codegraph/.gitignore`; the generated `codegraph.db` is ignored,
+  machine-local, and must never be synced to a downstream skill root.
+- Check freshness with `codegraph status`, query with
+  `codegraph explore "<repository question>"`, and refresh after source edits
+  with `codegraph sync .`.
+- Initialize only this repository with `codegraph init -y .`; never initialize
+  project-specific `C:\Assumption University` paths during catalog maintenance.
+- Set `CODEGRAPH_TELEMETRY=0` when a no-telemetry local run is required.
+
+CodeGraph output is navigation evidence. The validator, real helper tests,
+source-pin checks, and downstream mirror audit remain the completion gates.
 
 ## Skill Catalog Expectations
 

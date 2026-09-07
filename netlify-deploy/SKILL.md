@@ -1,7 +1,7 @@
 ---
 name: netlify-deploy
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [netlify, deploy]
 description: "Create and manage Netlify deploys — Git continuous deployment, CLI manual/anonymous deploys, Deploy to Netlify buttons, drag-and-drop, and per-context netlify.toml build settings. Use when linking a repo, deploying from the CLI, setting up Deploy Previews or branch deploys, configuring deploy contexts, adding skew protection, fixing a failed or secrets-flagged deploy, or wiring build hooks and Deploy to Netlify buttons."
 ---
@@ -186,9 +186,6 @@ ctx-gen and never generated. Owned by the skills maintainer.
    connected, warn the user that the next push to the production branch
    silently replaces the hand-shipped deploy; suggest locking the published
    deploy if it must stay live.
-
-<!-- MCP:START -->
-
 ## Windows CLI Compatibility
 
 - Resolve `netlify` with PowerShell `Get-Command` before invoking it; use the
@@ -198,6 +195,8 @@ ctx-gen and never generated. Owned by the skills maintainer.
 - Treat an unavailable CLI or unauthenticated session as a reported blocker;
   use the documented manual or API fallback instead of installing a runtime
   implicitly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

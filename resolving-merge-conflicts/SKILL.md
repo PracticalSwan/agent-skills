@@ -1,7 +1,7 @@
 ---
 name: resolving-merge-conflicts
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [resolving, merge, conflicts]
 description: "Use when you need to resolve an in-progress git merge/rebase conflict."
 license: "MIT"
@@ -15,6 +15,8 @@ license: "MIT"
 4. Discover the project's **automated checks** and run them, typically typecheck, then tests, then format. Fix anything the merge broke.
 
 5. **Finish the merge/rebase.** Stage everything and commit. If rebasing, continue the rebase process until all commits are rebased.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

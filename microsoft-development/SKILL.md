@@ -1,7 +1,7 @@
 ---
 name: microsoft-development
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [microsoft, cloud, architecture, operations, quality]
 description: "Microsoft docs lookup, code samples, and SDK reference for Azure, .NET, Microsoft 365, Windows, and Power Platform via Microsoft Learn MCP. Use for API reference or official MS documentation retrieval."
 ---
@@ -54,6 +54,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 - Use Microsoft Learn MCP for Microsoft-specific answers before browsing elsewhere.
 - Treat package versions, quotas, and service capabilities as time-sensitive.
 - If Learn MCP is unavailable in the current client, use the included scripts and references as local fallbacks, then browse official docs.
+
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/microsoft-development` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Microsoft Learn Docs MCP
+
+- Fallback prompt: "Use the Microsoft Development skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use Microsoft Learn in a browser and local SDK or CLI documentation when the docs MCP server is unavailable.
+- Verify generated commands or samples with the native toolchain (`dotnet`, `az`, PowerShell, etc.) before shipping them.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 
@@ -109,31 +135,6 @@ Moves from an opaque deployment command to a traceable and reviewable workflow w
 
 ### Examples
 - [Azure Function API Example](./examples/azure-function-api-example.md) - Example serverless API workflow tied back to official Microsoft docs
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/microsoft-development` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Microsoft Learn Docs MCP
-
-- Fallback prompt: "Use the Microsoft Development skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use Microsoft Learn in a browser and local SDK or CLI documentation when the docs MCP server is unavailable.
-- Verify generated commands or samples with the native toolchain (`dotnet`, `az`, PowerShell, etc.) before shipping them.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

@@ -1,7 +1,7 @@
 ---
 name: frontend-design
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [frontend, design, ui, ux, accessibility, responsive]
 description: "Design and implement context-fit frontend interfaces with deliberate art direction, accessible interaction, responsive behavior, complete states, and rendered verification. Use when creating or substantially reworking pages, components, product workspaces, dashboards, marketing sites, editorial surfaces, commerce flows, or justified immersive experiences."
 license: "MIT AND Apache-2.0"
@@ -241,9 +241,9 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the frontend-design skill without MCP. Inspect the local project and design system, implement the context-fit interface, then verify the rendered states, representative widths, accessibility, and performance evidence before concluding."
-- Use an available browser or design MCP only when it improves inspection or verification; never invent a host capability.
-- Without MCP, use the local source, project toolchain, browser developer tools, screenshots, the bundled contrast checker, and manual keyboard and responsive checks.
+- Fallback prompt: "Use the Frontend Design skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
 

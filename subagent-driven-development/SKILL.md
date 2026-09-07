@@ -1,7 +1,7 @@
 ---
 name: subagent-driven-development
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [subagent, driven, development]
 description: "Execute implementation plan by dispatching fresh subagent for each task, with code review between tasks"
 ---
@@ -568,6 +568,8 @@ Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 Done! Using superpowers:finishing-a-development-branch.
 ```
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

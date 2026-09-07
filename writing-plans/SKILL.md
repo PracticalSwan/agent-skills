@@ -1,7 +1,7 @@
 ---
 name: writing-plans
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [writing, plans]
 description: "Create detailed implementation plans with bite-sized tasks for engineers with zero codebase context"
 ---
@@ -171,6 +171,8 @@ After saving the plan, offer execution choice:
 **If Inline Execution chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
 - Batch execution with checkpoints for review
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

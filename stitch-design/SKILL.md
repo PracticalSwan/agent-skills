@@ -1,7 +1,7 @@
 ---
 name: stitch-design
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [stitch, design, frontend, ui, mcp]
 description: "Route Google Stitch tasks to the correct imported Stitch skill, with verified MCP tool boundaries, upload safety, and cross-client fallback guidance."
 license: "Apache-2.0"
@@ -53,6 +53,32 @@ Verified in this workspace on 2026-06-15: `create_project`, `upload_design_md`, 
 5. Ask before external uploads unless the current user request already approves that exact upload target and artifact.
 6. Verify with Stitch MCP when the requested operation matches the available tool surface; otherwise document the web UI/API/local fallback used.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/stitch-design` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Stitch MCP
+
+- Fallback prompt: "Use the Stitch Design skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use local `.stitch/` artifacts, exported HTML or screenshots, bundled scripts, and the Stitch web UI when the host does not expose the needed Stitch MCP operation.
+- Do not claim screen lookup, generation, editing, or variant MCP calls unless those tools are present in the active host tool list.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Using this entrypoint as a replacement for reading the dedicated skill that matches the task.
@@ -70,32 +96,6 @@ Before claiming Stitch work is complete:
 4. Pass/fail: Uploads and external state changes had user-approved artifact and destination details.
 5. Pressure-test scenario: Re-run the route selection with only the verified design-system MCP tools available and confirm the fallback path still works.
 6. Success metric: The final response names the selected Stitch skill, evidence used, and whether verification was local, MCP-backed, or manual.
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/stitch-design` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Stitch MCP
-
-- Fallback prompt: "Use the Stitch Design router without Stitch MCP. Route to the correct local Stitch skill, use local artifacts or the Stitch web UI where needed, and show the exact evidence used before concluding."
-- Use screenshots, exported HTML, DESIGN.md files, local scripts, and metadata files when Stitch MCP is not exposed by the host.
-- Treat generated React, design assets, and uploaded screens as drafts until verified through local render, Stitch MCP, or the Stitch UI.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

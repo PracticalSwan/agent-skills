@@ -1,7 +1,7 @@
 ---
 name: jupyter-notebook
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [jupyter, notebook, python, experiments, tutorials]
 description: "Use when the user asks to create, scaffold, or edit Jupyter notebooks (`.ipynb`) for experiments, explorations, or tutorials; prefer the bundled templates and helper script for reproducible notebook structure and safer editing."
 ---
@@ -107,20 +107,9 @@ No required environment variables.
 - `references/notebook-structure.md`: notebook JSON shape and safe editing rules.
 - `references/quality-checklist.md`: final validation checklist.
 
-## Anti-Patterns
-
-- Hand-authoring raw notebook JSON when the bundled scaffold or a targeted cell edit would avoid avoidable formatting mistakes.
-- Packing large exploratory leaps into one noisy cell instead of building small, runnable notebook steps with short narrative bridges.
-- Presenting a notebook as validated when it has not been run top-to-bottom or the execution limitation has not been disclosed.
-
-## Verification Protocol
-
-1. Pass/fail: the notebook opens successfully and the structure, title, and requested sections match the chosen experiment or tutorial pattern.
-2. Pressure test: execute the notebook top-to-bottom when the environment allows, or validate the JSON plus template structure and call out any runtime gap explicitly.
-3. Success metric: no malformed notebook JSON and a clear top-to-bottom flow with runnable or clearly marked cells.
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -135,10 +124,25 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 ## MCP Availability And Fallback
 
-No dedicated MCP server is required for the normal workflow in this skill.
-
 Preferred MCP Server: None required
-Fallback prompt: Use the bundled `new_notebook.py` scaffold, local Jupyter tooling, and notebook execution logs as the fallback evidence path when no notebook-aware MCP surface is available.
+
+- Fallback prompt: "Use the Jupyter Notebook Skill skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
+
+## Anti-Patterns
+
+- Hand-authoring raw notebook JSON when the bundled scaffold or a targeted cell edit would avoid avoidable formatting mistakes.
+- Packing large exploratory leaps into one noisy cell instead of building small, runnable notebook steps with short narrative bridges.
+- Presenting a notebook as validated when it has not been run top-to-bottom or the execution limitation has not been disclosed.
+
+## Verification Protocol
+
+1. Pass/fail: the notebook opens successfully and the structure, title, and requested sections match the chosen experiment or tutorial pattern.
+2. Pressure test: execute the notebook top-to-bottom when the environment allows, or validate the JSON plus template structure and call out any runtime gap explicitly.
+3. Success metric: no malformed notebook JSON and a clear top-to-bottom flow with runnable or clearly marked cells.
 
 ## Related Skills
 

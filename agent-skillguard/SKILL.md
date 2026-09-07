@@ -1,7 +1,7 @@
 ---
 name: agent-skillguard
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [agent, skillguard]
 description: "Use before installing an agent skill or plugin. Scan local files for risky instructions, broad permissions, suspicious downloads, prompt-injection patterns, and possible secret exposure; return file-and-line findings and remediation without running, uploading, or certifying the target."
 ---

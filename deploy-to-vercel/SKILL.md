@@ -1,7 +1,7 @@
 ---
 name: deploy-to-vercel
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [vercel, deploy, to]
 description: "Deploy applications and websites to Vercel. Use when the user requests deployment actions like \"deploy my app\", \"deploy and give me the link\", \"push this live\", or \"create a preview deployment\"."
 ---
@@ -293,9 +293,6 @@ the command with escalated permissions — want me to proceed?
 ### CLI Auth Failure
 
 If `vercel login` or `vercel deploy` fails with authentication errors, fall back to the no-auth deploy script (claude.ai or Codex variant, depending on the environment).
-
-<!-- MCP:START -->
-
 ## Windows CLI Compatibility
 
 - Resolve `vercel` with PowerShell `Get-Command` before invoking it; use the
@@ -305,6 +302,8 @@ If `vercel login` or `vercel deploy` fails with authentication errors, fall back
 - Treat an unavailable CLI or unauthenticated session as a reported blocker;
   use the documented manual or API fallback instead of installing a runtime
   implicitly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

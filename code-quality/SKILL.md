@@ -1,7 +1,7 @@
 ---
 name: code-quality
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [code, quality, workflow, planning, delivery]
 description: "two-stage review (spec compliance first, then code quality), refactoring, and quality improvement. Use when reviewing code, eliminating code smells, reducing technical debt, refactoring methods, running self-critique loops, or improving maintainability and readability."
 ---
@@ -295,6 +295,31 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 
 ---
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/code-quality` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: None required
+
+- Fallback prompt: "Use the Code Quality Management skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Starting work before the plan or gate is clear: Execution drifts when success criteria are implied instead of explicit.
@@ -553,31 +578,6 @@ Use the gate to fail fast on lint errors, formatting drift, coverage regressions
 - [Refactoring Walkthrough](./examples/refactoring-walkthrough.md) — Step-by-step React component refactoring from 160 lines to clean architecture
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/code-quality` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: None required
-
-- Fallback prompt: "Use the Code Quality Management skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

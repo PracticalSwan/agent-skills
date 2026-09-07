@@ -1,7 +1,7 @@
 ---
 name: notion-docs
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [notion, docs, writing, quality, templates]
 description: "Notion workspace management via MCP - create databases, pages, comments, and knowledge bases. Use when building Notion documentation, organizing project wikis, or managing Notion content."
 ---
@@ -49,6 +49,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 
 Inherit the shared stack from [documentation-patterns](../documentation-patterns/SKILL.md#shared-documentation-stack): source-of-truth discovery, audience framing, structure selection, verification, and freshness checks. Keep this skill focused on Notion conversion and workspace behavior instead of restating the full stack.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/notion-docs` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Notion MCP
+
+- Fallback prompt: "Use the Notion Documentation skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Draft content locally in Markdown or JSON, then use `scripts/notion-templates.js` and the Notion web UI for final publishing.
+- Prefer page and database templates from this skill to avoid duplicate structures when working without MCP.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
@@ -77,31 +103,6 @@ Before claiming "skill applied successfully":
 
 ### Examples
 - [Workspace Setup Example](./examples/workspace-setup-example.md) - Example team workspace structure using pages, databases, and review comments
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/notion-docs` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Notion MCP
-
-- Fallback prompt: "Use the Notion Documentation skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Draft content locally in Markdown or JSON, then use `scripts/notion-templates.js` and the Notion web UI for final publishing.
-- Prefer page and database templates from this skill to avoid duplicate structures when working without MCP.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

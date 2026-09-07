@@ -1,7 +1,7 @@
 ---
 name: figma-generate-library
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [figma, generate, library]
 description: "Build or update a professional-grade design system in Figma from a codebase. Use when the user wants to create variables/tokens, build component libraries, create individual components with proper variant sets and variable bindings, set up theming (light/dark modes), document foundations, or reconcile gaps between code and Figma. Also use when the user asks to create or generate any component in Figma — even a single one — since components require proper variable foundations, variant states, and design token bindings to be production-quality. This skill teaches WHAT to build and in WHAT ORDER — it complements the `figma-use` skill which teaches HOW to call the Plugin API. Both skills should be loaded together."
 ---
@@ -368,6 +368,8 @@ Reusable Plugin API helper functions. Embed in `use_figma` calls:
 | [createDocumentationPage.js](scripts/createDocumentationPage.js) | Create a page with title + description + section structure |
 | [validateCreation.js](scripts/validateCreation.js) | Verify created nodes match expected counts, names, structure |
 | [cleanupOrphans.js](scripts/cleanupOrphans.js) | Remove only the exact node, variable, and collection IDs supplied from the state ledger |
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

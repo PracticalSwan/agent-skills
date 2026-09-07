@@ -1,7 +1,7 @@
 ---
 name: deepstream-dev
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nvidia, deepstream, gstreamer, tensorrt, video, vision]
 description: "NVIDIA DeepStream SDK development guidance for Python pyservicemaker pipelines, video analytics, TensorRT integration, and streaming inference workflows."
 license: "CC-BY-4.0 AND Apache-2.0"
@@ -196,6 +196,8 @@ DeepStream uses NVIDIA Video Memory Manager (NVMM) for zero-copy GPU buffer tran
 
 <!-- Signing refresh marker. -->
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -213,9 +215,9 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the deepstream-dev skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the DeepStream Development Skill skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
 

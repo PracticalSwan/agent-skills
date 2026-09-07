@@ -15,12 +15,12 @@ from platform_skill_manifest import (
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "7b1ebe6333397841ca918dec904d24d4695fe953"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "f38fb6cf039b835990d0f49dc161d7c2af99ef69"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
     "anthropic_skills": ("https://github.com/anthropics/skills", "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "4b92218961138396b390d7b2ec5caf39209b17c3"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "a465548fe813969dc7006c2e042efa305c09c96f"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
     "nvidia_skills": ("https://github.com/NVIDIA/skills", "c3168ca798561c5aef7f69e6f99c4a874485ca24"),
     "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "0337446dadde6f8c94210444e2aa9d546126480f"),
@@ -137,32 +137,32 @@ ADDITIONAL_UPSTREAM_SKILLS = {
     "ai-writing-detector": (
         "avoid_ai_writing",
         "skills/ai-writing-detector",
-        "Current Avoid AI Writing v3.29 detector leaf for scanning prose with the catalog's local corpus and preservation safeguards; kept separate from the router and rewriting workflows.",
+        "Current Avoid AI Writing v3.33.2 detector leaf for scanning prose with the catalog's local corpus and preservation safeguards; kept separate from the router and rewriting workflows.",
     ),
     "avoid-ai-writing-router": (
         "avoid_ai_writing",
         "skills/avoid-ai-writing-router",
-        "Current Avoid AI Writing v3.29 routing workflow that selects detector, review, preservation, and rewriting leaves without collapsing their activation boundaries.",
+        "Current Avoid AI Writing v3.33.2 routing workflow that selects detector, review, preservation, and rewriting leaves without collapsing their activation boundaries.",
     ),
     "false-positive-reviewer": (
         "avoid_ai_writing",
         "skills/false-positive-reviewer",
-        "Current Avoid AI Writing v3.29 false-positive review leaf for evidence-backed human-voice decisions after detection; no automated accusation or authorship claim.",
+        "Current Avoid AI Writing v3.33.2 false-positive review leaf for evidence-backed human-voice decisions after detection; no automated accusation or authorship claim.",
     ),
     "file-edit-in-place": (
         "avoid_ai_writing",
         "skills/file-edit-in-place",
-        "Current Avoid AI Writing v3.29 preservation-first editing leaf for in-place changes, bounded diffs, and rollback-safe user approval.",
+        "Current Avoid AI Writing v3.33.2 preservation-first editing leaf for in-place changes, bounded diffs, and rollback-safe user approval.",
     ),
     "preservation-verifier": (
         "avoid_ai_writing",
         "skills/preservation-verifier",
-        "Current Avoid AI Writing v3.29 preservation verifier for checking voice, meaning, formatting, and file-boundary invariants after edits.",
+        "Current Avoid AI Writing v3.33.2 preservation verifier for checking voice, meaning, formatting, and file-boundary invariants after edits.",
     ),
     "voice-preserving-rewriter": (
         "avoid_ai_writing",
         "skills/voice-preserving-rewriter",
-        "Current Avoid AI Writing v3.29 voice-preserving rewrite leaf with explicit meaning, tone, and provenance checks; complements the detector rather than replacing review.",
+        "Current Avoid AI Writing v3.33.2 voice-preserving rewrite leaf with explicit meaning, tone, and provenance checks; complements the detector rather than replacing review.",
     ),
     "supabase": (
         "supabase_agent_skills",
@@ -741,6 +741,14 @@ def main() -> int:
         }
 
     mcp_skills = data.setdefault("mcp_skills", {})
+    mcp_skills["secret-scanning"] = {
+        "mode": "Optional",
+        "servers": ["GitHub Advanced Security plugin"],
+        "fallback": [
+            "Use the GitHub CLI, repository security settings, local diff inspection, and approved secret-scanning tools when the Advanced Security plugin is unavailable.",
+            "Do not claim a pre-commit scan or secret-remediation action ran without direct tool output; keep credentials out of commands and reports.",
+        ],
+    }
     # The current Xquik source no longer documents an MCP setup surface. Keep
     # the normalized skill's no-MCP fallback truthful instead of retaining the
     # stale preferred-server mapping from an older release.

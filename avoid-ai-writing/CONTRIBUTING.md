@@ -8,9 +8,10 @@ keep the project coherent.
 
 | Path | What it holds |
 |------|---------------|
-| `SKILL.md` | The human-readable catalog of rules. The source of truth for what counts as an AI tell. |
+| `SKILL.md` | The human-readable workflow and activation instructions. |
+| `references/patterns.md` | The canonical catalog of rules, word tiers, and context profiles. |
 | `detector/patterns.js` | The deterministic engine — the executable subset of the rules. |
-| `detector/CATEGORIES.md` | The map between SKILL.md rules and detector `type`s. Keep it current. |
+| `detector/CATEGORIES.md` | The map between `references/patterns.md` rules and detector `type`s. Keep it current. |
 | `README.md` | The pitch and the numbered prose-pattern list. |
 | `cursor-rules/`, `plugins/` | Editor and tool integrations. |
 
@@ -19,12 +20,12 @@ keep the project coherent.
 First decide which kind of rule it is:
 
 - **Regex-detectable** (a phrase, a character, a structural shape) → add it to
-  `SKILL.md`, add the detection to `detector/patterns.js` with a new `type`, and
+  `references/patterns.md`, add the detection to `detector/patterns.js` with a new `type`, and
   add a row to `detector/CATEGORIES.md`. Cover it with a fixture in
   `detector/patterns.test.js` (both a true positive and a case that must *not*
   fire).
 - **Judgment-only** (needs reading for meaning — tone, structure, name-dropping)
-  → add it to `SKILL.md` prose and list it under "Skill-only" in
+  → add it to `references/patterns.md` prose and list it under "Skill-only" in
   `detector/CATEGORIES.md`. There is no detector type for these.
 
 If you are unsure which it is, open an issue first and we will sort it out.
@@ -60,7 +61,7 @@ The rules from the [#88 license audit](https://github.com/conorbronsdon/avoid-ai
 npm test
 ```
 
-This runs the engine fixtures and the `CATEGORIES.md` contract checks: every
+This runs the engine fixtures, quote-normalization tests, and the `CATEGORIES.md` contract checks: every
 detector `type` must be documented, every documented type must be real, and every
 prose statement of the engine `type` total must match the code. All must pass. No
 dependencies to install; Node 18+ only.
@@ -70,7 +71,7 @@ dependencies to install; Node 18+ only.
 This repo polices writing quality, so the prose you add has to clear the same
 bar. Run your additions through the skill itself. Keep rule bullets terse and
 lead with the directive — match the length and tone of the bullets already in
-`SKILL.md`. Drop intensifiers like "strong" or "powerful"; let the rule stand on
+`references/patterns.md`. Drop intensifiers like "strong" or "powerful"; let the rule stand on
 its own.
 
 ## Changelog and versioning
@@ -78,3 +79,10 @@ its own.
 Add an entry to `CHANGELOG.md` under a dated, versioned heading
 (`## [X.Y.Z] — YYYY-MM-DD`), matching the existing entries. A new rule is a minor
 version bump; update the `version:` field in the `SKILL.md` frontmatter to match.
+
+## Generated artifacts
+
+After changing `SKILL.md` or `references/patterns.md`, run
+`bash scripts/sync-cursor-rules.sh`. Run `bash scripts/sync-plugin-skill.sh`
+only when the optional plugin tree is present; this catalog intentionally keeps
+that packaging surface out of the maintained copy.

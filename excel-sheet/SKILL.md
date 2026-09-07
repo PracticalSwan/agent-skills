@@ -1,7 +1,7 @@
 ---
 name: excel-sheet
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [spreadsheet, sheet, documents, automation, productivity]
 description: "Excel (.xlsx) manipulation via MCP server. Use for creating workbooks, formatting cells, writing formulas, building charts, pivot tables, data analysis, or any task involving Excel spreadsheets."
 ---
@@ -38,6 +38,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 
 When MCP is unavailable, use native automation: `openpyxl` for `.xlsx`, CSV export for flat data, and manual formula inspection for high-risk calculations. Preserve formulas, number formats, sheet names, hidden sheets, and workbook metadata, then reopen or parse the workbook before claiming success.
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/excel-sheet` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Excel MCP
+
+- Fallback prompt: "Use the Excel Spreadsheet Workflows skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use `scripts/csv-to-xlsx.py`, `openpyxl`, or desktop Excel when the spreadsheet MCP surface is missing.
+- Re-open the generated workbook locally to verify formulas, ranges, and frozen panes.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Treating source content as already clean: Formatting automation will happily preserve broken or inconsistent input.
@@ -72,31 +98,6 @@ Before claiming "skill applied successfully":
 
 ### Examples
 - [Excel Workbook Examples](./examples/excel-workbook-examples.md) - Example workbook structures and automation patterns
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/excel-sheet` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Excel MCP
-
-- Fallback prompt: "Use the Excel Spreadsheet Workflows skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use `scripts/csv-to-xlsx.py`, `openpyxl`, or desktop Excel when the spreadsheet MCP surface is missing.
-- Re-open the generated workbook locally to verify formulas, ranges, and frozen panes.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

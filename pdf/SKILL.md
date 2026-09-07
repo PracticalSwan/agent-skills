@@ -1,7 +1,7 @@
 ---
 name: pdf
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [pdf, docs, writing, quality, templates]
 description: "Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction."
 ---
@@ -74,27 +74,9 @@ pdftoppm -png $INPUT_PDF $OUTPUT_PREFIX
 - Confirm headers/footers, page numbering, and section transitions look polished.
 - Keep intermediate files organized or remove them after final approval.
 
-## Anti-Patterns
-
-- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
-- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
-- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
-## Verification Protocol
-
-Before claiming the `pdf` workflow succeeded:
-
-1. Pass/fail: The request matches this skill's documented activation boundary.
-2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
-3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
-4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
-5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
-6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -111,11 +93,28 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the PDF Skill skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the PDF Skill skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Writing for the author instead of the reader: It bakes in unstated context and leaves the actual audience unsure what to do next.
+- Skipping concrete examples or commands: Abstract guidance is easy to approve and hard to apply correctly.
+- Letting links, screenshots, or versions drift: Polished formatting does not help if the instructions are no longer true.
+
+## Verification Protocol
+
+Before claiming the `pdf` workflow succeeded:
+
+1. Pass/fail: The request matches this skill's documented activation boundary.
+2. Pass/fail: Required inputs, dependencies, and safety checks were resolved or reported as blockers.
+3. Pass/fail: The narrowest relevant workflow was completed without inventing unavailable tools or results.
+4. Pass/fail: Output was checked with the most relevant local test, inspection, render, or source evidence.
+5. Pressure test: Repeat the decision with the preferred integration unavailable and confirm the fallback remains safe and actionable.
+6. Success metric: The result, evidence, and any unverified limitation are explicit enough for another agent to reproduce.
 
 ## Related Skills
 

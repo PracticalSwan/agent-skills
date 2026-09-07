@@ -1,7 +1,7 @@
 ---
 name: using-skills
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [using, skills]
 description: "Skills wiki intro - mandatory workflows, search tool, brainstorming triggers"
 ---

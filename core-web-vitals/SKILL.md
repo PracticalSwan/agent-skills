@@ -1,7 +1,7 @@
 ---
 name: core-web-vitals
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [core, web, vitals]
 description: "Optimize Core Web Vitals (LCP, INP, CLS) for better page experience and search ranking. Use when asked to \"improve Core Web Vitals\", \"fix LCP\", \"reduce CLS\", \"optimize INP\", \"page experience optimization\", or \"fix layout shifts\"."
 license: "MIT"
@@ -225,6 +225,8 @@ startTransition(() => setExpensiveState(newValue));
 - [web.dev INP](https://web.dev/articles/inp)
 - [web.dev CLS](https://web.dev/articles/cls)
 - [Performance skill](../performance/SKILL.md)
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

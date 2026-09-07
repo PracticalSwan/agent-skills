@@ -1,7 +1,7 @@
 ---
 name: handoff
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [handoff]
 description: "Compact the current conversation into a handoff document for another agent to pick up."
 license: "MIT"
@@ -15,6 +15,8 @@ Do not duplicate content already captured in other artifacts (specs, plans, ADRs
 Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
 
 If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

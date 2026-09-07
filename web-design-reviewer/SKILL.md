@@ -1,7 +1,7 @@
 ---
 name: web-design-reviewer
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [web, design, reviewer, frontend, ui]
 description: "Visual inspection of live websites to find and fix design issues. Use when reviewing UI layout/design, checking responsive design visually, detecting visual inconsistencies, or diagnosing CSS/accessibility problems at the source code level. Not for automated E2E testing."
 ---
@@ -38,6 +38,32 @@ These tool names are current in the Playwright MCP server used by Codex:
 - `browser_resize` for responsive review
 - `browser_console_messages` and `browser_network_requests` to catch front-end breakage
 
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/web-design-reviewer` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Playwright MCP, Chrome DevTools MCP (optional)
+
+- Fallback prompt: "Use the Web Design Reviewer skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use Playwright CLI, browser devtools, screenshots, and manual responsive checks when MCP browser tools are unavailable.
+- Capture console or network issues with the browser or terminal before proposing visual fixes.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
+
 ## Anti-Patterns
 
 - Starting from a generic template without adapting it: The output may look polished but still miss the real audience or medium.
@@ -70,31 +96,6 @@ Before claiming "skill applied successfully":
 
 ### Scripts
 - [CSS Risk Audit](./scripts/css-risk-audit.py) - Scan CSS and front-end source for risky fixed widths, viewport traps, and overflow patterns
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/web-design-reviewer` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Playwright MCP
-
-- Fallback prompt: "Use the Web Design Reviewer skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use Playwright CLI, browser devtools, screenshots, and manual responsive checks when MCP browser tools are unavailable.
-- Capture console or network issues with the browser or terminal before proposing visual fixes.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

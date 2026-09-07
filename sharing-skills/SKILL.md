@@ -1,7 +1,7 @@
 ---
 name: sharing-skills
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [sharing, skills]
 description: "Contribute skills back to upstream via branch and PR"
 ---
@@ -191,6 +191,8 @@ Each skill should:
 
 **Why?** Individual skills can be reviewed, iterated, and merged independently.
 
+<!-- MCP:START -->
+
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability
 
@@ -235,5 +237,3 @@ Before claiming the `sharing-skills` workflow succeeded:
 ## Related Skills
 
 - **writing-skills** - How to create well-tested skills
-
-<!-- PORTABILITY:START -->

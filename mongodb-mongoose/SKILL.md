@@ -1,7 +1,7 @@
 ---
 name: mongodb-mongoose
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [mongodb, mongoose, development, testing, quality]
 description: "MongoDB with Mongoose — schemas, models, aggregation pipelines, migrations, and Atlas connections. Use when designing collections, writing queries, or integrating MongoDB into Node.js/Next.js apps."
 ---
@@ -28,6 +28,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 
 
 ---
+
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/mongodb-mongoose` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: MongoDB MCP
+
+- Fallback prompt: "Use the Mongodb Mongoose skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use `mongosh`, MongoDB Atlas UI, local schema files, and Mongoose model inspection when the MCP server is unavailable.
+- Validate indexes, queries, and aggregation pipelines against a local or staging database before finalizing changes.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 
@@ -363,31 +389,6 @@ async function migrateUsers() {
 - [Recipe API Example](./examples/recipe-api-example.md) — Complete Mongoose + Next.js Recipe CRUD API with models, routes, and validation
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/mongodb-mongoose` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: MongoDB MCP
-
-- Fallback prompt: "Use the Mongodb Mongoose skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use `mongosh`, MongoDB Atlas UI, local schema files, and Mongoose model inspection when the MCP server is unavailable.
-- Validate indexes, queries, and aggregation pipelines against a local or staging database before finalizing changes.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

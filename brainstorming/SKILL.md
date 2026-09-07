@@ -1,7 +1,7 @@
 ---
 name: brainstorming
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [brainstorming]
 description: "Interactive idea refinement using Socratic method to develop fully-formed designs"
 ---
@@ -250,6 +250,8 @@ A question about a UI topic is not automatically a visual question. "What does p
 
 If they agree to the companion, read the detailed guide before proceeding:
 `skills/brainstorming/visual-companion.md`
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

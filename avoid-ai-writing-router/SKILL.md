@@ -1,7 +1,7 @@
 ---
 name: avoid-ai-writing-router
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [avoid, ai, writing, router]
 description: "Use when a request combines AI-writing audit, rewrite, file editing, voice preservation, false-positive interpretation, verification, or when the user invokes Avoid AI Writing without naming a mode."
 ---

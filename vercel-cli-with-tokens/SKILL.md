@@ -1,7 +1,7 @@
 ---
 name: vercel-cli-with-tokens
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [vercel, cli, with, tokens]
 description: "Deploy and manage projects on Vercel using token-based authentication. Use when working with Vercel CLI using access tokens rather than interactive login — e.g. \"deploy to vercel\", \"set up vercel\", \"add environment variables to vercel\"."
 ---
@@ -333,9 +333,6 @@ Common causes:
 ```bash
 npm install -g vercel
 ```
-
-<!-- MCP:START -->
-
 ## Windows CLI Compatibility
 
 - Resolve `vercel` with PowerShell `Get-Command` before invoking it; use the
@@ -345,6 +342,8 @@ npm install -g vercel
 - Treat an unavailable CLI or unauthenticated session as a reported blocker;
   use the documented manual or API fallback instead of installing a runtime
   implicitly.
+
+<!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
 ## Cross-Client Portability

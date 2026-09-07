@@ -1,7 +1,7 @@
 ---
 name: codexer
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [codexer, agents, delegation, workflow, automation]
 description: "Python research assistant with Context7 MCP. Use for Python library research, evaluating packages, enforcing strict Python coding standards, or fetching up-to-date library docs via Context7."
 ---
@@ -112,6 +112,32 @@ Use symptom -> action triggers: when one matches, apply this skill and verify wi
 3. Implement proper error handling and logging
 
 ---
+
+<!-- MCP:START -->
+
+<!-- PORTABILITY:START -->
+## Cross-Client Portability
+
+This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
+
+- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
+  workflow in project instructions when folder discovery is unavailable.
+- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
+- Codex: install or sync the folder into
+  `$CODEX_HOME/skills/codexer` and restart Codex after major changes.
+
+<!-- PORTABILITY:END -->
+
+## MCP Availability And Fallback
+
+Preferred MCP Server: Context7 MCP
+
+- Fallback prompt: "Use the Codexer - Python Research Assistant skill without MCP. Follow the documented local or manual fallback, show the selected tool surface, and report the verification evidence."
+- Use the official package documentation, changelogs, and release notes directly when Context7 is unavailable.
+- Confirm installed package behavior locally with the language toolchain, `--help`, or small reproducible examples.
+- Do not claim an MCP operation was used when the active host does not expose it.
+
+<!-- MCP:END -->
 
 ## Anti-Patterns
 
@@ -261,31 +287,6 @@ project/
 
 
 ---
-
-<!-- MCP:START -->
-
-<!-- PORTABILITY:START -->
-## Cross-Client Portability
-
-This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
-
-- GitHub Copilot: keep the folder in a Copilot-visible skill path or wrap the
-  workflow in project instructions when folder discovery is unavailable.
-- Claude Code: keep the folder in a local skills directory or a compatible plugin source.
-- Codex: install or sync the folder into
-  `$CODEX_HOME/skills/codexer` and restart Codex after major changes.
-
-<!-- PORTABILITY:END -->
-
-## MCP Availability And Fallback
-
-Preferred MCP Server: Context7 MCP
-
-- Fallback prompt: "Use the Codexer - Python Research Assistant skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- Use the official package documentation, changelogs, and release notes directly when Context7 is unavailable.
-- Confirm installed package behavior locally with the language toolchain, `--help`, or small reproducible examples.
-
-<!-- MCP:END -->
 
 ## Related Skills
 

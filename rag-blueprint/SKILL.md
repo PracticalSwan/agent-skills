@@ -1,7 +1,7 @@
 ---
 name: rag-blueprint
 version: "2.0"
-last_updated: 2026-09-05
+last_updated: 2026-09-08
 tags: [nvidia, rag, deployment, retrieval, blueprint, ops]
 description: "NVIDIA RAG Blueprint deployment, configuration, troubleshooting, and shutdown guidance for Docker, Helm, and library-based RAG stacks."
 license: "Apache-2.0"
@@ -175,26 +175,9 @@ Read `docs/service-port-gpu-reference.md` for port mappings and GPU assignments.
 | B200 | No VLM, No Guardrails, No Nemotron Parse. May need multi-GPU LLM (`LLM_MS_GPU_ID`). |
 | RTX PRO 6000 | No Nemotron Parse. No Audio on Helm. |
 
-## Anti-Patterns
-
-- Changing deployment knobs before identifying the active deployment mode: Compose, Helm, and library paths are not interchangeable.
-- Treating retrieval, model, and infrastructure faults as the same class of problem: It wastes time and can hide the real failing layer.
-- Stopping or tearing down services without checking persistence impact: Cleanup can destroy the exact evidence needed for recovery.
-
-## Verification Protocol
-
-Before claiming "skill applied successfully":
-
-1. Pass/fail: The workflow identifies the active deployment path and uses the matching upstream playbook before proposing changes.
-2. Pass/fail: Any configuration change is tied to the exact file, chart value, or environment variable that owns the behavior.
-3. Pass/fail: Health checks, logs, or a real retrieval request are used before claiming the stack is healthy again.
-4. Pressure-test scenario: Apply the workflow to a half-running deployment where ingestion works but retrieval answers are empty.
-5. Success metric: The requested RAG feature or service state is reproducible, observable, and verified with a live check path.
-
 <!-- MCP:START -->
 
 <!-- PORTABILITY:START -->
-
 ## Cross-Client Portability
 
 This skill is written to stay usable across GitHub Copilot, Claude Code, and Codex.
@@ -211,11 +194,27 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 
 Preferred MCP Server: None required
 
-- Fallback prompt: "Use the rag-blueprint skill without MCP. Rely on the local `SKILL.md`, bundled references or scripts, and manual verification. Show the exact commands, evidence, and final checks you used before concluding."
-- If the current host does not expose a matching server, use the bundled references, scripts, native toolchain, and manual workflow already described in this skill.
-- Treat direct local verification, rendered output, logs, tests, or screenshots as the fallback evidence path before completion.
+- Fallback prompt: "Use the NVIDIA RAG Blueprint skill without MCP. Rely on its local instructions, bundled resources, standard shell or editor tools, and direct verification. Show the evidence used before concluding."
+- Do not claim an MCP operation was used when the active host does not expose it.
+- Treat local files, tests, rendered outputs, logs, or screenshots as the fallback evidence path.
 
 <!-- MCP:END -->
+
+## Anti-Patterns
+
+- Changing deployment knobs before identifying the active deployment mode: Compose, Helm, and library paths are not interchangeable.
+- Treating retrieval, model, and infrastructure faults as the same class of problem: It wastes time and can hide the real failing layer.
+- Stopping or tearing down services without checking persistence impact: Cleanup can destroy the exact evidence needed for recovery.
+
+## Verification Protocol
+
+Before claiming "skill applied successfully":
+
+1. Pass/fail: The workflow identifies the active deployment path and uses the matching upstream playbook before proposing changes.
+2. Pass/fail: Any configuration change is tied to the exact file, chart value, or environment variable that owns the behavior.
+3. Pass/fail: Health checks, logs, or a real retrieval request are used before claiming the stack is healthy again.
+4. Pressure-test scenario: Apply the workflow to a half-running deployment where ingestion works but retrieval answers are empty.
+5. Success metric: The requested RAG feature or service state is reproducible, observable, and verified with a live check path.
 
 ## Related Skills
 

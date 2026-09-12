@@ -22,5 +22,7 @@ All notable changes to the `playwright-cli` skill are documented here.
 
 - Removed stale guidance that treated `npx playwright` as an equivalent
   fallback for the global `@playwright/cli` package.
+- Standardized project test/debug examples on `npx --no-install` so missing
+  local dependencies fail closed instead of triggering an implicit fetch.
 - The catalog wrapper now gives a clear Node.js prerequisite error on WSL or
   other shells that can see a Windows shim but cannot execute its runtime.

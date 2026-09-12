@@ -121,6 +121,26 @@ movement was recorded in provenance without broad imports.
   `README.md`, `AGENTS.md`, `CLAUDE.md`, and `REFERENCE_SOURCES.md` for the
   synchronized inventory and exact provenance.
 
+## 2026-09-12 Playwright CLI Skill Consolidation
+
+The former broad `playwright` skill is retired. Route browser CLI requests to
+`playwright-cli`, component story-gallery requests to
+`playwright-component-testing`, and trace-file inspection to
+`playwright-trace`.
+
+- Replace `network` with the current `requests` command when inspecting page
+  traffic.
+- Replace the retired `playwright-cli.json` convention with the current
+  `.playwright/cli.config.json` location when a CLI config file is needed.
+- Use global `@playwright/cli@0.1.19` only for live browser CLI work. The
+  component `mount` fixture still requires project-local `@playwright/test`,
+  and trace-file inspection still requires the project-local `playwright`
+  executable; neither workflow silently installs a test runner or browser.
+- Run `playwright-cli install --skills=agents --global` or
+  `playwright-cli install --skills=claude --global` only when the corresponding
+  global agent-home installation is explicitly requested. Parent catalog sync
+  remains the source of truth for all three normalized entries.
+
 ## Rollback
 
 To restore the prior support model, revert the version 2.0 catalog commit,

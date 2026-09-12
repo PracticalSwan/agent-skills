@@ -40,7 +40,8 @@ Capture console messages and network activity after reproducing an issue:
 
 ```bash
 pwcli console warning
-pwcli network
+pwcli requests
+pwcli request 0
 ```
 
 Record a trace around a suspicious flow:
@@ -57,9 +58,9 @@ pwcli screenshot
 Use sessions to isolate work across projects:
 
 ```bash
-pwcli --session marketing open https://example.com
-pwcli --session marketing snapshot
-pwcli --session checkout open https://example.com/checkout
+pwcli -s=marketing open https://example.com
+pwcli -s=marketing snapshot
+pwcli -s=checkout open https://example.com/checkout
 ```
 
 Or set the session once:
@@ -71,7 +72,8 @@ pwcli open https://example.com/checkout
 
 ## Configuration file
 
-By default, the CLI reads `playwright-cli.json` from the current directory. Use `--config` to point at a specific file.
+By default, the current CLI reads `.playwright/cli.config.json` from the
+current directory. Use `--config` to point at a specific file.
 
 Minimal example:
 
@@ -92,4 +94,8 @@ Minimal example:
 
 - If an element ref fails, run `pwcli snapshot` again and retry.
 - If the page looks wrong, re-open with `--headed` and resize the window.
-- If a flow depends on prior state, use a named `--session`.
+- If a flow depends on prior state, use a named `-s=<name>` session or set
+  `PLAYWRIGHT_CLI_SESSION` for the wrapper.
+- If a project needs test specs or `.zip` trace analysis, install or use its
+  local `playwright`/`@playwright/test` dependency and activate the dedicated
+  `playwright-component-testing` or `playwright-trace` skill.

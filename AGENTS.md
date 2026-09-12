@@ -53,28 +53,30 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-09-08`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-12`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `245` tracked skill folders
-  - `213` tracked maintained skills
+  - `247` tracked skill folders
+  - `215` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `303` local skill folders detected
-  - `271` local maintained skills detected
+  - `305` local skill folders detected
+  - `273` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `245` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+All `247` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, and five Codex Router skills were promoted
 from the personal Codex root, and one standalone Codex plugin scanner was
-vendored after review. The catalog-wide maintenance baseline is
-`last_updated: 2026-09-08`. The `58` local-only Google
+vendored after review. Three official Playwright workflows are now maintained
+from pinned Microsoft sources. The catalog-wide maintenance baseline is
+`last_updated: 2026-09-08` for the unchanged catalog; the Playwright entries
+use `last_updated: 2026-09-12`. The `58` local-only Google
 Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
@@ -94,6 +96,13 @@ keeps only eight
 cross-client workflows that fill gaps for the user's OCR, storefront,
 Three.js, and multi-repository work. Existing TDD, debugging, review,
 implementation, planning, and skill-authoring equivalents remain canonical.
+
+The Playwright package refresh is pinned in `scripts/skill-registry.json`:
+`playwright-cli` comes from `@playwright/cli@0.1.19` at the tagged
+`microsoft/playwright-cli` revision, while `playwright-component-testing` and
+`playwright-trace` come from stable `microsoft/playwright@v1.63.0`. The old
+broad `playwright` folder is retired; its wrapper and practical catalog guides
+are retained under `playwright-cli`.
 
 The 2026-08-14 source refresh audited current upstream heads and updated the
 mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
@@ -135,6 +144,22 @@ and `supabase` were present; `hf`, `huggingface-cli`, `mongosh`, `mongo`, and
 guidance is included, while no Hugging Face, MongoDB, or Figma CLI skill was
 installed. The importer is repeatable with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-09-12 Playwright CLI Skills And Canonical Consolidation
+
+- Installed and verified the latest global `@playwright/cli@0.1.19` package on
+  Node 22, then ran the official `playwright-cli install --skills=agents --global`
+  and `--skills=claude --global` installers.
+- Imported the package's `playwright-cli` workflow and the stable Playwright
+  component-testing and trace workflows into the parent first. Component
+  testing retains the stable templates and `references/typing.md`; its `mount`
+  fixture correctly requires project-local `@playwright/test`.
+- Kept the three Playwright activation boundaries separate and retired the old
+  broad `playwright` folder. The sync script prunes only that exact known name
+  from approved mirrors and preserves unknown personal folders.
+- Reviewed available Claude marketplace and Codex plugin Playwright candidates;
+  none met the cross-client usefulness-without-bloat bar, so no additional
+  plugin skill was vendored.
 
 ## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
 

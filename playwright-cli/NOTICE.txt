@@ -1,0 +1,16 @@
+This skill includes material derived from the Microsoft `playwright-cli`
+repository and the `@playwright/cli@0.1.19` npm package.
+
+Source:
+- Repository: https://github.com/microsoft/playwright-cli
+- Release: `v0.1.19` (`397ee39c83a651e1314cfb010b94e8a3aac11261`)
+- Repository path: `skills/playwright-cli/SKILL.md`
+- Package path: `playwright-core/lib/tools/skills/playwright-cli`
+
+Copyright (c) Microsoft Corporation.
+Licensed under the Apache License, Version 2.0. See `LICENSE.txt`.
+
+Catalog changes:
+- Added the catalog portability, fallback, verification, and installation
+  notes while retaining the upstream command and reference workflows.
+- Added the optional parent-catalog wrapper under `scripts/`.

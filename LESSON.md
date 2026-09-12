@@ -280,6 +280,28 @@ Codex skill catalog.
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
 
+## 2026-09-12 Playwright CLI Package Refresh And Consolidation
+
+- Install the global `@playwright/cli` package explicitly and record the
+  observed version. The package installer currently writes only the official
+  `playwright-cli` skill into an agent home; companion workflows need a
+  parent-first import from their canonical Playwright source.
+- Keep `playwright-cli`, `playwright-component-testing`, and `playwright-trace`
+  as separate activation surfaces. The component gallery's built-in `mount`
+  fixture requires project-local `@playwright/test`; trace-file inspection
+  requires the project-local `playwright` binary. Neither should imply a silent
+  global test-runner or browser download.
+- Prefer the installed global `playwright-cli`, with the catalog wrapper's
+  `npx --yes --package @playwright/cli@latest` fallback when no global binary is
+  available. Use the current `requests` command and `.playwright/cli.config.json`
+  conventions; do not revive the old `network` or `playwright-cli.json` wording.
+- Retire the broad legacy `playwright` folder after consolidating its useful
+  wrapper and practical references into `playwright-cli`; add only exact-name
+  mirror cleanup so unknown personal skills remain untouched.
+- The 2026-09-12 live inventory is `305` folders (`273` maintained and `32`
+  copied official Superpowers, including `58` local-only overlays); the tracked
+  catalog is `247` folders (`215` maintained and `32` copied Superpowers).
+
 ## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
 
 - Compare every recorded source head with its exact mapped path before

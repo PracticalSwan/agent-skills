@@ -3,6 +3,34 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-09-12] - Playwright CLI Skills And Canonical Consolidation
+
+### Added
+
+- Added the official `playwright-cli` workflow from `@playwright/cli@0.1.19`
+  and the stable `playwright-component-testing` and `playwright-trace` workflows
+  from `microsoft/playwright@v1.63.0`, including the component templates and
+  typing reference.
+- Added the catalog wrapper and retained practical Playwright CLI references
+  under `playwright-cli`, with current global-install and project-local fallback
+  guidance for Copilot, Claude Code, and Codex.
+
+### Changed
+
+- Installed and verified the global `@playwright/cli@0.1.19` package on Node 22
+  and exercised the official agent-home skill installers before parent-first
+  import and mirror synchronization.
+- Clarified that component `mount` and trace-file inspection use project-local
+  Playwright dependencies, while live browser tracing uses `playwright-cli`.
+
+### Fixed
+
+- Retired the overlapping broad `playwright` folder after moving its useful
+  wrapper and practical references into `playwright-cli`; the sync script now
+  prunes only that exact known name from approved mirrors.
+- Replaced stale `network`/old config wording with the current `requests` and
+  `.playwright/cli.config.json` surfaces and documented the no-MCP fallback.
+
 ## [2026-09-08] - Catalog Refresh, CodeGraph Index, And Mirror Preparation
 
 ### Added

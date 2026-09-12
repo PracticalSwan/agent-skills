@@ -1,0 +1,12 @@
+This skill includes material derived from the Microsoft Playwright repository.
+
+Source:
+- Repository: https://github.com/microsoft/playwright
+- Release: `v1.63.0` (`1b025d7e20a026371cd5f98ba0cdce48892737c8`)
+- Path: `packages/playwright-core/src/tools/skills/playwright-trace`
+
+Copyright (c) Microsoft Corporation.
+Licensed under the Apache License, Version 2.0. See `LICENSE.txt`.
+
+Catalog changes:
+- Added catalog portability, fallback, verification, and prerequisite notes.

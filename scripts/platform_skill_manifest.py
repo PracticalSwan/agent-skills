@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import TypedDict
 
 
-SNAPSHOT_DATE = "2026-09-08"
+SNAPSHOT_DATE = "2026-09-12"
 
 SOURCE_COMMITS = {
     "vercel_agent_skills": (

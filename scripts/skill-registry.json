@@ -110,6 +110,14 @@
       "repo": "https://github.com/addyosmani/web-quality-skills",
       "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00"
     },
+    "playwright_cli": {
+      "repo": "https://github.com/microsoft/playwright-cli",
+      "commit": "397ee39c83a651e1314cfb010b94e8a3aac11261"
+    },
+    "playwright": {
+      "repo": "https://github.com/microsoft/playwright",
+      "commit": "1b025d7e20a026371cd5f98ba0cdce48892737c8"
+    },
     "netlify_context_and_tools": {
       "repo": "https://github.com/netlify/context-and-tools",
       "commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5"
@@ -1523,12 +1531,6 @@
       "source_path": "skills/.curated/jupyter-notebook",
       "reason": "Promoted from the Codex child root and refreshed from the current canonical OpenAI skills source."
     },
-    "playwright": {
-      "source_repo": "https://github.com/openai/skills",
-      "source_commit": "49f948faa9258a0c61caceaf225e179651397431",
-      "source_path": "skills/.curated/playwright",
-      "reason": "Promoted from the Codex child root and refreshed from the current canonical OpenAI skills source."
-    },
     "screenshot": {
       "source_repo": "https://github.com/openai/skills",
       "source_commit": "49f948faa9258a0c61caceaf225e179651397431",
@@ -2302,6 +2304,24 @@
       "source_commit": "sha256:af0520942d912ff03629943bce4c409de51459edc106555913181a795457afd8",
       "source_path": "skills/agent-skillguard",
       "reason": "Vendors the installed Codex plugin's standalone read-only skill-risk scanner as a self-contained catalog skill; host metadata, examples, large assets, and the package's absent tools/verify_rule_corpus.py helper are intentionally omitted, and the catalog SKILL.md documents the supported fixture smoke test."
+    },
+    "playwright-cli": {
+      "source_repo": "https://github.com/microsoft/playwright-cli",
+      "source_commit": "397ee39c83a651e1314cfb010b94e8a3aac11261",
+      "source_path": "packages/playwright-core/src/tools/skills/playwright-cli",
+      "reason": "The current `@playwright/cli@0.1.19` npm package ships this cross-client browser-automation workflow; its bundled references are kept together and refreshed from the exact release pin."
+    },
+    "playwright-component-testing": {
+      "source_repo": "https://github.com/microsoft/playwright",
+      "source_commit": "1b025d7e20a026371cd5f98ba0cdce48892737c8",
+      "source_path": "packages/playwright-core/src/tools/skills/playwright-component-testing",
+      "reason": "The stable `microsoft/playwright@v1.63.0` source ships this story-gallery component-testing workflow; it remains separate from the general Playwright CLI skill because its activation boundary and gallery contract differ."
+    },
+    "playwright-trace": {
+      "source_repo": "https://github.com/microsoft/playwright",
+      "source_commit": "1b025d7e20a026371cd5f98ba0cdce48892737c8",
+      "source_path": "packages/playwright-core/src/tools/skills/playwright-trace",
+      "reason": "The stable `microsoft/playwright@v1.63.0` source ships this focused trace-inspection workflow; it remains separate from browser interaction because trace analysis does not require a live browser session."
     }
   },
   "codex_system_managed_skills": [

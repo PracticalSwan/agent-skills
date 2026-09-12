@@ -28,7 +28,8 @@ $script:allowedDownstreamRoots = @(
 $script:retiredCatalogSkills = @(
     'frontend-skill',
     'premium-frontend-ui',
-    'gemini-interactions-api'
+    'gemini-interactions-api',
+    'playwright'
 )
 
 function Get-NormalizedPath {
@@ -262,7 +263,7 @@ if (-not $SkipCodex) {
         Remove-RetiredRouteCopies `
             -SkillNames $script:retiredCatalogSkills `
             -TargetRoot $codexRootPath `
-            -Label "retired frontend catalog"
+            -Label "retired catalog"
     )
     $summary.codex.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $codexMaintained -TargetRoot $codexRootPath -Label "Codex maintained"
@@ -280,7 +281,7 @@ if (-not $SkipShared) {
         Remove-RetiredRouteCopies `
             -SkillNames $script:retiredCatalogSkills `
             -TargetRoot $sharedRootPath `
-            -Label "retired frontend catalog"
+            -Label "retired catalog"
     )
     $summary.shared.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $sharedRootPath -Label "Shared maintained"
@@ -301,7 +302,7 @@ if (-not $SkipClaude) {
         Remove-RetiredRouteCopies `
             -SkillNames $script:retiredCatalogSkills `
             -TargetRoot $claudeRootPath `
-            -Label "retired frontend catalog"
+            -Label "retired catalog"
     )
     $summary.claude.synced_maintained = @(
         Sync-SkillFolders -SkillDirs $skillSet.Maintained -TargetRoot $claudeRootPath -Label "Claude maintained"

@@ -34,6 +34,11 @@ SOURCE_COMMITS = {
     "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8"),
     "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "063bee94c3f4df8453406c830b0a7df0f2860278"),
     "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "afa8da942115f2961fdbfa80807ea0b232ff6c00"),
+    # The Playwright CLI is distributed as an npm package rather than as a
+    # checkout of the parent catalog. Keep its release tag explicit and name
+    # the npm package/version in the skill rationale.
+    "playwright_cli": ("https://github.com/microsoft/playwright-cli", "397ee39c83a651e1314cfb010b94e8a3aac11261"),
+    "playwright": ("https://github.com/microsoft/playwright", "1b025d7e20a026371cd5f98ba0cdce48892737c8"),
 }
 SOURCE_COMMITS.update(PLATFORM_SOURCE_COMMITS)
 
@@ -79,7 +84,6 @@ OPENAI_CURRENT = {
     "figma-implement-design": "skills/.curated/figma-implement-design",
     "imagegen": "skills/.system/imagegen",
     "jupyter-notebook": "skills/.curated/jupyter-notebook",
-    "playwright": "skills/.curated/playwright",
     "screenshot": "skills/.curated/screenshot",
     "security-best-practices": "skills/.curated/security-best-practices",
     "security-ownership-map": "skills/.curated/security-ownership-map",
@@ -346,6 +350,24 @@ LOCAL_IMPORTS = {
     ),
 }
 
+PLAYWRIGHT_SKILLS = {
+    "playwright-cli": (
+        "playwright_cli",
+        "packages/playwright-core/src/tools/skills/playwright-cli",
+        "The current `@playwright/cli@0.1.19` npm package ships this cross-client browser-automation workflow; its bundled references are kept together and refreshed from the exact release pin.",
+    ),
+    "playwright-component-testing": (
+        "playwright",
+        "packages/playwright-core/src/tools/skills/playwright-component-testing",
+        "The stable `microsoft/playwright@v1.63.0` source ships this story-gallery component-testing workflow; it remains separate from the general Playwright CLI skill because its activation boundary and gallery contract differ.",
+    ),
+    "playwright-trace": (
+        "playwright",
+        "packages/playwright-core/src/tools/skills/playwright-trace",
+        "The stable `microsoft/playwright@v1.63.0` source ships this focused trace-inspection workflow; it remains separate from browser interaction because trace analysis does not require a live browser session.",
+    ),
+}
+
 
 def tree_digest(root: Path) -> str:
     digest = hashlib.sha256()
@@ -422,11 +444,11 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 
 {catalog_lines}
 
-Local child-workspace imports use `local-workspace://` provenance plus a SHA-256 tree digest when no git commit owns the source folder.
+Local child-workspace imports use `local-workspace://` provenance plus a SHA-256 tree digest when no git commit owns the source folder. Package imports use an explicit package pin in the same field.
 
-## Source Commits
+## Source Revisions And Package Pins
 
-| Source | Repository | Commit |
+| Source | Repository | Revision / package pin |
 |--------|------------|--------|
 {source_rows}
 
@@ -453,6 +475,15 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-09-12 Playwright refresh installed the current global
+  `@playwright/cli@0.1.19` package and compared its bundled `playwright-cli`
+  workflow at the tagged `microsoft/playwright-cli` revision. The stable
+  `microsoft/playwright@v1.63.0` source supplied the separate component-gallery
+  and trace workflows, including the component templates and typing reference.
+  The old broad `playwright` install was retired after its useful wrapper and
+  practical references were consolidated into `playwright-cli`; no additional
+  Claude marketplace or Codex plugin Playwright skill met the portability and
+  usefulness-without-bloat bar.
 - The 2026-09-05 audit rechecked only the personal `.codex`, `.agents`, and
   `.claude` skill roots. No eligible child-only skills remained after applying
   the protected Blender/local-only, Codex `.system`, copied Superpowers, and
@@ -621,6 +652,9 @@ def main() -> int:
     refs = data.setdefault("reference_installs", {})
     for retired_name in ("frontend-skill", "premium-frontend-ui"):
         refs.pop(retired_name, None)
+    # The old broad `playwright` entry is retired in favor of the official
+    # package skill plus its focused component-testing and trace companions.
+    refs.pop("playwright", None)
     # The upstream Gemini package consolidated the Interactions workflow into
     # gemini-api-dev and removed this standalone path at its current head.
     refs.pop("gemini-interactions-api", None)
@@ -691,6 +725,14 @@ def main() -> int:
             "reason": reason,
         }
     for name, (source_key, source_path, reason) in ADDITIONAL_UPSTREAM_SKILLS.items():
+        source_repo, source_commit = SOURCE_COMMITS[source_key]
+        refs[name] = {
+            "source_repo": source_repo,
+            "source_commit": source_commit,
+            "source_path": source_path,
+            "reason": reason,
+        }
+    for name, (source_key, source_path, reason) in PLAYWRIGHT_SKILLS.items():
         source_repo, source_commit = SOURCE_COMMITS[source_key]
         refs[name] = {
             "source_repo": source_repo,

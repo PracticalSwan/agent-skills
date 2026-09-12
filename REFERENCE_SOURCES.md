@@ -3,10 +3,10 @@
 This document summarizes external and child-workspace provenance for skills in this workspace.
 The canonical per-skill mapping is `scripts/skill-registry.json` under `reference_installs`.
 
-## Snapshot (2026-09-08)
+## Snapshot (2026-09-12)
 
-- `234` skills have source mappings.
-- `176` source-mapped skills are part of the git-tracked catalog.
+- `236` skills have source mappings.
+- `178` source-mapped skills are part of the git-tracked catalog.
 - `58` source-mapped skills are local-only overlays (`gws-*` and `recipe-*`).
 - `0` tracked imports are pending provenance mapping.
 - `0` source mappings point to missing local skill folders.
@@ -30,6 +30,8 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/googleworkspace/cli`
 - `https://github.com/huggingface/skills`
 - `https://github.com/mattpocock/skills`
+- `https://github.com/microsoft/playwright`
+- `https://github.com/microsoft/playwright-cli`
 - `https://github.com/mongodb/agent-skills`
 - `https://github.com/netlify/context-and-tools`
 - `https://github.com/obra/superpowers`
@@ -41,11 +43,11 @@ The canonical per-skill mapping is `scripts/skill-registry.json` under `referenc
 - `https://github.com/vercel-labs/agent-skills`
 - `https://github.com/zarazhangrui/codebase-to-course`
 
-Local child-workspace imports use `local-workspace://` provenance plus a SHA-256 tree digest when no git commit owns the source folder.
+Local child-workspace imports use `local-workspace://` provenance plus a SHA-256 tree digest when no git commit owns the source folder. Package imports use an explicit package pin in the same field.
 
-## Source Commits
+## Source Revisions And Package Pins
 
-| Source | Repository | Commit |
+| Source | Repository | Revision / package pin |
 |--------|------------|--------|
 | `awesome_copilot` | `https://github.com/github/awesome-copilot` | `f38fb6cf039b835990d0f49dc161d7c2af99ef69` |
 | `awesome_claude_skills` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` |
@@ -66,6 +68,8 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `gemini_skills` | `https://github.com/google-gemini/gemini-skills` | `e2e931ffd78c503f2a9ad848152e561c8f4e1ea8` |
 | `vercel_agent_skills` | `https://github.com/vercel-labs/agent-skills` | `063bee94c3f4df8453406c830b0a7df0f2860278` |
 | `web_quality_skills` | `https://github.com/addyosmani/web-quality-skills` | `afa8da942115f2961fdbfa80807ea0b232ff6c00` |
+| `playwright_cli` | `https://github.com/microsoft/playwright-cli` | `397ee39c83a651e1314cfb010b94e8a3aac11261` |
+| `playwright` | `https://github.com/microsoft/playwright` | `1b025d7e20a026371cd5f98ba0cdce48892737c8` |
 | `netlify_context_and_tools` | `https://github.com/netlify/context-and-tools` | `b79c1e58e82ecb319f1f213727f65ea10a5a69a5` |
 | `mongodb_agent_skills` | `https://github.com/mongodb/agent-skills` | `8ada610346e678b8dc9f866e8166092840c6eb2f` |
 | `figma_mcp_server_guide` | `https://github.com/figma/mcp-server-guide` | `ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce` |
@@ -185,7 +189,9 @@ Local child-workspace imports use `local-workspace://` provenance plus a SHA-256
 | `openai-docs` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:43ba6399569a39bb3a4c42ac1150bae34a3e60098943290c558ac18045aeab1c` | `openai-docs` |
 | `pdf` | `https://github.com/travisvn/awesome-claude-skills` | `1da55aa810f206d3fe2005e7e3989b15a275d942` | `Official skill reference -> anthropics/skills/pdf` |
 | `performance` | `https://github.com/addyosmani/web-quality-skills` | `afa8da942115f2961fdbfa80807ea0b232ff6c00` | `skills/performance` |
-| `playwright` | `https://github.com/openai/skills` | `49f948faa9258a0c61caceaf225e179651397431` | `skills/.curated/playwright` |
+| `playwright-cli` | `https://github.com/microsoft/playwright-cli` | `397ee39c83a651e1314cfb010b94e8a3aac11261` | `packages/playwright-core/src/tools/skills/playwright-cli` |
+| `playwright-component-testing` | `https://github.com/microsoft/playwright` | `1b025d7e20a026371cd5f98ba0cdce48892737c8` | `packages/playwright-core/src/tools/skills/playwright-component-testing` |
+| `playwright-trace` | `https://github.com/microsoft/playwright` | `1b025d7e20a026371cd5f98ba0cdce48892737c8` | `packages/playwright-core/src/tools/skills/playwright-trace` |
 | `plugin-creator` | `local-workspace://C:/Users/LOQ/.codex/skills/.system` | `sha256:9de2e46e1923c00cf8e0ac8244199a1949496557d1b8500ffff25b8d43311435` | `plugin-creator` |
 | `pptx` | `https://github.com/anthropics/skills` | `41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f` | `skills/pptx` |
 | `preservation-verifier` | `https://github.com/conorbronsdon/avoid-ai-writing` | `a465548fe813969dc7006c2e042efa305c09c96f` | `skills/preservation-verifier` |
@@ -270,6 +276,15 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
 
 ## Child-Path Promotion Notes
 
+- The 2026-09-12 Playwright refresh installed the current global
+  `@playwright/cli@0.1.19` package and compared its bundled `playwright-cli`
+  workflow at the tagged `microsoft/playwright-cli` revision. The stable
+  `microsoft/playwright@v1.63.0` source supplied the separate component-gallery
+  and trace workflows, including the component templates and typing reference.
+  The old broad `playwright` install was retired after its useful wrapper and
+  practical references were consolidated into `playwright-cli`; no additional
+  Claude marketplace or Codex plugin Playwright skill met the portability and
+  usefulness-without-bloat bar.
 - The 2026-09-05 audit rechecked only the personal `.codex`, `.agents`, and
   `.claude` skill roots. No eligible child-only skills remained after applying
   the protected Blender/local-only, Codex `.system`, copied Superpowers, and

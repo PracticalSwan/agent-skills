@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-09-08`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-12`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `245` tracked skill folders
-  - `213` tracked maintained skills
+  - `247` tracked skill folders
+  - `215` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `303` local skill folders detected
-  - `271` local maintained skills detected
+  - `305` local skill folders detected
+  - `273` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,16 +49,23 @@ Snapshot date: `2026-09-08`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `245` tracked skills use catalog `version: "2.0"`. The `166`
+- All `247` tracked skills use catalog `version: "2.0"`. The `166`
   pre-existing tracked skills retain their prior catalog baselines; the 66
   platform skills retain their import provenance, five Codex Router skills were
-  promoted from the personal Codex root, and one reviewed Codex plugin scanner
-  was vendored. The catalog-wide maintenance baseline is
-  `last_updated: 2026-09-08`. The `58`
+  promoted from the personal Codex root, one reviewed Codex plugin scanner was
+  vendored, and three official Playwright workflows were added. The catalog-
+  wide maintenance baseline remains `last_updated: 2026-09-08` for the
+  unchanged catalog; the Playwright entries use `last_updated: 2026-09-12`.
+  The `58`
   local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
   retained-client sections and maintenance date.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
+- The official Playwright package is pinned in `scripts/skill-registry.json`:
+  `playwright-cli` comes from `@playwright/cli@0.1.19` (`v0.1.19`), while
+  `playwright-component-testing` and `playwright-trace` come from stable
+  `microsoft/playwright@v1.63.0`. The old broad `playwright` name is retired
+  to avoid duplicate activation; use `playwright-cli` for browser CLI work.
 - The eight Tavily skills are imported from the official `tavily-ai/skills`
   repository at commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`,
   including the current `tavily-dynamic-search` workflow.
@@ -114,6 +121,23 @@ mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
 workflows, plus the affected copied Superpowers workflows. Exact-path audits
 left unchanged mapped skills untouched, and imported support material was
 reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
+
+## 2026-09-12 Playwright CLI Skills And Canonical Consolidation
+
+- Installed the latest `@playwright/cli@0.1.19` globally and verified its
+  `playwright-cli` command on Node 22.
+- Installed the official CLI skill into the approved global `.agents` and
+  `.claude` homes, then imported the package CLI workflow and the stable
+  component/trace workflows into the parent catalog before mirror
+  synchronization.
+- Kept only the distinct `playwright-cli`,
+  `playwright-component-testing`, and `playwright-trace` entries. The stable
+  component-testing source includes its templates and typing reference; the
+  old broad `playwright` folder was retired after its wrapper and practical
+  guides were consolidated into `playwright-cli`.
+- Reviewed the installed Claude marketplace Playwright candidates and the
+  Playwright tester agent; none met the catalog's usefulness-without-bloat or
+  cross-client portability bar.
 
 ## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
 
@@ -532,7 +556,9 @@ commits are in `scripts/platform_skill_manifest.py` and
 - `imagegen`
 - `legacy-circuit-mockups`
 - `nextjs-development`
-- `playwright`
+- `playwright-cli`
+- `playwright-component-testing`
+- `playwright-trace`
 - `react-best-practices`
 - `prototype`
 - `react-development`
@@ -812,7 +838,9 @@ scanned or refreshed during the 2026-07-30 pass:
 - `skill-creator`
 - `skill-installer`
 - `jupyter-notebook`
-- `playwright`
+- `playwright-cli`
+- `playwright-component-testing`
+- `playwright-trace`
 - `performance`
 - `pptx`
 - `react-best-practices`

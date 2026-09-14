@@ -36,7 +36,7 @@
   "source_commits": {
     "awesome_copilot": {
       "repo": "https://github.com/github/awesome-copilot",
-      "commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69"
+      "commit": "1899b18da3fa5183652f86165917d553cba1850a"
     },
     "awesome_claude_skills": {
       "repo": "https://github.com/travisvn/awesome-claude-skills",
@@ -44,7 +44,7 @@
     },
     "anthropic_skills": {
       "repo": "https://github.com/anthropics/skills",
-      "commit": "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f"
+      "commit": "34040c9c568585f6929bedeaad110ad08f079624"
     },
     "awesome_codex_skills": {
       "repo": "https://github.com/ComposioHQ/awesome-codex-skills",
@@ -56,7 +56,11 @@
     },
     "avoid_ai_writing": {
       "repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "commit": "a465548fe813969dc7006c2e042efa305c09c96f"
+      "commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f"
+    },
+    "humanizer": {
+      "repo": "https://github.com/blader/humanizer",
+      "commit": "9862685f575c65a8247f90369951df1b3416e3d6"
     },
     "codebase_to_course": {
       "repo": "https://github.com/zarazhangrui/codebase-to-course",
@@ -64,7 +68,7 @@
     },
     "nvidia_skills": {
       "repo": "https://github.com/NVIDIA/skills",
-      "commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24"
+      "commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34"
     },
     "stitch_skills": {
       "repo": "https://github.com/google-labs-code/stitch-skills",
@@ -100,7 +104,7 @@
     },
     "gemini_skills": {
       "repo": "https://github.com/google-gemini/gemini-skills",
-      "commit": "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8"
+      "commit": "80dd31dda25bbe1410207df0adb3e0d591c2c634"
     },
     "vercel_agent_skills": {
       "repo": "https://github.com/vercel-labs/agent-skills",
@@ -112,27 +116,27 @@
     },
     "playwright_cli": {
       "repo": "https://github.com/microsoft/playwright-cli",
-      "commit": "397ee39c83a651e1314cfb010b94e8a3aac11261"
+      "commit": "655530f6d0dc71a0d6bf46ae165877d3c7311099"
     },
     "playwright": {
       "repo": "https://github.com/microsoft/playwright",
-      "commit": "1b025d7e20a026371cd5f98ba0cdce48892737c8"
+      "commit": "d1ead3ecca23182f2d06d761c28e3d4edafb6595"
     },
     "netlify_context_and_tools": {
       "repo": "https://github.com/netlify/context-and-tools",
-      "commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5"
+      "commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f"
     },
     "mongodb_agent_skills": {
       "repo": "https://github.com/mongodb/agent-skills",
-      "commit": "8ada610346e678b8dc9f866e8166092840c6eb2f"
+      "commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503"
     },
     "figma_mcp_server_guide": {
       "repo": "https://github.com/figma/mcp-server-guide",
-      "commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce"
+      "commit": "d638a5e055e8d95e0394a94350860398cf424b74"
     },
     "huggingface_skills": {
       "repo": "https://github.com/huggingface/skills",
-      "commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d"
+      "commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159"
     },
     "blender_skills": {
       "repo": "https://github.com/arjun988/blender-skills",
@@ -906,25 +910,25 @@
   "reference_installs": {
     "avoid-ai-writing": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": ".",
       "reason": "Portable writing cleanup skill for auditing and rewriting content that has obvious AI-generated phrasing."
     },
     "agentic-eval": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/agentic-eval",
       "reason": "Evaluator-optimizer and rubric workflows are broadly useful across code, documentation, and planning tasks."
     },
     "cloud-design-patterns": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/cloud-design-patterns",
       "reason": "Distributed-system and cloud architecture trade-offs are common enough to justify a reusable shortlist skill."
     },
     "accelerated-computing-cudf": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/accelerated-computing-cudf",
       "reason": "The active Assumption University workspace includes pandas, scikit-learn, and PyTorch coursework where GPU dataframe guidance is a realistic next step."
     },
@@ -936,49 +940,49 @@
     },
     "context-map": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/context-map",
       "reason": "A dedicated pre-edit scoping skill is useful for safer multi-file changes and bug investigations."
     },
     "csharp-xunit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/csharp-xunit",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "dotnet-best-practices": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/dotnet-best-practices",
       "reason": "The workspace includes a top-level Visual Studio solution and C#/.NET course or project work."
     },
     "deepstream-dev": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/deepstream-dev",
       "reason": "The active Computer Vision coursework already uses OpenCV, making DeepStream pipeline guidance a relevant next-stage NVIDIA workflow."
     },
     "deepstream-import-vision-model": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/deepstream-import-vision-model",
       "reason": "The active Computer Vision coursework can grow from OpenCV demos into real detector deployment, export, and TensorRT integration work."
     },
     "java-docs": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/java-docs",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java documentation guidance."
     },
     "java-junit": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/java-junit",
       "reason": "The workspace includes multiple Java coursework directories and would benefit from reusable Java testing guidance."
     },
     "mcp-builder": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f",
+      "source_commit": "34040c9c568585f6929bedeaad110ad08f079624",
       "source_path": "skills/mcp-builder",
       "discovery_repo": "https://github.com/travisvn/awesome-claude-skills",
       "discovery_commit": "b05169af5448a3d8961aa0ed12c2934f94bfe52e",
@@ -986,7 +990,7 @@
     },
     "nemo-retriever": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/nemo-retriever",
       "reason": "The IBM RAG and Agentic AI workshop repo makes local retriever setup and corpus-grounded QA workflows directly relevant."
     },
@@ -999,31 +1003,31 @@
     },
     "rag-blueprint": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/rag-blueprint",
       "reason": "The IBM RAG and Agentic AI workshop repo makes end-to-end RAG deployment and configuration guidance directly relevant."
     },
     "rag-eval": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/rag-eval",
       "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable evaluation workflow for retrieval and answer quality checks."
     },
     "rag-perf": {
       "source_repo": "https://github.com/NVIDIA/skills",
-      "source_commit": "c3168ca798561c5aef7f69e6f99c4a874485ca24",
+      "source_commit": "d494cbaccb3c6f391ea9f06e6abefa9f13161b34",
       "source_path": "skills/rag-perf",
       "reason": "The IBM RAG and Agentic AI workshop repo benefits from a reusable latency and throughput tuning workflow once the stack is running."
     },
     "secret-scanning": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/secret-scanning",
       "reason": "Local pre-commit secret hygiene and GitHub alert workflows are broadly useful and safe to ship in a shared catalog."
     },
     "security-review": {
       "source_repo": "https://github.com/github/awesome-copilot",
-      "source_commit": "f38fb6cf039b835990d0f49dc161d7c2af99ef69",
+      "source_commit": "1899b18da3fa5183652f86165917d553cba1850a",
       "source_path": "skills/security-review",
       "reason": "The workspace includes multiple web apps and APIs that benefit from repeatable security review guidance."
     },
@@ -1491,19 +1495,19 @@
     },
     "docx": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f",
+      "source_commit": "34040c9c568585f6929bedeaad110ad08f079624",
       "source_path": "skills/docx",
       "reason": "Matches the current Anthropic DOCX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper."
     },
     "pptx": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f",
+      "source_commit": "34040c9c568585f6929bedeaad110ad08f079624",
       "source_path": "skills/pptx",
       "reason": "Matches the current Anthropic PPTX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper."
     },
     "xlsx": {
       "source_repo": "https://github.com/anthropics/skills",
-      "source_commit": "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f",
+      "source_commit": "34040c9c568585f6929bedeaad110ad08f079624",
       "source_path": "skills/xlsx",
       "reason": "Matches the current Anthropic XLSX asset and helper tree while retaining the catalog-normalized SKILL.md wrapper."
     },
@@ -1635,7 +1639,7 @@
     },
     "openai-docs": {
       "source_repo": "local-workspace://C:/Users/LOQ/.codex/skills/.system",
-      "source_commit": "sha256:43ba6399569a39bb3a4c42ac1150bae34a3e60098943290c558ac18045aeab1c",
+      "source_commit": "sha256:c9e28301410cebd30d00c821951613d674bec6a6a9270e85ae1fbf5bcdc6ffff",
       "source_path": "openai-docs",
       "reason": "Promoted from the personal Codex system bundle with official-domain and no-native-tool fallbacks for other clients."
     },
@@ -1779,7 +1783,7 @@
     },
     "gemini-api-dev": {
       "source_repo": "https://github.com/google-gemini/gemini-skills",
-      "source_commit": "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8",
+      "source_commit": "80dd31dda25bbe1410207df0adb3e0d591c2c634",
       "source_path": "skills/gemini-api-dev",
       "reason": "Official Gemini API workflow for the current google-genai SDKs, structured output, multimodal capabilities, model selection, and documentation fallbacks."
     },
@@ -1875,349 +1879,349 @@
     },
     "netlify-access-control": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-access-control",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-agent-runner": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-agent-runner",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-ai-gateway": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-ai-gateway",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-blobs": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-blobs",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-caching": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-caching",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-config": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-config",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-database": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-database",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-deploy": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-deploy",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-edge-functions": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-edge-functions",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-forms": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-forms",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-frameworks": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-frameworks",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-functions": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-functions",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-identity": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-identity",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-image-cdn": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-image-cdn",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "netlify-mcp-servers": {
       "source_repo": "https://github.com/netlify/context-and-tools",
-      "source_commit": "b79c1e58e82ecb319f1f213727f65ea10a5a69a5",
+      "source_commit": "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
       "source_path": "skills/netlify-mcp-servers",
       "reason": "Official Netlify skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-atlas-stream-processing": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-atlas-stream-processing",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-connection": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-connection",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-mcp-setup": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-mcp-setup",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-natural-language-querying": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-natural-language-querying",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-query-optimizer": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-query-optimizer",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-schema-design": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-schema-design",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "mongodb-search-and-ai": {
       "source_repo": "https://github.com/mongodb/agent-skills",
-      "source_commit": "8ada610346e678b8dc9f866e8166092840c6eb2f",
+      "source_commit": "1e72df255e54e81eff078054c2cfb2b5d8c13503",
       "source_path": "skills/mongodb-search-and-ai",
       "reason": "Official MongoDB skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-code-connect": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-code-connect",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-create-new-file": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-create-new-file",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-design-to-code": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-design-to-code",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-generate-design": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-generate-design",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-generate-diagram": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-generate-diagram",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-generate-library": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-generate-library",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-implement-motion": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-implement-motion",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-swiftui": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-swiftui",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-use": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-use",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-use-figjam": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-use-figjam",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-use-motion": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-use-motion",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "figma-use-slides": {
       "source_repo": "https://github.com/figma/mcp-server-guide",
-      "source_commit": "ae7e5e5f80da20f1dd7445e0c6ae5ac58a5b0bce",
+      "source_commit": "d638a5e055e8d95e0394a94350860398cf424b74",
       "source_path": "skills/figma-use-slides",
       "reason": "Official Figma skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-cloud-aws-context-discovery": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/hf-cloud-aws-context-discovery",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-cloud-python-env-setup": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/hf-cloud-python-env-setup",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-cloud-sagemaker-deployment-planner": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/hf-cloud-sagemaker-deployment-planner",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-cloud-sagemaker-iam-preflight": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/hf-cloud-sagemaker-iam-preflight",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-cloud-sagemaker-production-defaults": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/hf-cloud-sagemaker-production-defaults",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-cloud-serving-image-selection": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/hf-cloud-serving-image-selection",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-best": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-best",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-community-evals": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-community-evals",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-datasets": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-datasets",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-gradio": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-gradio",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-llm-trainer": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-llm-trainer",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-local-models": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-local-models",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-lora-space-builder": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-lora-space-builder",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-paper-publisher": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-paper-publisher",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-papers": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-papers",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-spaces": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-spaces",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-tool-builder": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-tool-builder",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-trackio": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-trackio",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-vision-trainer": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-vision-trainer",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "huggingface-zerogpu": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/huggingface-zerogpu",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "train-sentence-transformers": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/train-sentence-transformers",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "transformers-js": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/transformers-js",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "trl-training": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "skills/trl-training",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
     "hf-mcp": {
       "source_repo": "https://github.com/huggingface/skills",
-      "source_commit": "97862b0fcc89c850fdd00c82ede1e62d3c930a6d",
+      "source_commit": "f3186efbbc322121eb5d0f31e8a1d669ee961159",
       "source_path": "hf-mcp/skills/hf-mcp",
       "reason": "Official Hugging Face skill selected from the VoltAgent discovery catalog and imported from the canonical vendor repository; the live source was pinned at the recorded commit and normalized for this cross-client catalog."
     },
@@ -2253,49 +2257,49 @@
     },
     "gemini-live-api-dev": {
       "source_repo": "https://github.com/google-gemini/gemini-skills",
-      "source_commit": "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8",
+      "source_commit": "80dd31dda25bbe1410207df0adb3e0d591c2c634",
       "source_path": "skills/gemini-live-api-dev",
       "reason": "Official Gemini Live API workflow for bidirectional audio, video, text, VAD, ephemeral tokens, translation, transcription, and session recovery."
     },
     "gemini-omni-flash-api": {
       "source_repo": "https://github.com/google-gemini/gemini-skills",
-      "source_commit": "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8",
+      "source_commit": "80dd31dda25bbe1410207df0adb3e0d591c2c634",
       "source_path": "skills/gemini-omni-flash-api",
       "reason": "Official Gemini Omni Flash workflow for bounded text-to-video, image-to-video, video editing, extensions, references, and local media preprocessing."
     },
     "ai-writing-detector": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": "skills/ai-writing-detector",
       "reason": "Current Avoid AI Writing v3.33.2 detector leaf for scanning prose with the catalog's local corpus and preservation safeguards; kept separate from the router and rewriting workflows."
     },
     "avoid-ai-writing-router": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": "skills/avoid-ai-writing-router",
       "reason": "Current Avoid AI Writing v3.33.2 routing workflow that selects detector, review, preservation, and rewriting leaves without collapsing their activation boundaries."
     },
     "false-positive-reviewer": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": "skills/false-positive-reviewer",
       "reason": "Current Avoid AI Writing v3.33.2 false-positive review leaf for evidence-backed human-voice decisions after detection; no automated accusation or authorship claim."
     },
     "file-edit-in-place": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": "skills/file-edit-in-place",
       "reason": "Current Avoid AI Writing v3.33.2 preservation-first editing leaf for in-place changes, bounded diffs, and rollback-safe user approval."
     },
     "preservation-verifier": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": "skills/preservation-verifier",
       "reason": "Current Avoid AI Writing v3.33.2 preservation verifier for checking voice, meaning, formatting, and file-boundary invariants after edits."
     },
     "voice-preserving-rewriter": {
       "source_repo": "https://github.com/conorbronsdon/avoid-ai-writing",
-      "source_commit": "a465548fe813969dc7006c2e042efa305c09c96f",
+      "source_commit": "aa4da8b255eb9821f0dae2a059762de900bb5d1f",
       "source_path": "skills/voice-preserving-rewriter",
       "reason": "Current Avoid AI Writing v3.33.2 voice-preserving rewrite leaf with explicit meaning, tone, and provenance checks; complements the detector rather than replacing review."
     },
@@ -2307,21 +2311,27 @@
     },
     "playwright-cli": {
       "source_repo": "https://github.com/microsoft/playwright-cli",
-      "source_commit": "397ee39c83a651e1314cfb010b94e8a3aac11261",
+      "source_commit": "655530f6d0dc71a0d6bf46ae165877d3c7311099",
       "source_path": "packages/playwright-core/src/tools/skills/playwright-cli",
       "reason": "The current `@playwright/cli@0.1.19` npm package ships this cross-client browser-automation workflow; its bundled references are kept together and refreshed from the exact release pin."
     },
     "playwright-component-testing": {
       "source_repo": "https://github.com/microsoft/playwright",
-      "source_commit": "1b025d7e20a026371cd5f98ba0cdce48892737c8",
+      "source_commit": "d1ead3ecca23182f2d06d761c28e3d4edafb6595",
       "source_path": "packages/playwright-core/src/tools/skills/playwright-component-testing",
       "reason": "The stable `microsoft/playwright@v1.63.0` source ships this story-gallery component-testing workflow; it remains separate from the general Playwright CLI skill because its activation boundary and gallery contract differ."
     },
     "playwright-trace": {
       "source_repo": "https://github.com/microsoft/playwright",
-      "source_commit": "1b025d7e20a026371cd5f98ba0cdce48892737c8",
+      "source_commit": "d1ead3ecca23182f2d06d761c28e3d4edafb6595",
       "source_path": "packages/playwright-core/src/tools/skills/playwright-trace",
       "reason": "The stable `microsoft/playwright@v1.63.0` source ships this focused trace-inspection workflow; it remains separate from browser interaction because trace analysis does not require a live browser session."
+    },
+    "humanizer": {
+      "source_repo": "https://github.com/blader/humanizer",
+      "source_commit": "9862685f575c65a8247f90369951df1b3416e3d6",
+      "source_path": "SKILL.md",
+      "reason": "Official blader/humanizer v3.0.0 compact 25-pattern prose-rewrite workflow; retained as a distinct direct-humanization prompt alongside the broader avoid-ai-writing detector, preservation, and iterative routing suite because its activation contract differs."
     }
   },
   "codex_system_managed_skills": [

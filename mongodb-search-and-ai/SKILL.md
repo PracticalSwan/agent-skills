@@ -1,7 +1,7 @@
 ---
 name: mongodb-search-and-ai
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-09-14
 tags: [mongodb, search, and, ai]
 description: "Guides MongoDB users through implementing and optimizing Atlas Search (full-text), Vector Search (semantic), and Hybrid Search solutions. Use this skill when users need to build search functionality for text-based queries (autocomplete, fuzzy matching, faceted search), semantic similarity (embeddings, RAG applications), or combined approaches. Also use when users need text containment, substring matching ('contains', 'includes', 'appears in'), case-insensitive or multi-field text search, or filtering across many fields with variable combinations. Provides workflows for selecting the right search type, creating indexes, constructing queries, and optimizing performance using the MongoDB MCP server."
 license: "Apache-2.0"
@@ -17,6 +17,7 @@ You are helping MongoDB users implement, optimize, and troubleshoot Atlas Search
 3. **Explain before executing** - Describe what indexes will be created and require explicit approval
 4. **Optimize for the use case** - Different use cases require different index configurations and query patterns
 5. **Handle read-only scenarios** - If you do not have access to `create`, `update`, or `delete` operation tools, you are in read-only mode. Provide the complete index configuration JSON so the user can create it themselves, including via the Atlas UI.
+6. **Explain in accessible language** - Describe technical concepts and map business requirements to technical implementations in terms the user can follow.
 
 ## Workflow
 
@@ -37,11 +38,15 @@ If the user's request is vague:
 Common questions to ask:
 - What are users searching for? (products, movies, documents, etc.)
 - What fields contain the searchable content?
+- Are they searching by free text, or by similarity to an existing item (e.g. "given movie A, find similar movies")?
 - Do they need exact matching, fuzzy matching, or semantic similarity?
 - Do they need filters (price ranges, categories, dates)?
 - Do they need autocomplete/typeahead functionality?
+- Do they already generate vector embeddings, or do they want MongoDB to handle that automatically?
 
-### 2. Determine Search Type
+### 2. Determine Search Type and Consult the Reference File
+
+Match the use case to a search type below, then consult the linked reference file **before** recommending indexes or queries. Each reference file also documents the prerequisites you must verify first (cluster tier, MongoDB version, deployment requirements).
 
 **Atlas Search (Lexical/Full-Text):**
 Use when users need:
@@ -53,14 +58,27 @@ Use when users need:
 - Token-based search
 - Lexical search with views
 
-**Vector Search (Semantic):**
+→ Consult both `references/lexical-search-indexing.md` (index) and `references/lexical-search-querying.md` (query).
+
+**Automated Embedding (Semantic search, no embedding code):**
 Use when users need:
-- Semantic similarity ("find movies about coming of age stories")
-- Natural language understanding
-- RAG (Retrieval Augmented Generation) applications
-- Finding conceptually similar items
-- Cross-modal search
+- Semantic / vector search without writing embedding code
+- No existing vector pipeline or embedding infrastructure
+- Quick setup: MongoDB auto-generates and manages embeddings using Voyage AI models
+- Text data already stored in Atlas that they want to search by meaning
+- RAG or AI agent memory with minimal setup
+
+→ Consult `references/automated-embedding.md` and verify its cluster prerequisites (tier, deployment, auto-scaling) before creating the index or query.
+
+**Vector Search (Semantic, bring your own embeddings):**
+Use when users need:
+- Semantic similarity with their own pre-generated embeddings
+- A specific embedding model not provided by Voyage AI
+- Image, audio, or multimodal embeddings (Automated Embedding is text-only)
+- Self-managed MongoDB without Voyage AI API key configured
 - Vector search with views
+
+→ Consult `references/vector-search.md`.
 
 **Hybrid Search:**
 Use when users need:
@@ -69,24 +87,9 @@ Use when users need:
 - Results that factor in multiple relevance criteria
 - Uses `$rankFusion` (rank-based) or `$scoreFusion` (score-based) to merge pipelines
 
-### 3. Version Check (Hybrid Search only)
+→ Consult `references/hybrid-search.md` and verify its version requirements before building (also consult the lexical/vector files for the individual pipeline stages).
 
-If the search type is **Hybrid using `$rankFusion` or `$scoreFusion`**, verify the cluster version before proceeding:
-- `$rankFusion` requires MongoDB 8.0+
-- `$scoreFusion` requires MongoDB 8.2+
-
-If the version requirement is not met, do not proceed — inform the user the feature is unavailable and suggest upgrading. Do not consult `references/hybrid-search.md`.
-
-If the search type is Lexical, Vector, or the lexical prefilter pattern (`vectorSearch` operator inside `$search`), proceed to the next step.
-
-### 4. Consult Reference Files
-
-Always consult the appropriate reference file(s) before recommending indexes or queries:
-- **Lexical**: consult both `references/lexical-search-indexing.md` (index) and `references/lexical-search-querying.md` (query)
-- **Vector**: consult `references/vector-search.md`
-- **Hybrid**: consult `references/hybrid-search.md` (and the lexical/vector files for the individual pipeline stages within it)
-
-### 5. Execution and Validation
+### 3. Execution and Validation
 
 **Creating indexes:**
 1. Explain the index configuration in plain language
@@ -106,6 +109,27 @@ Always consult the appropriate reference file(s) before recommending indexes or 
 2. Compare against the query patterns and best practices in the relevant reference file(s)
 3. Propose specific improvements with before/after examples
 4. Run the revised query with `aggregate` to validate the results
+
+## Anti-Patterns to Avoid
+
+**NEVER recommend `$regex` or `$text` for search use cases.** Both lack the relevance scoring, fuzzy matching, and language-aware tokenization that search workloads need. If a user asks for either, explain why Atlas Search is more appropriate and show the equivalent pattern.
+
+## Handling Edge Cases
+
+**User mentions fields you can't find:**
+- Use `collection-schema` to inspect available fields
+- Suggest alternatives or ask for clarification
+
+**Required field doesn't exist:**
+- Explain what needs to be added and how (e.g., embedding field for vector search)
+
+**Query fails or index missing:**
+- Use `collection-indexes` to verify index exists
+- If missing, explain index needs to be created first
+
+**Multiple collections are relevant:**
+- List options and ask which one they mean
+- If context makes it obvious, confirm your assumption
 
 <!-- MCP:START -->
 
@@ -132,39 +156,6 @@ Preferred MCP Server: MongoDB MCP Server
 - Do not claim an MCP operation was used when the active host does not expose it.
 
 <!-- MCP:END -->
-
-## Anti-Patterns to Avoid
-
-**NEVER recommend $regex or $text for search use cases:**
-- **$regex**: Not designed for full-text search. Lacks relevance scoring, fuzzy matching, and language-aware tokenization.
-- **$text**: Legacy operator that doesn't scale well for search workloads.
-
-If a user asks for regex/text for a search use case, explain why Atlas Search is more appropriate and show the equivalent pattern.
-
-## Handling Edge Cases
-
-**User mentions fields you can't find:**
-- Use `collection-schema` to inspect available fields
-- Suggest alternatives or ask for clarification
-
-**Required field doesn't exist:**
-- Explain what needs to be added and how (e.g., embedding field for vector search)
-
-**Query fails or index missing:**
-- Use `collection-indexes` to verify index exists
-- If missing, explain index needs to be created first
-
-**Multiple collections are relevant:**
-- List options and ask which one they mean
-- If context makes it obvious, confirm your assumption
-
-## Remember
-
-- Always check existing indexes before recommending new ones
-- Explain technical concepts in accessible language
-- Require approval before creating indexes
-- Map user's business requirements to technical implementations
-- Use the appropriate search type for the use case
 
 ## Anti-Patterns
 

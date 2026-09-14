@@ -2,6 +2,20 @@
 
 All notable changes to the `hf-cloud-serving-image-selection` skill are documented here.
 
+## [2026-09-14] - Hugging Face SageMaker Image Selection Source Refresh
+
+### Added
+
+- Refreshed the current SageMaker container-selection guidance from the Hugging Face source.
+
+### Changed
+
+- Kept Hugging Face DLC preference, region compatibility, and no-hardcoded-URI rules explicit.
+
+### Fixed
+
+- Preserved the catalog's requirement to verify image availability before deployment.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

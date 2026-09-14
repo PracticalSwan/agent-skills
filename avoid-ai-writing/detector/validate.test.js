@@ -160,6 +160,61 @@ test('stripping an AI utm_source parameter → no error', () => {
   assert.equal(r.ok, true, formatResult(r));
 });
 
+test('stripping AI tracking parameters preserves the remaining query string', () => {
+  const cases = [
+    ['?utm_source=chatgpt.com&b=1', '?b=1'],
+    ['?a=1&utm_source=chatgpt.com', '?a=1'],
+    ['?a=1&utm_source=chatgpt.com&b=2', '?a=1&b=2'],
+    ['?utm_source=chatgpt.com', ''],
+    ['?referrer=grok.com&b=1', '?b=1'],
+    ['?a=1&referrer=grok.com', '?a=1'],
+    ['?a=1&referrer=grok.com&b=2', '?a=1&b=2'],
+    ['?referrer=grok.com', ''],
+    ['?utm_source=chatgpt.com&', ''],
+    ['?&utm_source=chatgpt.com', ''],
+    ['?a=1&&utm_source=chatgpt.com', '?a=1'],
+    ['?a=1&&b=2&utm_source=chatgpt.com', '?a=1&&b=2'],
+    ['?utm_source=chatgpt.com&&b=1', '?&b=1'],
+    ['?a=1&utm_source=chatgpt.com&', '?a=1&'],
+    ['?referrer=grok.com&&b=1', '?&b=1'],
+  ];
+
+  for (const [beforeQuery, afterQuery] of cases) {
+    const before = `See https://example.com/post${beforeQuery} for details.`;
+    const after = `See https://example.com/post${afterQuery} for details.`;
+    const r = validate(before, after, { skipResidual: true });
+    assert.equal(r.ok, true, `${beforeQuery}: ${formatResult(r)}`);
+  }
+});
+
+test('stripping a terminal AI tracker preserves adjacent sentence punctuation', () => {
+  const cases = [
+    ['https://example.com/post?utm_source=chatgpt.com.', 'https://example.com/post.'],
+    ['https://example.com/post?referrer=grok.com,', 'https://example.com/post,'],
+    ['https://example.com/post?utm_source=chatgpt.com?', 'https://example.com/post?'],
+    ['https://example.com/post?utm_source=chatgpt.com!?', 'https://example.com/post!?'],
+  ];
+
+  for (const [beforeUrl, afterUrl] of cases) {
+    const r = validate(`See ${beforeUrl}`, `See ${afterUrl}`, { skipResidual: true });
+    assert.equal(r.ok, true, `${beforeUrl}: ${formatResult(r)}`);
+  }
+});
+
+test('removing a terminal question mark from a URL is still an error', () => {
+  const before = 'See https://example.com/post? for details.';
+  const after = 'See https://example.com/post for details.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('url-missing'), formatResult(r));
+});
+
+test('changing a non-tracking query parameter → error', () => {
+  const before = 'See https://example.com/post?utm_source=chatgpt.com&ref=home for details.';
+  const after = 'See https://example.com/post?ref=away for details.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('url-missing'), formatResult(r));
+});
+
 test('sentence-casing a Title Case heading → warning, not error', () => {
   const before = '## Strategic Negotiations And Key Partnerships\n\nBody text goes here.';
   const after = '## Strategic negotiations and key partnerships\n\nBody text goes here.';

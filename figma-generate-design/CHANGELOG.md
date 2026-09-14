@@ -2,6 +2,20 @@
 
 All notable changes to the `figma-generate-design` skill are documented here.
 
+## [2026-09-14] - Figma Generate Design Source Refresh
+
+### Added
+
+- Refreshed the composed-screen generation workflow from the current Figma MCP guide.
+
+### Changed
+
+- Kept the mandatory figma-use prerequisite and incremental design-system assembly contract.
+
+### Fixed
+
+- Preserved local export and screenshot fallbacks when Figma MCP is unavailable.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

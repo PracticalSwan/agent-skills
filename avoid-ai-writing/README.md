@@ -16,10 +16,19 @@ Audit & rewrite content to remove AI writing patterns. A practical skill for any
 
 A portable writing skill for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [OpenClaw](https://github.com/openclaw/openclaw), [Hermes](https://github.com/NousResearch/hermes-agent), and any other [agentskills.io](https://agentskills.io)-compatible agent. Audits and rewrites content to remove AI writing patterns ("AI-isms").
 
+The bundled detector and CLI support follows upstream Avoid AI Writing
+v3.35.0. The catalog keeps the runtime helpers that are useful for local,
+cross-client verification; plugin marketplace, CI packaging, and the large
+rewrite-evaluation corpus remain outside this folder.
+
 **Three modes:**
 - **Rewrite** (default) — flags AI patterns and rewrites the text to fix them. A built-in second pass catches patterns that survived the first edit.
 - **Detect** — flags AI patterns without rewriting. Shows which flags are real problems vs. judgment calls. Useful when patterns might be intentional, when auditing content you don't want altered, or when you just want a quick scan.
 - **Edit** — edits a prose file in place (via the Edit tool) with minimal, targeted changes, preserving passages that are already human. Source code, configuration, and generated data are refused because prose rewrites can corrupt structured content. Returns an edits-made + verification report, not the full file.
+
+Use --iterate N when you want the skill to repeat the audit and rewrite cycle
+until no patterns remain or the requested pass limit is reached. The limit is
+capped at 2: rewrite mode already includes its corrective second pass.
 
 An optional **voice profile** (casual / professional / technical / warm / blunt) sets how the prose should sound, independent of the audience context profile.
 
@@ -29,9 +38,13 @@ An optional **voice profile** (casual / professional / technical / warm / blunt)
 > Certainly! Acme Analytics, a vibrant startup nestled in the heart of Boulder's thriving tech ecosystem, has secured $40M in Series B funding — marking a watershed moment for the observability landscape. The platform serves as a unified hub, featuring real-time dashboards, boasting sub-second queries, and presenting a seamless integration layer. Moreover, experts believe Acme is poised to disrupt the market. In conclusion, the future looks bright!
 
 **Output:**
-> Acme Analytics raised a $40M Series B led by Sequoia. The Boulder-based startup makes an observability platform that runs queries in under a second and plugs into existing monitoring stacks without custom integration work.
+> Acme Analytics, a Boulder-based startup, raised a $40M Series B. Its observability platform has real-time dashboards, runs queries in under a second, and includes an integration layer.
 
-**What it caught:** chatbot opener ("Certainly!"), promotional language ("vibrant," "nestled," "thriving"), significance inflation ("watershed moment"), copula avoidance ("serves as," "featuring," "boasting"), 4 word replacements, vague attribution ("experts believe"), filler ("Moreover"), generic conclusion ("the future looks bright"), over-polished uniformity. 15+ AI tells in one paragraph.
+**What it caught:** the chatbot opener ("Certainly!"), promotional modifiers,
+inflated significance, roundabout verbs, vague attribution, and the generic
+conclusion. The rewrite keeps the funding, location, and three product
+capabilities; it does not invent an investor, benchmark, or integration
+mechanism.
 
 ## Why a skill, not just a prompt
 
@@ -376,6 +389,35 @@ original file. Plain-text behavior remains the default.
 See [`detector/README.md`](./detector/README.md) for the full `analyzeText` API
 and [`detector/CATEGORIES.md`](./detector/CATEGORIES.md) for the rule ↔ category
 map that keeps `references/patterns.md` and the engine in sync.
+
+### Score files and gate prose
+
+The catalog includes the zero-dependency CLI entry points from upstream
+v3.35.0. They read UTF-8 text without modifying it and return JSON evidence:
+
+~~~bash
+npx --package avoid-ai-writing-detector avoid-ai-writing draft.md
+cat draft.md | npx --package avoid-ai-writing-detector avoid-ai-writing --context technical
+~~~
+
+avoid-ai-writing-gate is a deterministic CI/pre-commit gate. It uses finding
+count per file rather than the composite score, with a default threshold of six
+findings, technical context, and rendered-Markdown masking:
+
+~~~bash
+avoid-ai-writing-gate --glob "**/*.md" --threshold 6
+avoid-ai-writing-gate --context technical README.md docs/guide.md
+~~~
+
+The catalog copy also retains the upstream `.pre-commit-hooks.yaml` definition
+for projects that already use `pre-commit`; it invokes the same deterministic
+gate with technical context and rendered-Markdown masking. Marketplace,
+release-CI, and large evaluation-corpus files remain intentionally omitted.
+
+Exit code 0 means every scanned file is within threshold; 1 means a file
+exceeded it; 2 means usage, glob, I/O, encoding, or unscannable-input error.
+Run avoid-ai-writing --help and avoid-ai-writing-gate --help for the complete
+option set.
 
 ### Use the detector over MCP
 

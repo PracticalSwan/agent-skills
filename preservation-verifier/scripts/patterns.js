@@ -44,17 +44,67 @@ const AIDetector = (() => {
   };
   const GREEK_LOOKALIKES = { 'ο': 'o', 'Ο': 'O', 'α': 'a', 'Α': 'A', 'ρ': 'p', 'Ρ': 'P' };
 
-  function normalizeText(text) {
+  // ─── Source-coordinate mapping (issue #189) ─────────────────────────
+  //
+  // Each entry maps one code unit in the working string to the matching
+  // code unit in the caller's source. Deletion passes copy the entries for
+  // retained characters once, so interleaved or overlapping removals cannot
+  // double-count offsets. Masking and homoglyph replacement keep their input
+  // length and therefore keep the current map unchanged.
+  function identitySourceMap(length) {
+    return Array.from({ length }, (_, index) => index);
+  }
+
+  function appendMapRange(target, source, start, end) {
+    for (let index = start; index < end; index += 1) target.push(source[index]);
+  }
+
+  function remapFindingsToSource(issues, regions, sourceMap) {
+    for (const issue of issues) {
+      if (Number.isInteger(issue.index)) issue.index = sourceMap[issue.index];
+    }
+    for (const region of regions) {
+      region.start = sourceMap[region.start];
+      region.end = sourceMap[region.end - 1] + 1;
+    }
+  }
+
+  const ZERO_WIDTH_RE = /[​-‍﻿⁠]/u;
+  const ZERO_WIDTH_GLOBAL_RE = /[​-‍﻿⁠]/gu;
+  const HOMOGLYPH_GLOBAL_RE = /[Ѐ-ӿͰ-Ͽ]/gu;
+  const ROLEPLAY_VERBS_RE = /^(?:nods|sighs|laughs|smiles|frowns|shrugs|grins|winks|chuckles|gasps|pauses|thinks|wonders|whispers|shouts|gestures|raises|leans|turns|looks|glances|smirks|blinks|nodding|sighing|laughing|smiling|thinking|gesturing)\b/i;
+  const ROLEPLAY_MARKER_RE = /(?<!\*)\*([^*\n]{1,80}?)\*(?!\*)/gu;
+
+  function normalizeText(text, sourceMap) {
     const flags = { zeroWidth: 0, homoglyph: 0, roleplay: 0 };
     let out = text;
+    let map = Array.isArray(sourceMap) ? sourceMap : null;
 
     // 1. Strip zero-width chars (ZWSP U+200B, ZWNJ U+200C, ZWJ U+200D,
     //    BOM U+FEFF, word joiner U+2060).
-    out = out.replace(/[​-‍﻿⁠]/g, () => { flags.zeroWidth++; return ''; });
+    if (map) {
+      const chars = [];
+      const nextMap = [];
+      for (let i = 0; i < out.length; i += 1) {
+        if (ZERO_WIDTH_RE.test(out[i])) {
+          flags.zeroWidth += 1;
+          continue;
+        }
+        chars.push(out[i]);
+        nextMap.push(map[i]);
+      }
+      out = chars.join('');
+      map = nextMap;
+    } else {
+      out = out.replace(ZERO_WIDTH_GLOBAL_RE, () => {
+        flags.zeroWidth += 1;
+        return '';
+      });
+    }
 
     // 2. Swap Cyrillic / Greek Latin-lookalike chars back to Latin so
     //    pattern matching catches obfuscated tokens.
-    out = out.replace(/[Ѐ-ӿͰ-Ͽ]/g, (m) => {
+    out = out.replace(HOMOGLYPH_GLOBAL_RE, (m) => {
       const swap = CYRILLIC_LOOKALIKES[m] ?? GREEK_LOOKALIKES[m];
       if (swap) { flags.homoglyph++; return swap; }
       return m;
@@ -66,14 +116,55 @@ const AIDetector = (() => {
     //    artifact shape. Markdown `**bold**` is rejected by the
     //    lookbehind/lookahead; legitimate multi-word `*italic*` is
     //    preserved because the verb whitelist is narrow.
-    const ROLEPLAY_VERBS = /^(?:nods|sighs|laughs|smiles|frowns|shrugs|grins|winks|chuckles|gasps|pauses|thinks|wonders|whispers|shouts|gestures|raises|leans|turns|looks|glances|smirks|blinks|nodding|sighing|laughing|smiling|thinking|gesturing)\b/i;
-    out = out.replace(/(?<!\*)\*([^*\n]{1,80}?)\*(?!\*)/gu, (m, inner) => {
-      if (ROLEPLAY_VERBS.test(inner)) { flags.roleplay++; return ''; }
-      return m;
-    });
+    if (map) {
+      const chars = [];
+      const nextMap = [];
+      const matcher = new RegExp(ROLEPLAY_MARKER_RE.source, ROLEPLAY_MARKER_RE.flags);
+      let cursor = 0;
+      let match;
+      while ((match = matcher.exec(out)) !== null) {
+        if (!ROLEPLAY_VERBS_RE.test(match[1])) continue;
+        chars.push(out.slice(cursor, match.index));
+        appendMapRange(nextMap, map, cursor, match.index);
+        flags.roleplay += 1;
+        cursor = match.index + match[0].length;
+      }
+      chars.push(out.slice(cursor));
+      appendMapRange(nextMap, map, cursor, map.length);
+      out = chars.join('');
+      map = nextMap;
+    } else {
+      out = out.replace(ROLEPLAY_MARKER_RE, (m, inner) => {
+        if (ROLEPLAY_VERBS_RE.test(inner)) {
+          flags.roleplay += 1;
+          return '';
+        }
+        return m;
+      });
+    }
 
-    return { text: out, flags };
+    return map ? { text: out, flags, sourceMap: map } : { text: out, flags };
   }
+
+  // Terms with legitimate technical meaning that are suppressed when contextMode === 'technical'.
+  // See references/patterns.md and issue #237.
+  const TECHNICAL_EXEMPT = new Set([
+    'robust',
+    'comprehensive',
+    'seamless',
+    'seamlessly',
+    'ecosystem',
+    'leverage',
+    'leverages',
+    'leveraging',
+    'leveraged',
+    'facilitate',
+    'facilitates',
+    'underpin',
+    'underpinning',
+    'underpinnings',
+    'streamline',
+  ]);
 
   // ─── Tier 1: Always flag ───────────────────────────────────────────
   const TIER1 = {
@@ -281,7 +372,11 @@ const AIDetector = (() => {
     'significance-inflation': 4,
     'vague-attribution': 5,
     'hollow-intensifier': 2,
-    'emotional-flatline': 2,
+    // Issue #82 evidence boundary: this style pattern produced no detector hits
+    // in either corpus class, so it has no measured authorship direction. Keep
+    // the finding visible, but do not move authorship scores or probabilities
+    // until a relevant positive evaluation set supports a direction.
+    'emotional-flatline': 0,
     'lingering-attention': 3,
     'novelty-inflation': 3,
     'cutoff-disclaimer': 10,
@@ -479,8 +574,11 @@ const AIDetector = (() => {
     // Multiline flag (/m) so `^` matches at every line start, including
     // position 0 of a pasted text that has no leading newline. The earlier
     // `(?:^|\n)` form silently missed bare openers at the very start of
-    // input — caught by silent-failure audit 2026-05-16.
-    /^\s*interesting\s+(?:part|thing|aspect|piece)(?:\s+of\s+(?:the\s+)?\w+)?\s*:/gim,
+    // input — caught by silent-failure audit 2026-05-16. Leading whitespace
+    // is `[ \t]*`, not `\s*`: with /m every line start is a match attempt,
+    // and a `\s*` that can cross newlines rescans the whole blank run from
+    // each of them, which made a long masked block quadratic (#235).
+    /^[ \t]*interesting\s+(?:part|thing|aspect|piece)(?:\s+of\s+(?:the\s+)?\w+)?\s*:/gim,
   ];
 
   // ─── Lingering-attention claims ────────────────────────────────────
@@ -871,6 +969,48 @@ const AIDetector = (() => {
     }
   }
 
+  function inlineCodeRanges(text) {
+    const runs = [];
+    for (let i = 0; i < text.length;) {
+      if (text[i] === '\n') {
+        runs.push(null);
+        i += 1;
+        continue;
+      }
+      if (text[i] !== '`') {
+        i += 1;
+        continue;
+      }
+      const start = i;
+      while (i < text.length && text[i] === '`') i += 1;
+      runs.push({ start, end: i, length: i - start });
+    }
+
+    const ranges = [];
+    let lineStart = 0;
+    while (lineStart < runs.length) {
+      let lineEnd = runs.indexOf(null, lineStart);
+      if (lineEnd === -1) lineEnd = runs.length;
+      const nextByLength = new Map();
+      const nextSame = new Array(lineEnd - lineStart);
+      for (let i = lineEnd - 1; i >= lineStart; i -= 1) {
+        nextSame[i - lineStart] = nextByLength.get(runs[i].length);
+        nextByLength.set(runs[i].length, i);
+      }
+      for (let i = lineStart; i < lineEnd;) {
+        const close = nextSame[i - lineStart];
+        if (close === undefined) {
+          i += 1;
+          continue;
+        }
+        ranges.push([runs[i].start, runs[close].end]);
+        i = close + 1;
+      }
+      lineStart = lineEnd + 1;
+    }
+    return ranges;
+  }
+
   // Copy of the text with fenced blocks and inline code spans blanked out.
   // Index-preserving: each masked character becomes a space and newlines are
   // kept, so offsets into the result still address the same position in the
@@ -886,9 +1026,7 @@ const AIDetector = (() => {
     // continuation, so blanking it silences real tag blocks. #90 reports
     // fences and inline spans, and those are what this masks.
     const withoutFences = chars.join('');
-    const inlineRe = /(`+)(?:(?!\1)[^\n])+\1/g;
-    let m;
-    while ((m = inlineRe.exec(withoutFences)) !== null) blankRange(chars, m.index, m.index + m[0].length);
+    for (const [start, end] of inlineCodeRanges(withoutFences)) blankRange(chars, start, end);
     return chars.join('');
   }
 
@@ -925,6 +1063,136 @@ const AIDetector = (() => {
     return { start: 0, end: lines[closingLine].end };
   }
 
+  // Mask HTML comments in source order while tracking the Markdown constructs
+  // that protect a literal `<!--`. A comment wins over code delimiters that
+  // occur inside it; a fence, code span, or top-level indented block that
+  // starts first wins over comment-looking text inside that code. Each source
+  // character participates in a bounded number of forward scans.
+  function maskHtmlCommentsOutsideCode(chars) {
+    const source = chars.join('');
+    const lines = source.split('\n');
+    let offset = 0;
+    let openFence = null;
+    let inIndentedBlock = false;
+    let previousBlank = true;
+    let listContext = false;
+    let maskedHtmlComments = 0;
+    const commentClosings = [];
+    let closingCursor = 0;
+
+    for (let i = 0; i <= source.length - 3; i += 1) {
+      if (source[i] === '-' && source[i + 1] === '-' && source[i + 2] === '>') {
+        commentClosings.push(i);
+      }
+    }
+
+    const backtickRuns = (line) => {
+      const runs = [];
+      for (let i = 0; i < line.length;) {
+        if (line[i] !== '`') {
+          i += 1;
+          continue;
+        }
+        const start = i;
+        while (i < line.length && line[i] === '`') i += 1;
+        runs.push({ start, end: i, length: i - start, next: -1 });
+      }
+      const nextByLength = new Map();
+      for (let i = runs.length - 1; i >= 0; i -= 1) {
+        runs[i].next = nextByLength.get(runs[i].length) ?? -1;
+        nextByLength.set(runs[i].length, i);
+      }
+      return runs;
+    };
+
+    for (const originalLine of lines) {
+      const lineEnd = offset + originalLine.length;
+      let visibleLine = chars.slice(offset, lineEnd).join('');
+      const fenceMatch = /^[ \t]{0,3}(`{3,}|~{3,})([^\n]*)$/.exec(visibleLine);
+      let fencedLine = false;
+
+      if (openFence) {
+        fencedLine = true;
+        if (
+          fenceMatch
+          && fenceMatch[1][0] === openFence.char
+          && fenceMatch[1].length >= openFence.length
+          && /^[ \t]*\r?$/.test(fenceMatch[2])
+        ) openFence = null;
+      } else if (fenceMatch) {
+        fencedLine = true;
+        openFence = { char: fenceMatch[1][0], length: fenceMatch[1].length };
+      }
+
+      const indented = /^(?: {4}|\t)\S/.test(visibleLine);
+      const indentedCode = !fencedLine
+        && indented
+        && (inIndentedBlock || (previousBlank && !listContext));
+
+      if (!fencedLine && !indentedCode) {
+        const runs = backtickRuns(visibleLine);
+        let runIndex = 0;
+        let cursor = 0;
+
+        while (cursor < visibleLine.length) {
+          while (runIndex < runs.length && runs[runIndex].start < cursor) runIndex += 1;
+          const commentIndex = visibleLine.indexOf('<!--', cursor);
+          const run = runs[runIndex];
+
+          if (run && (commentIndex === -1 || run.start < commentIndex)) {
+            if (run.next !== -1) {
+              cursor = runs[run.next].end;
+              runIndex = run.next + 1;
+            } else {
+              cursor = run.end;
+              runIndex += 1;
+            }
+            continue;
+          }
+          if (commentIndex === -1) break;
+
+          const openingIndex = offset + commentIndex;
+          while (
+            closingCursor < commentClosings.length
+            && commentClosings[closingCursor] < openingIndex + 2
+          ) closingCursor += 1;
+          const closingIndex = commentClosings[closingCursor] ?? -1;
+          const end = closingIndex === -1 ? source.length : closingIndex + 3;
+          if (closingIndex !== -1) closingCursor += 1;
+          blankRange(chars, openingIndex, end);
+          maskedHtmlComments += 1;
+          cursor = Math.min(visibleLine.length, end - offset);
+        }
+      }
+
+      visibleLine = chars.slice(offset, lineEnd).join('');
+      const layoutChars = visibleLine.split('');
+      if (fencedLine) {
+        blankRange(layoutChars, 0, layoutChars.length);
+      } else {
+        const inlineRe = /(`+)(?:(?!\1)[^\n])+\1/g;
+        let inlineMatch;
+        while ((inlineMatch = inlineRe.exec(visibleLine)) !== null) {
+          blankRange(layoutChars, inlineMatch.index, inlineMatch.index + inlineMatch[0].length);
+        }
+      }
+      const layoutLine = layoutChars.join('');
+      const blank = layoutLine.trim() === '';
+
+      if (indentedCode) inIndentedBlock = true;
+      else if (!blank) inIndentedBlock = false;
+
+      if (!blank && !indentedCode && !fencedLine) {
+        if (/^ {0,3}(?:[-*+]|\d{1,9}[.)])(?:\s|$)/.test(layoutLine)) listContext = true;
+        else if (/^\S/.test(layoutLine)) listContext = false;
+      }
+      previousBlank = blank;
+      offset = lineEnd + 1;
+    }
+
+    return maskedHtmlComments;
+  }
+
   // Mask source-only Markdown spans while preserving source offsets. The
   // detector can then score what a reader sees without making later issue
   // indexes or sentence highlights point at the wrong source location.
@@ -938,22 +1206,7 @@ const AIDetector = (() => {
       maskedFrontmatter = 1;
     }
 
-    const maskCommentCode = () => {
-      const codeChars = maskCode(chars.join('')).split('');
-      maskTopLevelIndentedCode(codeChars, { listAware: true });
-      return codeChars.join('');
-    };
-    let maskedHtmlComments = 0;
-    let searchIndex = 0;
-    while (searchIndex < text.length) {
-      const openingIndex = maskCommentCode().indexOf('<!--', searchIndex);
-      if (openingIndex === -1) break;
-      const closingIndex = text.indexOf('-->', openingIndex + 2);
-      const end = closingIndex === -1 ? text.length : closingIndex + 3;
-      blankRange(chars, openingIndex, end);
-      maskedHtmlComments += 1;
-      searchIndex = end;
-    }
+    const maskedHtmlComments = maskHtmlCommentsOutsideCode(chars);
 
     return { text: chars.join(''), maskedFrontmatter, maskedHtmlComments };
   }
@@ -964,7 +1217,7 @@ const AIDetector = (() => {
     const lineRe = /[^\r\n]*(?:\r\n|\n|\r|$)/g;
     let match;
     while ((match = lineRe.exec(text)) !== null && match[0]) {
-      const body = match[0].replace(/[\r\n]+$/, '');
+      const body = match[0].replace(/(?:\r\n|\n|\r)$/, '');
       lines.push({ text: body, start: match.index, end: match.index + body.length });
     }
 
@@ -983,17 +1236,45 @@ const AIDetector = (() => {
   // Keep the historical deletion behavior for default plain mode. Paragraph-
   // scoped rules depend on the surrounding lines being rejoined exactly this
   // way, so changing this prepass would change scores for existing callers.
-  function stripMultilineBlockquotes(text) {
+  function stripMultilineBlockquotes(text, sourceMap) {
     const rawLines = text.split(/\r?\n/);
     const isQuote = rawLines.map((line) => /^\s*>\s/.test(line));
     const stripIndexes = new Set();
     for (let i = 0; i < rawLines.length; i += 1) {
       if (isQuote[i] && ((isQuote[i - 1] && i > 0) || isQuote[i + 1])) stripIndexes.add(i);
     }
-    return {
-      text: rawLines.filter((_, i) => !stripIndexes.has(i)).join('\n'),
+    const kept = rawLines
+      .map((_, index) => index)
+      .filter((index) => !stripIndexes.has(index));
+    const result = {
+      text: kept.map((index) => rawLines[index]).join('\n'),
       quotedLines: stripIndexes.size,
     };
+    if (!Array.isArray(sourceMap)) return result;
+
+    const lineStarts = [];
+    let offset = 0;
+    for (let i = 0; i < rawLines.length; i += 1) {
+      lineStarts.push(offset);
+      offset += rawLines[i].length;
+      if (i < rawLines.length - 1) {
+        if (text[offset] === '\r') offset += 1;
+        if (text[offset] === '\n') offset += 1;
+      }
+    }
+
+    const mapped = [];
+    for (let i = 0; i < kept.length; i += 1) {
+      const lineIndex = kept[i];
+      const start = lineStarts[lineIndex];
+      appendMapRange(mapped, sourceMap, start, start + rawLines[lineIndex].length);
+      if (i < kept.length - 1) {
+        const separatorStart = start + rawLines[lineIndex].length;
+        const newlineIndex = text[separatorStart] === '\r' ? separatorStart + 1 : separatorStart;
+        mapped.push(sourceMap[newlineIndex]);
+      }
+    }
+    return { ...result, sourceMap: mapped };
   }
 
   function maskTopLevelIndentedCode(chars, { listAware = false } = {}) {
@@ -1076,10 +1357,15 @@ const AIDetector = (() => {
 
   function maskMarkdownTables(chars) {
     const lines = chars.join('').split('\n');
-    const delimiter = /^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*\r?$/;
+    // Tested against the trimmed line: the pattern already allows surrounding
+    // whitespace, and its adjacent `\s*` groups backtrack quadratically on a
+    // long whitespace run, so a line of masked comments or blank padding
+    // cost seconds before it was rejected (#235).
+    const delimiter = /^\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?$/;
     const rows = new Set();
     for (let i = 0; i < lines.length; i += 1) {
-      if (!delimiter.test(lines[i])) continue;
+      const candidate = lines[i].trim();
+      if (!candidate.includes('---') || !delimiter.test(candidate)) continue;
       if (i > 0 && lines[i - 1].includes('|')) rows.add(i - 1);
       rows.add(i);
       for (let j = i + 1; j < lines.length && lines[j].includes('|'); j += 1) rows.add(j);
@@ -1133,7 +1419,7 @@ const AIDetector = (() => {
 
     maskMatches(/^[ \t]*>[^\n]*$/gm);
     maskMatches(/\b(?:https?:\/\/|www\.)[^\s<>]+/gi);
-    maskMatches(/<[!?/]?[a-z][^>\n]*>/gi);
+    maskMatches(/<[!?/]?[a-z][^<>\n]*>/gi);
     maskMatches(/(?<![a-z0-9_-])--?[a-z0-9][a-z0-9-]{0,127}/gi);
 
     // Paths and filenames use bounded components. Besides preventing
@@ -1209,8 +1495,8 @@ const AIDetector = (() => {
   // ─── Title Case Section Headers in non-technical prose ─────────────
   // "Strategic Negotiations And Key Partnerships" — every content word
   // capitalized. Acceptable in API docs, ML papers, news headlines. Tell
-  // in marketing/personal/blog prose. Gated to "personal" / "marketing"
-  // context modes (technical mode skips this check).
+  // in marketing/personal/blog prose. Skipped when contextMode is
+  // 'technical'; runs for general, marketing, and personal.
   //
   // The optional `#{1,6}` prefix is load-bearing (#62): without it the `^[A-Z]`
   // anchor required the line to START with a capital, so `## Benefits And
@@ -1221,7 +1507,11 @@ const AIDetector = (() => {
   //
   // Setext headings (`Title`/`=====`) need no prefix: their text line is bare
   // and already matched by this same pattern.
-  const TITLE_CASE_HEADER = /^(?:#{1,6}[ \t]+)?([A-Z][a-z]+(?:\s+(?:[A-Z][a-z]+|and|or|of|the|in|for|to|a|an))+\s+[A-Z][a-z]+)\s*$/gm;
+  // Interior tokens accept Title Case words, acronyms (`AI`, `API`, `CLI`) and
+  // the capitalised single-letter function word `A`. The first and last tokens
+  // stay ordinary `[A-Z][a-z]+` words, which also excludes all-caps banner
+  // lines (`## HTTP API REFERENCE`) whose leading token is not Title Case.
+  const TITLE_CASE_HEADER = /^(?:#{1,6}[ \t]+)?([A-Z][a-z]+(?:\s+(?:[A-Z][a-z]+|A|[A-Z]{2,}|and|or|of|the|in|for|to|a|an))+\s+[A-Z][a-z]+)\s*$/gm;
 
   // ─── Parenthetical hedging asides ──────────────────────────────────
   // "(and increasingly, X)", "(or more precisely, Y)", "(though to be
@@ -1388,14 +1678,19 @@ const AIDetector = (() => {
       return { ...buildV2Defaults('UNSCORED', 'low'), score: 0, label: 'Empty', issues: [], stats: {}, tooShort: true };
     }
 
-    // Context mode gates rules that are noisy in technical writing. Modes:
+    // Map each working-string code unit back to the caller's source. Every
+    // length-changing preprocessing stage composes this map as it removes
+    // characters, and results are translated before they leave the function.
+    let sourceMap = identitySourceMap(text.length);
+
+    // Context mode selects context-appropriate flagging. Accepted values:
     //   'general' (default) — full ruleset
     //   'technical' — skip title-case headers; individual prose-only rules
-    //                 apply their own technical-context gates
-    //   'marketing' — full ruleset + boost on formulaic-opener / future-narrative
-    //   'personal'  — full ruleset, normal weights
-    // Mode is purely a soft gate; nothing is silently suppressed without
-    // being reflected in stats.contextMode for transparency.
+    //                 apply their own technical-context gates (only mode
+    //                 that currently changes scoring)
+    //   'marketing' — accepted; recorded in stats; scores same as general
+    //   'personal'  — accepted; recorded in stats; scores same as general
+    // Invalid values fall back to 'general' with stats.contextModeFallback set.
     // Mode validation: an unknown string (e.g. typo "tecnical") would
     // otherwise silently downgrade to general-mode behavior. Coerce to
     // 'general' and surface the original value in stats for traceability.
@@ -1429,15 +1724,17 @@ const AIDetector = (() => {
     // keeps later issue and highlight offsets aligned with the source file.
     const blockquotes = sourceMode === 'rendered-markdown'
       ? maskMultilineBlockquotes(text)
-      : stripMultilineBlockquotes(text);
+      : stripMultilineBlockquotes(text, sourceMap);
     text = blockquotes.text;
+    if (blockquotes.sourceMap) sourceMap = blockquotes.sourceMap;
     const { quotedLines } = blockquotes;
 
     // Pre-pass: strip bypass-trick chars before pattern matching so
-    // "delve" with a Cyrillic 'е' still hits Tier 1. Original text is
-    // preserved so reported `match.index` values remain visually accurate.
-    const norm = normalizeText(text);
+    // "delve" with a Cyrillic 'е' still hits Tier 1. Compose the map while
+    // deleting characters so later offsets still address the source.
+    const norm = normalizeText(text, sourceMap);
     text = norm.text;
+    sourceMap = norm.sourceMap;
 
     const wordCount = countWords(text);
     if (wordCount < 10) {
@@ -1470,6 +1767,7 @@ const AIDetector = (() => {
     // ── 1. Tier 1 words ──────────────────────────────────────────
     const tier1Found = new Set();
     for (const token of tokens) {
+      if (contextMode === 'technical' && TECHNICAL_EXEMPT.has(token)) continue;
       if (Object.hasOwn(TIER1, token) && !tier1Found.has(token)) {
         tier1Found.add(token);
         issues.push({
@@ -1489,6 +1787,7 @@ const AIDetector = (() => {
       let match;
       while ((match = regex.exec(text)) !== null) {
         const lower = match[0].toLowerCase();
+        if (contextMode === 'technical' && TECHNICAL_EXEMPT.has(lower)) continue;
         if (tier1Found.has(lower)) continue;
         tier1Found.add(lower);
         issues.push({
@@ -1509,12 +1808,14 @@ const AIDetector = (() => {
       const found = [];
       const suggestions = {};
       for (const token of paraTokens) {
+        if (contextMode === 'technical' && TECHNICAL_EXEMPT.has(token)) continue;
         if (Object.hasOwn(TIER2, token) && !found.includes(token)) {
           found.push(token);
           suggestions[token] = TIER2[token];
         }
       }
       for (const cond of TIER2_CONDITIONAL) {
+        if (contextMode === 'technical' && TECHNICAL_EXEMPT.has(cond.word)) continue;
         if (!found.includes(cond.word) && cond.pattern.test(para)) {
           found.push(cond.word);
           suggestions[cond.word] = cond.suggestion;
@@ -1670,7 +1971,32 @@ const AIDetector = (() => {
     // a bracketed or bare semver token, then a dash, then an ISO date, and
     // nothing else on the line. Ordinary prose dashes in headings still count,
     // because SKILL.md applies the em-dash rule to headings too.
-    const VERSION_HEADING_DASH_RE = /^#{1,6}[ \t]+\[?v?\d+\.\d+\.\d+[^\]\n]*\]?[ \t]*—[ \t]*\d{4}-\d{2}-\d{2}[ \t]*$/gm;
+    function countVersionHeadingDashes(value) {
+      let count = 0;
+      for (const rawLine of value.split(/\r\n|\n|\r/)) {
+        let end = rawLine.length;
+        while (end > 0 && (rawLine[end - 1] === ' ' || rawLine[end - 1] === '\t')) end -= 1;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(rawLine.slice(Math.max(0, end - 10), end))) continue;
+        let cursor = end - 10;
+        while (cursor > 0 && (rawLine[cursor - 1] === ' ' || rawLine[cursor - 1] === '\t')) cursor -= 1;
+        if (rawLine[cursor - 1] !== '\u2014') continue;
+        cursor -= 1;
+        while (cursor > 0 && (rawLine[cursor - 1] === ' ' || rawLine[cursor - 1] === '\t')) cursor -= 1;
+        const prefix = rawLine.slice(0, cursor);
+        const heading = /^#{1,6}[ \t]+/.exec(prefix);
+        if (!heading) continue;
+        let version = prefix.slice(heading[0].length);
+        if (version.startsWith('[')) {
+          if (!version.endsWith(']')) continue;
+          version = version.slice(1, -1);
+        } else if (version.endsWith(']')) {
+          version = version.slice(0, -1);
+        }
+        if (version.includes(']')) continue;
+        if (/^v?\d+\.\d+\.\d+/.test(version)) count += 1;
+      }
+      return count;
+    }
 
     // ── Smart-punctuation co-occurrence signature ────────────────────
     // Curly quotes + em-dash + Oxford comma all present + zero typos
@@ -1683,7 +2009,7 @@ const AIDetector = (() => {
       const hasCurly = /[“”‘’]/.test(text);
       const totalEmDashes = (text.match(/—/g) || []).length;
       const separatorEmDashes = (text.match(SEPARATOR_DASH_RE) || []).length
-        + (text.match(VERSION_HEADING_DASH_RE) || []).length;
+        + countVersionHeadingDashes(text);
       const hasEmDash = totalEmDashes > separatorEmDashes;
       const oxfordHit = text.match(/\b\w+,\s+\w+,\s+and\s+\w+/g);
       const hasOxford = (oxfordHit?.length || 0) >= 1;
@@ -1920,7 +2246,17 @@ const AIDetector = (() => {
     // false-negative risk from adjectives ending in -ed ("skilled",
     // "advanced") that share the same surface form.
     const lines = text.split(/\r?\n/);
-    const bulletRe = /^\s*(?:\*|-|•|\+)\s+(.+)$/;
+    const parseBullet = (line) => {
+      let cursor = 0;
+      while (cursor < line.length && /\s/.test(line[cursor])) cursor += 1;
+      if (!['*', '-', '•', '+'].includes(line[cursor])) return null;
+      cursor += 1;
+      const spacingStart = cursor;
+      while (cursor < line.length && /\s/.test(line[cursor])) cursor += 1;
+      if (cursor === spacingStart) return null;
+      if (cursor >= line.length) return cursor - spacingStart >= 2 ? '' : null;
+      return line.slice(cursor).trim();
+    };
     const verbRe = /\b(?:is|are|was|were|has|have|had|will|would|should|must|do|does|did|can|could|may|might|am|been|being)\b/i;
     const fenceRe = /^\s*(?:```|~~~)/;
     let run = [];
@@ -1954,9 +2290,9 @@ const AIDetector = (() => {
         continue;
       }
       if (inFence) continue;
-      const m = line.match(bulletRe);
-      if (m) {
-        run.push(m[1].trim());
+      const bullet = parseBullet(line);
+      if (bullet !== null) {
+        run.push(bullet);
         blankStreak = 0;
       } else if (line.trim() === '') {
         // A single blank line inside a list is normal Markdown spacing;
@@ -1999,7 +2335,7 @@ const AIDetector = (() => {
     // splice. Em dash only — the `--` substitute is never carved out.
     const rawEmDashCount = (text.match(/—|(?<=\s)--(?=\s|$)|(?<=^|\s)--(?=\s)/gm) || []).length;
     const separatorDashCount = (text.match(SEPARATOR_DASH_RE) || []).length
-      + (text.match(VERSION_HEADING_DASH_RE) || []).length;
+      + countVersionHeadingDashes(text);
     const emDashCount = rawEmDashCount - separatorDashCount;
     const emDashRate = emDashCount / (wordCount / 1000);
     if (emDashRate > 1) {
@@ -2147,6 +2483,11 @@ const AIDetector = (() => {
       denseAIVocab,
     });
 
+    // Translate both dense issue indexes and half-open highlight boundaries.
+    // Mapping the region end from its final retained code unit avoids pulling
+    // a later removed roleplay marker into the highlighted source slice.
+    remapFindingsToSource(deduped, regions, sourceMap);
+
     return {
       // Legacy fields preserved for existing callers.
       score: normalizedScore,
@@ -2182,21 +2523,68 @@ const AIDetector = (() => {
 
   // ═══ Sentence regions + trinary classifier ═════════════════════════
 
+  // Coarse sentence spans over the whole text, as [start, end) offsets.
+  // Produces the same spans as the former /[^.!?]+[.!?]+|\S[^.!?]*$/g scan:
+  // each span runs from the end of the previous one through the next run of
+  // terminators, and a trailing fragment with no terminator starts at its
+  // first non-space character. The regex version backtracked to the end of
+  // the input at every position of a long terminator-free run, so a document
+  // that ended in blank lines, or whose masked comments became whitespace,
+  // cost O(n^2) (#235). This scan touches each character a bounded number
+  // of times.
+  const SENTENCE_TERMINATOR_RUN = /[.!?]+/g;
+  const FIRST_NON_SPACE = /\S/g;
+  function splitSentenceSpans(text) {
+    const spans = [];
+    const length = text.length;
+    let pos = 0;
+    while (pos < length) {
+      SENTENCE_TERMINATOR_RUN.lastIndex = pos;
+      const run = SENTENCE_TERMINATOR_RUN.exec(text);
+      if (run === null) {
+        FIRST_NON_SPACE.lastIndex = pos;
+        const head = FIRST_NON_SPACE.exec(text);
+        if (head !== null) spans.push([head.index, length]);
+        break;
+      }
+      if (run.index === pos) {
+        // Skip the entire bodyless run, not one character at a time: matching
+        // every remaining suffix would make a long punctuation run quadratic.
+        // If no later sentence terminator exists, the former regex's trailing
+        // alternative starts at the LAST terminator of this run.
+        const runEnd = pos + run[0].length;
+        SENTENCE_TERMINATOR_RUN.lastIndex = runEnd;
+        if (SENTENCE_TERMINATOR_RUN.exec(text) === null) {
+          spans.push([runEnd - 1, length]);
+          break;
+        }
+        pos = runEnd;
+        continue;
+      }
+      const end = run.index + run[0].length;
+      spans.push([pos, end]);
+      pos = end;
+    }
+    return spans;
+  }
+
   function buildSentenceRegions(text, issues, trimBoundaryWhitespace = false) {
     // Split text into sentences with source offsets preserved so the UI
     // can highlight spans accurately. Sentence boundaries are coarse
     // (.!?) — fine for highlighting, not for linguistic correctness.
     const sentences = [];
-    const sentenceRe = /[^.!?]+[.!?]+|\S[^.!?]*$/g;
-    let m;
-    while ((m = sentenceRe.exec(text)) !== null) {
-      const sentenceText = m[0].trim();
+    for (const [spanStart, spanEnd] of splitSentenceSpans(text)) {
+      const raw = text.slice(spanStart, spanEnd);
+      const sentenceText = raw.trim();
       if (sentenceText.length < 4) continue;
-      let start = m.index;
-      let end = m.index + m[0].length;
+      let start = spanStart;
+      let end = spanEnd;
       if (trimBoundaryWhitespace) {
-        start += m[0].search(/\S/);
-        end -= m[0].match(/\s*$/)[0].length;
+        // trimStart/trimEnd, not `\s*$`: that regex retries from every
+        // position of a leading whitespace run and was quadratic on a span
+        // that began with a masked comment block (#235).
+        start += raw.length - raw.trimStart().length;
+        end -= raw.length - raw.trimEnd().length;
       }
       sentences.push({ start, end, text: sentenceText });
     }
@@ -2206,10 +2594,9 @@ const AIDetector = (() => {
     // kinds of issue stay out of the AI-highlight regions. Summary signals
     // like "Punctuation density uniform across paragraphs" have no sentence
     // anchor — they contribute to the document-level signal but not to
-    // highlights. Zero-weight style copyedits (unnecessary-hyphenation) do
-    // have an anchor, but they are P2 grammar cleanup rather than evidence
-    // of machine authorship, so they belong in issues[] and nowhere near a
-    // field reserved for AI sentence highlights.
+    // highlights. Any category with authorship weight 0 is style-only by
+    // definition, so it belongs in issues[] but never in a field reserved
+    // for AI sentence highlights.
     // Filter by issue TYPE not text-regex: text-based filtering used to
     // drop legitimate phrase issues containing "across" / "density".
     const NON_HIGHLIGHT_TYPES = new Set([
@@ -2234,6 +2621,7 @@ const AIDetector = (() => {
     for (const issue of issues) {
       if (!issue.text || issue.text.length > 200) continue;
       if (NON_HIGHLIGHT_TYPES.has(issue.type)) continue;
+      if ((ISSUE_WEIGHTS[issue.type] ?? 2) === 0) continue;
       const needle = issue.text.toLowerCase();
       let idx = 0;
       let matched = false;
@@ -2434,7 +2822,9 @@ const AIDetector = (() => {
     'significance-inflation': 'Significance inflation',
     'vague-attribution': 'Vague attribution',
     'hollow-intensifier': 'Hollow intensifier',
-    'emotional-flatline': 'Emotional flatline',
+    // Keep the public type stable for API consumers; the user-facing name now
+    // describes the stock framing that the regexes actually match.
+    'emotional-flatline': 'Stock reaction framing',
     'lingering-attention': 'Lingering-attention claim',
     'novelty-inflation': 'Novelty inflation',
     'cutoff-disclaimer': 'Cutoff disclaimer',

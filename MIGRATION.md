@@ -121,6 +121,32 @@ movement was recorded in provenance without broad imports.
   `README.md`, `AGENTS.md`, `CLAUDE.md`, and `REFERENCE_SOURCES.md` for the
   synchronized inventory and exact provenance.
 
+## 2026-09-14 Humanizer Routing
+
+The catalog now includes the explicitly requested `humanizer` skill from
+`blader/humanizer` v3.0.0. Use it for a compact direct rewrite of prose that
+should sound like the writer without changing supported facts. Continue to
+route detection, false-positive review, preservation verification, in-place
+file edits, and iterative convergence to the existing `avoid-ai-writing`
+suite; use `voice-preserving-rewriter` when preserving a specific voice is the
+primary constraint. This is an additive skill and does not retire or rename
+any existing client-facing entry.
+
+The imported copy is normalized to the catalog v2.0 structure. Its upstream
+Claude marketplace metadata, CI, and package-install validator are not runtime
+requirements; use the parent catalog validator and approved three-root sync.
+
+## 2026-09-14 Mapped Source Refresh
+
+The maintenance pass checked all `27` recorded upstream heads, refreshed the
+`13` exact mapped paths that changed, and updated provenance-only pins for the
+remaining `68` mapped skills. Unchanged mapped paths were not rewritten. The
+Avoid AI Writing refresh is pinned to the final live v3.35.0 revision
+`aa4da8b255eb9821f0dae2a059762de900bb5d1f` and retains its runtime CLI/gate
+and focused regression helpers, while its upstream marketplace/CI/package-
+publishing metadata and large evaluation corpus are intentionally not part of
+the catalog install.
+
 ## 2026-09-12 Playwright CLI Skill Consolidation
 
 The former broad `playwright` skill is retired. Route browser CLI requests to

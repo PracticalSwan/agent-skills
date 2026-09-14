@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Regenerate cursor-rules/avoid-ai-writing.mdc from the canonical root SKILL.md.
-# Root SKILL.md is the single source of truth; the Cursor rule is generated.
+# SKILL.md and references/patterns.md are canonical; Cursor and paste files are generated.
 # Run this after editing SKILL.md. CI fails if the copy is out of sync.
 #
 # The rule is a copy-out artifact: users curl it into their own project's
-# .cursor/rules/, where nothing else from this repo exists. Five spans in
+# .cursor/rules/, where nothing else from this repo exists. Six spans in
 # SKILL.md point at files in this repo, so the generator rewrites them the
 # same way the claude-code-templates vendoring did (davila7/claude-code-templates#773):
 #   1. "this repo measures the ratios" -> passive form (no repo to measure)
@@ -12,6 +12,7 @@
 #   3. the node detector/validate.js mechanical check -> a manual prose check
 #   4. the --style config path (scripts/check-style.js, examples/) -> apply, unverified
 #   5. --style resolution by bare name out of examples/ -> a path only
+#   6. the automatic marks command -> manual convention pass, unverified
 # Each rewrite is anchored on the exact upstream text and FAILS LOUDLY if the
 # anchor stops matching exactly once — so an upstream edit to one of those
 # spans breaks CI here instead of silently shipping a wrong Cursor rule.
@@ -23,8 +24,10 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-python3 - "$repo_root/SKILL.md" "$repo_root/cursor-rules/avoid-ai-writing.mdc" <<'PY'
+node "$repo_root/scripts/flatten-skill.js"
+python3 - "$repo_root/SKILL.full.md" "$repo_root/cursor-rules/avoid-ai-writing.mdc" <<'PY'
 import io
+from pathlib import Path
 import re
 import sys
 
@@ -34,10 +37,6 @@ text = io.open(src, encoding="utf-8", newline="").read().replace("\r\n", "\n")
 
 def replace_once(haystack, old, new, label):
     n = haystack.count(old)
-    if n == 0:
-        # Upstream may remove a portability-only paragraph. The generated
-        # artifact remains valid when that optional rewrite has no target.
-        return haystack
     if n != 1:
         sys.exit(
             f"sync-cursor-rules: anchor for {label} found {n} times (expected 1). "
@@ -56,7 +55,7 @@ fm, body = text[:end], text[end:]
 version_lines = [l for l in fm.splitlines() if l.startswith("version:")]
 if len(version_lines) != 1:
     sys.exit("sync-cursor-rules: expected exactly one version: line in frontmatter")
-version = version_lines[0].split(":", 1)[1].strip().strip('"')
+version = version_lines[0].split(":", 1)[1].strip()
 
 # ── Portability rewrites (see header comment) ────────────────────────
 body = replace_once(
@@ -97,23 +96,12 @@ body = replace_once(
     "span 5 (--style resolution)",
 )
 
-# The current upstream entry loads its canonical catalog and quote-normalizing
-# helper by relative path. A standalone Cursor rule has no repository tree, so
-# turn those references into self-contained instructions before the gate below.
-body = body.replace(
+body = replace_once(
+    body,
     "Run `node scripts/normalize-quotes.js <rewritten-prose> --reference <original> --write` from the installed skill directory; no explicit quote target is needed.",
-    "Apply the original document's quote and apostrophe convention manually; this standalone rule does not bundle the upstream normalization command.",
+    "Apply the convention manually; this standalone rule does not bundle the upstream normalization command.",
+    "span 6 (automatic marks command)",
 )
-body = body.replace(
-    "[references/patterns.md](references/patterns.md)",
-    "the bundled pattern catalog",
-)
-body = body.replace("references/patterns.md", "the bundled pattern catalog")
-body = body.replace("scripts/normalize-quotes.js", "the optional quote-normalization command")
-body = body.replace("scripts/check-style.js", "the optional style checker")
-body = body.replace("examples/README.md", "the bundled style-configuration guide")
-body = body.replace("detector/CATEGORIES.md", "the detector category map")
-body = body.replace("detector/validate.js", "the preservation validator")
 
 cursor_fm = f"""---
 description: Audit and rewrite content to remove AI writing patterns ("AI-isms"). Activate whenever editing prose-heavy files (Markdown, documentation, blog posts, READMEs, release notes, emails). Cursor port of the avoid-ai-writing skill v{version}. See https://github.com/conorbronsdon/avoid-ai-writing.
@@ -121,7 +109,7 @@ globs: ["**/*.md", "**/*.mdx", "**/*.txt", "**/*.rst", "**/*.adoc"]
 alwaysApply: false
 ---
 
-<!-- GENERATED FILE — do not edit by hand. Regenerated from ../SKILL.md by
+<!-- GENERATED FILE — do not edit by hand. Regenerated from ../SKILL.md and ../references/patterns.md by
      scripts/sync-cursor-rules.sh; CI fails when the two drift. -->
 """
 
@@ -147,7 +135,7 @@ alwaysApply: false
 #     form the error message recommends, so the gate must not block it
 #   - a right boundary, so "patterns.json" cannot block via its patterns.js
 #     prefix
-REPO_DIRS = ("detector", "scripts", "examples", "plugins", "cursor-rules", "corpus")
+REPO_DIRS = ("references", "detector", "scripts", "examples", "plugins", "cursor-rules", "corpus")
 # Distinctive enough to block unqualified; README.md and friends are omitted on
 # purpose, since every project has them and this skill's prose names them.
 REPO_FILES = ("check-style.js", "validate.js", "patterns.js", "self-scan.js",
@@ -176,6 +164,7 @@ def scan_line(line):
 # script for the drift check, so the matrix rides along with no extra wiring.
 MUST_BLOCK = (
     "run scripts/check-style.js against the draft",
+    "read references/patterns.md",
     "see detector/CATEGORIES.md for the tiers",
     "bare validate.js and PROOF.md mentions",
     "plugins/avoid-ai-writing/SKILL.md",                # nested — the #110 hole
@@ -235,5 +224,8 @@ if leaks:
     )
 
 io.open(dst, "w", encoding="utf-8", newline="\n").write(cursor_fm + body)
+paste = Path(dst).parent.parent / "dist" / "avoid-ai-writing.md"
+paste.parent.mkdir(exist_ok=True)
+paste.write_text(fm + "\n<!-- GENERATED portable paste artifact; edit SKILL.md and references/patterns.md. -->\n" + body, encoding="utf-8", newline="\n")
 print(f"synced: cursor rule (v{version}); no repo references in the ported body")
 PY

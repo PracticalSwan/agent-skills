@@ -2,6 +2,20 @@
 
 All notable changes to the `mongodb-search-and-ai` skill are documented here.
 
+## [2026-09-14] - MongoDB Search and AI Source Refresh
+
+### Added
+
+- Added the current automated-embedding reference and refreshed the hybrid/vector search guidance from mongodb/agent-skills.
+
+### Changed
+
+- Kept lexical, vector, hybrid, and embedding workflows explicit rather than collapsing their activation boundaries.
+
+### Fixed
+
+- Retained the no-MCP MongoDB CLI and local-database fallback.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

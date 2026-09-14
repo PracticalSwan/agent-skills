@@ -47,7 +47,7 @@ const AIDetectorValidate = (() => {
   // Tracking parameters this skill is documented to strip (SKILL.md,
   // "AI-tool URL parameters"). Kept in sync with the `ai-utm-source`
   // detector category in patterns.js.
-  const AI_URL_PARAMS = /[?&](?:utm_source=(?:chatgpt\.com|openai(?:\.com)?|copilot\.com|claude\.ai|perplexity\.ai|gemini\.google\.com|grok\.com)|referrer=grok\.com)\b/gi;
+  const AI_URL_PARAM = /^(?:utm_source=(?:chatgpt\.com|openai(?:\.com)?|copilot\.com|claude\.ai|perplexity\.ai|gemini\.google\.com|grok\.com)|referrer=grok\.com)$/i;
 
   function extractAll(re, text) {
     const out = [];
@@ -72,7 +72,37 @@ const AIDetectorValidate = (() => {
   }
 
   function normalizeUrl(u) {
-    return u.replace(AI_URL_PARAMS, '').replace(/[?&]$/, '');
+    const queryStart = u.indexOf('?');
+    const fragmentStart = u.indexOf('#');
+    if (queryStart === -1 || (fragmentStart !== -1 && fragmentStart < queryStart)) return u;
+
+    const queryEnd = fragmentStart === -1 ? u.length : fragmentStart;
+    let query = u.slice(queryStart + 1, queryEnd);
+    let suffix = u.slice(queryEnd);
+
+    // A terminal question mark is ambiguous with sentence punctuation because
+    // the bare-URL extractor captures it. Preserve it for symmetric comparison.
+    if (queryStart === u.length - 1) return u;
+
+    // Bare-URL extraction includes adjacent sentence punctuation. Treat it as
+    // prose only when removing it exposes an exact tracker in the final field.
+    if (queryEnd === u.length) {
+      const punctuation = query.match(/[.,;:!?]+$/)?.[0] || '';
+      const withoutPunctuation = query.slice(0, query.length - punctuation.length);
+      const finalParam = withoutPunctuation.slice(withoutPunctuation.lastIndexOf('&') + 1);
+      if (punctuation && AI_URL_PARAM.test(finalParam)) {
+        query = withoutPunctuation;
+        suffix = punctuation;
+      }
+    }
+
+    const params = query.split('&');
+    const kept = params.filter((param) => param !== '' && !AI_URL_PARAM.test(param));
+    if (kept.length === params.length) return u;
+
+    return kept.length > 0
+      ? `${u.slice(0, queryStart)}?${kept.join('&')}${suffix}`
+      : `${u.slice(0, queryStart)}${suffix}`;
   }
 
   /** Collapse cell padding so a re-aligned table isn't reported as edited. */

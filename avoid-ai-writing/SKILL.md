@@ -1,7 +1,7 @@
 ---
 name: avoid-ai-writing
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-09-14
 tags: [avoid, ai, writing, docs, quality]
 description: "Audit and rewrite content to remove AI writing patterns (\"AI-isms\"). Supports detect-only audits, edit-in-place file cleanup, voice and context profiles, and an iterate-to-convergence pass."
 license: "MIT"
@@ -39,7 +39,7 @@ This skill operates in one of three modes:
 
 Trigger detect mode when the user says "detect," "flag only," "audit only," "just flag," "scan," "what AI patterns are in this," or similar. Trigger edit mode when the user names a file and asks you to fix or clean it in place. Default to rewrite mode if not specified.
 
-**Invocation.** Natural language is enough ("rewrite this in a blunt voice for LinkedIn," "edit `post.md` in place," "scan this, don't rewrite"). Power users can also pass explicit options, which map to the sections below: `[--mode rewrite|detect|edit]`, `[--voice casual|professional|technical|warm|blunt]`, `[--context linkedin|blog|technical-blog|investor-email|docs|casual]`, `[--file PATH]`, `[--iterate N]` (max 2), `[--style CONFIG|GUIDE]`.
+**Invocation.** Natural language is enough ("rewrite this in a blunt voice for LinkedIn," "edit `post.md` in place," "scan this, don't rewrite"). Power users can also pass explicit options, which map to the sections below: `[--mode rewrite|detect|edit]`, `[--voice casual|professional|technical|warm|blunt]`, [`--context linkedin|blog|technical-blog|investor-email|docs|casual`](https://github.com/conorbronsdon/avoid-ai-writing/blob/main/references/patterns.md#detector-mode-mapping), `[--file PATH]`, `[--iterate N]` (max 2), `[--style CONFIG|GUIDE]`.
 
 **Iterate to convergence (optional).** Rewrite mode already runs one corrective second pass (see Output format) — that built-in pass *is* pass 2, so `--iterate` does not stack on top of it. When the writer asks to "iterate," "keep going until it's clean," or passes `--iterate N`, repeat the audit→rewrite cycle until no patterns remain or **N passes** are reached. Cap **N at 2**: a rewrite plus one corrective pass clears the flagged patterns, and a third pass costs a full regeneration while rarely finding more. Report how many passes it took ("converged in 2 passes").
 

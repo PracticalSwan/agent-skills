@@ -252,6 +252,26 @@ test('#123: code delimiters in one comment cannot hide a later comment', () => {
   assert.ok(result.issues.some((issue) => issue.type === 'transition'), 'visible prose must still fire');
 });
 
+test('#190: tilde fences and adjacent list markers in comments preserve later context', () => {
+  const prose = 'Moreover, the editor checked the original document before changing the published account for the morning edition.';
+  const hidden = 'Furthermore, this seamless robust paradigm is a testament to progress.';
+  const cases = [
+    ['tilde fence', ['<!--', '~~~', '-->', prose, `<!-- ${hidden} -->`].join('\n'), 2],
+    ['adjacent list marker', ['-<!-- hidden -->', '', `    <!-- ${hidden} -->`, '', prose].join('\n'), 2],
+  ];
+
+  for (const [name, text, commentCount] of cases) {
+    const result = AIDetector.analyzeText(text, { sourceMode: 'rendered-markdown' });
+    assert.equal(result.stats.maskedHtmlComments, commentCount, `${name}: comment count`);
+    assert.equal(
+      result.issues.some((issue) => /seamless|robust|paradigm|testament/i.test(issue.text || '')),
+      false,
+      `${name}: hidden prose must stay hidden`,
+    );
+    assert.ok(result.issues.some((issue) => issue.type === 'transition' && issue.text === 'Moreover'));
+  }
+});
+
 test('#123: short HTML comments close at an overlapping delimiter', () => {
   const prose = 'Moreover, the editor checked the original document before changing the published account for the morning edition.';
 
@@ -359,6 +379,45 @@ test('#123: unknown source modes fall back visibly to plain', () => {
 
   const omitted = AIDetector.analyzeText(text);
   assert.equal(omitted.stats.sourceModeFallback, undefined);
+});
+
+test('#190: many HTML comments avoid quadratic rescanning', () => {
+  const count = 2000;
+  // Every comment contains the unmatched backtick that forced the old
+  // implementation to rebuild whole-document code masks per comment.
+  const text = `${'<!-- ` -->\n'.repeat(count)}one two three four five six seven eight nine ten`;
+  const started = performance.now();
+  const result = AIDetector.analyzeText(text, { sourceMode: 'rendered-markdown' });
+  const elapsedMs = performance.now() - started;
+
+  assert.equal(result.stats.maskedHtmlComments, count);
+  assert.ok(
+    elapsedMs < 900,
+    `masking must not rescan the full document per comment (${elapsedMs.toFixed(1)}ms for ${count} comments)`,
+  );
+});
+
+test('adversarial Markdown scans stay within a bounded time', () => {
+  const ordinary = 'one two three four five six seven eight nine ten';
+  const attacks = [
+    `${ordinary} ${'`'.repeat(2500)}${'a'.repeat(2500)}`,
+    `${ordinary} ${'<a'.repeat(10000)}`,
+    `## 1.1.1${'\t'.repeat(20000)}— x\n${ordinary}`,
+    `## 1.1.${'1'.repeat(64000)}]x — 2026-01-01\n${ordinary}`,
+    `- ${' '.repeat(10000)}X\rY\n${ordinary}`,
+  ];
+  for (const text of attacks) {
+    const started = performance.now();
+    AIDetector.analyzeText(text);
+    const elapsedMs = performance.now() - started;
+    assert.ok(elapsedMs < 900, `adversarial scan took ${elapsedMs.toFixed(1)}ms`);
+  }
+});
+
+test('version-heading dash carve-out does not swallow prose after a closed version label', () => {
+  const text = '## [1.1.1] Not a version label — 2026-01-01\n\nOne two three four five six seven eight nine ten.';
+  const issues = AIDetector.analyzeText(text).issues.filter((issue) => issue.type === 'em-dash');
+  assert.equal(issues.length, 1, 'text after a closed version label must keep its prose dash visible');
 });
 
 test('repeated Tier 1 phrase does not inflate score linearly', () => {
@@ -1047,6 +1106,25 @@ test('emotional-flatline opener fires at position 0 (no leading newline)', () =>
   assert.ok(types.has('emotional-flatline'), 'expected emotional-flatline at position 0');
 });
 
+test('emotional-flatline stays visible without moving the authorship score', () => {
+  // #82: compare nearly identical prose so the assertion isolates the category
+  // weight instead of assuming every other scoring input remains at zero.
+  const text = 'What surprised me most was the rollback time: eleven seconds across all three production hosts after the database migration completed without retries.';
+  const control = 'The detail I remember best was the rollback time: eleven seconds across all three production hosts after the database migration completed without retries.';
+  const r = AIDetector.analyzeText(text);
+  const baseline = AIDetector.analyzeText(control);
+  const hits = r.issues.filter((i) => i.type === 'emotional-flatline');
+  assert.deepEqual(baseline.issues, [], `control sentence must stay clean: ${JSON.stringify(baseline.issues)}`);
+  assert.deepEqual(r.issues.map((i) => i.type), ['emotional-flatline'], `target sentence has confounding findings: ${JSON.stringify(r.issues)}`);
+  assert.equal(hits.length, 1, `expected one emotional-flatline hit, got ${JSON.stringify(hits)}`);
+  assert.equal(r.score, baseline.score, `style-only emotional-flatline changed score from ${baseline.score} to ${r.score}`);
+  assert.deepEqual(
+    r.highlight_sentence_for_ai,
+    [],
+    `style-only emotional-flatline must not create AI sentence highlights: ${JSON.stringify(r.highlight_sentence_for_ai)}`,
+  );
+});
+
 test('bullet-np-list ignores bullets inside fenced code blocks', () => {
   // CLI flag docs / option dumps inside ``` fences are not prose AI
   // scaffolding. False-positive that would fire on most READMEs.
@@ -1711,6 +1789,39 @@ test('#62: an interior function word still flags, in both forms', () => {
   }
 });
 
+test('#240: an acronym or single-letter function word in the title still flags', () => {
+  // `TITLE_CASE_HEADER` previously required every interior token to be
+  // [A-Z][a-z]+ or a lowercase function word, so a capitalised `A` and any
+  // all-caps acronym (AI, API, CLI) broke the whole match. These are the
+  // common shapes in the content this rule actually targets.
+  for (const heading of [
+    '## Why Your Team Needs A Better Testing Strategy',
+    '## The Future Of AI In Production',
+    '## Choosing A Database For Your Startup',
+    '## Building An API Driven Strategy',
+  ]) {
+    assert.equal(titleCaseHits(heading + HEADING_BODY).length, 1, `must flag: ${heading}`);
+  }
+});
+
+test('#240: an all-caps banner line is not a title-case header', () => {
+  // The first and last tokens must remain ordinary [A-Z][a-z]+ words, so a
+  // fully uppercase line like a section banner never matches.
+  assert.equal(
+    titleCaseHits('## HTTP API REFERENCE' + HEADING_BODY).length,
+    0,
+    'all-caps banner must not flag',
+  );
+});
+
+test('#240: unrelated single-letter capitals do not widen the rule', () => {
+  assert.equal(
+    titleCaseHits('## What X Means And Other Things' + HEADING_BODY).length,
+    0,
+    'only the capitalised function word A may be a one-letter interior token',
+  );
+});
+
 test('#62: fences that a parity count gets wrong', () => {
   const f3 = '```';
   const f4 = '````';
@@ -2183,6 +2294,386 @@ test('dev-blog-boilerplate: ordinary prose stays clean', () => {
   );
   const hits = r.issues.filter((i) => i.type === 'dev-blog-boilerplate');
   assert.equal(hits.length, 0, `false positives: ${JSON.stringify(hits.map((i) => i.text))}`);
+});
+
+// ── Issue #189 — preserve source offsets through preprocessing ─────────
+// Preprocessing that changes string length (plain-mode blockquote stripping,
+// zero-width-character and *roleplay-action* removal) must not shift the
+// issue.index and highlight-range coordinates reported against the caller's
+// original source. For every index-carrying issue, the source slice at its
+// coordinates must reproduce its text exactly; highlight regions must land on
+// real source chars. Masking stages are already covered by #123 — these tests
+// pin the length-changing stages.
+function assertIndexedIssuesSliceExactly(source, issues, label) {
+  for (const issue of issues) {
+    if (!Number.isInteger(issue.index)) continue;
+    assert.equal(
+      source.slice(issue.index, issue.index + issue.text.length),
+      issue.text,
+      `${label}: source.slice(index, index+len) must reproduce the reported ${issue.type} text`,
+    );
+  }
+}
+
+test('#189: plain-mode multiline blockquote (LF) keeps issue and highlight offsets on source', () => {
+  const source = '> quoted line one\n> quoted line two\n\nIt is important to note that the system works well and the team shipped it.';
+  const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+  const filler = result.issues.find((issue) => issue.type === 'filler');
+
+  assert.equal(result.stats.quotedLines, 2);
+  assert.ok(filler, 'prose after the stripped quote must still be analyzed');
+  assert.equal(filler.index, source.indexOf('It is important'), 'filler index must address the source');
+  assert.equal(source.slice(filler.index, filler.index + filler.text.length), filler.text);
+  assertIndexedIssuesSliceExactly(source, result.issues, 'plain LF blockquote');
+
+  const [region] = result.highlight_sentence_for_ai;
+  assert.deepEqual([region.start, region.end], [36, 112], 'highlight must span from the newline before the sentence to the end');
+  assert.equal(
+    source.slice(region.start, region.end),
+    '\nIt is important to note that the system works well and the team shipped it.',
+  );
+});
+
+test('#189: plain-mode multiline blockquote (CRLF) keeps issue and highlight offsets on source', () => {
+  const source = '> quoted line one\r\n> quoted line two\r\n\r\nIt is important to note that the system works well and the team shipped it.';
+  const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+  const filler = result.issues.find((issue) => issue.type === 'filler');
+
+  assert.equal(result.stats.quotedLines, 2);
+  assert.ok(filler, 'prose after the stripped quote must still be analyzed');
+  assert.equal(filler.index, source.indexOf('It is important'), 'filler index must address the source');
+  assert.equal(source.slice(filler.index, filler.index + filler.text.length), filler.text);
+  assertIndexedIssuesSliceExactly(source, result.issues, 'plain CRLF blockquote');
+
+  const [region] = result.highlight_sentence_for_ai;
+  assert.deepEqual([region.start, region.end], [39, 115], 'the leading \\r of the CRLF blank line must be accounted for too');
+  assert.equal(
+    source.slice(region.start, region.end),
+    '\nIt is important to note that the system works well and the team shipped it.',
+  );
+});
+
+test('#189: rendered-markdown multiline blockquotes keep offsets on source (LF and CRLF)', () => {
+  const prose = 'It is important to note that the system works well and the team shipped it.';
+  for (const [name, quote] of [
+    ['LF', '> quoted line one\n> quoted line two\n\n'],
+    ['CRLF', '> quoted line one\r\n> quoted line two\r\n\r\n'],
+  ]) {
+    const source = quote + prose;
+    const result = AIDetector.analyzeText(source, { sourceMode: 'rendered-markdown' });
+    const filler = result.issues.find((issue) => issue.type === 'filler');
+
+    assert.equal(result.stats.quotedLines, 2, `${name}: both quote lines counted`);
+    assert.ok(filler, `${name}: visible prose after the masked quote must still be analyzed`);
+    assert.equal(filler.index, quote.length, `${name}: masked quote must not shift the filler`);
+    assertIndexedIssuesSliceExactly(source, result.issues, `rendered ${name}`);
+
+    const [region] = result.highlight_sentence_for_ai;
+    assert.deepEqual([region.start, region.end], [quote.length, source.length], `${name}: highlight spans the visible prose`);
+    assert.equal(source.slice(region.start, region.end), prose);
+  }
+});
+
+test('#189: zero-width characters do not shift later offsets', () => {
+  const source = 'Powerful is the new baseline​‌ and truly robust and tough.';
+  const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+  const truly = result.issues.find((issue) => issue.type === 'hollow-intensifier' && issue.text === 'truly');
+
+  assert.equal(result.stats.normalization.zeroWidth, 2);
+  assert.ok(truly, 'word after the zero-width chars must still be flagged');
+  assert.equal(truly.index, source.indexOf('truly'));
+  assert.equal(source.slice(truly.index, truly.index + truly.text.length), truly.text);
+  assertIndexedIssuesSliceExactly(source, result.issues, 'zero-width');
+});
+
+test('#189: zero-width chars separated by content record exact source runs', () => {
+  const source = 'This system works well​ across the board‌ and truly robust and tough for the final release today.';
+  const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+  const truly = result.issues.find((issue) => issue.type === 'hollow-intensifier' && issue.text === 'truly');
+
+  assert.equal(result.stats.normalization.zeroWidth, 2);
+  assert.ok(truly, 'word after both separated zero-width chars must still be flagged');
+  assert.equal(truly.index, source.indexOf('truly'));
+  assert.equal(source.slice(truly.index, truly.index + truly.text.length), truly.text);
+  assertIndexedIssuesSliceExactly(source, result.issues, 'separated zero-width');
+});
+
+test('#189: roleplay-action markers do not shift later offsets', () => {
+  const source = 'It is important to note that the system works well. *nods* This is truly robust and the team shipped it.';
+  const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+  const truly = result.issues.find((issue) => issue.type === 'hollow-intensifier' && issue.text === 'truly');
+
+  assert.equal(result.stats.normalization.roleplay, 1);
+  assert.ok(truly, 'word after the *nods* marker must still be flagged');
+  assert.equal(truly.index, source.indexOf('truly'));
+  assert.equal(source.slice(truly.index, truly.index + truly.text.length), truly.text);
+  assertIndexedIssuesSliceExactly(source, result.issues, 'roleplay marker');
+});
+
+test('#189: interleaved preprocessing stages compose source offsets', () => {
+  const prose = 'Moreover, the editor checked the original document before changing the published account for the morning edition.';
+  for (const [name, prefix] of [
+    ['zero-width before quote', '\u200b\n> x\n> y\n'],
+    ['roleplay before quote', '*nods*\n> x\n> y\n'],
+    ['roleplay before zero-width', '*nods* later\u200b '],
+  ]) {
+    const source = prefix + prose;
+    const result = AIDetector.analyzeText(source);
+    const transition = result.issues.find((issue) => issue.type === 'transition');
+
+    assert.ok(transition, `${name}: visible prose must still be analyzed`);
+    assert.equal(transition.index, source.indexOf('Moreover'), `${name}: issue index must address source`);
+    const [region] = result.highlight_sentence_for_ai;
+    assert.ok(region.start <= transition.index && transition.index < region.end, `${name}: issue must sit inside highlight`);
+    assert.ok(region.end <= source.length, `${name}: highlight must stay within source`);
+  }
+});
+
+test('#189: overlapping normalization removals map once and keep staged semantics', () => {
+  const prose = 'Moreover, the editor checked the original document before changing the published account for the morning edition.';
+  const source = '*nod\u200bs* *nоds* ' + prose;
+  const result = AIDetector.analyzeText(source);
+  const transition = result.issues.find((issue) => issue.type === 'transition');
+
+  assert.deepEqual(result.stats.normalization, { zeroWidth: 1, homoglyph: 1, roleplay: 2 });
+  assert.ok(transition, 'prose after normalized roleplay markers must still be analyzed');
+  assert.equal(transition.index, source.indexOf('Moreover'));
+  assert.ok(result.highlight_sentence_for_ai.every((region) => region.end <= source.length));
+});
+
+test('#189: malformed emphasis is not reclassified as roleplay', () => {
+  const prose = 'Moreover, the editor checked the original document before changing the published account for the morning edition.';
+  const source = '**nods* **sighs* ' + prose;
+  const result = AIDetector.analyzeText(source);
+  const transition = result.issues.find((issue) => issue.type === 'transition');
+
+  assert.equal(result.stats.normalization.roleplay, 0);
+  assert.equal(transition.index, source.indexOf('Moreover'));
+});
+
+test('#189: a zero-width character inside a finding preserves its source start and region', () => {
+  const obfuscated = 'only ti\u200bme will tell';
+  const source = `Alpha beta gamma delta epsilon zeta eta theta iota kappa ${obfuscated} about systems.`;
+  const result = AIDetector.analyzeText(source);
+  const generic = result.issues.find((issue) => issue.type === 'generic-conclusion');
+
+  assert.ok(generic, 'normalization must not hide a phrase from detection');
+  assert.equal(generic.index, source.indexOf('only'));
+  assert.equal(source.slice(generic.index, generic.index + obfuscated.length), obfuscated);
+  const [region] = result.highlight_sentence_for_ai;
+  assert.ok(source.slice(region.start, region.end).includes(obfuscated));
+  assert.ok(region.end <= source.length);
+});
+
+test('#189: trailing removed markers stay outside the preceding highlight', () => {
+  const prose = 'Moreover, the editor checked the original document before changing the published account for the morning edition.';
+  const source = `${prose} *nods*`;
+  const result = AIDetector.analyzeText(source);
+  const [region] = result.highlight_sentence_for_ai;
+
+  assert.equal(region.end, prose.length);
+  assert.equal(source.slice(region.start, region.end), prose);
+});
+
+test('#189: direct normalization handles every occurrence and mapped analysis stays linear', () => {
+  const normalized = AIDetector.normalizeText('x\u200by\u200bz еx еy');
+  assert.equal(normalized.text, 'xyz ex ey');
+  assert.deepEqual(normalized.flags, { zeroWidth: 2, homoglyph: 2, roleplay: 0 });
+
+  const dense = '\u200b'.repeat(75000)
+    + 'Alpha beta gamma delta epsilon zeta eta theta iota kappa only time will tell about systems.';
+  const started = Date.now();
+  const denseResult = AIDetector.analyzeText(dense);
+  const elapsed = Date.now() - started;
+  assert.equal(denseResult.stats.normalization.zeroWidth, 75000);
+  assert.ok(elapsed < 1000, `dense mapped analysis took ${elapsed}ms; expected a linear pass under 1000ms`);
+});
+
+test('#189: ordinary unchanged text reports native indexes and exact slices', () => {
+  const source = 'It is important to note that the system works well, and it is truly robust and tough.';
+  const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+
+  for (const issue of result.issues) {
+    if (!Number.isInteger(issue.index)) continue;
+    assert.equal(issue.index, source.indexOf(issue.text), `${issue.type}: unchanged text keeps a native index`);
+  }
+  assertIndexedIssuesSliceExactly(source, result.issues, 'ordinary text');
+});
+
+test('#189: highlight regions land on real source bytes and slice back to the flagged sentence', () => {
+  for (const [name, lineEnd] of [['LF', '\n'], ['CRLF', '\r\n']]) {
+    const source = [
+      '> quoted line one',
+      '> quoted line two',
+      '',
+      'It is important to note that the system works well and the team shipped it.',
+    ].join(lineEnd);
+
+    const result = AIDetector.analyzeText(source, { sourceMode: 'plain' });
+    const filler = result.issues.find((issue) => issue.type === 'filler');
+    const [region] = result.highlight_sentence_for_ai;
+
+    assert.ok(Number.isInteger(region.start) && Number.isInteger(region.end), `${name}: region coords are integers`);
+    assert.ok(region.start < region.end && region.end <= source.length, `${name}: region stays inside source bounds`);
+    assert.ok(
+      source.slice(region.start, region.end).includes('It is important to note'),
+      `${name}: source slice at the region covers the flagged sentence`,
+    );
+    assert.ok(region.start <= filler.index && filler.index < region.end, `${name}: issue index sits inside the highlight`);
+  }
+});
+
+test('#235: sentence spans match the former regex scan on every boundary shape', () => {
+  // Oracle: the regex the single-pass scanner replaced. Every flagged sentence
+  // below is isolated by at least two clean sentences so region merging never
+  // joins them, and each region must reproduce the oracle span exactly.
+  const oracle = (text) => {
+    const spans = [];
+    const re = /[^.!?]+[.!?]+|\S[^.!?]*$/g;
+    let m;
+    while ((m = re.exec(text)) !== null) spans.push([m.index, m.index + m[0].length, m[0]]);
+    return spans;
+  };
+  const clean = 'The bus was late. We waited by the shop.';
+  const shapes = [
+    'We must delve into it.',
+    '   We must delve into it?!',
+    '\n\nWe must delve into it...',
+    'We must delve into it',
+    ' We must delve into it.',
+    'We must delve into it.\r\n',
+  ];
+  for (const flagged of shapes) {
+    for (const trailing of ['', ' ', '\n\n', '   \n  ']) {
+      const text = `${clean} ${flagged} ${clean}${trailing}`;
+      const expected = oracle(text).filter(([, , raw]) => raw.includes('delve'));
+      assert.equal(expected.length, 1, `oracle isolates one flagged span in ${JSON.stringify(text)}`);
+      const [[start, end]] = expected;
+      const regions = AIDetector.analyzeText(text, { sourceMode: 'plain' }).highlight_sentence_for_ai;
+      assert.equal(regions.length, 1, `one region for ${JSON.stringify(text)}: ${JSON.stringify(regions)}`);
+      assert.equal(regions[0].start, start, `region start for ${JSON.stringify(text)}`);
+      assert.equal(regions[0].end, end, `region end for ${JSON.stringify(text)}`);
+    }
+  }
+
+  // Terminator-only prefixes and a document with no terminator at all. Each
+  // stays above the ten-word gate so the document is scored.
+  for (const text of [
+    `...We must delve into it. ${clean} ${clean}`,
+    `. We must delve into it. ${clean} ${clean}`,
+    ...['.', '?!', '...!?'].flatMap((prefix) => [
+      `${prefix}We must delve into it and then keep going for a good while longer`,
+      `${prefix}\r\nWe must delve into it and then keep going for a good while longer`,
+      `${prefix}We must delve into it. ${clean} ${clean}`,
+    ]),
+    'We must delve into it and then keep going for a good while longer without stopping',
+  ]) {
+    const [[start, end]] = oracle(text).filter(([, , raw]) => raw.includes('delve'));
+    const regions = AIDetector.analyzeText(text, { sourceMode: 'plain' }).highlight_sentence_for_ai;
+    assert.equal(regions.length, 1, `one region for ${JSON.stringify(text)}`);
+    assert.deepEqual([regions[0].start, regions[0].end], [start, end], `span for ${JSON.stringify(text)}`);
+  }
+});
+
+test('#260: punctuation-prefix analysis scales without rescanning each suffix', () => {
+  const timeFor = (n, ending) => {
+    const text = '.!?'.repeat(n) + ' We must delve into it and then keep going for a good while longer' + ending;
+    let best = Infinity;
+    for (let run = 0; run < 3; run += 1) {
+      const start = performance.now();
+      AIDetector.analyzeText(text, { sourceMode: 'plain' });
+      best = Math.min(best, performance.now() - start);
+    }
+    return best;
+  };
+  for (const ending of ['', '.']) {
+    // Cover both the trailing-fragment fallback and a later terminator. The
+    // sizes keep the small run well above timer noise: at 3000 prefixes it
+    // measured 6 ms on a CI runner and the ratio read 8x on a linear scan.
+    timeFor(100, ending);
+    const small = Math.max(timeFor(20000, ending), 20);
+    const large = timeFor(80000, ending);
+    assert.ok(large < small * 8,
+      `punctuation prefix (${JSON.stringify(ending)}): 4x input took ${(large / small).toFixed(1)}x time (${small.toFixed(1)}ms vs ${large.toFixed(1)}ms)`);
+  }
+});
+
+test('#235: analysis time grows linearly on whitespace-heavy input', () => {
+  // Ratio, not budget: a linear scan takes about 4x longer on 4x the input;
+  // the quadratic regexes this replaces took about 16x. The floor keeps
+  // timer noise on a fast machine from turning a few milliseconds into a
+  // meaningless ratio.
+  const timeFor = (build) => {
+    let best = Infinity;
+    for (let run = 0; run < 3; run += 1) {
+      const text = build();
+      const started = performance.now();
+      AIDetector.analyzeText(text, { sourceMode: text.startsWith('<!--') ? 'rendered-markdown' : 'plain' });
+      best = Math.min(best, performance.now() - started);
+    }
+    return best;
+  };
+  const cases = [
+    ['trailing whitespace, no terminator', (n) => `${' '.repeat(n)}one two three four five six seven eight nine ten`],
+    ['blank-line run before prose', (n) => `${'\n'.repeat(n)}Interesting part: it still works. Another sentence follows here.`],
+    ['masked HTML comments', (n) => `${'<!-- ` -->\n'.repeat(n / 10)}one two three four five six seven eight nine ten`],
+    ['masked HTML comments before a terminated sentence', (n) => `${'<!-- x -->\n'.repeat(n / 10)}one two three four five six seven eight nine ten. Then more.`],
+  ];
+  for (const [name, build] of cases) {
+    const small = Math.max(timeFor(() => build(40000)), 15);
+    const large = timeFor(() => build(160000));
+    assert.ok(
+      large < small * 8,
+      `${name}: 4x input took ${(large / small).toFixed(1)}x longer (${small.toFixed(1)}ms vs ${large.toFixed(1)}ms)`,
+    );
+  }
+});
+
+test('#235: table delimiter rows still mask with surrounding whitespace and CR', () => {
+  const table = [
+    '  | Setting | Legacy value |  ',
+    '  | --- | --- |  \r',
+    '  | package | code-base |  ',
+  ].join('\n');
+  const hits = AIDetector.analyzeText(table).issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+  assert.equal(hits.length, 0, `padded table rows stay protected: ${JSON.stringify(hits)}`);
+
+  const notTable = 'A dash line --- followed by a code-base mention that is ordinary prose here.\n| --- |';
+  const prose = AIDetector.analyzeText(notTable).issues.filter((issue) => issue.type === 'unnecessary-hyphenation');
+  assert.equal(prose.length, 1, `prose next to a single-cell delimiter still edits: ${JSON.stringify(prose)}`);
+});
+
+test('#237: technical context mode suppresses technical-legitimate vocabulary terms', () => {
+  const text = 'We built a robust, comprehensive, seamless pipeline that can leverage the ecosystem to facilitate and streamline the work that underpin delivery. '.repeat(3);
+
+  const generalResult = AIDetector.analyzeText(text, { contextMode: 'general' });
+  const technicalResult = AIDetector.analyzeText(text, { contextMode: 'technical' });
+
+  // Verify all eight exception terms fire under general mode
+  const genIssueTexts = generalResult.issues.map((i) => i.text.toLowerCase());
+  const exemptTerms = ['robust', 'comprehensive', 'seamless', 'leverage', 'ecosystem', 'facilitate', 'streamline', 'underpin'];
+  for (const term of exemptTerms) {
+    assert.ok(genIssueTexts.includes(term), `general mode must report issue for "${term}"`);
+  }
+
+  // Verify all eight exception terms stay suppressed under technical mode
+  assert.equal(technicalResult.score, 0, 'technical mode must score 0 on technical-legitimate terms');
+  assert.equal(technicalResult.issues.length, 0, 'technical mode must report 0 issues for technical-legitimate terms');
+
+  // Verify inflections also stay clean under technical mode
+  const inflections = 'Leveraging the leveraged leverages of the ecosystems and seamlessly streamlining what facilitates and underpins the underpinning underpinnings.';
+  const techInflect = AIDetector.analyzeText(inflections, { contextMode: 'technical' });
+  assert.equal(techInflect.issues.length, 0, `technical mode must suppress inflections: ${JSON.stringify(techInflect.issues.map((i) => i.text))}`);
+
+  // Non-exempt terms must STILL fire under technical mode
+  // Include harness alongside another Tier 2 term (navigate) to satisfy cluster threshold (2+ per paragraph)
+  const nonExemptText = 'We delve into the tapestry and beacon to embark on a testament to a game-changer. We harness the power to navigate.';
+  const techNonExempt = AIDetector.analyzeText(nonExemptText, { contextMode: 'technical' });
+  const nonExemptIssueTexts = techNonExempt.issues.map((i) => i.text.toLowerCase());
+  const requiredNonExempt = ['delve', 'tapestry', 'beacon', 'embark', 'testament to', 'game-changer', 'harness'];
+  for (const term of requiredNonExempt) {
+    assert.ok(nonExemptIssueTexts.includes(term), `technical mode must still flag non-exempt term "${term}"`);
+  }
 });
 
 if (failed > 0) {

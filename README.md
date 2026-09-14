@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-09-12`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `247` tracked skill folders
-  - `215` tracked maintained skills
+  - `248` tracked skill folders
+  - `216` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `305` local skill folders detected
-  - `273` local maintained skills detected
+  - `306` local skill folders detected
+  - `274` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,13 +49,14 @@ Snapshot date: `2026-09-12`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `247` tracked skills use catalog `version: "2.0"`. The `166`
+- All `248` tracked skills use catalog `version: "2.0"`. The `166`
   pre-existing tracked skills retain their prior catalog baselines; the 66
   platform skills retain their import provenance, five Codex Router skills were
   promoted from the personal Codex root, one reviewed Codex plugin scanner was
   vendored, and three official Playwright workflows were added. The catalog-
   wide maintenance baseline remains `last_updated: 2026-09-08` for the
-  unchanged catalog; the Playwright entries use `last_updated: 2026-09-12`.
+  unchanged catalog; the Playwright entries use `last_updated: 2026-09-12`,
+  and the imported `humanizer` entry uses `last_updated: 2026-09-14`.
   The `58`
   local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
@@ -75,9 +76,26 @@ Snapshot date: `2026-09-12`. Local overlay totals can differ by machine.
   tree contributed only `codebase-design`, `domain-modeling`,
   `improve-codebase-architecture`, `prototype`, `research`,
   `resolving-merge-conflicts`, `handoff`, and `writing-for-agents`.
+- The compact `humanizer` workflow is imported from
+  `blader/humanizer` v3.0.0 at revision
+  `9862685f575c65a8247f90369951df1b3416e3d6`. It remains a direct,
+  facts-preserving 25-pattern rewrite workflow; `avoid-ai-writing` remains the
+  broader detector, preservation, and iterative routing suite.
 - Existing catalog equivalents remain canonical for upstream `tdd`,
   `diagnosing-bugs`, `code-review`, and `implement` overlap; no project-local
   skill roots receive sync.
+- The 2026-09-14 source audit checked all `27` recorded upstream heads. It
+  refreshed exactly `13` mapped entrypoints whose source paths changed:
+  `avoid-ai-writing`, its detector/router/preservation leaves,
+  `nemo-retriever`, `mongodb-search-and-ai`, four Figma workflows, and three
+  Hugging Face SageMaker/image-selection workflows. The other `68` mapped
+  skills received provenance-only pin updates; unrelated upstream movement
+  was not imported. The live Avoid AI Writing head moved during this run and
+  is now pinned to `aa4da8b255eb9821f0dae2a059762de900bb5d1f` (v3.35.0), with
+  its detector and preservation leaves refreshed from the same head. Avoid AI
+  Writing keeps the current runtime CLI/gate and
+  focused regression helpers, while upstream marketplace/CI/package-publishing
+  metadata and its large evaluation corpus remain intentionally out of scope.
 - The 2026-08-16 child reconciliation compared all eleven installed `.codex`
   skill trees byte-for-byte with their official upstream paths and promoted
   them without collapsing distinct activation boundaries. `web-quality-audit`
@@ -121,6 +139,29 @@ mapped `avoid-ai-writing`, Stitch, Xquik, and Matt Pocock domain-modeling
 workflows, plus the affected copied Superpowers workflows. Exact-path audits
 left unchanged mapped skills untouched, and imported support material was
 reviewed for removed-client paths, credential handling, and no-MCP fallbacks.
+
+## 2026-09-14 Humanizer Import And Catalog Routing
+
+- Audited the current [`blader/humanizer`](https://github.com/blader/humanizer)
+  main revision `9862685f575c65a8247f90369951df1b3416e3d6`, which is the
+  released v3.0.0 package, and verified its upstream package validator before
+  importing the root skill.
+- Kept only the runtime-relevant `SKILL.md`, OpenAI-compatible `agents/openai.yaml`,
+  MIT license, and attribution notice. Claude marketplace metadata, CI files,
+  README duplication, and the upstream packaging validator were omitted to
+  avoid catalog bloat; the catalog validator remains authoritative here.
+- Added the compact 25-pattern direct-rewrite workflow as `humanizer`. Route
+  detector, edit-in-place, preservation, and iterative requests to the existing
+  `avoid-ai-writing` suite, and use `voice-preserving-rewriter` when voice
+  preservation is the primary constraint.
+- Re-audited only `C:\Users\LOQ\.codex\skills`,
+  `C:\Users\LOQ\.agents\skills`, and `C:\Users\LOQ\.claude\skills`:
+  914 discovered skill files were either already represented in the parent
+  (819) or excluded as protected/system/Superpowers material (101); no
+  eligible child-only skill remained to promote. Project-specific paths were
+  not scanned.
+- No additional Codex plugin skill was vendored in this pass: the reviewed
+  plugin candidates did not add a non-overlapping, cross-client capability.
 
 ## 2026-09-12 Playwright CLI Skills And Canonical Consolidation
 
@@ -642,6 +683,7 @@ commits are in `scripts/platform_skill_manifest.py` and
 - `avoid-ai-writing-router`
 - `false-positive-reviewer`
 - `file-edit-in-place`
+- `humanizer`
 - `preservation-verifier`
 - `voice-preserving-rewriter`
 - `agent-skillguard`
@@ -799,6 +841,7 @@ scanned or refreshed during the 2026-07-30 pass:
 - `avoid-ai-writing-router`
 - `false-positive-reviewer`
 - `file-edit-in-place`
+- `humanizer`
 - `preservation-verifier`
 - `voice-preserving-rewriter`
 - `agent-skillguard`

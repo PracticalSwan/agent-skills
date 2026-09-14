@@ -15,14 +15,15 @@ from platform_skill_manifest import (
 
 
 SOURCE_COMMITS = {
-    "awesome_copilot": ("https://github.com/github/awesome-copilot", "f38fb6cf039b835990d0f49dc161d7c2af99ef69"),
+    "awesome_copilot": ("https://github.com/github/awesome-copilot", "1899b18da3fa5183652f86165917d553cba1850a"),
     "awesome_claude_skills": ("https://github.com/travisvn/awesome-claude-skills", "1da55aa810f206d3fe2005e7e3989b15a275d942"),
-    "anthropic_skills": ("https://github.com/anthropics/skills", "41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f"),
+    "anthropic_skills": ("https://github.com/anthropics/skills", "34040c9c568585f6929bedeaad110ad08f079624"),
     "awesome_codex_skills": ("https://github.com/ComposioHQ/awesome-codex-skills", "0930e1373789d2eda449039f7ac154b33031de89"),
     "googleworkspace_cli": ("https://github.com/googleworkspace/cli", "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd"),
-    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "a465548fe813969dc7006c2e042efa305c09c96f"),
+    "avoid_ai_writing": ("https://github.com/conorbronsdon/avoid-ai-writing", "aa4da8b255eb9821f0dae2a059762de900bb5d1f"),
+    "humanizer": ("https://github.com/blader/humanizer", "9862685f575c65a8247f90369951df1b3416e3d6"),
     "codebase_to_course": ("https://github.com/zarazhangrui/codebase-to-course", "ff8837ecf8e9f6ce9874ffa42e42633394a52a00"),
-    "nvidia_skills": ("https://github.com/NVIDIA/skills", "c3168ca798561c5aef7f69e6f99c4a874485ca24"),
+    "nvidia_skills": ("https://github.com/NVIDIA/skills", "d494cbaccb3c6f391ea9f06e6abefa9f13161b34"),
     "stitch_skills": ("https://github.com/google-labs-code/stitch-skills", "0337446dadde6f8c94210444e2aa9d546126480f"),
     "xquik_x_twitter_scraper": ("https://github.com/Xquik-dev/x-twitter-scraper", "98260596503409589f727b839e5bd3e2cff910e1"),
     "openai_skills": ("https://github.com/openai/skills", "49f948faa9258a0c61caceaf225e179651397431"),
@@ -31,14 +32,14 @@ SOURCE_COMMITS = {
     "tavily_skills": ("https://github.com/tavily-ai/skills", "778122e5f9c680f541eeceda5a5b36405eb7980c"),
     "matt_pocock_skills": ("https://github.com/mattpocock/skills", "3cca18b368ae95cdbdebbff572ccafa662551015"),
     "supabase_agent_skills": ("https://github.com/supabase/agent-skills", "8331f910845103c08d51f6ca1d86ebb7d1f745e3"),
-    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "e2e931ffd78c503f2a9ad848152e561c8f4e1ea8"),
+    "gemini_skills": ("https://github.com/google-gemini/gemini-skills", "80dd31dda25bbe1410207df0adb3e0d591c2c634"),
     "vercel_agent_skills": ("https://github.com/vercel-labs/agent-skills", "063bee94c3f4df8453406c830b0a7df0f2860278"),
     "web_quality_skills": ("https://github.com/addyosmani/web-quality-skills", "afa8da942115f2961fdbfa80807ea0b232ff6c00"),
     # The Playwright CLI is distributed as an npm package rather than as a
     # checkout of the parent catalog. Keep its release tag explicit and name
     # the npm package/version in the skill rationale.
-    "playwright_cli": ("https://github.com/microsoft/playwright-cli", "397ee39c83a651e1314cfb010b94e8a3aac11261"),
-    "playwright": ("https://github.com/microsoft/playwright", "1b025d7e20a026371cd5f98ba0cdce48892737c8"),
+    "playwright_cli": ("https://github.com/microsoft/playwright-cli", "655530f6d0dc71a0d6bf46ae165877d3c7311099"),
+    "playwright": ("https://github.com/microsoft/playwright", "d1ead3ecca23182f2d06d761c28e3d4edafb6595"),
 }
 SOURCE_COMMITS.update(PLATFORM_SOURCE_COMMITS)
 
@@ -167,6 +168,11 @@ ADDITIONAL_UPSTREAM_SKILLS = {
         "avoid_ai_writing",
         "skills/voice-preserving-rewriter",
         "Current Avoid AI Writing v3.33.2 voice-preserving rewrite leaf with explicit meaning, tone, and provenance checks; complements the detector rather than replacing review.",
+    ),
+    "humanizer": (
+        "humanizer",
+        "SKILL.md",
+        "Official blader/humanizer v3.0.0 compact 25-pattern prose-rewrite workflow; retained as a distinct direct-humanization prompt alongside the broader avoid-ai-writing detector, preservation, and iterative routing suite because its activation contract differs.",
     ),
     "supabase": (
         "supabase_agent_skills",
@@ -601,6 +607,15 @@ Use `scripts/skill-registry.json` for each overlay's exact source path, commit, 
   manifest and extraction helper/tests at its current head. `awesome-copilot`
   and NVIDIA heads moved outside installed paths and received provenance-only
   updates.
+- The 2026-09-14 source audit checked all `27` recorded heads. Exact-path
+  comparison refreshed `13` mapped entrypoints (Avoid AI Writing and its
+  focused leaves, NeMo Retriever, MongoDB Search and AI, four Figma workflows,
+  and three Hugging Face cloud workflows); the remaining `68` mapped skills
+  received provenance-only pin updates. The Avoid AI Writing head moved again
+  during the run; its final v3.35.0 pin is
+  `aa4da8b255eb9821f0dae2a059762de900bb5d1f`. It retains its runtime CLI/gate
+  and focused local regression helpers, while marketplace, CI,
+  package-publishing, and large evaluation-corpus material remains excluded.
 - The Stitch refresh preserved the previously verified project/design-system
   MCP boundary. Broader screen tools remain optional and must be rediscovered
   in the active host before use.

@@ -2,6 +2,20 @@
 
 All notable changes to the `hf-cloud-sagemaker-production-defaults` skill are documented here.
 
+## [2026-09-14] - Hugging Face SageMaker Production Defaults Source Refresh
+
+### Added
+
+- Refreshed the real-time, inference-component, and async deployment helpers from the current Hugging Face source.
+
+### Changed
+
+- Kept autoscaling, alarms, tags, data-capture opt-in, and cleanup defaults explicit.
+
+### Fixed
+
+- Maintained the no-MCP AWS CLI fallback and dry-run/approval boundary.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

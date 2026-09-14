@@ -33,27 +33,28 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-09-12`. Local overlay totals can differ by machine.
+Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `247` tracked skill folders
-  - `215` tracked maintained skills
+  - `248` tracked skill folders
+  - `216` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `305` local skill folders detected
-  - `273` local maintained skills detected
+  - `306` local skill folders detected
+  - `274` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `247` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+All `248` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, five Codex Router skills were promoted from
 the personal Codex root, and one reviewed Codex plugin scanner was vendored.
 Three official Playwright workflows are now maintained from pinned Microsoft
 sources. The catalog-wide maintenance baseline is
 `last_updated: 2026-09-08` for the unchanged catalog; the Playwright entries
-use `last_updated: 2026-09-12`. The `58` local-only Google
+use `last_updated: 2026-09-12`, and the imported `humanizer` entry uses
+`last_updated: 2026-09-14`. The `58` local-only Google
 Workspace overlays retain upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 The tracked imports `docx`, `jupyter-notebook`, `pptx`, and `xlsx` now have finalized canonical provenance in `scripts/skill-registry.json`.
@@ -71,6 +72,13 @@ for architecture, domain modeling, prototypes, primary-source research,
 conflict resolution, handoffs, and agent-document writing. Keep the existing
 catalog equivalents for TDD, debugging, review, implementation, planning, and
 skill authoring as the canonical overlapping workflows.
+
+The compact `humanizer` workflow is sourced from
+`blader/humanizer` v3.0.0 at revision
+`9862685f575c65a8247f90369951df1b3416e3d6`. It is a direct,
+facts-preserving 25-pattern rewrite workflow; route detection, file edits,
+preservation checks, and iterative convergence to the broader
+`avoid-ai-writing` suite.
 
 The Playwright package refresh is pinned in `scripts/skill-registry.json`:
 `playwright-cli` comes from `@playwright/cli@0.1.19` at the tagged
@@ -118,6 +126,39 @@ therefore included, with no Hugging Face, MongoDB, or Figma CLI skill imported.
 Authentication, runtime installation, and MCP configuration remain explicit
 user-authorized actions. Repeat imports with
 `python scripts/import-platform-skills.py --source-root <pinned-clones>`.
+
+## 2026-09-14 Humanizer Import And Catalog Routing
+
+- Audited the current `blader/humanizer` main revision
+  `9862685f575c65a8247f90369951df1b3416e3d6` (v3.0.0) and passed its
+  upstream package validator before importing the root skill.
+- Retained only the runtime-relevant `SKILL.md`, OpenAI-compatible
+  `agents/openai.yaml`, MIT license, and attribution notice. Upstream Claude
+  marketplace metadata, CI files, README duplication, and packaging validator
+  were intentionally omitted; this catalog's validator is authoritative.
+- Kept `humanizer` separate from `avoid-ai-writing` because the former is a
+  compact direct-rewrite prompt while the latter owns detection, preservation,
+  edit-in-place, and iterative routing workflows.
+- Re-audited only the three approved personal child roots. The scan found 914
+  skill files: 819 already represented in the parent, 101 excluded as
+  protected/system/Superpowers material, and zero eligible child-only skills;
+  project-specific paths were not scanned.
+- No additional Codex plugin skill was vendored in this pass after review for
+  cross-client usefulness and bloat.
+
+## 2026-09-14 Mapped Source Refresh
+
+- Checked all `27` recorded upstream heads and refreshed exactly `13` mapped
+  entrypoints whose exact source paths changed: Avoid AI Writing and its
+  detector/router/preservation leaves, NeMo Retriever, MongoDB Search and AI,
+  four Figma workflows, and three Hugging Face cloud workflows.
+- Updated provenance pins for the remaining `68` mapped skills without
+  rewriting unchanged paths. Avoid AI Writing retains the current runtime
+  CLI/gate and focused local regression helpers; upstream marketplace, CI,
+  package-publishing metadata, and the large evaluation corpus remain omitted
+  to avoid bloat. Its final live pin is
+  `aa4da8b255eb9821f0dae2a059762de900bb5d1f` (v3.35.0); the Awesome Copilot
+  head moved outside mapped paths and is recorded provenance-only.
 
 ## 2026-09-12 Playwright CLI Skills And Canonical Consolidation
 

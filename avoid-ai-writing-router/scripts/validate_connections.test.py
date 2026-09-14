@@ -12,25 +12,17 @@ import tempfile
 
 sys.dont_write_bytecode = True
 VALIDATOR = Path(__file__).with_name("validate_connections.py").resolve()
-REPO_ROOT = VALIDATOR.parents[2]
-GRAPH_RELATIVE_PATH = Path("avoid-ai-writing-router/references/skill-graph.json")
-SKILL_NAMES = [
-    "ai-writing-detector",
-    "avoid-ai-writing",
-    "avoid-ai-writing-router",
-    "false-positive-reviewer",
-    "file-edit-in-place",
-    "preservation-verifier",
-    "voice-preserving-rewriter",
-]
+REPO_ROOT = VALIDATOR.parents[3]
+GRAPH_RELATIVE_PATH = Path(
+    "skills/avoid-ai-writing-router/references/skill-graph.json"
+)
 BASE_GRAPH = json.loads((REPO_ROOT / GRAPH_RELATIVE_PATH).read_text(encoding="utf-8"))
 
 
 def validate(payload: object, expected_error: str) -> None:
     with tempfile.TemporaryDirectory() as temp_dir:
         root = Path(temp_dir)
-        for skill_name in SKILL_NAMES:
-            shutil.copytree(REPO_ROOT / skill_name, root / skill_name)
+        shutil.copytree(REPO_ROOT / "skills", root / "skills")
         (root / GRAPH_RELATIVE_PATH).write_text(
             json.dumps(payload), encoding="utf-8"
         )

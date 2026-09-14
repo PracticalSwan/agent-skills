@@ -1,7 +1,7 @@
 ---
 name: avoid-ai-writing-router
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-09-14
 tags: [avoid, ai, writing, router]
 description: "Use when a request combines AI-writing audit, rewrite, file editing, voice preservation, false-positive interpretation, verification, or when the user invokes Avoid AI Writing without naming a mode."
 ---
@@ -68,7 +68,8 @@ Use the edge semantics in `references/handoff-contract.md`:
 - `REPAIR`: return a failed preservation result to the correct mutation owner.
 - `RECHECK`: run one bounded residual check when requested.
 - `ESCALATE`: move uncertain or consequential authorship interpretation to `false-positive-reviewer`.
-- `GUARD`: add conditional protected constraints without changing the primary owner.
+
+Conditional guards are not graph edges. Encode them in `skill-graph.json` `guards` and the handoff envelope (`protected_constraints`, `human_representation_sensitive`) per `references/handoff-contract.md`.
 
 ## Conditional human-representation guard
 

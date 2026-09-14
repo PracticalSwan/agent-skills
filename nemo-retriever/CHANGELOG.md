@@ -1,6 +1,20 @@
 # Changelog
 
-All notable changes to the `nemo-retriever` skill will be documented in this file.
+All notable changes to the `nemo-retriever` skill will be documented here.
+
+## [2026-09-14] - NeMo Retriever 26.8.1 Source Refresh
+
+### Added
+
+- Refreshed the NeMo Retriever benchmark, signed skill card, and evaluation fixture from NVIDIA's current `skills/nemo-retriever` source.
+
+### Changed
+
+- Updated the workflow to the current local LanceDB and deployed-retriever service guidance while retaining the catalog's cross-client and safety sections.
+
+### Fixed
+
+- Removed stale CLI reference pages and helper scripts that no longer ship in the pinned upstream skill.
 
 ## [2026-09-08] - Catalog Freshness And Source Sync
 

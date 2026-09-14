@@ -2,6 +2,20 @@
 
 All notable changes to the `figma-generate-library` skill are documented here.
 
+## [2026-09-14] - Figma Generate Library Source Refresh
+
+### Added
+
+- Refreshed component-creation and discovery guidance from the current Figma MCP guide.
+
+### Changed
+
+- Kept token, variant, Code Connect, and documentation phases separate and ordered.
+
+### Fixed
+
+- Preserved the bundled validation scripts and no-MCP fallback wording.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

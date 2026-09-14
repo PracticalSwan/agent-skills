@@ -54,11 +54,11 @@ echo "pattern count in sync: $detection_count"
 claudemd="$repo_root/CLAUDE.md"
 
 if [ ! -f "$claudemd" ]; then
-  echo "CLAUDE.md copy check skipped: this flattened catalog does not vendor the upstream CLAUDE.md." >&2
-  claude_count=""
+  echo "CLAUDE.md not found — it carries a tracked copy of the pattern count (.ssot.yaml)." >&2
+  echo "If it was deliberately removed, drop the copy from .ssot.yaml and this check together." >&2
+  exit 1
 fi
 
-if [ -f "$claudemd" ]; then
 claude_count="$(grep -o 'README "[0-9][0-9]* pattern categories" bullet' "$claudemd" | head -n1 | tr -cd '0-9' || true)"
 
 if [ -z "$claude_count" ]; then
@@ -74,7 +74,6 @@ if [ "$claude_count" != "$detection_count" ]; then
 fi
 
 echo "CLAUDE.md copy in sync: $claude_count"
-fi
 
 # Word-table entries = data rows across the Tier 1/2/3 word tables. The Tier 3
 # *phrases* table is counted separately in the README bullet, so it is excluded.

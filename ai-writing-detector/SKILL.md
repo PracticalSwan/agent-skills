@@ -1,7 +1,7 @@
 ---
 name: ai-writing-detector
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-09-14
 tags: [ai, writing, detector]
 description: "Use when the user asks to detect, scan, audit, score, or flag AI-writing patterns without rewriting the text, including requests for a deterministic local detector result when the host can execute Node."
 ---

@@ -98,18 +98,12 @@ def first_cycle(adjacency: dict[str, list[str]]) -> list[str] | None:
 
 def main() -> int:
     root = Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
-    # The upstream package keeps skills under ``skills/``; this catalog
-    # flattens maintained skills into its repository root. Accept both layouts
-    # so the validator remains executable after promotion.
-    nested_skill_root = root / "skills"
-    flattened_catalog = not (nested_skill_root / "avoid-ai-writing-router").is_dir()
-    skill_root = nested_skill_root if not flattened_catalog else root
-    refs = skill_root / "avoid-ai-writing-router/references"
+    refs = root / "skills/avoid-ai-writing-router/references"
     graph_path = refs / "skill-graph.json"
     handoff_path = refs / "handoff-contract.md"
     lenses_path = refs / "agency-role-lenses.md"
     routing_path = refs / "routing-matrix.md"
-    router_path = skill_root / "avoid-ai-writing-router/SKILL.md"
+    router_path = root / "skills/avoid-ai-writing-router/SKILL.md"
     errors: list[str] = []
 
     for path in (graph_path, handoff_path, lenses_path, routing_path, router_path):
@@ -160,7 +154,7 @@ def main() -> int:
     if handoff_contract != "handoff-contract.md":
         fail(errors, "handoff_contract must point to handoff-contract.md")
 
-    skills_root = skill_root
+    skills_root = root / "skills"
     if not skills_root.is_dir():
         fail(errors, "skills directory is missing")
         skill_dirs: set[str] = set()
@@ -176,14 +170,9 @@ def main() -> int:
     if missing_dirs:
         fail(errors, f"graph nodes without Skill directories: {missing_dirs}")
 
-    # A source-package checkout should contain only the public graph skills,
-    # so fail closed on an uncovered entry there. The shared catalog is a
-    # larger multi-domain catalog; its unrelated top-level skills are not part
-    # of this focused orchestration graph.
-    if not flattened_catalog:
-        uncovered_public_skills = sorted(skill_dirs - graph_nodes)
-        if uncovered_public_skills:
-            fail(errors, f"public Skills missing from orchestration graph: {uncovered_public_skills}")
+    uncovered_public_skills = sorted(skill_dirs - graph_nodes)
+    if uncovered_public_skills:
+        fail(errors, f"public Skills missing from orchestration graph: {uncovered_public_skills}")
 
     incoming: dict[str, int] = {name: 0 for name in graph_nodes}
     outgoing: dict[str, int] = {name: 0 for name in graph_nodes}
@@ -341,7 +330,7 @@ def main() -> int:
 
     skill_texts: dict[str, str] = {}
     for slug in SPECIALIZED:
-        path = skill_root / slug / "SKILL.md"
+        path = root / "skills" / slug / "SKILL.md"
         if not path.is_file():
             fail(errors, f"missing specialized Skill: {slug}")
             continue

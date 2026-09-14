@@ -2,6 +2,20 @@
 
 All notable changes to the `preservation-verifier` skill are documented here.
 
+## [2026-09-14] - Preservation Verifier v3.35.0 Source Refresh
+
+### Added
+
+- Refreshed the residual detector patterns used by the preservation verifier.
+
+### Changed
+
+- Kept protected-content checks and the catalog's rollback-safe verification boundary intact.
+
+### Fixed
+
+- Aligned residual regression checks with the current upstream detector categories and latest preservation-related regressions.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

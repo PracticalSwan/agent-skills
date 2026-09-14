@@ -2,6 +2,20 @@
 
 All notable changes to the `avoid-ai-writing` skill will be documented in this file.
 
+## [2026-09-14] - Avoid AI Writing v3.35.0 Source Refresh
+
+### Added
+
+- Refreshed the catalog's mapped Avoid AI Writing core, detector, corpus, and measurement helpers from the upstream v3.35.0 source while retaining the cross-client catalog tail and safety boundaries.
+
+### Changed
+
+- Kept the catalog copy focused on runtime and verification support; upstream marketplace metadata, CI, and package-publishing metadata remain outside this skill while the current runtime CLI and gate entry points are retained.
+
+### Fixed
+
+- Updated detector-facing fixtures and corpus guidance, including the current false-positive preprocessing/comparison and bounded local regression checks, so supported local checks follow the upstream behavior.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

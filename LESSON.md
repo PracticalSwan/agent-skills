@@ -144,6 +144,11 @@ Codex skill catalog.
 - Keep official provenance sidecars from trusted imports when they add value. NVIDIA skill imports, for example, ship `skill-card.md`, `skill.oms.sig`, and benchmark evidence that should stay with the vendored copy unless removal is deliberate and documented.
 - If an imported tracked skill is still missing catalog sections or `CHANGELOG.md`, document that exception plainly until the modernization pass is done.
 - When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
+- A catalog-wide source refresh should report both numbers: exact mapped paths
+  whose content changed and mapped skills that only received provenance pins.
+  For the 2026-09-14 pass these were `13` and `68` respectively across `27`
+  checked source heads; do not broad-import a repository merely because its
+  HEAD moved.
 - Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
 - The verified Stitch MCP surface in this workspace is design-system oriented: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim screen lookup, screen generation, screen editing, or variant tools exist unless the active host exposes them.
 - Imported skills that broker third-party content need explicit prompt-injection boundaries and credential-collection limits in the normalized `SKILL.md`; do not assume upstream README safety notes survive a catalog rewrite.
@@ -279,6 +284,34 @@ Codex skill catalog.
 - When an upstream skill deletes a reference file, apply that deletion while
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
+
+## 2026-09-14 Humanizer Import And Catalog Routing
+
+- Audit the named upstream repository and exact release before importing. The
+  current `blader/humanizer` main revision is
+  `9862685f575c65a8247f90369951df1b3416e3d6` (v3.0.0); its upstream package
+  validator passed before the root skill was copied into the parent catalog.
+- Keep an explicitly requested overlapping skill separate only when its
+  activation contract is materially narrower and the routing boundary is
+  documented. `humanizer` owns the compact direct 25-pattern rewrite prompt;
+  `avoid-ai-writing` owns detection, preservation, edit-in-place, and
+  iterate-to-convergence workflows.
+- Import only runtime-relevant files. The Humanizer catalog copy retains
+  `SKILL.md`, `agents/openai.yaml`, the MIT license, and attribution notice;
+  upstream Claude marketplace metadata, CI, README duplication, and packaging
+  validator were omitted to avoid bloat.
+- Re-audit only the three approved personal child roots before declaring
+  promotion complete. This pass found 914 discovered skill files, with 819
+  already represented in the parent, 101 excluded as protected/system/
+  Superpowers material, and zero eligible child-only skills; project-specific
+  paths remained out of scope.
+- Preserve attribution for both the upstream MIT files and the cited Wikipedia
+  "Signs of AI writing" taxonomy. Do not imply that a Claude plugin manifest,
+  package installer, MCP server, or network access is required at runtime.
+- The 2026-09-14 intended inventory is `306` live folders (`274` maintained
+  and `32` copied Superpowers, including `58` local-only overlays); the
+  tracked catalog is `248` folders (`216` maintained and `32` copied
+  Superpowers).
 
 ## 2026-09-12 Playwright CLI Package Refresh And Consolidation
 

@@ -1,7 +1,7 @@
 ---
 name: preservation-verifier
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-09-14
 tags: [preservation, verifier]
 description: "Use when the user provides an original and rewritten version, asks whether a rewrite preserved protected content, or wants a deterministic check for code, frontmatter, quotes, tables, links, paths, numbers, headings, and residual AI-pattern regressions."
 ---

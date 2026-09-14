@@ -2,6 +2,20 @@
 
 All notable changes to the `hf-cloud-sagemaker-iam-preflight` skill are documented here.
 
+## [2026-09-14] - Hugging Face SageMaker IAM Preflight Source Refresh
+
+### Added
+
+- Refreshed the SageMaker role-creation helper and preflight instructions from the current Hugging Face source.
+
+### Changed
+
+- Kept discovery-before-create ordering and SSO/AccessDenied safeguards.
+
+### Fixed
+
+- Preserved explicit AWS CLI and manual fallback evidence requirements.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

@@ -3,6 +3,66 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-09-14] - Mapped Source Refresh And Provenance Pins
+
+### Added
+
+- Added the current upstream Avoid AI Writing runtime CLI/gate entrypoints and
+  focused detector, flattening, measurement, and self-scan regression helpers.
+- Added current mapped support references for NeMo Retriever, MongoDB Search
+  and AI, Figma, and Hugging Face cloud workflows where their exact upstream
+  paths changed.
+
+### Changed
+
+- Checked all `27` recorded upstream heads and refreshed exactly `13` mapped
+  entrypoints with source-path changes.
+- Updated provenance pins for the remaining `68` mapped skills without
+  rewriting unchanged content; regenerated `REFERENCE_SOURCES.md` and the
+  registry from the audited revisions.
+- Rechecked the two heads that moved during the maintenance run: Awesome
+  Copilot is pinned provenance-only at `1899b18da3fa5183652f86165917d553cba1850a`,
+  while Avoid AI Writing's final v3.35.0 content pin is
+  `aa4da8b255eb9821f0dae2a059762de900bb5d1f`.
+- Kept upstream marketplace, CI, package-publishing metadata, and the large
+  Avoid AI Writing evaluation corpus outside the catalog to avoid bloat.
+
+### Fixed
+
+- Removed stale NeMo Retriever support files that no longer exist in the
+  current source and kept its current benchmark/signature sidecars intact.
+
+## [2026-09-14] - Humanizer Import And Catalog Routing
+
+### Added
+
+- Added the compact `humanizer` skill from
+  [`blader/humanizer`](https://github.com/blader/humanizer) v3.0.0 at main
+  revision `9862685f575c65a8247f90369951df1b3416e3d6`.
+- Added the upstream MIT license, source attribution notice, and
+  OpenAI-compatible `agents/openai.yaml` metadata needed for the
+  cross-client catalog copy.
+
+### Changed
+
+- Normalized the imported `SKILL.md` to catalog v2.0 frontmatter and required
+  portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related
+  Skills sections while preserving the official 25-pattern, facts-preserving
+  workflow.
+- Documented the activation boundary: use `humanizer` for direct compact
+  rewrites, while `avoid-ai-writing` remains canonical for detection,
+  preservation, edit-in-place, and iterative routing.
+- Updated the inventory and provenance documentation for the 2026-09-14
+  catalog state and kept sync restricted to the three approved personal roots.
+
+### Fixed
+
+- Omitted upstream Claude marketplace metadata, CI, README duplication, and
+  packaging-only validator files so the parent catalog does not gain redundant
+  runtime surfaces.
+- Recorded the Wikipedia "Signs of AI writing" attribution and the upstream
+  MIT notice instead of presenting the taxonomy as locally authored.
+
 ## [2026-09-12] - Playwright CLI Skills And Canonical Consolidation
 
 ### Added

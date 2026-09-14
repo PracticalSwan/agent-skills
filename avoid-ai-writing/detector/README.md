@@ -4,7 +4,7 @@
 zero-dependency, build-step-free detection engine that scores text for
 AI-writing tells. It runs identically in Node (`>=18`) and in the browser.
 
-The skill's `SKILL.md` is the human-readable catalog of rules; this engine is
+The skill's `references/patterns.md` is the human-readable catalog of rules; this engine is
 the deterministic, testable implementation of the regex-detectable subset, plus
 stylometric and AI-tool-fingerprint detectors that don't make sense as prose.
 See [`CATEGORIES.md`](./CATEGORIES.md) for the rule ↔ category mapping that keeps
@@ -12,10 +12,75 @@ the two in sync.
 
 ## Run it
 
+### From npm
+
+Install the published detector package in another project:
+
 ```bash
-npm test          # pattern, category-contract, and preservation tests (no deps)
-# or directly:
-node detector/patterns.test.js
+npm install avoid-ai-writing-detector
+```
+
+```js
+const AIDetector = require("avoid-ai-writing-detector");
+const result = AIDetector.analyzeText("Your text here…");
+console.log(result.score, result.label, result.issues.length);
+```
+
+### From the command line
+
+The published package exposes an `avoid-ai-writing` command that scores a file
+or stdin and prints the full result as JSON:
+
+```bash
+npx --package avoid-ai-writing-detector avoid-ai-writing draft.md
+cat draft.md | npx --package avoid-ai-writing-detector avoid-ai-writing --context technical
+```
+
+### As a CI or pre-commit gate
+
+`avoid-ai-writing-gate` turns the existing detector into a pass/fail interface
+for automation. It intentionally gates on deterministic `issues.length` per
+file rather than the composite score:
+
+```bash
+avoid-ai-writing-gate --glob "**/*.md" --context technical
+avoid-ai-writing-gate --threshold 0 docs/strict-policy.md
+avoid-ai-writing-gate --threshold 2 docs/guide.md README.md
+```
+
+Exit codes:
+
+- `0`: every scanned file is at or below the finding threshold;
+- `1`: at least one file exceeds the threshold;
+- `2`: usage, glob-expansion, file-read, UTF-8, or unscannable-input error (including documents above the detector's 10,000-word limit).
+
+The GitHub Action in `action.yml` exposes `glob`, `threshold`, `context`,
+and `source-mode` inputs. The CLI, Action, and shipped pre-commit hook default
+to **6 findings per file** with `technical` context and `rendered-markdown`
+source mode.
+
+That default is measured rather than guessed. On the current 376-document human
+control corpus under those exact settings, threshold 0 rejects 31.4% of human
+documents, while threshold 6 rejects 1.9% (7/376). A value of 6 is at or above
+the observed 95th-percentile finding count for every represented register; the
+single `technical-blog` document is an explicitly under-sampled slice. Use
+`--threshold 0` when a repository deliberately wants a strict zero-findings
+policy. The corpus predates current model generations, so this threshold is a
+practical writing-quality default, not an AI-authorship accuracy claim.
+
+This gate does not run `validate.js`: preservation checks compare **two**
+versions of a document, while CI/pre-commit detection inspects one snapshot.
+Run the preservation validator separately when an automated rewrite is part of
+the workflow.
+
+### From a local checkout
+
+Use the repository directly when developing or validating detector changes:
+
+```bash
+npm test          # all suites; failures in one file still run the rest (no deps)
+node scripts/run-tests.js detector/patterns.test.js   # one suite
+node detector/patterns.test.js                        # same, direct
 ```
 
 ```js
@@ -24,8 +89,10 @@ const result = AIDetector.analyzeText("Your text here…");
 console.log(result.score, result.label, result.issues.length);
 ```
 
-In the browser, load `patterns.js` as a plain script — it self-registers as a
-global `AIDetector` (the `module.exports` block is guarded and only runs under
+### In the browser
+
+Load `patterns.js` as a plain script — it self-registers as a global
+`AIDetector` (the `module.exports` block is guarded and only runs under
 CommonJS).
 
 ## `analyzeText(text, options?)` → result
@@ -33,17 +100,41 @@ CommonJS).
 | Field | Type | Meaning |
 |---|---|---|
 | `score` | `0–100` | 0 = clean, 100 = heavy AI |
-| `label` | string | `Minimal` / `Some` / `Strong` / `Heavy` (or `Empty` / `Too short` / `Text too long`) |
+| `label` | string | scored: `Clean` (0) / `Minimal AI signals` (1–15) / `Some AI patterns` (16–35) / `Moderate AI signals` (36–60) / `Strong AI signals` (61–80) / `Heavy AI patterns` (81–100). Unscored: `Empty` / `Too short` / `Text too long` |
 | `issues[]` | `{type, text, severity, …}` | one entry per detected pattern; `type` keys map to [`CATEGORIES.md`](./CATEGORIES.md) |
 | `stats` | object | `wordCount`, per-tier counts, `contextMode`, `sourceMode`, masked-span counts, `denseAIVocab`, normalization flags, etc. |
-| `document_classification` | string | trinary `HUMAN_ONLY` / `MIXED` / `AI_ONLY` (shape mirrors GPTZero for swap-in) |
+| `document_classification` | string | `HUMAN_ONLY` / `MIXED` / `AI_ONLY` (shape mirrors GPTZero for swap-in), or `UNSCORED` on the early-exit paths |
 | `class_probabilities` | `{human, mixed, ai}` | sums to exactly 1.0 |
 | `confidence_category` | `low` / `medium` / `high` | |
 | `highlight_sentence_for_ai` | region[] | sentence spans with source offsets + per-region score, for UI highlighting |
 
-`options.contextMode` accepts `general` (default) or `technical`; technical mode
-suppresses flags that are legitimate in code-adjacent prose (e.g. Title Case
-headers). Invalid modes fall back to `general` and set `stats.contextModeFallback`.
+The three unscored labels share one result shape: `score` 0,
+`document_classification` `UNSCORED`, an even `class_probabilities` split, and
+`confidence_category` `low`. Branch on that classification rather than on the
+score, since clean text also scores 0 and is labeled `Clean`.
+
+`options.contextMode` accepts `general` (default), `technical`, `marketing`, and
+`personal`. Technical mode suppresses flags that are legitimate in code-adjacent
+prose (e.g. Title Case headers and eight technical-legitimate terms: `robust`,
+`comprehensive`, `seamless`, `ecosystem`, `leverage`, `facilitate`, `underpin`,
+`streamline`); `marketing` and `personal` are accepted and reported in
+`stats.contextMode`, but currently score the same as `general`.
+Invalid modes fall back to `general` and set `stats.contextModeFallback` to the
+value you passed.
+
+The skill's context profiles map to `contextMode` as follows:
+
+| Skill profile | Detector mode | What differs |
+|---|---|---|
+| `linkedin` | `marketing` | The skill applies the LinkedIn tolerance profile; detector `marketing` currently scores like `general`. |
+| `blog` | `general` | The skill applies the default blog tolerance profile; detector uses baseline behavior. |
+| `technical-blog` | `technical` | The skill applies technical-blog tolerances; detector enables technical-context suppressions. |
+| `investor-email` | `marketing` | The skill applies stricter investor-email tolerances; detector `marketing` currently scores like `general`. |
+| `docs` | `technical` | The skill applies docs tolerances; detector enables technical-context suppressions. |
+| `casual` | `personal` | The skill applies casual tolerances; detector `personal` currently scores like `general`. |
+
+See [`references/patterns.md`](../references/patterns.md#detector-mode-mapping)
+for the full context-profile definitions and tolerance matrix.
 
 `options.sourceMode` accepts `plain` (default) or `rendered-markdown`. Rendered
 Markdown mode masks initial YAML frontmatter and HTML comments before pattern
@@ -66,7 +157,7 @@ reported.
 
 ## `validate(original, rewritten, options?)` → result
 
-`validate.js` checks that a rewrite kept its hands off the things `SKILL.md`
+`validate.js` checks that a rewrite kept its hands off the things `references/patterns.md`
 says not to touch. Edit mode writes to files, so a violation there is silent
 and destructive.
 

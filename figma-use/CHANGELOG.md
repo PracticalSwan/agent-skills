@@ -2,6 +2,20 @@
 
 All notable changes to the `figma-use` skill are documented here.
 
+## [2026-09-14] - Figma Use Source Refresh
+
+### Added
+
+- Refreshed the Plugin API references, standalone TypeScript declarations, and design-system guidance from the current Figma MCP guide.
+
+### Changed
+
+- Kept batched schema loading, font loading, ID-return, and validation rules as explicit prerequisites.
+
+### Fixed
+
+- Retained the manual/local export fallback for hosts without Figma MCP.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

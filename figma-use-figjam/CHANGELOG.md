@@ -2,6 +2,20 @@
 
 All notable changes to the `figma-use-figjam` skill are documented here.
 
+## [2026-09-14] - Figma Use FigJam Source Refresh
+
+### Added
+
+- Refreshed the FigJam text-edit guidance from the current Figma MCP guide.
+
+### Changed
+
+- Kept FigJam-specific inspection and font-loading constraints layered on top of figma-use.
+
+### Fixed
+
+- Preserved manual board-editing and export fallbacks.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

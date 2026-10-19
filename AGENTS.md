@@ -53,31 +53,32 @@ apply to any AI agent operating in `C:\Users\LOQ\.copilot\skills`.
 
 ## Current Counts
 
-Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
+Snapshot date: `2026-10-19`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `248` tracked skill folders
-  - `216` tracked maintained skills
+  - `253` tracked skill folders
+  - `221` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot, including local-only overlays such as
   `gws-*` and `recipe-*` when present:
-  - `306` local skill folders detected
-  - `274` local maintained skills detected
+  - `311` local skill folders detected
+  - `279` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit
 `copied_official_superpowers` list in `scripts/skill-registry.json`, not by
 whether a skill folder has a `CHANGELOG.md`.
 
-All `248` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+All `253` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, and five Codex Router skills were promoted
 from the personal Codex root, and one standalone Codex plugin scanner was
-vendored after review. Three official Playwright workflows are now maintained
-from pinned Microsoft sources. The catalog-wide maintenance baseline is
-`last_updated: 2026-09-08` for the unchanged catalog; the Playwright entries
-use `last_updated: 2026-09-12`, and the imported `humanizer` entry uses
-`last_updated: 2026-09-14`. The `58` local-only Google
+vendored after review. Three official Playwright workflows are maintained
+from pinned Microsoft sources, and five scientific workflows were added.
+The 37 refreshed and five newly imported entrypoints use
+`last_updated: 2026-10-19`; unchanged entries retain their previous dates. The
+Playwright entries use `last_updated: 2026-09-12`, and the imported `humanizer`
+entry uses `last_updated: 2026-09-14`. The `58` local-only Google
 Workspace overlays keep their upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
 
@@ -92,11 +93,11 @@ self-contained, retain the local secret and prompt-injection safeguards, and
 do not reintroduce removed-client integrations from upstream references.
 
 The selected Matt Pocock skills are sourced from `mattpocock/skills` at the
-current audited commit `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76`. The import
-keeps only eight
-cross-client workflows that fill gaps for the user's OCR, storefront,
-Three.js, and multi-repository work. Existing TDD, debugging, review,
-implementation, planning, and skill-authoring equivalents remain canonical.
+current audited commit recorded in `scripts/skill-registry.json`. Seven current
+upstream paths remain mapped; `resolving-merge-conflicts` is retained as a
+catalog-local snapshot because the current upstream removed that path. Existing
+TDD, debugging, review, implementation, planning, and skill-authoring
+equivalents remain canonical.
 
 The compact `humanizer` workflow is sourced from
 `blader/humanizer` v3.0.0 at revision
@@ -106,9 +107,9 @@ preservation checks, and iterative convergence to the broader
 `avoid-ai-writing` suite.
 
 The Playwright package refresh is pinned in `scripts/skill-registry.json`:
-`playwright-cli` comes from `@playwright/cli@0.1.19` at the tagged
+`playwright-cli` comes from `@playwright/cli@0.1.22` at the tagged
 `microsoft/playwright-cli` revision, while `playwright-component-testing` and
-`playwright-trace` come from stable `microsoft/playwright@v1.63.0`. The old
+`playwright-trace` come from stable `microsoft/playwright@v1.64.1`. The old
 broad `playwright` folder is retired; its wrapper and practical catalog guides
 are retained under `playwright-cli`.
 
@@ -137,6 +138,35 @@ workflows, and the React/web-quality groups remain separate
 with explicit routing links because their activation boundaries and evidence
 paths differ. Plugin-managed Supabase and React copies remain external; the
 parent catalog is canonical for maintained cross-client content.
+
+## 2026-10-19 Catalog Refresh And Scientific Workflows
+
+- Audited 30 pinned source repositories and refreshed only exact mapped paths:
+  37 skill entrypoints and 54 supporting-file mappings changed across the
+  current source set. Fifteen source heads moved; unrelated path movement was
+  recorded as provenance rather than imported broadly.
+- Added five scientific workflows from K-Dense's
+  `scientific-agent-skills` at commit
+  `593377bb048752abb0152deab9fbb1083a6087df`: experimental design, hypothesis
+  generation, paper lookup, scientific writing, and peer review. The
+  `literature-review` and `citation-management` candidates were excluded as
+  standalone imports after overlap review against existing research,
+  scholarly-retrieval, and manuscript-writing workflows.
+- Re-audited only the personal `.codex`, `.agents`, and `.claude` roots; no
+  eligible child-only skills remained. Protected Codex `.system`, Blender,
+  copied Superpowers, and project-specific paths remained outside promotion.
+- The current Playwright pins are `@playwright/cli@0.1.22` and stable
+  `microsoft/playwright@v1.64.1`. Both mapped Playwright workflow paths were
+  unchanged at the newer stable release.
+- Xquik now prefers its current MCP server and retains a direct REST fallback
+  with explicit write authorization and credential-destination safeguards.
+- No new Codex plugin skill was imported after reviewing the current
+  plugin-creator package; its create, update, and submission workflows are
+  narrower than the global catalog's remit. The existing `plugin-creator`
+  snapshot is tracked as a local import, not a Codex system-managed skill.
+- The Gemini API skill may document Google's currently published Antigravity
+  managed agent, while catalog portability still excludes retired CLI or
+  standalone-client integrations.
 
 ## 2026-08-20 VoltAgent Platform Import
 

@@ -4,7 +4,9 @@ from __future__ import annotations
 import argparse
 import json
 import re
+from datetime import date
 from pathlib import Path
+from typing import Any
 
 
 DATE_STAMP = "2026-09-08"
@@ -43,7 +45,11 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
     return metadata, text[match.end() :]
 
 
-def render_frontmatter(skill_name: str, metadata: dict[str, str]) -> str:
+def render_frontmatter(
+    skill_name: str,
+    metadata: dict[str, str],
+    date_stamp: str = DATE_STAMP,
+) -> str:
     if not VALID_NAME_RE.fullmatch(skill_name):
         raise ValueError(f"Invalid folder-safe skill name: {skill_name}")
 
@@ -64,7 +70,7 @@ def render_frontmatter(skill_name: str, metadata: dict[str, str]) -> str:
         "---",
         f"name: {skill_name}",
         f'version: "{version}"',
-        f"last_updated: {DATE_STAMP}",
+        f"last_updated: {date_stamp}",
         f"tags: {tags}",
         f"description: {json.dumps(description, ensure_ascii=False)}",
     ]
@@ -108,7 +114,7 @@ This skill is written to stay usable across GitHub Copilot, Claude Code, and Cod
 {PORTABILITY_END}"""
 
 
-def render_mcp_section(skill_name: str, title: str, registry: dict) -> str:
+def render_mcp_section(skill_name: str, title: str, registry: dict[str, Any]) -> str:
     skill_meta = registry.get("mcp_skills", {}).get(skill_name)
     if not skill_meta:
         return f"""{MCP_START}
@@ -195,7 +201,12 @@ def insert_before(body: str, heading: str, section: str) -> str:
     return body[:index].rstrip() + "\n\n" + section.strip() + "\n\n" + body[index:].lstrip()
 
 
-def normalize_sections(body: str, skill_name: str, title: str, registry: dict) -> str:
+def normalize_sections(
+    body: str,
+    skill_name: str,
+    title: str,
+    registry: dict[str, Any],
+) -> str:
     body = body.strip()
     managed_portability = re.compile(
         rf"(?ms)^\s*{re.escape(PORTABILITY_START)}.*?{re.escape(PORTABILITY_END)}\s*",
@@ -242,7 +253,11 @@ def normalize_sections(body: str, skill_name: str, title: str, registry: dict) -
     return body.rstrip() + "\n\n" + related.strip() + "\n"
 
 
-def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
+def normalize_changelog(
+    skill_dir: Path,
+    imported: set[str],
+    date_stamp: str = DATE_STAMP,
+) -> None:
     path = skill_dir / "CHANGELOG.md"
     if path.exists():
         text = path.read_text(encoding="utf-8")
@@ -250,7 +265,7 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
         text = f"# Changelog\n\nAll notable changes to the `{skill_dir.name}` skill are documented here.\n"
 
     text = re.sub(r"(?m)^### (?:Tested|Verified)\s*$", "### Changed", text)
-    title = f"## [{DATE_STAMP}] - Catalog Freshness And Source Sync"
+    title = f"## [{date_stamp}] - Catalog Freshness And Source Sync"
     if title not in text:
         added_lines = [
             "- Refreshed the catalog metadata and retained-client portability baseline."
@@ -258,7 +273,7 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
         if skill_dir.name in imported:
             added_lines.insert(
                 0,
-                "- Promoted this skill from a verified `.codex` or `.claude` child path into the parent catalog.",
+                "- Added this skill from a reviewed upstream source and normalized it for the shared catalog.",
             )
         added = "\n".join(added_lines)
         entry = f"""{title}
@@ -269,7 +284,7 @@ def normalize_changelog(skill_dir: Path, imported: set[str]) -> None:
 
 ### Changed
 
-- Updated the catalog metadata and last-updated state for the {DATE_STAMP} maintenance pass.
+- Updated the catalog metadata and last-updated state for the {date_stamp} maintenance pass.
 - Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
 
 ### Fixed
@@ -289,16 +304,42 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Normalize the complete live skill catalog.")
     parser.add_argument("--repo-root", default=str(Path(__file__).resolve().parents[1]))
     parser.add_argument("--imported", nargs="*", default=[])
+    parser.add_argument(
+        "--skills",
+        nargs="*",
+        help="Normalize only these top-level skill folders; defaults to the complete catalog.",
+    )
+    parser.add_argument(
+        "--date",
+        default=DATE_STAMP,
+        help="Catalog maintenance date in YYYY-MM-DD format (defaults to the catalog baseline).",
+    )
     args = parser.parse_args()
 
+    try:
+        date.fromisoformat(args.date)
+    except ValueError:
+        parser.error("--date must use YYYY-MM-DD format")
+    date_stamp = args.date
     repo_root = Path(args.repo_root).resolve()
     registry = json.loads((repo_root / "scripts" / "skill-registry.json").read_text(encoding="utf-8"))
     imported = set(args.imported)
-    skill_dirs = sorted(
+    available_skill_dirs = {
         skill_dir
         for skill_dir in repo_root.iterdir()
         if skill_dir.is_dir() and (skill_dir / "SKILL.md").exists()
-    )
+    }
+    if args.skills is None:
+        skill_dirs = sorted(available_skill_dirs)
+    else:
+        requested = set(args.skills)
+        invalid = sorted(name for name in requested if not VALID_NAME_RE.fullmatch(name))
+        if invalid:
+            parser.error("Invalid top-level skill name(s): " + ", ".join(invalid))
+        missing = sorted(name for name in requested if not (repo_root / name / "SKILL.md").is_file())
+        if missing:
+            parser.error("Unknown top-level skill folder(s): " + ", ".join(missing))
+        skill_dirs = sorted(repo_root / name for name in requested)
 
     for skill_dir in skill_dirs:
         skill_path = skill_dir / "SKILL.md"
@@ -306,18 +347,18 @@ def main() -> int:
         metadata, body = parse_frontmatter(original)
         title_match = re.search(r"(?m)^# (.+?)\s*$", body)
         title = title_match.group(1) if title_match else skill_dir.name.replace("-", " ").title()
-        normalized = render_frontmatter(skill_dir.name, metadata) + normalize_sections(
+        normalized = render_frontmatter(skill_dir.name, metadata, date_stamp) + normalize_sections(
             body, skill_dir.name, title, registry
         )
         skill_path.write_text(normalized, encoding="utf-8")
-        normalize_changelog(skill_dir, imported)
+        normalize_changelog(skill_dir, imported, date_stamp)
 
     print(
         json.dumps(
             {
                 "updated_skills": [skill_dir.name for skill_dir in skill_dirs],
                 "count": len(skill_dirs),
-                "date": DATE_STAMP,
+                "date": date_stamp,
                 "catalog_version": CATALOG_VERSION,
                 "imported": sorted(imported),
             },

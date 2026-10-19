@@ -1,7 +1,7 @@
 ---
 name: gemini-api-dev
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-10-19
 tags: [gemini, api, dev]
 description: "Use this skill when building applications with Gemini API hosted models, including Gemini and Gemma 4, working with multimodal content (text, images, audio, video), implementing function calling, using structured outputs, or needing current model specifications. Covers SDK usage (google-genai for Python, @google/genai for JavaScript/TypeScript, com.google.genai:google-genai for Java, google.golang.org/genai for Go), model selection, and API capabilities."
 license: "Apache-2.0"
@@ -15,15 +15,16 @@ license: "Apache-2.0"
 
 ### Current Models (Use These)
 
+- `gemini-4-argon`: 1M tokens, most powerful model for complex reasoning, coding, and research
 - `gemini-3.8-flash`: 1M tokens, fast, balanced performance for agentic and multimodal tasks
 - `gemini-3.5-flash-lite`: 1M tokens, fastest, lowest-cost 3.5 model for high-throughput execution
-- `gemini-3.1-pro-preview`: 1M tokens, complex reasoning, coding, research
 - `gemini-3.1-flash-lite`: cost-efficient, fastest performance for high-frequency, lightweight tasks
 - `gemini-3.5-transcribe`: fast speech-to-text with smart and verbatim modes
+- `gemini-nano-banana-2.1` (Nano Banana 2.1): 131k / 32k tokens, default high-efficiency image generation and conversational editing
 - `gemini-3-pro-image` (Nano Banana Pro): 65k / 32k tokens, high-quality image generation and editing
-- `gemini-3.1-flash-image` (Nano Banana 2): 65k / 32k tokens, fast, efficient image generation and editing
 - `gemini-3.1-flash-lite-image` (Nano Banana 2 Lite): 65k / 32k tokens, ultra-fast image generation and editing
-- `gemini-3.1-flash-tts-preview`: expressive text-to-speech with Director's Chair prompting
+- `gemini-3.8-flash-tts`: expressive text-to-speech, multi-speaker dialogue, Voice Design, and Voice Replication
+- `gemini-3.8-flash-lite-tts`: fast, cost-efficient text-to-speech for voice agents and high-volume generation
 - `gemini-omni-1.1-flash`: video generation, first-frame-to-video, first-and-last-frame transitions, video extensions (up to 40s), video editing, and reference-guided generation
 - `gemma-4-31b-it`: Gemma 4 dense model, 31B parameters
 - `gemma-4-26b-a4b-it`: Gemma 4 MoE model, 26B total / 4B active parameters
@@ -36,16 +37,15 @@ license: "Apache-2.0"
 
 ### Current Agents
 
-- **Managed agents**: Discover the currently available agent IDs from the
-  official Gemini API documentation and the authenticated account before use.
+- `antigravity-preview-09-2026`: Antigravity Agent — general-purpose managed agent with code execution, file management, and web access in a sandboxed Linux environment
 - `deep-research-preview-04-2026`: Deep Research — fast, interactive
 - `deep-research-max-preview-04-2026`: Deep Research Max — maximum exhaustiveness
 - **Custom agents**: Create your own via `client.agents.create()`
 
 ### Current SDKs
 
-- **Python**: `google-genai` >= `2.3.0` → `pip install -U google-genai`
-- **JavaScript/TypeScript**: `@google/genai` >= `2.3.0` → `npm install @google/genai`
+- **Python**: `google-genai` >= `2.30.1` → `pip install -U google-genai`
+- **JavaScript/TypeScript**: `@google/genai` >= `2.29.1` → `npm install @google/genai`
 
 > [!NOTE]
 > SDK versions ≥ 2.0.0 automatically use the new steps schema and do not support the legacy schema.
@@ -61,6 +61,8 @@ license: "Apache-2.0"
 - **Migrating from `generateContent`**: Read `references/migration.md` for the scoping, checklist, and before/after code examples. Always confirm scope with the user before editing.
 - **Model upgrades**: Drop-in, swap the model string. Deprecated models (`gemini-2.0-*`, `gemini-1.5-*`) must be replaced, see `references/migration.md`.
 - **Migrating to Gemini 3.8 Flash or Gemini 3.5 Flash-Lite**: Read `references/migration.md` for the scoping and checklist.
+- **Migrating to Gemini 3.8 TTS (`gemini-3.8-flash-tts` / `gemini-3.8-flash-lite-tts`)**: Read `references/migration.md` for breaking changes from `gemini-3.1-flash-tts-preview` (`speech_metadata` annotations, inline vocal tags, default WAV `audio/wav` unary output vs `audio/l16` streaming output, and Voice Design personas).
+- **Migrating to Gemini Nano Banana 2.1 (`gemini-nano-banana-2.1`)**: Read `references/migration.md` for upgrading from `gemini-3.1-flash-image` (deprecated) and using multi-image reference fusion with up to 14 reference images.
 
 ## Quick Start
 
@@ -188,12 +190,9 @@ Advanced features: collaborative planning, native visualization, MCP integration
 
 Managed agents run inside a sandboxed Linux environment hosted by Google. Fetch the [Managed Agents Quickstart](https://ai.google.dev/gemini-api/docs/managed-agents-quickstart.md.txt) before writing agent code.
 
-### Managed agent invocation
+### Antigravity Agent
 
-Managed-agent capabilities, IDs, environments, tools, and pricing change over
-time. Discover the current managed-agent ID and read the matching official
-documentation before writing an invocation. Do not copy an ID from an old
-example or assume that every account exposes the same agent.
+The Antigravity agent (`antigravity-preview-09-2026`) is the general-purpose managed agent. It can execute code (Bash, Python, Node.js), manage files, browse the web, and use Google Search. It uses `gemini-3.8-flash` by default and also supports `gemini-4-argon` via `agent_config={"type": "antigravity", "model": "gemini-4-argon"}`. See [Antigravity Agent docs](https://ai.google.dev/gemini-api/docs/antigravity-agent.md.txt) for capabilities, tools, multimodal input, and pricing.
 
 #### Python
 ```python
@@ -202,7 +201,7 @@ from google import genai
 client = genai.Client()
 
 interaction = client.interactions.create(
-    agent="<managed-agent-id>",
+    agent="antigravity-preview-09-2026",
     input="Write a Python script that generates the first 20 Fibonacci numbers and saves them to fibonacci.txt. Then read the file and print its contents.",
     environment="remote",
 )
@@ -218,7 +217,7 @@ import { GoogleGenAI } from "@google/genai";
 const client = new GoogleGenAI({});
 
 const interaction = await client.interactions.create({
-    agent: "<managed-agent-id>",
+    agent: "antigravity-preview-09-2026",
     input: "Write a Python script that generates the first 20 Fibonacci numbers and saves them to fibonacci.txt. Then read the file and print its contents.",
     environment: "remote",
 });
@@ -235,7 +234,7 @@ See [Building Custom Agents docs](https://ai.google.dev/gemini-api/docs/custom-a
 ```python
 agent = client.agents.create(
     id="code-reviewer",
-    base_agent="<managed-agent-id>",
+    base_agent="antigravity-preview-09-2026",
     system_instruction="You are a senior code reviewer. Check every file for bugs, style issues, and security vulnerabilities.",
     base_environment={
         "type": "remote",
@@ -262,7 +261,7 @@ print(result.output_text)
 ```typescript
 const agent = await client.agents.create({
     id: "code-reviewer",
-    base_agent: "<managed-agent-id>",
+    base_agent: "antigravity-preview-09-2026",
     system_instruction: "You are a senior code reviewer. Check every file for bugs, style issues, and security vulnerabilities.",
     base_environment: {
         type: "remote",
@@ -355,7 +354,9 @@ For streaming with tools, thinking, agents, and image generation see the full [S
 - [Image Generation](https://ai.google.dev/gemini-api/docs/image-generation.md.txt)
 - [Image Understanding](https://ai.google.dev/gemini-api/docs/image-understanding.md.txt)
 - [Video Generation & Editing (Omni Flash)](https://ai.google.dev/gemini-api/docs/omni.md.txt)
-- [Speech Generation](https://ai.google.dev/gemini-api/docs/speech-generation.md.txt)
+- [Speech Generation (TTS)](https://ai.google.dev/gemini-api/docs/speech-generation.md.txt)
+- [Voice Design](https://ai.google.dev/gemini-api/docs/voice-design.md.txt)
+- [Voice Replication](https://ai.google.dev/gemini-api/docs/voice-replication.md.txt)
 - [Music Generation](https://ai.google.dev/gemini-api/docs/music-generation.md.txt)
 - [Embeddings](https://ai.google.dev/gemini-api/docs/embeddings.md.txt)
 
@@ -368,19 +369,23 @@ For streaming with tools, thinking, agents, and image generation see the full [S
 **Files & Context:**
 - [Files](https://ai.google.dev/gemini-api/docs/files.md.txt)
 - [File Input Methods](https://ai.google.dev/gemini-api/docs/file-input-methods.md.txt)
+- [Long Context](https://ai.google.dev/gemini-api/docs/long-context.md.txt)
 - [Caching](https://ai.google.dev/gemini-api/docs/caching.md.txt)
 - [Media Resolution](https://ai.google.dev/gemini-api/docs/media-resolution.md.txt)
 
 **Agents:**
 - [Agents Overview](https://ai.google.dev/gemini-api/docs/agents.md.txt)
 - [Managed Agents Quickstart](https://ai.google.dev/gemini-api/docs/managed-agents-quickstart.md.txt)
+- [Antigravity Agent](https://ai.google.dev/gemini-api/docs/antigravity-agent.md.txt)
 - [Agent Environments](https://ai.google.dev/gemini-api/docs/agent-environment.md.txt)
 - [Agent Hooks](https://ai.google.dev/gemini-api/docs/agent-hooks.md.txt)
+- [Agent Credentials](https://ai.google.dev/gemini-api/docs/agent-credentials.md.txt)
 - [Building Custom Agents](https://ai.google.dev/gemini-api/docs/custom-agents.md.txt)
 - [Deep Research](https://ai.google.dev/gemini-api/docs/deep-research.md.txt)
 
 **Advanced Features:**
-- [Latest Models (3.8 Flash & 3.5 Flash-Lite)](https://ai.google.dev/gemini-api/docs/latest-model.md.txt)
+- [Latest Model (Gemini 4 Argon)](https://ai.google.dev/gemini-api/docs/latest-model.md.txt)
+- [Background Execution](https://ai.google.dev/gemini-api/docs/background-execution.md.txt)
 - [Flex Inference](https://ai.google.dev/gemini-api/docs/flex-inference.md.txt)
 - [Priority Inference](https://ai.google.dev/gemini-api/docs/priority-inference.md.txt)
 
@@ -410,7 +415,7 @@ An `Interaction` response contains `steps`, an array of typed step objects repre
 - `file_search_call` / `file_search_result`: File search tool steps, can have a `signature` field.
 
 ### Content types (inside `content` array on `model_output` and `user_input` steps)
-- `text`: Text content (`text` field)
+- `text`: Text content (`text` field, plus optional `annotations` such as `{"type": "speech_metadata", "speaker": "...", "style": "..."}` for TTS)
 - `image` / `audio` / `document` / `video`: Content with `data`, `mime_type`, or `uri`
 
 ### Streaming Event Types
@@ -434,11 +439,11 @@ An `Interaction` response contains `steps`, an array of typed step objects repre
 | `thought_summary` | `thought` | thinking summary text. |
 | `thought_signature` | `thought` | Opaque signature for thought verification. |
 
-**Status values:** `completed`, `in_progress`, `requires_action`, `failed`, `cancelled`
+**Status values:** `completed`, `in_progress`, `queued`, `requires_action`, `incomplete`, `failed`, `cancelled`
 
 ## Gemini Live API
 
-For real-time, bidirectional audio/video/text streaming with the Gemini Live API, install the **`google-gemini/gemini-live-api-dev`** skill. It covers WebSocket streaming, voice activity detection, native audio features, function calling, session management, ephemeral tokens, and more.
+For real-time, bidirectional audio/video/text streaming with the Gemini Live API (`gemini-3.8-live`, `gemini-3.8-live-extended-thinking`, and `gemini-3.5-transcribe-live`), install the **`google-gemini/gemini-live-api-dev`** skill. It covers WebSocket streaming, voice activity detection, background reasoning (extended thinking), asynchronous function calling, session management, ephemeral tokens, and more.
 
 <!-- MCP:START -->
 

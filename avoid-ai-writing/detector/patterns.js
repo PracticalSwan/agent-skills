@@ -1737,6 +1737,34 @@ const AIDetector = (() => {
     sourceMap = norm.sourceMap;
 
     const wordCount = countWords(text);
+    // Unsegmented-script check (GH-241): Chinese and Japanese carry no
+    // inter-word spaces, so a long document can be misread as one token or
+    // newline-wrapped lines can be scored without segmentation. Decline when
+    // CJK script characters dominate non-whitespace content; incidental Han
+    // characters in otherwise English prose stay scorable.
+    const cjkChars = (text.match(/[\p{Script_Extensions=Han}\p{Script_Extensions=Hiragana}\p{Script_Extensions=Katakana}]/gu) || []).length;
+    const nonSpaceChars = (text.match(/\S/gu) || []).length;
+    if (cjkChars > 0 && cjkChars * 2 >= nonSpaceChars) {
+      return {
+        ...buildV2Defaults('UNSCORED', 'low'),
+        score: 0,
+        label: 'Unsupported script',
+        issues: [],
+        stats: {
+          wordCount,
+          cjkChars,
+          reason: 'unsegmented-script document: no inter-word spaces to count',
+          contextMode,
+          contextModeFallback,
+          sourceMode,
+          sourceModeFallback,
+          maskedFrontmatter,
+          maskedHtmlComments,
+          quotedLines,
+        },
+        unsupportedScript: true,
+      };
+    }
     if (wordCount < 10) {
       return {
         ...buildV2Defaults('UNSCORED', 'low'),

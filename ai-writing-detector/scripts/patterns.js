@@ -71,9 +71,39 @@ const AIDetector = (() => {
 
   const ZERO_WIDTH_RE = /[​-‍﻿⁠]/u;
   const ZERO_WIDTH_GLOBAL_RE = /[​-‍﻿⁠]/gu;
+  const HOMOGLYPH_RE = /[Ѐ-ӿͰ-Ͽ]/u;
   const HOMOGLYPH_GLOBAL_RE = /[Ѐ-ӿͰ-Ͽ]/gu;
+  const LATIN_LETTER_RE = /\p{Script=Latin}/u;
+  // Dates, versions and ASCII filenames keep internal dots; prose may hard-wrap.
+  // Other sentence punctuation and Markdown/HTML block starts separate units, even
+  // without a space, so unrelated Russian text cannot hide an English word.
+  const SENTENCE_UNIT_GLOBAL_RE = /(?:[^.!?\r\n]|(?<=[A-Za-z0-9_])\.(?=[A-Za-z0-9_])|\r?\n(?![ \t]*(?:\r?\n|(?:[-*+]|#{1,6}|\d+[.)])\s|[><|]|`{3}|~{3}|(?:-+|(?:\*[ \t]*){3,}|(?:_[ \t]*){3,}|(?:-[ \t]*){3,}|=+)[\t ]*(?:\r?\n|$)|:?-+:?[\t ]*(?:\|[\t ]*:?-+:?[\t ]*)+\|?[\t ]*(?:\r?\n|$))))+/g;
+  // Words are letter runs; a hyphen splits them, so "API-сервис" stays two
+  // words and its Russian half is not swapped.
+  const LETTER_RUN_GLOBAL_RE = /[\p{L}\p{M}]+/gu;
   const ROLEPLAY_VERBS_RE = /^(?:nods|sighs|laughs|smiles|frowns|shrugs|grins|winks|chuckles|gasps|pauses|thinks|wonders|whispers|shouts|gestures|raises|leans|turns|looks|glances|smirks|blinks|nodding|sighing|laughing|smiling|thinking|gesturing)\b/i;
   const ROLEPLAY_MARKER_RE = /(?<!\*)\*([^*\n]{1,80}?)\*(?!\*)/gu;
+
+  // A word joiner (U+2060) only counts as a bypass character when it splits a
+  // word: letters on both sides, the shape a humanizer uses to break "delve"
+  // apart. Show-notes and CMS editors insert word joiners next to URLs and
+  // punctuation to control line breaking (#351); those are still stripped so
+  // matching sees clean text, but they are typesetting, not AI evidence.
+  // Neighbours are read past a short adjacent zero-width run, so a doubled
+  // joiner inside a word still counts. The bound keeps a long run linear.
+  const LETTER_END_RE = /\p{L}$/u;
+  const LETTER_START_RE = /^\p{L}/u;
+  const MAX_ZERO_WIDTH_SKIP = 8;
+  function countsAsBypass(chars, i) {
+    if (chars[i] !== '\u2060') return true;
+    let before = i - 1;
+    while (before >= 0 && i - before <= MAX_ZERO_WIDTH_SKIP && ZERO_WIDTH_RE.test(chars[before])) before -= 1;
+    let after = i + 1;
+    while (after < chars.length && after - i <= MAX_ZERO_WIDTH_SKIP && ZERO_WIDTH_RE.test(chars[after])) after += 1;
+    // A two-unit slice lets the Unicode regex see a supplementary-plane letter.
+    return LETTER_END_RE.test(chars.slice(Math.max(0, before - 1), before + 1))
+      && LETTER_START_RE.test(chars.slice(after, after + 2));
+  }
 
   function normalizeText(text, sourceMap) {
     const flags = { zeroWidth: 0, homoglyph: 0, roleplay: 0 };
@@ -81,13 +111,14 @@ const AIDetector = (() => {
     let map = Array.isArray(sourceMap) ? sourceMap : null;
 
     // 1. Strip zero-width chars (ZWSP U+200B, ZWNJ U+200C, ZWJ U+200D,
-    //    BOM U+FEFF, word joiner U+2060).
+    //    BOM U+FEFF, word joiner U+2060). Word joiners outside a word are
+    //    stripped without being counted; see countsAsBypass.
     if (map) {
       const chars = [];
       const nextMap = [];
       for (let i = 0; i < out.length; i += 1) {
         if (ZERO_WIDTH_RE.test(out[i])) {
-          flags.zeroWidth += 1;
+          if (countsAsBypass(out, i)) flags.zeroWidth += 1;
           continue;
         }
         chars.push(out[i]);
@@ -96,18 +127,66 @@ const AIDetector = (() => {
       out = chars.join('');
       map = nextMap;
     } else {
-      out = out.replace(ZERO_WIDTH_GLOBAL_RE, () => {
-        flags.zeroWidth += 1;
+      out = out.replace(ZERO_WIDTH_GLOBAL_RE, (_, offset, whole) => {
+        if (countsAsBypass(whole, offset)) flags.zeroWidth += 1;
         return '';
       });
     }
 
     // 2. Swap Cyrillic / Greek Latin-lookalike chars back to Latin so
-    //    pattern matching catches obfuscated tokens.
-    out = out.replace(HOMOGLYPH_GLOBAL_RE, (m) => {
-      const swap = CYRILLIC_LOOKALIKES[m] ?? GREEK_LOOKALIKES[m];
+    //    pattern matching catches obfuscated tokens. Swapping every а, е, о
+    //    reported thousands of "homoglyph swaps" on plain Russian text, and
+    //    swapping inside ordinary Russian words flagged bilingual technical
+    //    text, so only two word shapes are swapped:
+    //    - mixed-script words ("pаypal", "dеlve"), anywhere;
+    //    - words of two or more letters spelled entirely in lookalike
+    //      letters ("аст" for "act"), when the sentence around them has no
+    //      Russian or Greek in it: every Cyrillic and Greek letter in the
+    //      sentence is a lookalike. Deciding per sentence, not per document,
+    //      keeps Russian padding from hiding such a word in an English
+    //      sentence.
+    //    Sentence punctuation, blank lines and Markdown block starts separate units.
+    //    Internal ASCII-token dots ("07.10", "v1.2", "report.pdf") and a prose
+    //    hard wrap do not end it: cutting there left pieces such as "поста в
+    //    r/StableDiffusion от 07" that looked like Latin text.
+    //    Ordinary Russian words contain non-lookalike letters (з, п, и, л),
+    //    so short Russian words in Russian technical prose ("на Enum",
+    //    "от 07.10") stay put, and one-letter prepositions (с, о, у) are too
+    //    short.
+    //    Known limits, because no letter-level rule separates these from
+    //    real Russian: a fully substituted word inside or next to Russian
+    //    words ("МЕТА поможет", "пароль: аст"), including across prose hard wraps,
+    //    is left alone; a one-letter
+    //    lookalike split off by a hyphen ("а-ct") is left alone; and a short
+    //    Russian sentence spelled only in lookalike letters ("Он сам.") is
+    //    swapped.
+    const lookalikeFor = (m) => CYRILLIC_LOOKALIKES[m] ?? GREEK_LOOKALIKES[m];
+    const swapLookalike = (m) => {
+      const swap = lookalikeFor(m);
       if (swap) { flags.homoglyph++; return swap; }
       return m;
+    };
+    const letterCount = (word) => (word.match(/\p{L}/gu) || []).length;
+    const allLookalike = (word) => letterCount(word) >= 2
+      && [...word].every((ch) => lookalikeFor(ch) || !/\p{L}/u.test(ch));
+    out = out.replace(SENTENCE_UNIT_GLOBAL_RE, (unit) => {
+      const scriptLetters = unit.match(HOMOGLYPH_GLOBAL_RE) || [];
+      const onlyLookalikes = scriptLetters.length > 0 && scriptLetters.every((ch) => lookalikeFor(ch));
+      const words = [...unit.matchAll(LETTER_RUN_GLOBAL_RE)];
+      let result = '';
+      let last = 0;
+      words.forEach((match) => {
+        const word = match[0];
+        let next = word;
+        if (HOMOGLYPH_RE.test(word)) {
+          if (LATIN_LETTER_RE.test(word) || (allLookalike(word) && onlyLookalikes)) {
+            next = word.replace(HOMOGLYPH_GLOBAL_RE, swapLookalike);
+          }
+        }
+        result += unit.slice(last, match.index) + next;
+        last = match.index + word.length;
+      });
+      return result + unit.slice(last);
     });
 
     // 3. Strip *roleplay-action* markers — paired *...* containing an
@@ -169,7 +248,7 @@ const AIDetector = (() => {
   // ─── Tier 1: Always flag ───────────────────────────────────────────
   const TIER1 = {
     'delve': 'explore, dig into, look at',
-    'tapestry': 'describe the actual complexity',
+    'tapestry': 'complex structure, rich history',
     'paradigm': 'model, approach, framework',
     'beacon': 'rewrite entirely',
     'robust': 'strong, reliable, solid',
@@ -180,10 +259,10 @@ const AIDetector = (() => {
     'meticulously': 'carefully, precisely',
     'seamless': 'smooth, easy, without friction',
     'seamlessly': 'smoothly, easily',
-    'game-changer': 'describe what changed',
-    'game-changing': 'describe what changed',
+    'game-changer': 'changes how [X] works',
+    'game-changing': 'changes how [X] works',
     'nestled': 'is located, sits',
-    'vibrant': 'describe what makes it active',
+    'vibrant': 'lively, active',
     'thriving': 'growing, active',
     'bustling': 'busy, active',
     'intricate': 'complex, detailed',
@@ -196,14 +275,139 @@ const AIDetector = (() => {
     'actionable': 'practical, useful, concrete',
     'impactful': 'effective, significant',
     'learnings': 'lessons, findings, takeaways',
-    'synergy': 'describe the combined effect',
-    'synergies': 'describe the combined effect',
+    'synergy': 'combined effect, benefit of working together',
+    'synergies': 'combined effect, benefit of working together',
     'interplay': 'relationship, connection',
-    'symphony': 'describe the coordination',
+    'symphony': 'coordination, balance',
     'embrace': 'adopt, accept, use',
   };
 
   // Multi-word tier 1 phrases
+  // "features" is copula avoidance only as a verb: "the app features a
+  // dashboard". The plural noun ("three new features", a "Features" heading,
+  // "the features we shipped") is ordinary product and technical writing, and
+  // it is most of what the word does in corpus/ (#351). A verb needs a subject
+  // before it and an object after it, so the word counts as a noun when it
+  // opens a sentence, line or list item; follows a determiner, number,
+  // possessive, quantifier, "of", "or" or a compound modifier; or comes
+  // before punctuation, a line break, a preposition, a conjunction, a pronoun
+  // or a verb.
+  // Singular "this", "that" and "each" cannot determine the plural noun:
+  // here they are subjects ("each features a...") or a relative pronoun.
+  const FEATURES_NOUN_BEFORE_RE = /(?:^|[.!?:;(]\s*|(?:^|\n)[ \t]*(?:[-*+>#]+[ \t]*)?|\b(?:the|a|an|these|those|its|their|our|your|my|his|her|of|or|new|key|main|core|top|other|more|most|many|several|some|all|any|few|no|both|only|about|over|just|free|similar|common|specific|distinct|additional|extra|premium|advanced|basic|best|unique|missing|upcoming|existing|latest|major|minor|useful|important|various|different|certain|such|\d+|two|three|four|five|six|seven|eight|nine|ten|whose)\s+|\w['’]s\s+|\w[-/]\w+\s+)$/i;
+  // "on-device" is an object modifier, not the preposition "on".
+  const FEATURES_NOUN_AFTER_RE = /^(?:[ \t]*(?:[.,;:!?()[\]"'’”\n]|$)|\s+(?:of|for|in|on|at|into|and|or|but|nor|are|were|is|was|be|been|being|that|which|who|whose|like|such|to|from|with|without|than|help|helps|helped|let|allow|make|keep|give|provide|enable|offer|save|protect|ensure|improve|reduce|support|remain|vary|need|unlock|bring|include|includes|included|work|works|worked|will|can|could|should|would|may|might|must|do|did|does|have|has|had|we|you|they|i|it)(?![\w-]))/i;
+  // Bare product objects: "we ship features", "teams build features".
+  // A subject is required so noun subjects such as "the ship"/"the build"
+  // still flag. One optional modifier preserves "we ship GPT-5 features".
+  const FEATURES_NOUN_OBJECT_RE = /\b(?:i|we|you|they|teams?|developers?|engineers?|users?|companies|vendors|the\s+(?:release|update))\s+(?:(?:can|could|will|would|should|must)\s+)?(?:ship|ships|shipped|shipping|build|builds|built|building|add|adds|added|adding)\s+(?:[\w./-]+\s+)?$/i;
+  // Leads that make "which/what features" an indirect question (#384): a question
+  // verb that opens its clause ("Decide which...", "we should check which..."),
+  // or which/what at the start of a sentence or list item. A lead word inside a
+  // noun phrase ("a security check which features...") does not count.
+  const FEATURES_QUESTION_LEAD_RE = /(?:^|[.!?:;]\s*|(?:^|\n)[ \t]*(?:[-*+>#]+[ \t]*)?|(?:^|[.!?:;,]\s*|(?:^|\n)[ \t]*(?:[-*+>#]+[ \t]*)?|\b(?:i|we|you|they|he|she|let['’]?s|to|can|could|should|must|will|would|please|just|then|first|now|and|or|but|so)\s+)(?:decide|decides|deciding|choose|choosing|pick|check|checking|see|know|knowing|learn|find\s+out|figure\s+out|work\s+out|identify|determine|ask|asking|asked|tell\s+(?:me|us|them|you)|show\s+(?:me|us|them|you)|understand|explain|wonder|discover|confirm|consider|evaluate|prioritize|about)\s+)(?:which|what)\s+$/i;
+
+  // A lead word after a determiner is a noun ("a track which features...",
+  // "the review which features..."), not a question verb.
+  const FEATURES_LEAD_AS_NOUN_RE = /\b(?:a|an|the|this|that|these|those|my|our|your|their|its|his|her|each|every)\s+[\w-]+\s+(?:which|what)\s+$/i;
+
+  // Subjects that definitively make "features" a verb, avoiding ambiguity with
+  // plural-noun subjects like "The experimental features" or "Security features".
+  const FEATURES_VERB_SUBJECTS = /\b(?:library|tool|app|application|platform|system|language|service|product|update|release|version|site|website|game|device|model|framework|package|plugin|extension|which|what|that|who|it|he|she)\s+$/i;
+
+  function featuresIsNoun(text, index) {
+    const end = index + 'features'.length;
+    const before = text.slice(Math.max(0, index - 40), index);
+    const after = text.slice(end, end + 40);
+    if (FEATURES_NOUN_OBJECT_RE.test(before)) return true;
+    // A recognizable model/version followed by an object article is a
+    // subject: "GPT-5 features a...", "Windows 11 features a...".
+    // Determiner-led counts ("These 3 features a customer requested") and
+    // the explicit object contexts above remain nouns. This is a bounded
+    // context heuristic, not a grammatical parse of every use of the word.
+    const product = /\b([A-Z][\w]*)(?:[-/]\d[\w.-]*|[ \t]+\d+(?:\.\d+)*)[ \t]+$/.exec(before);
+    if (product && !FEATURES_NOUN_BEFORE_RE.test(`${product[1]} `)
+        && /^\s+(?:a|an|the)(?![\w-])/i.test(after)) return false;
+    // A short comma-delimited aside can precede the verb's article-led
+    // object. Strong noun contexts still take priority over punctuation.
+    if (!FEATURES_NOUN_BEFORE_RE.test(before)
+        && /^[ \t]*,[^,\n]{1,80},\s*(?:a|an|the)(?![\w-])/i.test(text.slice(end, end + 110))) return false;
+
+    // "which/what features" is a noun in an indirect question: right after a
+    // question verb ("Decide which features matter") or at the start of a
+    // sentence ("Which features matter most..."). Every other context falls
+    // through to the checks below unchanged, so relative clauses ("a library
+    // which features dashboards") keep their verb finding (#384).
+    if (FEATURES_QUESTION_LEAD_RE.test(before) && !FEATURES_LEAD_AS_NOUN_RE.test(before)) {
+      // If there is no trailing verb (e.g. end of clause), it's the verb case ("Check what features a dashboard and export tools.").
+      // Look past a compound subject and optional appositive for a trailing verb before returning the verb classification.
+      const match = /^\s+(?:a|an|the)\s+[\w-]+\s*(?:(?:and\b|or\b)\s+(?:a\s+|an\s+|the\s+)?(?:[\w-]+\s+){0,2}[\w-]+\s*)?(?:([,.!?;])|$)/i.exec(after);
+      if (match) {
+        const predicateRe = /\b(?:can|could|should|will|would|may|might|must|is|are|was|were|has|have|had|do|does|did|include|includes|disable|disables|reject|accept|allow|deny|provide|require|use|make|work|help|give|take|need|become|seem|look|show|offer|support|supports|fail|pass|lack|prefer|choose|prevent|stop)\b/i;
+
+        // If the matched subject ends with a predicate right before the punctuation,
+        // the predicate was consumed as part of the compound subject.
+        const subjectText = match[0].slice(0, match[1] ? -match[1].length : undefined).trim();
+        const lastWord = subjectText.split(/\s+/).pop();
+        if (predicateRe.test(lastWord)) {
+          return true;
+        }
+
+        if (match[1] === ',') {
+          // If the comma leads into a phrase, limit noun classification to a predicate
+          // belonging to the article-led subject (after the next comma), excluding predicates inside subordinate clauses.
+          const remainder = text.slice(end + match[0].length, end + 120);
+          // An adverb can sit between the closing comma and the predicate.
+          const remainderPredicateRe = new RegExp(`^[^,]+,\\s*(?:(?:[\\w-]+ly|also|not|never)\\s+){0,2}${predicateRe.source}`, 'i');
+          if (remainderPredicateRe.test(remainder)) {
+            return true;
+          }
+        }
+        return false;
+      }
+      return true;
+    }
+
+    // "The library features support for..." is a verb.
+    // "Security features support for..." is a plural noun subject + verb.
+    if (FEATURES_VERB_SUBJECTS.test(before) && /^\s+support\s+for\b/i.test(after)) {
+      // A nearby quantifier in an earlier clause cannot make a singular pronoun plural.
+      if (/\b(?:it|he|she)\s+$/i.test(before)) return false;
+      const hasPluralDeterminer = /\b(?:these|those|all|some|many|few|various|multiple|several|both)\s+(?:[\w-]+\s+){1,2}$/i.test(before);
+      // Count words modify "features" only when they follow its determiner.
+      // A digit inside a product name ("This Windows 11 app") or a date before
+      // the subject ("In 2024 the library") is not a plural count.
+      const hasPluralCount = /\b(?:the|a|an|this|that|my|our|your|their|its|his|her|each|every)\s+(?:(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|dozen)\s+(?:[\w-]+\s+){1,2}|(?!(?:19|20)\d{2}\s)\d{3,}\s+(?!(?:[\w-]+\s+)?(?:app|release|model|version|update)\s+$)(?:[\w-]+\s+){1,2})$/i.test(before);
+      const extendedAfter = text.slice(end, end + 100);
+      // A predicate inside a relative clause modifying the object (e.g. "teams that connect and remain online")
+      // is not coordinated with the main subject. Limit predicate search to the direct prepositional object.
+      const hasPartitivePlural = /\b(?:all|some|many|most|few|several|both|\d+|two|three|four|five|six|seven|eight|nine|ten)\s+of\s+(?:the|my|our|your|their|its|his|her)\s+(?:[\w-]+\s+){1,3}$/i.test(before);
+      const hasPluralPredicate = /^\s+support\s+for(?:(?!\b(?:that|which|who|whom|whose|where|when)\b)[^.?!;]){0,80}?\b(?:and|but|or|nor)\s+(?:are|were|have|do|reject|accept|allow|deny|provide|require|use|make|work|help|give|take|need|become|seem|look|show|include|offer|support|remain|fail|pass|lack|prefer|choose|prevent|stop)\b/i.test(extendedAfter);
+      const hasForObject = /^\s+support\s+for(?:-|\s+)(?:profit|loops?)\b/i.test(after);
+      // Numeric modifiers and plural cues exclude a singular-subject reading:
+      // "The two platform features..." has plural noun "features".
+      // Do not borrow a determiner across a preposition or conjunction:
+      // "a suite of system features" still has plural noun "features".
+      // "that" can introduce a clause and "which" can determine plural nouns.
+      // A relative pronoun needs its own determiner-led subject evidence.
+      const hasUnambiguousSingular = /\b(?:a|an|this|that|every|each|one)\s+(?:(?!(?:of|for|in|with|and|or|which|what|that|who|two|three|four|five|six|seven|eight|nine|ten|multiple|several|many|few|both|various)\b)[\w-]+\s+){1,3}$/i.test(before)
+        || /\b(?:it|he|she)\s+$/i.test(before)
+        || /\b(?:a|an|this|that|each|every|one)\s+[\w-]+\s+(?:which|that|who)\s+$/i.test(before);
+
+      const hasSingularEvidence = hasUnambiguousSingular
+        || /\b(?:the|my|our|your|their|its|his|her)\s+(?:(?!(?:of|for|in|with|and|or|which|what|that|who|two|three|four|five|six|seven|eight|nine|ten|multiple|several|many|few|both|various)\b)[\w-]+\s+){1,3}$/i.test(before)
+        || /\b(?:the|my|our|your|their|its|his|her)\s+[\w-]+\s+(?:which|that|who)\s+$/i.test(before);
+
+      // Unambiguous singular subjects ("It", "This app") cannot be plural-noun phrases,
+      // so hasForObject ("support for loops") only suppresses ambiguous determiners ("The library").
+      if (!hasPluralDeterminer && !hasPluralCount && !hasPartitivePlural && !hasPluralPredicate && (hasUnambiguousSingular || (!hasForObject && hasSingularEvidence))) {
+        return false;
+      }
+    }
+
+    return FEATURES_NOUN_BEFORE_RE.test(before) || FEATURES_NOUN_AFTER_RE.test(after);
+  }
+
   const TIER1_PHRASES = [
     { pattern: /\bdelve\s+into\b/gi, replace: 'explore, dig into' },
     { pattern: /\blandscape\b/gi, replace: 'field, space, industry', filter: true },
@@ -211,21 +415,21 @@ const AIDetector = (() => {
     { pattern: /\btestament\s+to\b/gi, replace: 'shows, proves' },
     { pattern: /\bleverag(?:e|es|ing|ed)\b/gi, replace: 'use' },
     { pattern: /\bwatershed\s+moment\b/gi, replace: 'turning point, shift' },
-    { pattern: /\bmarking\s+a\s+pivotal\s+moment\b/gi, replace: 'state what happened' },
+    { pattern: /\bmarking\s+a\s+pivotal\s+moment\b/gi, replace: 'changing [X], leading to [Y]' },
     { pattern: /\bthe\s+future\s+looks\s+bright\b/gi, replace: 'cut or say something specific' },
     { pattern: /\bonly\s+time\s+will\s+tell\b/gi, replace: 'cut or say something specific' },
-    { pattern: /\bdespite\s+challenges[^.]*continues?\s+to\s+thrive\b/gi, replace: 'name the challenge and response' },
+    { pattern: /\bdespite\s+challenges[^.]*continues?\s+to\s+thrive\b/gi, replace: 'keeps growing despite [named difficulty], continues to succeed despite [named difficulty]' },
     { pattern: /\bdeep\s+dive\b/gi, replace: 'look at, examine' },
     { pattern: /\bdive\s+into\b/gi, replace: 'look at, examine' },
     { pattern: /\bunpack(?:ing)?\b/gi, replace: 'explain, break down' },
-    { pattern: /\bcomplexities\b/gi, replace: 'name the actual problems' },
+    { pattern: /\bcomplexities\b/gi, replace: 'problems, details' },
     { pattern: /\bthought\s+leader(?:ship)?\b/gi, replace: 'expert, authority' },
     { pattern: /\bbest\s+practices\b/gi, replace: 'what works, proven methods' },
     { pattern: /\bat\s+its\s+core\b/gi, replace: 'cut, just state it' },
     { pattern: /\bin\s+order\s+to\b/gi, replace: 'to', clarity: true },
     { pattern: /\bdue\s+to\s+the\s+fact\s+that\b/gi, replace: 'because', clarity: true },
     { pattern: /\bserves\s+as\b/gi, replace: 'is', clarity: true },
-    { pattern: /\bfeatures\b/gi, replace: 'has, includes', filter: true, clarity: true },
+    { pattern: /\bfeatures\b/gi, replace: 'has, includes', filter: true, clarity: true, skip: featuresIsNoun },
     { pattern: /\bboasts\b/gi, replace: 'has', clarity: true },
     { pattern: /\butiliz(?:e|es|ing|ed)\b/gi, replace: 'use', clarity: true },
     { pattern: /\bshowcas(?:e|es|ing|ed)\b/gi, replace: 'show, demonstrate' },
@@ -264,7 +468,7 @@ const AIDetector = (() => {
     'underpin': 'support, form the basis of',
     'nuanced': 'specific, subtle, detailed',
     'crucial': 'important, key, necessary',
-    'multifaceted': 'describe the actual facets',
+    'multifaceted': 'having several parts, with several aspects',
     'ecosystem': 'system, community, network',
     'myriad': 'many, numerous',
     'plethora': 'many, a lot of',
@@ -277,8 +481,8 @@ const AIDetector = (() => {
     'illuminate': 'clarify, explain, show',
     'elucidate': 'explain, clarify',
     'juxtapose': 'compare, contrast',
-    'transformative': 'describe what changed',
-    'transformation': 'describe what changed',
+    'transformative': 'changes how [X] works',
+    'transformation': 'major change, overhaul',
     'cornerstone': 'foundation, basis, key part',
     'paramount': 'most important, top priority',
     'poised': 'ready, set, about to',
@@ -289,7 +493,7 @@ const AIDetector = (() => {
     'quietly': 'cut, or name the concrete contrast',
     'underpinning': 'basis, foundation',
     'underpinnings': 'basis, foundations',
-    'paradigm-shifting': 'describe what shifted',
+    'paradigm-shifting': 'changes the basic model, changes how [X] is understood',
   };
 
   // Conditional Tier 2 entries: everyday words whose AI tell is a specific
@@ -368,7 +572,6 @@ const AIDetector = (() => {
     'generic-conclusion': 3,
     'lets-construction': 2,
     'reasoning-artifact': 6,
-    'acknowledgment-loop': 3,
     'significance-inflation': 4,
     'vague-attribution': 5,
     'hollow-intensifier': 2,
@@ -410,6 +613,10 @@ const AIDetector = (() => {
     'performed-insight': 3,
     // Negation chains are a strong single-hit structural tell.
     'negation-chain': 5,
+    // Negative parallelism ("It's not just X, it's Y"). The frame is also
+    // how people state a real correction, so it is weighted below the
+    // negation chain; the per-piece gate in analyzeText does the rest.
+    'negative-parallelism': 4,
     'dev-blog-boilerplate': 3,
     'formulaic-opener': 8,
     // Speculative scenario opener ("Imagine a world where…"). Weighted like
@@ -429,7 +636,9 @@ const AIDetector = (() => {
     'fake-casual-prop': 8,
     'title-case-header': 4,
     'parenthetical-hedge': 3,
-    'smart-punct-signature': 6,
+    // House-style typography is a style review prompt, not authorship
+    // evidence. Keep it neutral in both the score and classifier (#351).
+    'smart-punct-signature': 0,
     'punct-distribution': 6,
     'fnword-trigram-entropy': 5,
     'cross-para-burstiness': 5,
@@ -528,18 +737,20 @@ const AIDetector = (() => {
     /\bworking\s+through\s+this\s+logically\b/gi,
   ];
 
-  // ─── Acknowledgment loops ──────────────────────────────────────────
-  const ACKNOWLEDGMENT_LOOPS = [
-    /\byou'?re\s+asking\s+about\b/gi,
-    /\bthe\s+question\s+of\s+whether\b/gi,
-    /\bto\s+answer\s+your\s+question\b/gi,
-  ];
+  // NOTE: Acknowledgment loops are judgment-only (#239). The three phrases the
+  // detector matched ("you're asking about", "the question of whether", "to answer
+  // your question") are also how people open an ordinary reply and standard
+  // analytical English. The tell is a restatement that adds nothing, which a
+  // regex cannot see. See detector/CATEGORIES.md §C.
 
   // ─── Significance inflation ────────────────────────────────────────
   const SIGNIFICANCE_INFLATION = [
     /\bmarking\s+a\s+(?:pivotal|significant|important)\s+moment\b/gi,
     /\ba\s+watershed\s+moment\s+for\b/gi,
-    /\bin\s+the\s+evolution\s+of\b/gi,
+    // Require an inflating word before "in the evolution of" (the bare phrase
+    // is allowed for literal uses like "a key stage in the evolution of the
+    // vertebrate eye"). See issue #212.
+    /\b(?:moment|milestone|chapter|era|turning\s+point|watershed|inflection\s+point|leap|role|new\s+phase)\s+in\s+the\s+evolution\s+of\b/gi,
     /\ba\s+(?:pivotal|defining)\s+moment\s+in\b/gi,
   ];
 
@@ -681,16 +892,51 @@ const AIDetector = (() => {
 
   // ─── Template phrases ──────────────────────────────────────────────
   const TEMPLATE_PHRASES = [
-    /\ba\s+\w+\s+step\s+(?:towards?|forward\s+for)\b/gi,
+    // template-phrase: only vague-praise adjectives. "a first step towards the full API",
+    // "a small step towards cutting our storage bill" stay clean.
+    /\ban?\s+(?:meaningful|significant|major|crucial|important|big|huge|bold|giant|monumental|pivotal|critical|key|vital|massive|tremendous|substantial|decisive|landmark|historic|exciting|transformative)\s+step\s+(?:towards?|forward)\b/gi,
     /\bwhether\s+you'?re\s+\w+\s+or\s+\w+/gi,
     /\bi\s+recently\s+had\s+the\s+pleasure\s+of\b/gi,
   ];
 
   // ─── False concession ──────────────────────────────────────────────
+  // "While X is impressive, Y remains a challenge" and "Although X has made
+  // strides, Y is still an open question" only read as the AI tell when both
+  // halves are vague: an opener that concedes nothing specific, paired with a
+  // close that names no actual gap. The subject (X) is widened past a single
+  // word — "while the underlying model architecture is impressive" is as
+  // hollow as "while it is impressive" — but stays inside one clause (no
+  // comma or sentence punctuation) so the opener cannot reach across clauses.
+  // The close is required in the same sentence: a bare opener followed by a
+  // concrete, specific continuation ("...at this scale, our write pattern is
+  // append-only, so we moved the hot table to a log-structured store
+  // instead") is ordinary technical writing, not the empty frame. See #211.
+  // "Despite X challenges" is dropped entirely: alone it is too common a
+  // shape in ordinary prose to carry the tell.
+  // The close must also follow a clause separator (comma, semicolon or
+  // colon): without one, "While the model is impressive and remains a
+  // challenge to maintain, we plan to replace it next month" matched both
+  // phrases inside the opening clause and never looked at the concrete main
+  // clause that followed. See #359.
+  // Stop at the next clause separator too: a concrete continuation followed
+  // by a later vague phrase is not the empty two-half frame.
+  const FALSE_CONCESSION_SUBJECT = "[^,;:.!?\\n]{1,60}?";
+  // Known limit: a period inside an abbreviation ("U.S.", "e.g.") ends the
+  // gap the same as a real sentence boundary would, so a close on the far
+  // side of one is deliberately missed to keep that boundary guarantee;
+  // only a comma, semicolon or colon counts as the clause separator #359
+  // requires.
+  const FALSE_CONCESSION_GAP = "[^,;:.!?\\n]{0,80}?[,;:]\\s*[^,;:.!?\\n]{0,80}?";
+  const FALSE_CONCESSION_VAGUE_CLOSE =
+    "(?:remains?\\s+a\\s+challenge" +
+    "|(?:is|are)\\s+still\\s+an?\\s+open\\s+questions?" +
+    "|there\\s+(?:is|are)\\s+still\\s+work\\s+to\\s+do" +
+    "|remains?\\s+unanswered)\\b";
   const FALSE_CONCESSION = [
-    /\bwhile\s+\w+\s+is\s+impressive\b/gi,
-    /\balthough\s+\w+\s+has\s+made\s+strides\b/gi,
-    /\bdespite\s+\w+\s+challenges?\b/gi,
+    new RegExp("\\bwhile\\s+" + FALSE_CONCESSION_SUBJECT + "\\s+is\\s+impressive\\b" +
+      FALSE_CONCESSION_GAP + FALSE_CONCESSION_VAGUE_CLOSE, 'gi'),
+    new RegExp("\\balthough\\s+" + FALSE_CONCESSION_SUBJECT + "\\s+has\\s+made\\s+strides\\b" +
+      FALSE_CONCESSION_GAP + FALSE_CONCESSION_VAGUE_CLOSE, 'gi'),
   ];
 
   // ─── Rhetorical question openers ───────────────────────────────────
@@ -874,8 +1120,19 @@ const AIDetector = (() => {
     /(?:['\u2019]s|\b(?:is|was|are|were))\s+the\s+(?:whole|entire)\s+(?:point|game|ballgame|trick|pitch|idea|play|business\s+model|value\s+proposition)\b/gi,
     /\b(?:that|this)(?:['\u2019]s|\s+(?:is|was))\s+the\s+part\s+(?:that|I|you|we|nobody|no\s+one|most\s+people)\b/gi,
     /\bthe\s+only\s+[\w'\u2019-]+\s+that\s+(?:matters|counts)\b/gi,
-    /\bis\s+dead\s*[.;,:\u2013\u2014]\s*long\s+live\b/gi,
+    // "X is dead; long live Y" also names an essay or a literal succession
+    // announcement. Whether the contrast earns its place needs reading (#351).
     /\b(?:that|this)(?:['\u2019]s|\s+(?:is|was))\s+why\s+[^.!?\n]{0,60}\s+mattered\b/gi,
+  ];
+
+  const STAGED_DISCOVERY = [
+    // Staged discovery: a judgment framed as a twist the writer found ("the recording
+    // turned out to be the least interesting part"). Superlative + insight noun keeps
+    // ordinary "turned out to be the most expensive option" clean.
+    /\b(?:turned|turns|turning)\s+out\s+to\s+be\s+the\s+(?:least|most)\s+(?:interesting|important|surprising|revealing|valuable|useful)\s+(?:part|thing|piece|bit)\b/gi,
+    // Require a reveal-style continuation; "the real story was covered by..."
+    // describes a literal story and is not a staged discovery.
+    /\bthe\s+real\s+story\s+(?:here\s+)?(?:is|was)\b(?=\s+(?:the|that|how|why|what)\b)/gi,
   ];
 
   // ─── Negation chains ───────────────────────────────────────────────
@@ -899,6 +1156,86 @@ const AIDetector = (() => {
     /\b(?:did\s+not|didn['\u2019]t)\s+[a-z]+[^,.;!?\n]{0,20},\s*(?:did\s+not|didn['\u2019]t)\s+[a-z]+/gi,
     /\b(?:do\s+not|don['\u2019]t)\s+(?:just\s+)?(\w+)\s+it\b[^.!?\n]{0,60}[.!?;:,][\s'"\u201d\u2019]*(?:just\s+)?\1\s+it\b/gi,
   ];
+
+  // ─── Negative parallelism ──────────────────────────────────────────
+  // "It's not just a search index, it's a foundation for trust." A frame is
+  // a negated copula, a body X, then a restatement: "it / this / that /
+  // they" + be. The engine splits frames in two (#351):
+  //
+  //   reveal    a minimizer (just / merely / simply), then a comma,
+  //             semicolon, colon, or dash and the restatement ("isn't just
+  //             raining, it's pouring"). The minimizer-then-upgrade move is
+  //             the tell itself, so a reveal flags on its own.
+  //   contrast  the same joined frame without the minimizer ("isn't X, it's
+  //             Y", "isn't about X, it's about Y", "are not only X, they're
+  //             Y") and the split-sentence reveal ("isn't just X. It's Y.").
+  //             A single plain correction ("It isn't raining, it's
+  //             snowing.") is ordinary English, and references/patterns.md
+  //             allows one frame per piece, so a contrast flags only when
+  //             another frame of either kind starts within
+  //             NP_WINDOW_SENTENCES sentences of it. The stacked cadence is
+  //             the tell; two unrelated corrections paragraphs apart are
+  //             ordinary prose. "only" is not a reveal minimizer: the human
+  //             control corpus holds "fossil fuels are not only bad for our
+  //             environment, they're a losing bet".
+  //
+  // The restated pronoun is the gate. "not only X but (also) Y" and "not X
+  // but Y" are ordinary correlatives and are not matched: on the human
+  // control corpus "not only ... but" appeared 16 times in 143k human words
+  // against 5 in 115k machine words. X is capped at 80 characters with no
+  // comma or sentence punctuation, so a frame cannot reach across clauses.
+  const NP_NEG = "(?:\\b(?:is|are|was|were)(?:n['\\u2019]t|\\s+not)|\\b(?:it|this|that|they|he|she|we|you)['\\u2019](?:s|re)\\s+not)";
+  const NP_MINIMIZER = "(?:just|merely|simply)";
+  const NP_BODY = "[^,;:.!?\\n\\u2014\\u2013]{1,80}?";
+  const NP_JOIN = "(?:\\s*[,;:]|\\s*[\\u2014\\u2013]|\\s+--)\\s*";
+  const NP_RESTATE = "(?:it|this|that|they)(?:['\\u2019](?:s|re)|\\s+(?:is|are|was|were))\\b";
+  const NEGATIVE_PARALLELISM_REVEAL = [
+    new RegExp(NP_NEG + "\\s+" + NP_MINIMIZER + "\\s+" + NP_BODY + NP_JOIN + NP_RESTATE, 'gi'),
+  ];
+  const NEGATIVE_PARALLELISM_CONTRAST = [
+    new RegExp(NP_NEG + "\\s+(?!" + NP_MINIMIZER + "\\b)" + NP_BODY + NP_JOIN + NP_RESTATE, 'gi'),
+    // Split-sentence reveal: the restatement opens the next sentence.
+    new RegExp(NP_NEG + "\\s+" + NP_MINIMIZER + "\\s+" + NP_BODY + "[.!]\\s+" + NP_RESTATE, 'gi'),
+  ];
+  // Two frames pair when their starting sentences are at most this many
+  // sentences apart: the same sentence, the next, or the one after.
+  const NP_WINDOW_SENTENCES = 2;
+  // A blank line in LF, CRLF, or CR-only text.
+  const NP_PARAGRAPH_BREAK = /(?:\r\n|\r(?!\n)|\n)[ \t]*(?:\r\n|\r|\n)/;
+
+  // Reveals always flag. A contrast flags only when some other frame, reveal
+  // or contrast, starts nearby. Sentence indexes come from the same coarse
+  // splitter the highlight regions use.
+  function negativeParallelismIssues(text, reveals, contrasts) {
+    // Apply the proximity gate to the same distinct frames the caller reports.
+    const distinctReveals = deduplicateIssues(reveals);
+    const distinctContrasts = deduplicateIssues(contrasts);
+    if (distinctContrasts.length === 0 || distinctReveals.length + distinctContrasts.length < 2) return distinctReveals;
+    const frames = [...distinctReveals, ...distinctContrasts];
+    const starts = splitSentenceSpans(text).map(([start]) => start);
+    const sentenceOf = (index) => {
+      let lo = 0;
+      let hi = starts.length - 1;
+      while (lo < hi) {
+        const mid = (lo + hi + 1) >> 1;
+        if (starts[mid] <= index) lo = mid;
+        else hi = mid - 1;
+      }
+      return lo;
+    };
+    const sentences = frames.map((frame) => sentenceOf(frame.index));
+    // Paired frames must also share a paragraph: no blank line between them.
+    const sameParagraph = (a, b) => !NP_PARAGRAPH_BREAK.test(text.slice(Math.min(a, b), Math.max(a, b)));
+    const paired = distinctContrasts.filter((contrast, c) => {
+      const i = distinctReveals.length + c;
+      return sentences.some((other, j) =>
+        j !== i
+        && frames[j].index !== contrast.index
+        && Math.abs(other - sentences[i]) <= NP_WINDOW_SENTENCES
+        && sameParagraph(frames[j].index, contrast.index));
+    });
+    return [...distinctReveals, ...paired].sort((a, b) => a.index - b.index);
+  }
 
   // ─── Dev-blog boilerplate ──────────────────────────────────────────
   // Stock simplicity slogans from developer marketing. Adapted from
@@ -1211,7 +1548,223 @@ const AIDetector = (() => {
     return { text: chars.join(''), maskedFrontmatter, maskedHtmlComments };
   }
 
-  function maskMultilineBlockquotes(text) {
+  // Ignore regions (#351): an author can exclude a passage from scoring, such
+  // as a specimen of AI prose quoted on purpose, by wrapping it in
+  //   <!-- avoid-ai-writing:ignore-start --> … <!-- avoid-ai-writing:ignore-end -->
+  // A marker counts only as a whole line: the full comment, at most three
+  // spaces of indent, nothing else on the line. Starts nest: each start needs
+  // its own end, and the region runs from the outermost start to its matching
+  // end. An unclosed start runs to the end of the text; an end with no open
+  // start is ignored. The region is blanked in place, so offsets still
+  // address the source.
+  //
+  // Markers are found by ONE left-to-right scan rather than a stack of masks,
+  // because separate masks disagree about who owns overlapping text: a fence
+  // inside a comment would swallow the comment's `-->`, and a `<pre>` inside
+  // a comment would open a container. After skipping initial YAML
+  // frontmatter, the scan recognizes, in order of appearance, an HTML
+  // comment, a Markdown fence, a top-level indented code line, an inline code
+  // span, and an HTML <pre>, <code>, <script>, or <style> element. Whichever
+  // construct opens first owns the text until its own close, so a marker, a
+  // fence, a tag, or a comment inside another construct is inert. Anything
+  // unclosed runs to the end of the text: when in doubt, the marker does
+  // nothing and the prose stays scored. Every character is visited a bounded
+  // number of times.
+  const IGNORE_MARKER_LINE_RE = /^ {0,3}<!--[ \t]*avoid-ai-writing:ignore-(start|end)[ \t]*-->[ \t]*$/i;
+  const MARKER_FENCE_RE = /^ {0,3}(`{3,}|~{3,})(.*)$/;
+  const HTML_CODE_OPEN_RE = /<(pre|code|script|style)\b[^>]*>/iy;
+  const HTML_CODE_CLOSE_RE = {
+    pre: /<\/pre/gi,
+    code: /<\/code/gi,
+    script: /<\/script/gi,
+    style: /<\/style/gi,
+  };
+
+  function findIgnoreMarkers(text) {
+    const n = text.length;
+    const markers = [];
+    const lineEndAt = (from) => {
+      let i = from;
+      while (i < n && text[i] !== '\n' && text[i] !== '\r') i += 1;
+      return i;
+    };
+    const nextLineAt = (end) => (text[end] === '\r' && text[end + 1] === '\n' ? end + 2 : end + 1);
+    const isLineStart = (i) => i === 0 || text[i - 1] === '\n' || (text[i - 1] === '\r' && text[i] !== '\n');
+
+    // Backtick runs in [from, to), keyed by start, each with the end of the
+    // next run of the same length on the line (-1 when unmatched). Built at
+    // most once per line segment and never rebuilt after a comment or HTML
+    // element closes mid-line: rebuilding made a long line that alternates
+    // code spans and <code> elements quadratic. Runs inside a construct the
+    // scan jumps over are simply never visited.
+    const backtickRuns = (from, to) => {
+      const list = [];
+      for (let i = from; i < to;) {
+        if (text[i] !== '`') { i += 1; continue; }
+        const start = i;
+        while (i < to && text[i] === '`') i += 1;
+        list.push({ start, end: i, length: i - start, closeEnd: -1 });
+      }
+      const nextByLength = new Map();
+      for (let i = list.length - 1; i >= 0; i -= 1) {
+        const next = nextByLength.get(list[i].length);
+        if (next) list[i].closeEnd = next.end;
+        nextByLength.set(list[i].length, list[i]);
+      }
+      return new Map(list.map((run) => [run.start, run]));
+    };
+
+    let pos = 0;
+    const frontmatter = initialFrontmatterRange(text);
+    if (frontmatter) pos = frontmatter.end;
+
+    let lineEnd = -1;
+    let runs = null;
+    let prevBlank = true;
+    let inIndented = false;
+    let listContext = false;
+
+    while (pos < n) {
+      if (pos > lineEnd) {
+        // Entering a new line, or resuming mid-line after a construct that
+        // spanned lines. Only a true line start gets the line-level checks.
+        lineEnd = lineEndAt(pos);
+        runs = null;
+        if (isLineStart(pos)) {
+          const line = text.slice(pos, lineEnd);
+          const blank = line.trim() === '';
+          const fence = MARKER_FENCE_RE.exec(line);
+          if (fence && !(fence[1][0] === '`' && fence[2].includes('`'))) {
+            let close = n;
+            for (let scan = nextLineAt(lineEnd); scan < n;) {
+              const end = lineEndAt(scan);
+              const closing = MARKER_FENCE_RE.exec(text.slice(scan, end));
+              if (
+                closing
+                && closing[1][0] === fence[1][0]
+                && closing[1].length >= fence[1].length
+                && closing[2].trim() === ''
+              ) {
+                close = end;
+                break;
+              }
+              scan = nextLineAt(end);
+            }
+            pos = close;
+            prevBlank = false;
+            inIndented = false;
+            continue;
+          }
+          const indented = !blank && /^(?: {4}|\t)/.test(line);
+          if (indented && (inIndented || (prevBlank && !listContext))) {
+            inIndented = true;
+            prevBlank = false;
+            pos = lineEnd;
+            continue;
+          }
+          if (!blank) {
+            inIndented = false;
+            if (/^ {0,3}(?:[-*+]|\d{1,9}[.)])(?:\s|$)/.test(line)) listContext = true;
+            else if (/^\S/.test(line)) listContext = false;
+          }
+          prevBlank = blank;
+          const marker = IGNORE_MARKER_LINE_RE.exec(line);
+          if (marker) {
+            markers.push({ kind: marker[1].toLowerCase(), start: pos, end: lineEnd });
+            pos = lineEnd;
+            continue;
+          }
+        }
+      }
+
+      const ch = text[pos];
+      if (ch === '<') {
+        if (text.startsWith('<!--', pos)) {
+          const close = text.indexOf('-->', pos + 4);
+          pos = close === -1 ? n : close + 3;
+          continue;
+        }
+        HTML_CODE_OPEN_RE.lastIndex = pos;
+        const open = HTML_CODE_OPEN_RE.exec(text);
+        if (open) {
+          const closeRe = HTML_CODE_CLOSE_RE[open[1].toLowerCase()];
+          closeRe.lastIndex = pos + open[0].length;
+          const close = closeRe.exec(text);
+          pos = close === null ? n : close.index;
+          continue;
+        }
+      } else if (ch === '`') {
+        if (!runs) runs = backtickRuns(pos, lineEnd);
+        const run = runs.get(pos);
+        if (run && run.closeEnd !== -1) {
+          pos = run.closeEnd;
+          continue;
+        }
+        pos += run ? run.length : 1;
+        continue;
+      }
+      pos += 1;
+    }
+    return markers;
+  }
+
+  function maskIgnoreRegions(text) {
+    if (!/avoid-ai-writing:ignore-/i.test(text)) return { text, ignoredRegions: 0 };
+    const chars = text.split('');
+    let ignoredRegions = 0;
+    let depth = 0;
+    let openAt = -1;
+    for (const marker of findIgnoreMarkers(text)) {
+      if (marker.kind === 'start') {
+        if (depth === 0) openAt = marker.start;
+        depth += 1;
+      } else if (depth > 0) {
+        depth -= 1;
+        if (depth === 0) {
+          blankRange(chars, openAt, marker.end);
+          ignoredRegions += 1;
+        }
+      }
+    }
+    if (depth > 0) {
+      blankRange(chars, openAt, chars.length);
+      ignoredRegions += 1;
+    }
+    return { text: chars.join(''), ignoredRegions };
+  }
+
+  // Blank the content of double-quoted spans and keep the quote marks, so
+  // offsets and the curly-quote signal survive. Based on QUOTED_SPAN in
+  // scripts/self-scan.js minus its single-quote branch: apostrophes in
+  // contractions and possessives would pair up across ordinary prose. A
+  // straight quote touching a letter or digit on its outer side is an inch
+  // mark, not a quotation. Empty `""` pairs are consumed so they cannot
+  // shift the pairing, and a span never crosses a backtick into code. A
+  // nested quotation escaped as a pair (`\"…\"`) stays inside the span. A
+  // lone `\"` still closes it, so a path such as `"C:\Temp\"` cannot run on
+  // into the next quotation.
+  const QUOTED_SPAN_RE = /(?<![\p{L}\p{N}])"(?:\\"[^"`\n]{0,300}\\"|[^"`\n]){0,300}"(?![\p{L}\p{N}])|“[^“”`\n]{0,300}”/gu;
+  function maskQuotedSpans(text) {
+    let maskedQuotes = 0;
+    const masked = text.replace(QUOTED_SPAN_RE, (span) => {
+      // Escaped pairs can chain past the 300-character cap; score those.
+      // Count code points, as the `u` regex does, so emoji do not trip it.
+      if (span.length === 2 || [...span].length > 302) return span;
+      maskedQuotes += 1;
+      // Keep sentence punctuation so getSentences splits where it did before.
+      return span[0] + span.slice(1, -1).replace(/[^.!?]/g, ' ') + span[span.length - 1];
+    });
+    return { text: masked, maskedQuotes };
+  }
+
+  // A `>` opens a blockquote line when a space, the line end, a letter, a
+  // nested `>`, an opening double quote, emphasis, a link, or a list marker
+  // (`- `, `+ `, `1. `) follows it. That covers compact Markdown (`>text`)
+  // without swallowing comparisons such as `>=5` or `>-1`. A single quote is
+  // left out, as in the inline quote pass.
+  const BLOCKQUOTE_LINE_RE = /^\s*>(?:$|[\s\p{L}>"“*_[]|[-+]\s|\d{1,9}[.)]\s)/u;
+
+  function maskBlockquotes(text) {
     const chars = text.split('');
     const lines = [];
     const lineRe = /[^\r\n]*(?:\r\n|\n|\r|$)/g;
@@ -1222,10 +1775,9 @@ const AIDetector = (() => {
     }
 
     let quotedLines = 0;
-    const isQuote = lines.map((line) => /^\s*>\s/.test(line.text));
-    for (let i = 0; i < lines.length; i += 1) {
-      if (isQuote[i] && ((isQuote[i - 1] && i > 0) || isQuote[i + 1])) {
-        blankRange(chars, lines[i].start, lines[i].end);
+    for (const line of lines) {
+      if (BLOCKQUOTE_LINE_RE.test(line.text)) {
+        blankRange(chars, line.start, line.end);
         quotedLines += 1;
       }
     }
@@ -1236,19 +1788,31 @@ const AIDetector = (() => {
   // Keep the historical deletion behavior for default plain mode. Paragraph-
   // scoped rules depend on the surrounding lines being rejoined exactly this
   // way, so changing this prepass would change scores for existing callers.
-  function stripMultilineBlockquotes(text, sourceMap) {
+  function stripBlockquotes(text, sourceMap) {
     const rawLines = text.split(/\r?\n/);
-    const isQuote = rawLines.map((line) => /^\s*>\s/.test(line));
     const stripIndexes = new Set();
+    let blankedLines = 0;
     for (let i = 0; i < rawLines.length; i += 1) {
-      if (isQuote[i] && ((isQuote[i - 1] && i > 0) || isQuote[i + 1])) stripIndexes.add(i);
+      // A bare CR is not split here, so a CR-only document is one element.
+      // Deleting it would take the unquoted lines after the quote with it,
+      // so blank each quoted CR-separated line in place instead. Blanking
+      // keeps the element length, so the offsets below still line up.
+      if (rawLines[i].includes('\r')) {
+        rawLines[i] = rawLines[i].split('\r').map((line) => {
+          if (!BLOCKQUOTE_LINE_RE.test(line)) return line;
+          blankedLines += 1;
+          return ' '.repeat(line.length);
+        }).join('\r');
+      } else if (BLOCKQUOTE_LINE_RE.test(rawLines[i])) {
+        stripIndexes.add(i);
+      }
     }
     const kept = rawLines
       .map((_, index) => index)
       .filter((index) => !stripIndexes.has(index));
     const result = {
       text: kept.map((index) => rawLines[index]).join('\n'),
-      quotedLines: stripIndexes.size,
+      quotedLines: stripIndexes.size + blankedLines,
     };
     if (!Array.isArray(sourceMap)) return result;
 
@@ -1508,10 +2072,15 @@ const AIDetector = (() => {
   // Setext headings (`Title`/`=====`) need no prefix: their text line is bare
   // and already matched by this same pattern.
   // Interior tokens accept Title Case words, acronyms (`AI`, `API`, `CLI`) and
-  // the capitalised single-letter function word `A`. The first and last tokens
+  // the capitalised single-letter words `A` and `I`. The first and last tokens
   // stay ordinary `[A-Z][a-z]+` words, which also excludes all-caps banner
   // lines (`## HTTP API REFERENCE`) whose leading token is not Title Case.
-  const TITLE_CASE_HEADER = /^(?:#{1,6}[ \t]+)?([A-Z][a-z]+(?:\s+(?:[A-Z][a-z]+|A|[A-Z]{2,}|and|or|of|the|in|for|to|a|an))+\s+[A-Z][a-z]+)\s*$/gm;
+  //
+  // Separators and trailing whitespace are horizontal only (`[ \t]`), so a
+  // match can never run past one physical line: `\s` also eats newlines, which
+  // let two unrelated lines or a blank-line-separated fragment combine into a
+  // single heading match (GH-291).
+  const TITLE_CASE_HEADER = /^(?:#{1,6}[ \t]+)?([A-Z][a-z]+(?:[ \t]+(?:[A-Z][a-z]+|A|I|[A-Z]{2,}|and|or|of|the|in|for|to|a|an))+[ \t]+[A-Z][a-z]+)[ \t]*$/gm;
 
   // ─── Parenthetical hedging asides ──────────────────────────────────
   // "(and increasingly, X)", "(or more precisely, Y)", "(though to be
@@ -1614,6 +2183,40 @@ const AIDetector = (() => {
     return text.toLowerCase().match(/[\w'-]+/g) || [];
   }
 
+  // Moving-average type-token ratio (MATTR; Covington & McFall 2010,
+  // doi:10.1080/09296171003643098): the share of distinct tokens in each
+  // run of `size` consecutive tokens, averaged over every such run. Plain
+  // TTR falls as a text grows, because common words keep recurring while
+  // new ones arrive more slowly, so a fixed threshold on it measures length.
+  // The windowed mean does not drift with length, and on a text of exactly
+  // `size` tokens it equals plain TTR.
+  function movingAverageTTR(tokens, size) {
+    const counts = new Map();
+    let distinct = 0;
+    const add = (token) => {
+      const n = (counts.get(token) || 0) + 1;
+      counts.set(token, n);
+      if (n === 1) distinct += 1;
+    };
+    const drop = (token) => {
+      const n = counts.get(token) - 1;
+      if (n === 0) {
+        counts.delete(token);
+        distinct -= 1;
+      } else {
+        counts.set(token, n);
+      }
+    };
+    for (let i = 0; i < size; i += 1) add(tokens[i]);
+    let sum = distinct;
+    for (let i = size; i < tokens.length; i += 1) {
+      drop(tokens[i - size]);
+      add(tokens[i]);
+      sum += distinct;
+    }
+    return sum / ((tokens.length - size + 1) * size);
+  }
+
   function countWords(text) {
     return (text.match(/\S+/g) || []).length;
   }
@@ -1674,9 +2277,45 @@ const AIDetector = (() => {
   }
 
   function analyzeText(text, options = {}) {
-    if (!text || text.trim().length === 0) {
-      return { ...buildV2Defaults('UNSCORED', 'low'), score: 0, label: 'Empty', issues: [], stats: {}, tooShort: true };
+
+    if (typeof text !== 'string') {
+      throw new TypeError('analyzeText(text): argument must be a string');
     }
+
+    const VALID_CONTEXT_MODES = new Set(['general', 'technical', 'marketing', 'personal']);
+    const requestedMode = options.contextMode === undefined ? 'general' : options.contextMode;
+    const contextMode = VALID_CONTEXT_MODES.has(requestedMode) ? requestedMode : 'general';
+    const contextModeFallback = requestedMode !== contextMode ? requestedMode : null;
+
+    // Source mode controls which parts of a Markdown file count as prose.
+    // Plain remains the compatibility default. Rendered Markdown masks only
+    // initial YAML frontmatter and HTML comments; source-hygiene checks for
+    // hidden TODO/placeholder comments remain available through plain mode.
+    const VALID_SOURCE_MODES = new Set(['plain', 'rendered-markdown']);
+    const requestedSourceMode = options.sourceMode === undefined ? 'plain' : options.sourceMode;
+    const sourceMode = VALID_SOURCE_MODES.has(requestedSourceMode) ? requestedSourceMode : 'plain';
+    const sourceModeFallback = requestedSourceMode !== sourceMode ? requestedSourceMode : undefined;
+    if (!text || text.trim().length === 0) {
+      return {
+                ...buildV2Defaults('UNSCORED', 'low'),
+                    score: 0,
+                    label: 'Empty',
+                    issues: [],
+                    stats: {
+                        wordCount: 0,
+                        contextMode,
+                        contextModeFallback,
+                        sourceMode,
+                        sourceModeFallback,
+                        maskedFrontmatter: 0,
+                        maskedHtmlComments: 0,
+                        ignoredRegions: 0,
+                        quotedLines: 0,
+                        maskedQuotes: 0,
+                    },
+                  tooShort: true,
+                };
+              }
 
     // Map each working-string code unit back to the caller's source. Every
     // length-changing preprocessing stage composes this map as it removes
@@ -1694,21 +2333,16 @@ const AIDetector = (() => {
     // Mode validation: an unknown string (e.g. typo "tecnical") would
     // otherwise silently downgrade to general-mode behavior. Coerce to
     // 'general' and surface the original value in stats for traceability.
-    const VALID_CONTEXT_MODES = new Set(['general', 'technical', 'marketing', 'personal']);
-    const requestedMode = options.contextMode || 'general';
-    const contextMode = VALID_CONTEXT_MODES.has(requestedMode) ? requestedMode : 'general';
-    const contextModeFallback = requestedMode !== contextMode ? requestedMode : null;
-
-    // Source mode controls which parts of a Markdown file count as prose.
-    // Plain remains the compatibility default. Rendered Markdown masks only
-    // initial YAML frontmatter and HTML comments; source-hygiene checks for
-    // hidden TODO/placeholder comments remain available through plain mode.
-    const VALID_SOURCE_MODES = new Set(['plain', 'rendered-markdown']);
-    const requestedSourceMode = options.sourceMode === undefined ? 'plain' : options.sourceMode;
-    const sourceMode = VALID_SOURCE_MODES.has(requestedSourceMode) ? requestedSourceMode : 'plain';
-    const sourceModeFallback = requestedSourceMode !== sourceMode ? requestedSourceMode : undefined;
     let maskedFrontmatter = 0;
     let maskedHtmlComments = 0;
+
+    // Author-marked ignore regions go first, in every source mode, so no
+    // later pass sees the excluded passage. Masking keeps the length, so the
+    // source map needs no update.
+    const ignored = maskIgnoreRegions(text);
+    text = ignored.text;
+    const { ignoredRegions } = ignored;
+
     if (sourceMode === 'rendered-markdown') {
       const rendered = maskRenderedMarkdown(text);
       text = rendered.text;
@@ -1718,16 +2352,27 @@ const AIDetector = (() => {
 
     // Pre-pass: mask Markdown blockquotes before scoring. A human
     // reacting to AI text by quoting it shouldn't have the quoted block
-    // counted against their own writing. Requires ≥2 consecutive `> `
-    // lines to count as a blockquote — single-line `> ls -la` shell
-    // prompts in technical docs stay in the text. Masking instead of deleting
-    // keeps later issue and highlight offsets aligned with the source file.
+    // counted against their own writing. A single `> ` line counts too
+    // (#238). Masking instead of deleting keeps later issue and highlight
+    // offsets aligned with the source file.
     const blockquotes = sourceMode === 'rendered-markdown'
-      ? maskMultilineBlockquotes(text)
-      : stripMultilineBlockquotes(text, sourceMap);
+      ? maskBlockquotes(text)
+      : stripBlockquotes(text, sourceMap);
     text = blockquotes.text;
     if (blockquotes.sourceMap) sourceMap = blockquotes.sourceMap;
     const { quotedLines } = blockquotes;
+
+    // Pre-pass: the inline half of the blockquote escape hatch. Words inside
+    // a double-quoted span belong to whoever is quoted (#238). Masking runs
+    // before normalization, as blockquotes do, so bypass characters inside a
+    // quotation raise no normalization flag. Masking keeps the length, so
+    // the source map needs no update. The smart-punctuation check below
+    // reads the unmasked text, because the blanked span would otherwise
+    // count as a double space.
+    const unquotedText = normalizeText(text).text;
+    const quotes = maskQuotedSpans(text);
+    text = quotes.text;
+    const { maskedQuotes } = quotes;
 
     // Pre-pass: strip bypass-trick chars before pattern matching so
     // "delve" with a Cyrillic 'е' still hits Tier 1. Compose the map while
@@ -1737,13 +2382,38 @@ const AIDetector = (() => {
     sourceMap = norm.sourceMap;
 
     const wordCount = countWords(text);
+    // Unsegmented-script check (GH-241): Chinese and Japanese carry no
+    // inter-word spaces, so word segmentation cannot measure them — a long
+    // document counts as one \S+ run and would misreport as "Too short",
+    // while newline-wrapped lines each count as a word and would score
+    // without segmentation. The check therefore runs before the word gate
+    // and declines only when CJK characters dominate the non-whitespace
+    // text, so short English documents with an incidental place name or
+    // single Han character stay scorable. Unicode script properties cover
+    // the complete Han, Hiragana, and Katakana repertoires (including
+    // supplementary-plane and halfwidth forms); Hangul is space-separated
+    // and segments fine, so it is excluded. Both counts use Unicode mode so
+    // supplementary characters count as one code point rather than two UTF-16
+    // code units.
+    const cjkChars = (text.match(/[\p{Script_Extensions=Han}\p{Script_Extensions=Hiragana}\p{Script_Extensions=Katakana}]/gu) || []).length;
+    const nonSpaceChars = (text.match(/\S/gu) || []).length;
+    if (cjkChars > 0 && cjkChars * 2 >= nonSpaceChars) {
+      return {
+        ...buildV2Defaults('UNSCORED', 'low'),
+        score: 0,
+        label: 'Unsupported script',
+        issues: [],
+        stats: { wordCount, cjkChars, reason: 'unsegmented-script document: no inter-word spaces to count', contextMode, contextModeFallback, sourceMode, sourceModeFallback, maskedFrontmatter, maskedHtmlComments, ignoredRegions, quotedLines, maskedQuotes },
+        unsupportedScript: true,
+      };
+    }
     if (wordCount < 10) {
       return {
         ...buildV2Defaults('UNSCORED', 'low'),
         score: 0,
         label: 'Too short',
         issues: [],
-        stats: { wordCount, contextMode, contextModeFallback, sourceMode, sourceModeFallback, maskedFrontmatter, maskedHtmlComments },
+        stats: { wordCount, contextMode, contextModeFallback, sourceMode, sourceModeFallback, maskedFrontmatter, maskedHtmlComments, ignoredRegions, quotedLines, maskedQuotes },
         tooShort: true,
       };
     }
@@ -1753,7 +2423,7 @@ const AIDetector = (() => {
         score: 0,
         label: 'Text too long',
         issues: [],
-        stats: { wordCount, contextMode, contextModeFallback, sourceMode, sourceModeFallback, maskedFrontmatter, maskedHtmlComments },
+        stats: { wordCount, contextMode, contextModeFallback, sourceMode, sourceModeFallback, maskedFrontmatter, maskedHtmlComments, ignoredRegions, quotedLines, maskedQuotes },
         tooLong: true,
       };
     }
@@ -1788,6 +2458,7 @@ const AIDetector = (() => {
       while ((match = regex.exec(text)) !== null) {
         const lower = match[0].toLowerCase();
         if (contextMode === 'technical' && TECHNICAL_EXEMPT.has(lower)) continue;
+        if (phrase.skip && phrase.skip(text, match.index)) continue;
         if (tier1Found.has(lower)) continue;
         tier1Found.add(lower);
         issues.push({
@@ -1865,7 +2536,6 @@ const AIDetector = (() => {
     issues.push(...matchPatterns(text, GENERIC_CONCLUSIONS, 'generic-conclusion', 'medium'));
     issues.push(...matchPatterns(text, LETS_PATTERNS, 'lets-construction', 'medium'));
     issues.push(...matchPatterns(text, REASONING_ARTIFACTS, 'reasoning-artifact', 'critical'));
-    issues.push(...matchPatterns(text, ACKNOWLEDGMENT_LOOPS, 'acknowledgment-loop', 'medium'));
     issues.push(...matchPatterns(text, SIGNIFICANCE_INFLATION, 'significance-inflation', 'high'));
     issues.push(...matchPatterns(text, VAGUE_ATTRIBUTIONS, 'vague-attribution', 'critical'));
     issues.push(...matchPatterns(text, HOLLOW_INTENSIFIERS, 'hollow-intensifier', 'medium'));
@@ -1884,7 +2554,15 @@ const AIDetector = (() => {
     issues.push(...matchPatterns(text, REAL_ACTUAL_INFLATION, 'real-actual-inflation', 'medium'));
     issues.push(...matchPatterns(text, SOCIAL_CTA_CLOSER, 'social-cta-closer', 'high'));
     issues.push(...matchPatterns(text, PERFORMED_INSIGHT, 'performed-insight', 'medium'));
+    const stagedDiscoveryIssues = matchPatterns(text, STAGED_DISCOVERY, 'performed-insight', 'medium');
+    issues.push(...stagedDiscoveryIssues);
     issues.push(...matchPatterns(text, NEGATION_CHAIN, 'negation-chain', 'high'));
+    // Reveals flag alone; contrasts need a nearby frame. See NEGATIVE_PARALLELISM_*.
+    issues.push(...negativeParallelismIssues(
+      text,
+      matchPatterns(text, NEGATIVE_PARALLELISM_REVEAL, 'negative-parallelism', 'high'),
+      matchPatterns(text, NEGATIVE_PARALLELISM_CONTRAST, 'negative-parallelism', 'high'),
+    ));
     issues.push(...matchPatterns(text, DEV_BLOG_BOILERPLATE, 'dev-blog-boilerplate', 'medium'));
     issues.push(...findUnnecessaryHyphenation(text));
 
@@ -1999,13 +2677,15 @@ const AIDetector = (() => {
     }
 
     // ── Smart-punctuation co-occurrence signature ────────────────────
-    // Curly quotes + em-dash + Oxford comma all present + zero typos
-    // (no double-spaces, no missing apostrophes in common contractions)
-    // is a near-dispositive paste-from-LLM signature: humans typing
-    // directly into a textarea don't produce all four. Standalone any of
-    // these is meaningless — co-occurrence is the signal. Separator-position
-    // dashes are typography and don't corroborate it.
-    {
+    // Curly punctuation + prose em dash + Oxford comma, with no sampled
+    // spacing or common-contraction anomalies,
+    // can also come from house style or editor settings. Keep the existing
+    // narrow shape as a low-priority style check in plain source only.
+    // Rendered Markdown deliberately preserves publication typography.
+    // This finding has no weight or classifier corroborator. Separator-only
+    // dashes do not complete the shape, and the spacing/contraction checks
+    // below are limited heuristics, not proof that a document has no typos.
+    if (sourceMode === 'plain') {
       const hasCurly = /[“”‘’]/.test(text);
       const totalEmDashes = (text.match(/—/g) || []).length;
       const separatorEmDashes = (text.match(SEPARATOR_DASH_RE) || []).length
@@ -2013,16 +2693,16 @@ const AIDetector = (() => {
       const hasEmDash = totalEmDashes > separatorEmDashes;
       const oxfordHit = text.match(/\b\w+,\s+\w+,\s+and\s+\w+/g);
       const hasOxford = (oxfordHit?.length || 0) >= 1;
-      const doubleSpaces = (text.match(/[^.!?]  +/g) || []).length;
+      const doubleSpaces = (unquotedText.match(/[^.!?]  +/g) || []).length;
       const missingApos = /\b(?:dont|wont|cant|isnt|wasnt|shouldnt|wouldnt|couldnt|youre|theyre|its\s+a\s+\w+ing)\b/i.test(text);
       const clean = doubleSpaces === 0 && !missingApos;
       const signals = [hasCurly, hasEmDash, hasOxford, clean].filter(Boolean).length;
       if (signals >= 4 && wordCount >= 80) {
         issues.push({
           type: 'smart-punct-signature',
-          text: 'curly-quotes + em-dash + Oxford comma + zero typos',
-          severity: 'high',
-          suggestion: 'Smart-punctuation signature consistent with LLM output. Humans typing into textareas rarely produce all four.',
+          text: 'curly punctuation + prose em dash + Oxford comma',
+          severity: 'low',
+          suggestion: 'Check destination style before changing punctuation. Preserve house-style typography; this combination is not evidence of AI authorship.',
         });
       }
     }
@@ -2366,30 +3046,37 @@ const AIDetector = (() => {
     }
 
     // ── Type-token ratio (stylometric — vocabulary diversity) ────
-    // TTR = distinct word types / total tokens. Human prose at 200+
-    // words typically sits around 0.50–0.65 for English; AI prose
-    // tends flatter (0.55–0.75 looks normal, but the lower end of the
-    // *too-flat* tail at >=200 words is where the signal lives — too
-    // FEW unique words for the length). This is the simplest of the
-    // four stylometric signals identified in the May 2026 detection-
-    // research review (docs/competitive/detection-research.md): no
-    // POS tagger required, no model, pure JS.
+    // TTR = distinct word types / total tokens, taken over each 200-token
+    // window and averaged (movingAverageTTR). Whole-text TTR falls with
+    // length whoever wrote the text: on the human documents in corpus/ its
+    // median is 0.63 at 200 tokens, 0.37 at 2,000 and 0.28 at 6,000, so a
+    // fixed threshold on it flagged every 6,000-word public-domain slice.
+    // The windowed median stays between 0.62 and 0.64 at every length.
+    // Within a window, human prose typically sits around 0.50–0.65 for
+    // English; AI prose tends flatter (0.55–0.75 looks normal, but the
+    // lower end of the *too-flat* tail at >=200 words is where the signal
+    // lives — too FEW unique words for the length). This is the simplest
+    // of the four stylometric signals identified in the May 2026 detection-
+    // research review: no POS tagger required, no model, pure JS.
     //
     // Threshold tuning: flag only when the sample is large enough
     // that low TTR is meaningfully suspicious (>=200 tokens) AND TTR
     // is below 0.40 (very vocabulary-poor). Conservative on purpose;
     // false positives on short or topic-narrow human prose are easy
     // to trigger and would drown out other signals. The detector-
-    // research lens flagged TTR as one of four stylometric add-ons;
-    // POS-bigram log-odds, function-word z-scores, and sentence-
-    // length burstiness are still TODO.
+    // research lens flagged TTR as one of four stylometric add-ons.
+    // One of the other three has since shipped in approximated form:
+    // `cross-para-burstiness` covers sentence-length burstiness across
+    // paragraphs. `fnword-trigram-entropy` is a related tagger-free
+    // signal (it approximates POS-trigram entropy, not one of the
+    // three). POS-bigram log-odds and function-word z-scores are
+    // still TODO.
     if (tokens.length >= 200) {
-      const unique = new Set(tokens).size;
-      const ttr = unique / tokens.length;
-      if (ttr < 0.4) {
+      const diversity = movingAverageTTR(tokens, 200);
+      if (diversity < 0.4) {
         issues.push({
           type: 'low-ttr',
-          text: `Vocabulary diversity ${(ttr * 100).toFixed(1)}% (${unique} unique / ${tokens.length} tokens)`,
+          text: `Vocabulary diversity ${(diversity * 100).toFixed(1)}% (distinct words per 200-token window, ${tokens.length} tokens)`,
           severity: 'low',
           suggestion: 'Text reuses a narrow word set. Vary nouns and verbs deliberately, or check if the topic genuinely warrants the repetition.',
         });
@@ -2430,7 +3117,20 @@ const AIDetector = (() => {
     // above a list of two items. Now the dedup runs first, then each
     // distinct issue contributes its category weight — so the number
     // reflects the same signals the user actually sees.
-    const deduped = deduplicateIssues(issues);
+    // The staged-discovery phrase can contain the older "the most interesting
+    // part" flatline match or sentence-initial "Turns out". Report the
+    // enclosing signal once while leaving unrelated findings intact.
+    const stagedDiscoverySpans = stagedDiscoveryIssues
+      .map((issue) => ({ start: issue.index, end: issue.index + issue.text.length }));
+    const nonOverlappingIssues = issues.filter((issue) =>
+      (issue.type !== 'emotional-flatline' && issue.type !== 'performed-insight') ||
+      stagedDiscoveryIssues.includes(issue) ||
+      !Number.isInteger(issue.index) ||
+      !stagedDiscoverySpans.some((span) =>
+        issue.index >= span.start && issue.index + issue.text.length <= span.end
+      )
+    );
+    const deduped = deduplicateIssues(nonOverlappingIssues);
     for (const issue of deduped) {
       rawScore += ISSUE_WEIGHTS[issue.type] ?? 2;
     }
@@ -2507,8 +3207,10 @@ const AIDetector = (() => {
         sourceModeFallback,
         maskedFrontmatter,
         maskedHtmlComments,
+        ignoredRegions,
         normalization: norm.flags,
         quotedLines,
+        maskedQuotes,
         unmappedHighlights: regions._unmapped ?? 0,
         denseAIVocab,
         tier1Distinct,
@@ -2626,6 +3328,12 @@ const AIDetector = (() => {
       let idx = 0;
       let matched = false;
       while ((idx = lowerText.indexOf(needle, idx)) !== -1) {
+        // Deduplicated verb issues must not highlight skipped noun matches.
+        // Reuse the same predicate and retain all qualifying verb locations.
+        if (issue.type === 'tier1-clarity' && needle === 'features' && featuresIsNoun(text, idx)) {
+          idx += needle.length;
+          continue;
+        }
         matched = true;
         for (let i = 0; i < sentences.length; i++) {
           if (idx >= sentences[i].start && idx < sentences[i].end) {
@@ -2713,13 +3421,12 @@ const AIDetector = (() => {
       (hasReasoning && hasChatbot ? 1 : 0) +
       (denseAIVocab ? 1 : 0);
 
-    // Weak (stylometric) corroborators — suggestive on their own,
-    // dispositive in combination. Smart-punct-signature matches
-    // Word-edited human prose so doesn't count without other support.
+    // Weak stylometric corroborators. The style-only smart-punct finding
+    // must not alter classification, probabilities, or confidence even when
+    // other findings already put the score near a classification boundary.
     const stylometricHits = ['punct-distribution', 'cross-para-burstiness', 'fnword-trigram-entropy']
       .filter((t) => issues.some((i) => i.type === t)).length;
-    const hasSmartPunct = issues.some((i) => i.type === 'smart-punct-signature');
-    const weakCorrob = (stylometricHits >= 2 ? 1 : 0) + (hasSmartPunct ? 1 : 0);
+    const weakCorrob = stylometricHits >= 2 ? 1 : 0;
 
     // Thresholds:
     //   score < 15 with no strong → HUMAN_ONLY
@@ -2740,8 +3447,9 @@ const AIDetector = (() => {
     // floor of 'medium' in that case (an adversary actively evading
     // detection should never read as low-confidence noise).
 
-    // Soft probability distribution. Not calibrated against a labeled
-    // corpus yet (TODO when corpus exists — see roadmap.md). Largest
+    // Soft probability distribution. Hand-tuned, not calibrated
+    // against the labeled corpora the repo now samples
+    // (`scripts/dataset-hc3.js`, `scripts/dataset-raid.js`). Largest
     // class is computed as `1 - others` after rounding to guarantee
     // sum=1 exactly. Sub-1% drift would otherwise hide in toFixed.
     const aiSoft = Math.min(0.97, score / 100 + totalCorrob * 0.06 + strongCorrob * 0.08);
@@ -2818,7 +3526,6 @@ const AIDetector = (() => {
     'generic-conclusion': 'Generic conclusion',
     'lets-construction': '"Let\'s" opener',
     'reasoning-artifact': 'Reasoning artifact',
-    'acknowledgment-loop': 'Acknowledgment loop',
     'significance-inflation': 'Significance inflation',
     'vague-attribution': 'Vague attribution',
     'hollow-intensifier': 'Hollow intensifier',
@@ -2862,6 +3569,7 @@ const AIDetector = (() => {
     'unnecessary-hyphenation': 'Unnecessary hyphenation',
     'performed-insight': 'Performed-insight phrase',
     'negation-chain': 'Negation chain',
+    'negative-parallelism': 'Negative parallelism',
     'dev-blog-boilerplate': 'Dev-blog boilerplate',
   };
 

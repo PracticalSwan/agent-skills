@@ -71,6 +71,60 @@ const independentTopTypes = (text) => {
 };
 
 try {
+  t('unequal long-document chunks use word-weighted scores and retain every issue', () => {
+    const paragraph = (sample, size) => {
+      const tokens = sample.split(/\s+/);
+      return Array.from({ length: size }, (_, i) => tokens[i % tokens.length]).join(' ');
+    };
+    // These known paragraph boundaries produce two full, lower-score chunks
+    // and a shorter, higher-score tail. Equal weighting and worst-chunk
+    // aggregation must both disagree with the expected document score.
+    const chunks = [paragraph(PLAIN, 4000), paragraph(PLAIN, 4000), paragraph(SEEDED, 1600)];
+    const document = chunks.join('\n\n');
+    assert.strictEqual(words(document), 9600);
+    assert.strictEqual(applyExemptions(document), document);
+    const results = chunks.map((chunk) => AIDetector.analyzeText(chunk));
+    assert.ok(results.every((r) => !r.tooShort && r.label !== 'Text too long' && !r.unsupportedScript));
+    const [full, secondFull, tail] = results;
+    assert.strictEqual(full.stats.wordCount, secondFull.stats.wordCount);
+    assert.strictEqual(full.score, secondFull.score);
+    assert.ok(tail.stats.wordCount < full.stats.wordCount);
+    assert.ok(tail.score > full.score, 'the shorter tail must carry a higher score');
+    const totalWords = full.stats.wordCount * 2 + tail.stats.wordCount;
+    const expectedScore = Math.round((full.score * full.stats.wordCount * 2
+      + tail.score * tail.stats.wordCount) / totalWords);
+    assert.notStrictEqual(expectedScore, Math.max(...results.map((r) => r.score)));
+    assert.notStrictEqual(expectedScore, Math.round((full.score * 2 + tail.score) / 3));
+    const row = scanFile(fixture('weighted-chunks.md', document), expectedScore);
+    assert.strictEqual(row.chunked, 3);
+    assert.strictEqual(row.words, totalWords);
+    assert.strictEqual(row.rawScore, expectedScore);
+    assert.strictEqual(row.exemptScore, expectedScore);
+    assert.strictEqual(row.overBudget, false, 'the weighted score equals the budget');
+    const issueTotal = results.reduce((sum, r) => sum + r.issues.length, 0);
+    assert.ok(issueTotal > 0);
+    assert.strictEqual(row.rawIssues, issueTotal);
+    assert.strictEqual(row.exemptIssues, issueTotal);
+    assert.deepStrictEqual(row.topTypes, independentTopTypes(document));
+  });
+
+  t('short-document scores and categories still match a single detector pass', () => {
+    const document = `${SEEDED}\n\n${PLAIN}`;
+    assert.ok(words(document) < LONG_DOCUMENT_WORDS);
+    assert.strictEqual(applyExemptions(document), document);
+    const result = AIDetector.analyzeText(document);
+    const row = scanFile(fixture('short-unchanged.md', document));
+    assert.strictEqual(row.chunked, null);
+    assert.strictEqual(row.words, result.stats.wordCount);
+    assert.strictEqual(row.rawScore, result.score);
+    assert.strictEqual(row.exemptScore, result.score);
+    assert.strictEqual(row.rawIssues, result.issues.length);
+    assert.strictEqual(row.exemptIssues, result.issues.length);
+    const counts = new Map();
+    for (const issue of result.issues) counts.set(issue.type, (counts.get(issue.type) || 0) + 1);
+    assert.deepStrictEqual(row.topTypes, [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3));
+  });
+
   const text = longDocument();
   assert.ok(words(text) > LONG_DOCUMENT_WORDS, 'fixture must take the chunked path');
   assert.strictEqual(applyExemptions(text), text, 'fixture must contain no exempt spans');
@@ -125,8 +179,56 @@ try {
   t('the CLI scans every tracked document against its own budget', () => {
     const out = execFileSync(process.execPath, [path.join(__dirname, 'self-scan.js'), '--json'], { encoding: 'utf8' });
     const { rows } = JSON.parse(out);
-    assert.deepStrictEqual(rows.map((r) => r.file), Object.keys(BUDGETS));
+    const installedFiles = Object.keys(BUDGETS).filter((file) => fs.existsSync(path.join(ROOT, file)));
+    assert.deepStrictEqual(rows.map((r) => r.file), installedFiles);
     for (const r of rows) assert.strictEqual(r.budget, BUDGETS[r.file], `${r.file} scanned against budget ${r.budget}`);
+  });
+
+  t('the text table header lines up with its rows', () => {
+    // The score columns are sized for the word `declined`, which is wider
+    // than either heading: the header must be padded to the same widths or
+    // it labels the wrong columns.
+    const out = execFileSync(process.execPath, [path.join(__dirname, 'self-scan.js')], { encoding: 'utf8' });
+    const lines = out.split('\n');
+    const headerIndex = lines.findIndex((l) => l.includes('budget'));
+    assert.ok(headerIndex >= 0, 'header row not printed');
+    const header = lines[headerIndex];
+    const row = lines[headerIndex + 1];
+    for (const col of ['words', 'raw', 'exempt', 'budget']) {
+      const edge = header.indexOf(col) + col.length;
+      assert.ok(/\S/.test(row[edge - 1] || ' '), `${col} column is not right-aligned with its cells:\n${header}\n${row}`);
+      assert.ok(!row[edge] || row[edge] === ' ', `${col} column overruns its cells:\n${header}\n${row}`);
+    }
+  });
+
+  t('an unsupported-script document is declined, not scored as clean', () => {
+    const row = scanFile(fixture('cjk.md', '这个函数返回一个承诺，调用方不应假设句柄之后仍可重用。'.repeat(50)));
+    assert.strictEqual(row.rawDeclined, true);
+    assert.strictEqual(row.exemptDeclined, true);
+    assert.strictEqual(row.declined, true);
+    assert.strictEqual(row.rawScore, 0);
+    assert.strictEqual(row.exemptIssues, 0);
+    assert.strictEqual(row.overBudget, false);
+  });
+
+  t('raw-only unsupported examples do not decline the exemption-aware scan', () => {
+    const prose = 'This ordinary English prose has enough words for the detector to score the relevant document content normally.';
+    const example = '这个函数返回一个承诺，调用方不应假设句柄之后仍可重用。'.repeat(50);
+    const row = scanFile(fixture('cjk-example.md', `${prose}\n\n\`\`\`text\n${example}\n\`\`\`\n`));
+    assert.strictEqual(row.rawDeclined, true);
+    assert.strictEqual(row.exemptDeclined, false);
+    assert.strictEqual(row.declined, false);
+  });
+
+  t('a chunked unsegmented-script document is declined, not scored as clean', () => {
+    // One-word-per-paragraph Chinese paragraphs take the chunked path, and
+    // every chunk is CJK-dominated: the scan must be marked declined rather
+    // than aggregated as a clean zero score.
+    const paragraphs = new Array(LONG_DOCUMENT_WORDS + 500).fill('这个函数返回一个承诺。');
+    const row = scanFile(fixture('chunked-cjk.md', paragraphs.join('\n\n')));
+    assert.ok(row.chunked >= 2, 'fixture must take the chunked path');
+    assert.strictEqual(row.declined, true);
+    assert.deepStrictEqual(row.topTypes, []);
   });
 
   t('the over-budget diagnostic still prints none when nothing was detected', () => {

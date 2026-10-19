@@ -1,7 +1,7 @@
 ---
 name: preservation-verifier
 version: "2.0"
-last_updated: 2026-09-14
+last_updated: 2026-10-19
 tags: [preservation, verifier]
 description: "Use when the user provides an original and rewritten version, asks whether a rewrite preserved protected content, or wants a deterministic check for code, frontmatter, quotes, tables, links, paths, numbers, headings, and residual AI-pattern regressions."
 ---
@@ -36,8 +36,8 @@ A `FAIL` is a blocking workflow result. The rewrite/edit stage is not complete m
 
 ### Outgoing
 
-- `REPAIR` to `voice-preserving-rewriter` when returned text failed preservation.
-- `REPAIR` to `file-edit-in-place` when a named file failed preservation.
+- `REPAIR` to `voice-preserving-rewriter` when returned text failed preservation and the shared editing budget has room.
+- `REPAIR` to `file-edit-in-place` when a named file failed preservation and the shared editing budget has room.
 - `RECHECK` to `ai-writing-detector` only when convergence or a residual audit was part of the user's request.
 - Stop on `PASS` unless another user-requested stage remains.
 - Stop and report on a second verification failure. Do not start another repair loop.
@@ -56,22 +56,23 @@ The verifier does not rewrite content itself.
 The bundled `scripts/validate.js` is an exact copy of the source repository's preservation validator. When Node execution is available, run:
 
 ```bash
-node scripts/validate.js before.md after.md
+node scripts/validate.js --residual-policy warn before.md after.md
 ```
 
 For programmatic use:
 
 ```js
 const { validate } = require("./scripts/validate.js");
+const result = validate(original, rewritten, { residualPolicy: "warn" });
 ```
 
-The validator checks protected structures and reports blocking errors separately from warnings. Never claim it ran unless the current host executed it.
+Use the explicit `warn` residual policy for editorial verification. The validator exposes mechanical `preservation` results separately from `quality` diagnostics while retaining top-level errors, warnings, and stats. Residual growth stays visible as a warning; it is not proof of content damage and does not by itself authorize a repair. A skipped, unavailable, or unscored quality check is not a clean residual audit. It does not decide whether a semantic change was grounded in an explicit user correction or whether the user specifically authorized editing a normally protected span. Never claim it ran unless the current host executed it.
 
 If execution is unavailable, compare the original and rewrite manually using the same preservation contract and label the result as `model_only`.
 
 ## Additional protected constraints
 
-In addition to the canonical validator's structural checks, honor protected semantic constraints carried in the handoff envelope.
+In addition to the canonical validator's structural checks, apply the canonical editing contract in a separate semantic review. Check remaining meaning, attribution, quantities and units, negation, conditions, causality, uncertainty, and speaker experience. Treat an explicit user correction as the intended change rather than an invention. If the user specifically placed a normally protected span in scope, verify that requested change and continue protecting its data and attribution; do not infer permission from a general cleanup, style, or voice request. Report this review as model-only rather than claiming the deterministic validator performed it.
 
 When `human_representation_sensitive: true`, review identity and representation details protected by the `agency-inclusive-visuals-specialist` lens. A structurally valid rewrite may still require `REVIEW` or `FAIL` if it erased or genericized material cultural, geographic, disability, attire, skin-tone/lighting, physical-reality, or anti-stereotype constraints.
 
@@ -81,11 +82,11 @@ Do not claim the deterministic validator checked semantic representation details
 
 ### PASS
 
-No blocking preservation error was found. Continue only if another requested stage remains.
+No blocking mechanical preservation error was found and no warning or semantic concern remains unresolved. If the user requested a residual audit, PASS also requires `quality.status: checked`; `skipped`, `unavailable`, or `unscored` requires REVIEW even when a number-spelling warning has been resolved. This does not prove semantic fidelity. Continue only if another requested stage remains.
 
 ### REVIEW
 
-Warnings or semantic changes need judgment but are not automatically blocking. Explain the exact uncertainty.
+Warnings or semantic changes need judgment but are not automatically blocking. Review `number-added`, `number-missing`, and `residual-grew` against the source and context; number spelling changes can be legitimate. Report unavailable or unscored residual analysis as incomplete when that audit was required. This includes a literal validator difference that corresponds to a specifically requested edit of normally protected content: review it against that scope and its remaining data and attribution constraints instead of automatically repairing it back to the original. Explain the exact uncertainty.
 
 ### FAIL
 
@@ -94,11 +95,11 @@ Protected content changed or disappeared. Identify the correct repair owner from
 - returned text -> `voice-preserving-rewriter`
 - named file -> `file-edit-in-place`
 
-Pass only the blocking repair scope and existing envelope. Do not ask the repair owner to redo clean parts.
+Pass only the blocking repair scope and existing envelope. Do not ask the repair owner to redo clean parts. If `pass.index` has reached `pass.max`, report the unresolved failure instead of requesting another mutation.
 
 ## Repair-loop limit
 
-One repair re-entry is allowed. After repair, verify once more. If that second check still fails, stop and report the unresolved errors. Never cycle indefinitely.
+At most one repair re-entry is allowed, and only while the requested editing budget has room. The repair consumes the next editing pass. Verification itself does not consume a pass. After repair, verify once more. If that check still fails, stop and report the unresolved errors. Never cycle indefinitely.
 
 ## Output
 

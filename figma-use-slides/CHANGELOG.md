@@ -2,6 +2,13 @@
 
 All notable changes to the `figma-use-slides` skill are documented here.
 
+## [2026-10-19] - Upstream Reference Refresh
+
+### Changed
+
+- Removed stale slide-property guidance that is absent from the current mapped
+  Figma source; the skill entrypoint and workflow contract were unchanged.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

@@ -1,7 +1,7 @@
 ---
 name: ai-writing-detector
 version: "2.0"
-last_updated: 2026-09-14
+last_updated: 2026-10-19
 tags: [ai, writing, detector]
 description: "Use when the user asks to detect, scan, audit, score, or flag AI-writing patterns without rewriting the text, including requests for a deterministic local detector result when the host can execute Node."
 ---
@@ -26,7 +26,7 @@ Accept detector work from:
 
 Do not accept a direct handoff from `false-positive-reviewer`. That Skill is terminal in the graph and must return control to `avoid-ai-writing-router` when fresh signal collection is needed. This prevents a reviewer-detector cycle.
 
-Carry forward the existing `context_mode`, protected constraints, pass state, and risk flags. Do not reset them.
+Carry forward the canonical `context_profile` separately from the detector's `context_mode`, along with protected constraints, pass state, and risk flags. Do not collapse or reset them.
 
 ### Produce
 
@@ -44,14 +44,17 @@ Update the handoff envelope with:
 - `ESCALATE` to `false-positive-reviewer` when the user asks what the findings can establish about authorship or another consequential conclusion.
 - Otherwise stop after the detect-only result.
 
-Detector findings are evidence inputs. They are not mandatory edit instructions and they never authorize a mutation.
+Deterministic hits are candidate matches. Keep the engine's public issue types
+and scores intact, then apply the canonical context exceptions and pass
+conditions when deciding which hits are justified editorial findings. Neither
+kind of result is a mandatory edit instruction or authorizes a mutation.
 
 ## AI-engineering evidence lens
 
 Apply the `agency-ai-engineer` lens encoded in `../avoid-ai-writing-router/references/agency-role-lenses.md`:
 
 - keep deterministic output separate from model-only observations,
-- preserve the selected context mode through downstream handoffs,
+- preserve the selected context profile and detector mode through downstream handoffs,
 - treat score and label as signals rather than ground truth,
 - consider false positives and genre/register effects,
 - never convert pattern detection into an authorship classifier claim.
@@ -62,9 +65,10 @@ When the current host can execute Node safely:
 
 1. Pass the supplied text to `scripts/detect.js`.
 2. Use `--context technical` for code-adjacent or technical prose when appropriate. Otherwise use `general`.
-3. Report the detector's score, label, issue types, severity, matched text, and suggestions.
-4. Separate deterministic findings from editorial observations that only exist in the full rulebook.
-5. Never claim execution unless the command actually ran.
+3. Use `--source-mode rendered-markdown` for Markdown that carries YAML frontmatter or HTML comments, so unedited metadata is not scored as the author's prose. Otherwise leave the default `plain`.
+4. Report the detector's score, label, issue types, severity, matched text, and suggestions.
+5. Separate deterministic candidate matches from justified editorial findings and observations that only exist in the full rulebook.
+6. Never claim execution unless the command actually ran.
 
 Example:
 
@@ -78,17 +82,23 @@ For a file:
 node scripts/detect.js --file path/to/draft.md --context general
 ```
 
+For Markdown with frontmatter or HTML comments:
+
+```bash
+node scripts/detect.js --file path/to/draft.md --source-mode rendered-markdown
+```
+
 If Node or shell execution is unavailable, perform the detect-only workflow from the canonical `avoid-ai-writing` Skill and explicitly say the deterministic detector was not run.
 
 ## Stop conditions
 
 Stop here when the request is detect-only. Do not continue into rewrite, file mutation, or interpretation merely because those Skills are available.
 
-A residual `RECHECK` may run once. Respect the canonical two-pass limit and the graph's loop policy.
+A residual `RECHECK` may run once when requested. It is read-only and does not consume an editing pass; any change it prompts must fit within the requested editing-pass limit, capped at two, and the graph's loop policy.
 
 ## Output
 
-Return the overall label and score when executed, detected patterns grouped by severity, a short contextual assessment of clear issues versus plausible false positives, execution status, and no rewritten version unless control has explicitly passed to a rewrite owner.
+Return the overall label and score when executed, detected candidate matches grouped by severity, a short contextual assessment that distinguishes justified findings from plausible false positives, execution status, and no rewritten version unless control has explicitly passed to a rewrite owner.
 
 <!-- MCP:START -->
 

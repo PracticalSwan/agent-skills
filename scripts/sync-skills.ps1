@@ -29,7 +29,9 @@ $script:retiredCatalogSkills = @(
     'frontend-skill',
     'premium-frontend-ui',
     'gemini-interactions-api',
-    'playwright'
+    'playwright',
+    'literature-review',
+    'citation-management'
 )
 
 function Get-NormalizedPath {

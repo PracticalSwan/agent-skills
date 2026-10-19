@@ -8,6 +8,8 @@ const root = path.resolve(__dirname, '..');
 /** Default `npm test` suites, in run order. */
 const SUITES = [
   'scripts/flatten-skill.test.js',
+  'scripts/editorial-cards.test.js',
+  'scripts/detect-parity.test.js',
   'detector/patterns.test.js',
   'detector/categories.test.js',
   'detector/validate.test.js',

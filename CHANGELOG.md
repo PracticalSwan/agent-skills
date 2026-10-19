@@ -3,6 +3,48 @@
 All notable changes to the Copilot Skills repository will be documented in this
 file.
 
+## [2026-10-19] - Catalog Refresh And Scientific Workflow Import
+
+### Added
+
+- Added five focused MIT-licensed scientific workflows from
+  `K-Dense-AI/scientific-agent-skills` at commit
+  `593377bb048752abb0152deab9fbb1083a6087df`: experimental design, hypothesis
+  generation, paper lookup, scientific writing, and peer review. The
+  `literature-review` and `citation-management` candidates were excluded as
+  standalone imports after overlap review to avoid duplicate activation and
+  unnecessary optional dependency surfaces.
+- Added regression coverage distinguishing retired standalone client surfaces
+  from the current official Gemini API managed-agent workflow.
+
+### Changed
+
+- Audited 30 pinned upstream repositories; 15 heads moved. Refreshed 37 mapped
+  skill entrypoints and 54 supporting-file mappings only where exact paths had
+  changed, and regenerated source provenance.
+- Updated the Playwright pins to the verified latest stable releases at this
+  audit: `@playwright/cli@0.1.22` and `microsoft/playwright@v1.64.1`. The two
+  mapped Playwright skill paths did not change between the prior recorded
+  source commit and v1.64.1.
+- Reconciled current source removals: `resolving-merge-conflicts` and the
+  catalog-local `plugin-creator` remain useful snapshots but are no longer
+  described as current upstream or Codex system-managed entries.
+- Refreshed Xquik to its current MCP-first workflow with an explicit direct
+  REST fallback, credential-destination limits, write authorization, and
+  redirect refusal.
+- Updated root inventory and maintenance documentation for 253 catalog skills
+  and 311 live workspace skills. No eligible child-only skills were promoted,
+  and no new Codex plugin skill was added after overlap and scope review.
+
+### Fixed
+
+- Narrowed catalog rejection to retired Gemini CLI and standalone Antigravity
+  client surfaces so current official Gemini API managed-agent guidance can be
+  validated without reopening retired client integrations.
+- Corrected the Codex system-skill registry: `plugin-creator` is not present in
+  the current `.system` root, so its retained catalog copy now has local
+  snapshot provenance and follows the normal top-level sync route.
+
 ## [2026-09-14] - Mapped Source Refresh And Provenance Pins
 
 ### Added

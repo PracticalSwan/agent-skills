@@ -2,6 +2,13 @@
 
 All notable changes to the `figma-swiftui` skill are documented here.
 
+## [2026-10-19] - Upstream Reference Refresh
+
+### Changed
+
+- Refreshed the design-to-code reference from the current mapped Figma source;
+  the skill entrypoint and workflow contract were unchanged.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

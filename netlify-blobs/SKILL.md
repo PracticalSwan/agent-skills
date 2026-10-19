@@ -1,39 +1,51 @@
 ---
 name: netlify-blobs
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-10-19
 tags: [netlify, blobs]
 description: "Store and retrieve unstructured objects, file uploads, and cache-like state on Netlify using the @netlify/blobs key/value API from Functions, Edge Functions, and Build Plugins. Use when a task involves saving user file or image uploads, persisting form or contact-form submissions, storing generated output from Background Functions (sitemaps/processed media/bulk-email results), building read-only asset stores, adding client-side blob expiration, or wiring file-based blob uploads at deploy time. Not for per-user, transactional, or relational data (counters/balances/sessions) — reach for Netlify DB there instead."
 ---
 # Netlify Blobs
 
-Modern import — reach for this:
+Modern syntax — import from `@netlify/blobs` and open a store, then call methods on the handle:
 
 ```ts
 import { getStore, getDeployStore, listStores } from "@netlify/blobs";
+import type { Context } from "@netlify/functions"; // or "@netlify/edge-functions"
 ```
 
-Install: `npm install @netlify/blobs`. Fetch API is required (built into Node 18+); otherwise pass a custom `fetch`.
+In Functions, Edge Functions, and Build Plugins, `siteID`, `deployID`, `token` (and `region` for `getDeployStore`) are injected automatically. Install with `npm install @netlify/blobs`.
 
-Two ways to open a store — use the **options-object form** when you need `consistency` or a custom `fetch` (the string form cannot pass them):
+**Not a database.** For dynamic, per-user, transactional, or relational data, use Netlify DB. Blobs is for objects, files, and cache-like state, optimized for frequent reads and infrequent writes.
+
+**Store scope is a footgun — read this first.** `getStore` opens a **site-wide store shared across ALL deploy contexts**: code on a deploy preview reads, overwrites, and deletes production data. Never run destructive tests or seed throwaway data from a preview against a site-wide store. Use `getDeployStore()` or a context-specific store name for isolation.
+
+## Choosing a store type
+
+- `getStore(name)` — site-wide, shared across all deploys. Data persists across deploys; previews see production data.
+- `getDeployStore(name)` — deploy-specific, scoped to one deploy. Kept in sync on rollback, cleaned up on deploy deletion. Use for isolation and for anything a failed deploy must not corrupt.
+- **Build plugins can READ from any of the site's stores, but WRITE only to deploy-specific stores** (`getDeployStore`). File-based uploads also write only to deploy-specific stores.
+
+## Core writes and reads
 
 ```ts
-const store = getStore("file-uploads");                          // string form
-const store = getStore({ name: "animals", consistency: "strong" }); // options form
+const uploads = getStore("file-uploads");
+
+// set: value is ArrayBuffer | Blob | string
+await uploads.set(key, file, { metadata: { country: "Spain" } });
+
+// setJSON: any JSON-serializable value
+await uploads.setJSON(key, { hello: "world" });
+
+// get: returns value or null. type: text (default) | json | arrayBuffer | blob | stream
+const entry = await uploads.get(key);            // string
+const obj = await uploads.get(key, { type: "json" });
+if (entry === null) { /* 404 */ }
 ```
 
-`siteID`, `token`, `deployID`, and `region` are set automatically inside Functions, Edge Functions, and Build Plugins — do not pass them manually there.
+`set`/`setJSON` overwrite an existing key. Both return `{ modified, etag }` (`etag` omitted when no new entry was generated).
 
-## Choosing the store type — READ THIS FIRST
-
-- **`getStore(name)`** — site-scoped. Persists across deploys and is **shared across ALL deploy contexts**. Code on a Deploy Preview reads, overwrites, and deletes production data. **Never seed throwaway data or run destructive tests from a preview.**
-- **`getDeployStore(name)`** — scoped to one deploy; isolated from production. Use this for throwaway/per-deploy data, or use a context-specific store name for isolation.
-
-Blobs have **no built-in access control** — the serving function is the gate. Default to private: gate reads behind an authenticated function rather than exposing blobs publicly. Never accept an arbitrary caller-supplied key against a store holding sensitive data.
-
-## Common tasks
-
-### Persist a user upload with metadata (`set`)
+### Persisting a user upload (Function)
 
 ```ts
 import { getStore } from "@netlify/blobs";
@@ -44,123 +56,39 @@ export default async (req: Request, context: Context) => {
   const form = await req.formData();
   const file = form.get("file") as File;
   const key = uuid();
-
   const uploads = getStore("file-uploads");
-  await uploads.set(key, file, {
-    metadata: { country: context.geo.country.name }
-  });
-
+  await uploads.set(key, file, { metadata: { country: context.geo.country.name } });
   return new Response("Submission saved");
 };
 ```
 
-Edge Function form is identical but imports `Context` from `@netlify/edge-functions`.
+Edge functions are identical except `import type { Context } from "@netlify/edge-functions";`.
 
-### Persist JSON (`setJSON`)
-
-```ts
-const uploads = getStore("json-uploads");
-await uploads.setJSON(key, data, { metadata: { country: context.geo.country.name } });
-```
-
-### Read a blob (`get`) — always null-check
+### Reading (Function)
 
 ```ts
-const uploads = getStore("file-uploads");
-const entry = await uploads.get(key);          // string by default
-if (entry === null) {
-  return new Response(`Could not find ${key}`, { status: 404 });
-}
-return new Response(entry);
-```
-
-Pass `type` for other formats: `get(key, { type: "json" | "arrayBuffer" | "blob" | "stream" | "text" })`.
-
-### Atomic conditional write
-
-Write only if the key is new:
-
-```ts
-const { modified } = await store.set("jane@netlify.com", "Jane Doe", { onlyIfNew: true });
-if (!modified) return new Response("Email already exists", { status: 400 });
-```
-
-Write only if the entry matches a known ETag (compare-and-swap):
-
-```ts
-const { modified } = await store.set(key, "New Jane", { onlyIfMatch: etag });
-if (!modified) return new Response("Cached data is stale", { status: 400 });
-```
-
-**Do not build counters, balances, or read-modify-write logic on a blob key** — even with `onlyIfMatch` retries. That is transactional data; use Netlify DB.
-
-### List blobs
-
-```ts
-const { blobs } = await store.list();          // auto-paginates all pages
-// blobs: [ { etag: "\"etag1\"", key: "..." }, ... ]
-```
-
-Manual pagination (returns an `AsyncIterator`):
-
-```ts
-for await (const entry of store.list({ paginate: true })) {
-  console.log(entry.blobs);
-}
-```
-
-Hierarchical listing — group keys with `/`, set `directories: true` to list one level, and use a **trailing slash** on `prefix` to drill in (without it, `cats` would also match `catsuit`):
-
-```ts
-const { blobs, directories } = await store.list({ directories: true });      // top level
-const catList = await store.list({ directories: true, prefix: "cats/" });    // inside cats/
-```
-
-### List stores
-
-```ts
-const { stores } = await listStores();   // does NOT include deploy-specific stores
-```
-
-### Delete
-
-```ts
-await store.delete(key);                       // resolves undefined
-const { deletedBlobs } = await store.deleteAll(); // deletes the whole store; 0 if it didn't exist
-```
-
-### Build plugin — write to a deploy-specific store
-
-Build plugins can **READ from any of the site's stores, but can WRITE only to deploy-specific stores** (`getDeployStore`).
-
-```js
-import { readFile } from "node:fs/promises";
-import { getDeployStore } from "@netlify/blobs";
-import { v4 as uuid } from "uuid";
-
-export const onPostBuild = async () => {
-  const file = await readFile("some-file.txt", "utf8");
-  const uploads = getDeployStore("file-uploads");
-  await uploads.set(uuid(), file);
+export default async (req: Request, context: Context) => {
+  const { key } = context.params;
+  const uploads = getStore("file-uploads");
+  const entry = await uploads.get(key);
+  if (entry === null) return new Response(`Not found: ${key}`, { status: 404 });
+  return new Response(entry);
 };
 ```
 
-### Client-side expiration (no server-side TTL)
-
-Blobs have no TTL. Store a timestamp in metadata, check it on read, and `delete` when expired:
+## Metadata and conditional reads
 
 ```ts
-await uploads.set(key, await req.text(), {
-  metadata: { expiration: new Date("2024-01-01").getTime() }
-});
-const entry = await uploads.getWithMetadata(key);
-const { expiration } = entry.metadata;
-if (expiration && expiration < Date.now()) {
-  await uploads.delete(key);
-}
+// getWithMetadata: data + metadata + etag; supports conditional reads
+const { data, etag, metadata } = await uploads.getWithMetadata(key);
+
+// getMetadata: metadata + etag only, without downloading the blob
+const meta = await uploads.getMetadata(key); // { etag, metadata } or null
 ```
 
-### Conditional read with ETag (`getWithMetadata`)
+Both return `null` if the key is absent. Both accept `{ consistency, etag, type }`.
+
+**Conditional read:** pass a cached `etag`; if it still matches server-side, `data` is `null` (your copy is fresh). Compare the whole ETag value including surrounding quotes and any weakness prefix.
 
 ```ts
 const { data, etag } = await uploads.getWithMetadata("my-key", { etag: cachedETag });
@@ -169,77 +97,140 @@ if (etag === cachedETag) {
 }
 ```
 
-`getWithMetadata` returns `{ data, etag, metadata }`, or `null` if the key is absent. `getMetadata(key)` returns `{ metadata, etag }` (no blob body) — use it to check existence cheaply.
+## Concurrency: atomic conditional writes
 
-## API surface
+**Last write wins — there is no concurrency control.** Do NOT build counters, balances, or read-modify-write logic on a blob key, even with `onlyIfMatch` retries — that is transactional data; use Netlify DB.
 
-Store instance methods:
-- `set(key, value, { metadata, onlyIfMatch, onlyIfNew })` → `{ modified, etag }`. `value` is `ArrayBuffer | Blob | string`.
-- `setJSON(key, value, { metadata, onlyIfMatch, onlyIfNew })` → `{ modified, etag }`.
-- `get(key, { consistency, type })` → blob in requested format, or `null`.
-- `getWithMetadata(key, { consistency, etag, type })` → `{ data, etag, metadata }` or `null`.
-- `getMetadata(key, { consistency, etag })` → `{ metadata, etag }` or `null`.
-- `list({ directories, paginate, prefix })` → `{ blobs, directories }` (auto-paginates unless `paginate: true`).
-- `delete(key)` → `undefined`.
-- `deleteAll()` → `{ deletedBlobs }`.
+`set`/`setJSON` accept `{ onlyIfNew, onlyIfMatch }`:
 
-Module functions:
-- `listStores({ paginate })` → `{ stores }`. Excludes deploy-specific stores.
+```ts
+// Create only if key does not exist
+const { modified } = await emails.set("jane@netlify.com", "Jane Doe", { onlyIfNew: true });
+if (!modified) return new Response("Email already exists", { status: 400 });
 
-## Configuration
+// Update only if the ETag still matches
+const { modified } = await emails.set("jane@netlify.com", "New Jane", { onlyIfMatch: etag });
+if (!modified) return new Response("Cached data is stale", { status: 400 });
+```
 
-### Consistency
-Default is **eventual**: writes are globally readable immediately; updates and deletes propagate within **60 seconds**. Opt into **strong** consistency per store or per read:
+## Listing
+
+```ts
+const { blobs } = await uploads.list(); // blobs: [{ etag, key }]
+```
+
+`list({ directories, paginate, prefix })`. Group keys hierarchically with `/`:
+
+```ts
+const { blobs, directories } = await animals.list({ directories: true });
+// directories: ["cats", "dogs"]; blobs: top-level keys only
+
+// Drill in — trailing slash REQUIRED (without it "catsuit" also matches)
+const res = await animals.list({ directories: true, prefix: "cats/" });
+```
+
+Pagination: `list` returns all pages by default (pages of up to 1,000 entries). Set `paginate: true` for an `AsyncIterator`:
+
+```ts
+for await (const page of store.list({ paginate: true })) {
+  console.log(page.blobs);
+}
+```
+
+`listStores({ paginate })` returns `{ stores: string[] }` — **does not include deploy-specific stores** (pages of up to 1,000).
+
+## Deleting
+
+```ts
+await uploads.delete(key);                        // resolves undefined
+const { deletedBlobs } = await uploads.deleteAll(); // deletes every object = deletes the store
+```
+
+## Expiration (no server-side TTL)
+
+Blobs never expire on their own. Store an expiration timestamp in metadata, check it on read, and `delete` when past:
+
+```ts
+await uploads.set(key, body, { metadata: { expiration: new Date("2025-01-01").getTime() } });
+const entry = await uploads.getWithMetadata(key);
+const { expiration } = entry.metadata;
+if (expiration && expiration < Date.now()) await uploads.delete(key);
+```
+
+## Consistency
+
+Default is **eventual** consistency: writes are globally available immediately, but updates/deletions propagate to all edge locations within 60 seconds. Opt into **strong** consistency per store or per read:
 
 ```ts
 const store = getStore({ name: "animals", consistency: "strong" }); // whole store
 await store.get("dog", { consistency: "strong" });                  // single read
 ```
 
-The CLI always uses strong consistency.
+Netlify CLI always uses strong consistency.
 
-### Regions (deploy-specific stores)
-Deploy-specific stores default to the function's region. Override with `region`:
+## Regions
+
+`region` takes an **AWS region code** (not the functions airport code). Supported (any other value throws `InvalidBlobsRegionError` before the request): `ap-southeast-1`, `ap-southeast-2`, `eu-central-1`, `us-east-1`, `us-east-2`.
+
+- **Deploy-specific stores** default to your functions region (auto-injected).
+- **Site-wide stores** default to `us-east-2` and do NOT follow your functions region.
+
+**Footgun — site-wide region is per-call:** if you need a site-wide store in a specific region, pass `region` on **every** `getStore` call for that store (reads, writes, deletes). A call that omits it uses `us-east-2` and silently sees no data — no error or warning.
+
+**Footgun — changing a region does not move data:** the store appears empty in the new region while data remains in the old. To migrate, copy each entry to a store opened in the new region, then delete from the old.
 
 ```ts
 const uploads = getDeployStore({ name: "file-uploads", region: "ap-southeast-2" });
+const profiles = getStore({ name: "user-profiles", region: "eu-central-1" });
 ```
 
-Available regions: https://docs.netlify.com/build/functions/configuration#region
+## File-based uploads (no build plugin)
 
-### File-based uploads (no build plugin)
-Place blob files under `.netlify/blobs/deploy/` in the site's base directory; Netlify uploads them to deploy-specific stores (preserving directory structure) after build, before deploy.
+Place files under `.netlify/blobs/deploy` in the base directory; Netlify uploads them (preserving directory structure) to **deploy-specific stores**. Attach metadata with a sibling JSON file named `$<filename>.json` (must be valid JSON or the deploy fails).
 
-- Attach metadata with a sibling JSON file prefixed with `$`: `$mouse.jpg.json` for `mouse.jpg`, `dogs/$good-boy.jpg.json` for `dogs/good-boy.jpg`.
-- Metadata files must be valid JSON or **the deploy fails**.
-- `.netlify/blobs/deploy` is **wiped before each build** — files must be created DURING the build (build command or plugin). Files committed to the repo beforehand are NOT uploaded.
-- Requires continuous deployment or CLI deploys.
+```
+.netlify/blobs/deploy/
+├─ dogs/good-boy.jpg
+├─ dogs/$good-boy.jpg.json   # metadata for good-boy.jpg
+├─ cat.jpg
+└─ mouse.jpg
+```
 
-## Constraints & gotchas
+**Caution:** Netlify empties `.netlify/blobs/deploy` before each build. Files committed to your repo are NOT uploaded — create blob files during the build (build command or build plugin).
 
-- **Store names:** no `/`, no `:`, max 64 bytes.
-- **Keys:** non-empty, cannot start with `/`, max 600 bytes, any Unicode. (UTF-8: most chars 1 byte, some more, e.g. `à` = 2 bytes.)
-- **Sizes:** object ≤ 5 GB; metadata ≤ 2 KB.
-- **Pagination pages:** `list` and `listStores` cap pages at 1,000 entries/stores.
-- **Last write wins** — no concurrency control beyond `onlyIfMatch` / `onlyIfNew`.
-- **Go Functions cannot access Blobs.**
-- **Local dev (Netlify Dev)** uses a sandboxed local store: no file-based uploads, and you cannot read production data.
-- **Not supported** under Netlify's HIPAA-compliant hosting.
-- Deploy deletion cleans up deploy-specific stores only; other stores need manual deletion or your own expiration logic.
-- Downloading a deploy does NOT include deploy-specific blobs; locking a published deploy does NOT prevent writes to its deploy-specific stores.
-- Encrypted at rest and in transit; blobs are reachable only through your own site.
+## Access control (default to private)
 
-## When something fails
-Surface the error and read the function logs. Do not invent REST endpoints or side-channel APIs to retry a failed store operation.
+Blobs have **no built-in access control** — the serving function is the gate. Blobs are only reachable through your own site's code, encrypted at rest and in transit. When in doubt, default to private: gate reads behind an authenticated function rather than exposing blobs publicly. Do not serve arbitrary user-supplied keys for sensitive data; scope keys with something callers cannot tamper with. Blobs is not part of Netlify's HIPAA-compliant offering.
 
-## CLI & migration
-Inspect blobs with `netlify blobs:list` / `:get` / `:set` / `:delete` — reference: https://cli.netlify.com/commands/blobs/
+## Constraints
 
-If you wrote to site-wide stores with `@netlify/blobs` ≤ 6.5.0, data becomes inaccessible after upgrading (namespacing change). Migrate with the latest CLI, which makes the store accessible on 7.0.0+:
+- Store names: no `/` or `:`, max 64 bytes.
+- Keys: non-empty, cannot start with `/`, max 600 bytes, any Unicode (some chars >1 byte).
+- Object size max 5 GB; metadata max 2 KB.
+- Functions written in **Go cannot access Netlify Blobs**.
+- Fetch API required (Node.js 18+); otherwise pass a custom `fetch`: `getStore({ fetch, name: "file-uploads" })`.
+- Local dev (Netlify Dev) uses a sandboxed local store: no file-based uploads, cannot read production data.
+- File-based uploads require continuous deployment or CLI deploys.
+
+## When an operation fails
+
+Surface the error and read the function logs. Do not invent REST endpoints or side-channel APIs to retry.
+
+## CLI and UI
+
+`netlify blobs:list/get/set/delete` exist for inspection — see the [CLI command reference](https://cli.netlify.com/commands/blobs/). Browse and download in the UI under **Data & Storage > Blobs**.
+
+## Module version migration
+
+If you wrote to site-wide stores with `@netlify/blobs` 6.5.0 or earlier and upgrade, those stores become inaccessible due to a namespacing change. Migrate with the latest CLI, then use module 7.0.0+:
 
 ```sh
 netlify recipes blobs-migrate YOUR_STORE_NAME
 ```
+
+## Reference
+
+Full API and background: [Netlify Blobs docs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/) and the [data & storage overview](https://docs.netlify.com/build/data-and-storage/overview/).
 
 <!-- system: agent-context/blobs/system.md — human-owned, merged by ctx-gen; edit system.md, not this section -->
 # Netlify house rules (blobs)

@@ -1,7 +1,7 @@
 ---
 name: netlify-database
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-10-19
 tags: [netlify, database]
 description: "Zero-config Postgres for Netlify apps via @netlify/database — querying data from Functions/Edge Functions, writing schema migrations, setting up Drizzle ORM, local dev with netlify dev, database branches for deploy previews, and migrating an existing Postgres project onto Netlify. Use when adding a database, building a contact form or CRUD API, writing SQL migrations, wiring up Drizzle, running netlify database commands, testing with a local Postgres, or switching from Neon/Supabase/RDS to Netlify Database."
 ---
@@ -236,7 +236,7 @@ netlify dev
 ```
 Manual: `npm install @netlify/database`, write a migration under `netlify/database/migrations/`, write a function, `netlify dev`, deploy.
 
-**If `@netlify/database` is NOT installed, Netlify will NOT auto-provision a database** — you'd have to create one manually from the UI **Database** menu. Install the package.
+**If `@netlify/database` is NOT installed, Netlify will NOT auto-provision a database** — you'd have to create one manually from the UI **Data & Storage** > **Database** menu. Install the package.
 
 ## CLI reference (`netlify database`)
 
@@ -388,15 +388,6 @@ ctx-gen and never generated. Owned by the skills maintainer.
 10. Pin: `drizzle-orm` and `drizzle-kit` must be installed from `@beta` —
     `latest` lacks the `drizzle-orm/netlify-db` adapter and will fail. The
     body may not soften this to a recommendation.
-## Windows CLI Compatibility
-
-- Resolve `netlify` with PowerShell `Get-Command` before invoking it; use the
-  installed `.cmd` or `.ps1` shim when PowerShell does not resolve the bare name.
-- Keep tokens and environment values in an approved secret store or local
-  environment. Never paste them into commands, logs, or committed config.
-- Treat an unavailable CLI or unauthenticated session as a reported blocker;
-  use the documented manual or API fallback instead of installing a runtime
-  implicitly.
 
 <!-- MCP:START -->
 

@@ -2,6 +2,13 @@
 
 All notable changes to the `codebase-design` skill are documented here.
 
+## [2026-10-19] - Upstream Reference Refresh
+
+### Changed
+
+- Refreshed `DESIGN-IT-TWICE.md` from the current mapped Matt Pocock source;
+  the skill entrypoint and workflow contract were unchanged.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

@@ -30,15 +30,15 @@ do not create empty sync, commit, or push churn.
 
 ## Current Inventory
 
-Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
+Snapshot date: `2026-10-19`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `248` tracked skill folders
-  - `216` tracked maintained skills
+  - `253` tracked skill folders
+  - `221` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `306` local skill folders detected
-  - `274` local maintained skills detected
+  - `311` local skill folders detected
+  - `279` local maintained skills detected
   - `32` local copied official Superpowers detected
 - Copied official superpowers are identified by the explicit list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`
 - The normalized catalog baseline includes:
@@ -49,33 +49,33 @@ Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
   - an `Anti-Patterns` section
   - a `Verification Protocol` section
   - a final `Related Skills` section
-- All `248` tracked skills use catalog `version: "2.0"`. The `166`
+- All `253` tracked skills use catalog `version: "2.0"`. The `166`
   pre-existing tracked skills retain their prior catalog baselines; the 66
   platform skills retain their import provenance, five Codex Router skills were
   promoted from the personal Codex root, one reviewed Codex plugin scanner was
-  vendored, and three official Playwright workflows were added. The catalog-
-  wide maintenance baseline remains `last_updated: 2026-09-08` for the
-  unchanged catalog; the Playwright entries use `last_updated: 2026-09-12`,
-  and the imported `humanizer` entry uses `last_updated: 2026-09-14`.
+  vendored, three official Playwright workflows were added, and five
+  scientific workflows were imported. The 37 refreshed and five newly
+  imported entrypoints use `last_updated: 2026-10-19`; unchanged catalog
+  entries retain their prior dates. The Playwright entries use
+  `last_updated: 2026-09-12`, and the imported `humanizer` entry uses
+  `last_updated: 2026-09-14`.
   The `58`
   local-only Google Workspace overlays
   retain their upstream `version: "0.22.5"` while receiving the same
   retained-client sections and maintenance date.
 - Provenance is complete for `docx`, `jupyter-notebook`, `pptx`, and `xlsx`; the registry now maps them to the current Anthropic or OpenAI canonical sources.
 - The official Playwright package is pinned in `scripts/skill-registry.json`:
-  `playwright-cli` comes from `@playwright/cli@0.1.19` (`v0.1.19`), while
+  `playwright-cli` comes from `@playwright/cli@0.1.22` (`v0.1.22`), while
   `playwright-component-testing` and `playwright-trace` come from stable
-  `microsoft/playwright@v1.63.0`. The old broad `playwright` name is retired
+  `microsoft/playwright@v1.64.1`. The old broad `playwright` name is retired
   to avoid duplicate activation; use `playwright-cli` for browser CLI work.
 - The eight Tavily skills are imported from the official `tavily-ai/skills`
   repository at commit `ea5e8201b0d3ed9c10b70b71187589bd761fe2d2`,
   including the current `tavily-dynamic-search` workflow.
 - The selected Matt Pocock import is sourced from `mattpocock/skills` at the
-  current audited commit `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76`. The
-  audited 35-skill
-  tree contributed only `codebase-design`, `domain-modeling`,
-  `improve-codebase-architecture`, `prototype`, `research`,
-  `resolving-merge-conflicts`, `handoff`, and `writing-for-agents`.
+  current audited commit recorded in `scripts/skill-registry.json`. Seven
+  current upstream paths remain mapped; `resolving-merge-conflicts` is retained
+  as a catalog-local snapshot because the current upstream removed that path.
 - The compact `humanizer` workflow is imported from
   `blader/humanizer` v3.0.0 at revision
   `9862685f575c65a8247f90369951df1b3416e3d6`. It remains a direct,
@@ -106,6 +106,40 @@ Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
   `.codex` and `.claude` roots. No child-only skills remained to promote;
   Codex system-managed copies remain protected and the three approved
   downstream roots are the only sync destinations.
+
+## 2026-10-19 Catalog Refresh And Scientific Workflows
+
+- Audited 30 pinned source repositories and refreshed only mapped paths that
+  changed: 37 skill entrypoints and 54 supporting-file mappings. Fifteen source
+  heads moved; head movement outside the exact mapped paths was recorded as
+  provenance rather than broad-imported.
+- Added five focused scientific workflows from
+  [`K-Dense-AI/scientific-agent-skills`](https://github.com/K-Dense-AI/scientific-agent-skills)
+  at commit `593377bb048752abb0152deab9fbb1083a6087df`: `experimental-design`,
+  `hypothesis-generation`, `paper-lookup`, `scientific-writing`, and
+  `peer-review`. `literature-review` and `citation-management` were not kept as
+  standalone skills because their workflows overlap existing research,
+  scholarly-retrieval, and manuscript-writing guidance.
+- Refreshed the Playwright source pins to the latest verified stable releases:
+  `@playwright/cli@0.1.22` and `microsoft/playwright@v1.64.1`. The two mapped
+  Playwright workflow paths were unchanged between the prior audit commit and
+  v1.64.1, so their normalized skill bodies were not needlessly rewritten.
+- Updated Xquik to its current MCP-first workflow with a guarded direct REST
+  fallback. The parent still requires OAuth/secret boundaries, explicit user
+  authorization for writes, redirect refusal, and untrusted-content handling.
+- Re-audited only personal `.codex`, `.agents`, and `.claude` skill roots; no
+  eligible child-only skills remained. Protected Codex `.system`, the 95-name
+  Blender overlay, copied Superpowers, and project-specific paths stayed out of
+  promotion and sync scope.
+- Reviewed current Codex plugin workflows without adding narrow plugin-only
+  skills. The existing catalog-local `plugin-creator` snapshot is no longer
+  mislabeled as a Codex `.system` skill; the current package's create, update,
+  and submission skills remain external. `agent-skillguard` remains the
+  selected standalone plugin-derived scanner.
+- Updated Gemini managed-agent guidance only where current official API docs
+  support it; the catalog validator continues to reject retired CLI or
+  standalone-client surfaces. See the
+  [official Antigravity Agent API documentation](https://ai.google.dev/gemini-api/docs/antigravity-agent).
 
 ## 2026-08-20 VoltAgent Platform Import
 

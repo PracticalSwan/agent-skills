@@ -2,6 +2,37 @@
 
 All notable changes to the `avoid-ai-writing` skill will be documented in this file.
 
+## [2026-10-19] - Detector And Catalog Test Compatibility
+
+### Added
+
+- Declined Chinese and Japanese documents when unsegmented script characters dominate, matching the standalone detector workflow and avoiding a false clean score from whitespace-based word counts.
+
+### Changed
+
+- Marked the supported-contrast editorial card as judgment-only because the detector exposes no dedicated type for that frame.
+- Adapted helper tests to the curated catalog layout and optional upstream evaluation archives without importing bulky evaluation artifacts.
+- Aligned the root CLI's accepted context values with the shared detector API.
+
+### Fixed
+
+- Kept the root CLI and standalone detector aligned on shared scoring output while retaining standalone diagnostic counters.
+
+## [2026-10-19] - Catalog Freshness And Source Sync
+
+### Added
+
+- Refreshed the catalog metadata and retained-client portability baseline.
+
+### Changed
+
+- Updated the catalog metadata and last-updated state for the 2026-10-19 maintenance pass.
+- Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+
+### Fixed
+
+- Preserved explicit no-MCP fallbacks and the catalog's safety, approval, and source-boundary guidance.
+
 ## [2026-09-14] - Avoid AI Writing v3.35.0 Source Refresh
 
 ### Added

@@ -25,7 +25,12 @@ BAD_TEXT_MARKERS = {
     "\ufffd": "replacement character",
 }
 STALE_REFERENCES = {"../nestjs/SKILL.md": "removed nestjs skill"}
-REMOVED_CLIENT_RE = re.compile(r"\b(?:Gemini\s+CLI|Antigravity(?:\s+CLI)?)\b", re.IGNORECASE)
+# Keep retired standalone client integrations out of portable skills while
+# allowing the currently documented Antigravity managed agent through Gemini API.
+REMOVED_CLIENT_RE = re.compile(
+    r"\b(?:Gemini\s+CLI|Antigravity\s+(?:CLI|IDE|host(?:\s+integration)?))\b",
+    re.IGNORECASE,
+)
 VALID_SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 ACTIVE_ROOT_DOCS = [
     "README.md",
@@ -153,7 +158,7 @@ def main() -> int:
         body = skill_path.read_text(encoding="utf-8")
         if REMOVED_CLIENT_RE.search(body):
             issues.append(
-                f"{skill_dir.name}: active SKILL.md still names removed Gemini or Antigravity support."
+                f"{skill_dir.name}: active SKILL.md still names a retired Gemini CLI or standalone Antigravity client surface."
             )
         if "## Cross-Client Portability" not in body:
             issues.append(f"{skill_dir.name}: missing Cross-Client Portability section.")

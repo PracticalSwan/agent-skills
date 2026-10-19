@@ -2,6 +2,13 @@
 
 All notable changes to the `resolving-merge-conflicts` skill are documented here.
 
+## [2026-10-19] - Provenance Reconciliation
+
+### Changed
+
+- Retained this merge-conflict workflow as a catalog-local snapshot because
+  the current mapped Matt Pocock source removed the skill path.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

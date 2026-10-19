@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import TypedDict
 
 
-SNAPSHOT_DATE = "2026-09-14"
+SNAPSHOT_DATE = "2026-10-19"
 
 SOURCE_COMMITS = {
     "vercel_agent_skills": (
@@ -19,23 +19,23 @@ SOURCE_COMMITS = {
     ),
     "netlify_context_and_tools": (
         "https://github.com/netlify/context-and-tools",
-        "b4fd870cf2f1f4cc66b28ead16277e1d799b510f",
+        "dc9ebf1b994420a4791e9d5d7cd68f62e07a0a41",
     ),
     "mongodb_agent_skills": (
         "https://github.com/mongodb/agent-skills",
-        "1e72df255e54e81eff078054c2cfb2b5d8c13503",
+        "26231c59b980405c33d4981428d71e41486e00b0",
     ),
     "supabase_agent_skills": (
         "https://github.com/supabase/agent-skills",
-        "8331f910845103c08d51f6ca1d86ebb7d1f745e3",
+        "c9be0e931b7930f7d02126d04774d904c381e7d7",
     ),
     "figma_mcp_server_guide": (
         "https://github.com/figma/mcp-server-guide",
-        "d638a5e055e8d95e0394a94350860398cf424b74",
+        "f2789420e7e8b4e2465dfeb1e12e1fc6a31397e5",
     ),
     "huggingface_skills": (
         "https://github.com/huggingface/skills",
-        "f3186efbbc322121eb5d0f31e8a1d669ee961159",
+        "c3ff942be3e07116b475253f0a8fc4f54682c1a8",
     ),
 }
 

@@ -221,9 +221,10 @@ Codex skill catalog.
   activation boundaries, evidence, or output shape differ. The same rule keeps
   Vercel React performance guidance separate from framework and art-direction
   skills.
-- Keep official Gemini API terminology allowed in active skills and docs while
-  rejecting retired command-line or provider-specific host support;
-  managed-agent IDs must come from current account/documentation discovery.
+- Distinguish the Gemini API's official managed-agent workflow from retired
+  standalone command-line or IDE integrations. Verify agent IDs against
+  current official documentation; API support does not imply client
+  portability.
 - When a source skill is MCP-aware, name the optional server in the catalog
   registry and keep an official-doc or CLI fallback. Configuration and
   authentication remain explicit user-authorized actions.
@@ -284,6 +285,41 @@ Codex skill catalog.
 - When an upstream skill deletes a reference file, apply that deletion while
   preserving catalog changelogs and reviewed provenance sidecars. Run the
   complete validator after the catalog-wide modernization pass.
+
+## 2026-10-19 Catalog Refresh And Scientific Workflow Import
+
+- Compare exact mapped source paths at pinned commits before copying. This
+  refresh audited 30 source repositories, found 37 changed skill entrypoints
+  and 54 changed support-file mappings, and updated pins for moved heads
+  without broad-importing unrelated repository content.
+- Query package registries and official release tags when the task says
+  “latest”; descriptions can lag the source pin. Here `@playwright/cli@0.1.22`
+  and `microsoft/playwright@v1.64.1` were current, and the two mapped Playwright
+  skill paths were unchanged at the stable release.
+- Import only distinct, workflow-level scientific gaps from the pinned
+  K-Dense source. Keep the focused design, hypothesis, scholarly retrieval,
+  manuscript-writing, and peer-review workflows. Exclude standalone
+  literature-review and citation-management variants when their activation
+  overlaps existing research/retrieval/writing skills; add neither merely to
+  preserve an upstream suite's full bundle. Add reviewed-out catalog-owned
+  names to the sync script's exact retirement list so stale mirror copies are
+  removed without touching unknown personal skills.
+- Re-audit only personal `.codex`, `.agents`, and `.claude` roots for child-only
+  skills. Keep protected `.system`, the 95-name Codex-only Blender overlay,
+  copied Superpowers, and project-specific paths outside promotion and sync.
+- Review Codex plugin skills for a concrete cross-client gap before importing.
+  Plugin-specific create/update/submission workflows remain external when
+  overlapping catalog skills or their narrow host scope make them poor global
+  defaults.
+- A source pin can be stale even when content has not changed. When an upstream
+  removes a mapped skill or a host moves a skill out of `.system`, preserve a
+  useful copy only as an explicitly local snapshot with truthful provenance.
+- Distinguish current Gemini API managed agents from retired standalone client
+  integrations in both validators and portability rules without reintroducing
+  obsolete command names into active root guidance.
+- Run docs hygiene and the smallest affected tests again after the final docs
+  and skill mutations; catalog sync and mirrored-state checks are separate
+  completion evidence.
 
 ## 2026-09-14 Humanizer Import And Catalog Routing
 

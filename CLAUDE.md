@@ -33,27 +33,28 @@ Codex.
 
 ## Current Counts
 
-Snapshot date: `2026-09-14`. Local overlay totals can differ by machine.
+Snapshot date: `2026-10-19`. Local overlay totals can differ by machine.
 
 - Git-tracked catalog in this repository:
-  - `248` tracked skill folders
-  - `216` tracked maintained skills
+  - `253` tracked skill folders
+  - `221` tracked maintained skills
   - `32` tracked copied official Superpowers
 - Live local workspace snapshot (includes local-only overlays such as `gws-*` and `recipe-*` when present):
-  - `306` local skill folders detected
-  - `274` local maintained skills detected
+  - `311` local skill folders detected
+  - `279` local maintained skills detected
   - `32` local copied official Superpowers detected
 
 Copied official superpowers are identified by the explicit `copied_official_superpowers` list in `scripts/skill-registry.json`, not by whether a skill folder has a `CHANGELOG.md`.
 
-All `248` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
+All `253` tracked skills use catalog `version: "2.0"`. The `166` pre-existing
 tracked skills retain their prior catalog baselines; the 66 platform skills
 retain their import provenance, five Codex Router skills were promoted from
 the personal Codex root, and one reviewed Codex plugin scanner was vendored.
-Three official Playwright workflows are now maintained from pinned Microsoft
-sources. The catalog-wide maintenance baseline is
-`last_updated: 2026-09-08` for the unchanged catalog; the Playwright entries
-use `last_updated: 2026-09-12`, and the imported `humanizer` entry uses
+Three official Playwright workflows are maintained from pinned Microsoft
+sources, and five scientific workflows were added. The 37 refreshed and five
+newly imported entrypoints use `last_updated: 2026-10-19`; unchanged entries
+retain their previous dates. The Playwright entries use
+`last_updated: 2026-09-12`, and the imported `humanizer` entry uses
 `last_updated: 2026-09-14`. The `58` local-only Google
 Workspace overlays retain upstream `version: "0.22.5"`
 while receiving the same retained-client sections and maintenance date.
@@ -66,12 +67,11 @@ healthy configured Tavily MCP server; they must not assume subscription-only
 browser integrations.
 
 The selected Matt Pocock import is sourced from `mattpocock/skills` at the
-current audited commit `6654f6b60cd9d5be8b54c6fafe44346dabeb3b76`. It adds
-eight cross-client gaps
-for architecture, domain modeling, prototypes, primary-source research,
-conflict resolution, handoffs, and agent-document writing. Keep the existing
-catalog equivalents for TDD, debugging, review, implementation, planning, and
-skill authoring as the canonical overlapping workflows.
+current audited commit recorded in `scripts/skill-registry.json`. Seven current
+upstream paths remain mapped; `resolving-merge-conflicts` is retained as a
+catalog-local snapshot because the current upstream removed that path. Keep
+the existing catalog equivalents for TDD, debugging, review, implementation,
+planning, and skill authoring as the canonical overlapping workflows.
 
 The compact `humanizer` workflow is sourced from
 `blader/humanizer` v3.0.0 at revision
@@ -81,9 +81,9 @@ preservation checks, and iterative convergence to the broader
 `avoid-ai-writing` suite.
 
 The Playwright package refresh is pinned in `scripts/skill-registry.json`:
-`playwright-cli` comes from `@playwright/cli@0.1.19` at the tagged
+`playwright-cli` comes from `@playwright/cli@0.1.22` at the tagged
 `microsoft/playwright-cli` revision, while `playwright-component-testing` and
-`playwright-trace` come from stable `microsoft/playwright@v1.63.0`. The old
+`playwright-trace` come from stable `microsoft/playwright@v1.64.1`. The old
 broad `playwright` folder is retired; its wrapper and practical catalog guides
 are retained under `playwright-cli`.
 
@@ -110,6 +110,30 @@ Supabase platform/Postgres, Gemini API/Live/Omni, React implementation/
 performance, and aggregate/focused web-quality workflows remain separate with
 explicit routing links. Plugin-managed Supabase and React copies remain
 external; this parent catalog is canonical for maintained cross-client content.
+
+## 2026-10-19 Catalog Refresh And Scientific Workflows
+
+- Audited 30 pinned source repositories and refreshed only exact mapped paths:
+  37 skill entrypoints and 54 supporting-file mappings changed. Fifteen source
+  heads moved; other head movement outside mapped paths remained provenance-only.
+- Added five K-Dense scientific workflows at commit
+  `593377bb048752abb0152deab9fbb1083a6087df`: experimental design, hypothesis
+  generation, paper lookup, scientific writing, and peer review. The
+  `literature-review` and `citation-management` candidates were excluded as
+  standalone imports after overlap review against existing workflows.
+- Updated the Playwright source pins to `@playwright/cli@0.1.22` and stable
+  `microsoft/playwright@v1.64.1`; the exact mapped skill paths were unchanged
+  between the prior source commit and the newer stable release.
+- Re-audited only personal `.codex`, `.agents`, and `.claude` skill roots; no
+  eligible child-only skills remained. Protected system, Blender, Superpowers,
+  and project-specific paths were excluded.
+- No new plugin-only skill was added. The current plugin-creator package's
+  create, update, and submission workflows remain external due to narrow scope;
+  the existing local snapshot no longer claims a Codex `.system` source.
+  Xquik's current MCP-first route and guarded REST fallback are reflected in
+  the catalog.
+- The Gemini API skill now reflects Google's currently published managed-agent
+  workflow; retired CLI and standalone-client guidance remains excluded.
 
 ## 2026-08-20 VoltAgent Platform Import
 

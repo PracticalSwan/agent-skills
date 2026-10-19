@@ -5,27 +5,117 @@ const fs = require("fs");
 const path = require("path");
 const AIDetector = require("./patterns.js");
 
-const args = process.argv.slice(2);
-let file = null;
-let contextMode = "general";
+const USAGE = `Usage: detect.js [options]
 
-for (let i = 0; i < args.length; i += 1) {
-  const arg = args[i];
-  if (arg === "--file") {
-    if (!args[i + 1]) throw new Error("--file requires a path");
-    file = args[++i];
-  } else if (arg === "--context") {
-    if (!args[i + 1]) throw new Error("--context requires general or technical");
-    contextMode = args[++i];
-  } else {
-    throw new Error(`unknown argument: ${arg}`);
+Scores UTF-8 text from --file or stdin and prints the complete analyzeText()
+result as JSON to stdout. Read-only: nothing is modified.
+Exits 0 after a successful analysis, 2 on usage or I/O errors.
+
+Options:
+  --file <path>                            Read the text from a file (default: stdin)
+  --context <general|technical|marketing|personal>
+                                           Analysis context (default: general)
+  --source-mode <plain|rendered-markdown>
+                                           Plain text (default) or rendered
+                                           Markdown, which excludes YAML
+                                           frontmatter and HTML comments from
+                                           the score
+  -h, --help                               Show this help
+
+Examples:
+  printf '%s' "$TEXT" | node scripts/detect.js --context general
+  node scripts/detect.js --file path/to/draft.md --source-mode rendered-markdown
+`;
+
+// Must stay in step with VALID_CONTEXT_MODES in patterns.js and CONTEXTS in
+// bin/avoid-ai-writing.js: the bundled script has to accept every context the
+// root CLI accepts, or equivalent invocations stop agreeing.
+const CONTEXTS = ["general", "technical", "marketing", "personal"];
+const SOURCE_MODES = ["plain", "rendered-markdown"];
+
+function parseArgs(argv) {
+  const options = { help: false, file: null, context: "general", sourceMode: "plain" };
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+
+    if (arg === "-h" || arg === "--help") {
+      options.help = true;
+      continue;
+    }
+
+    if (arg === "--file" || arg === "--context" || arg === "--source-mode") {
+      const value = argv[i + 1];
+      if (value === undefined) {
+        return { error: `${arg} requires a value` };
+      }
+      i += 1;
+      if (arg === "--file") {
+        options.file = value;
+      } else if (arg === "--context") {
+        if (!CONTEXTS.includes(value)) {
+          return { error: `invalid --context value: ${value}` };
+        }
+        options.context = value;
+      } else {
+        if (!SOURCE_MODES.includes(value)) {
+          return { error: `invalid --source-mode value: ${value}` };
+        }
+        options.sourceMode = value;
+      }
+      continue;
+    }
+
+    return { error: `unknown argument: ${arg}` };
+  }
+
+  return options;
+}
+
+function readInput(file) {
+  const source = file === null ? "stdin" : file;
+  try {
+    return { text: fs.readFileSync(file === null ? 0 : path.resolve(file), "utf8") };
+  } catch (error) {
+    return { error: `cannot read ${source}: ${error.message}` };
   }
 }
 
-if (!["general", "technical"].includes(contextMode)) {
-  throw new Error("--context must be general or technical");
+function main(argv) {
+  const parsed = parseArgs(argv);
+
+  if (parsed.error) {
+    process.stderr.write(`detect.js: ${parsed.error}\n\n${USAGE}`);
+    return 2;
+  }
+
+  if (parsed.help) {
+    process.stdout.write(USAGE);
+    return 0;
+  }
+
+  const input = readInput(parsed.file);
+  if (input.error) {
+    process.stderr.write(`detect.js: ${input.error}\n\n${USAGE}`);
+    return 2;
+  }
+
+  const result = AIDetector.analyzeText(input.text, {
+    contextMode: parsed.context,
+    sourceMode: parsed.sourceMode,
+  });
+
+  // analyzeText() returns an empty stats object for empty input. Surface the
+  // selected modes anyway, exactly as the root CLI does, so the option
+  // contract holds in every case and blank input does not diverge between the
+  // two entry points.
+  if (result.stats && Object.keys(result.stats).length === 0) {
+    result.stats.contextMode = parsed.context;
+    result.stats.sourceMode = parsed.sourceMode;
+  }
+
+  process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+  return 0;
 }
 
-const text = file ? fs.readFileSync(path.resolve(file), "utf8") : fs.readFileSync(0, "utf8");
-const result = AIDetector.analyzeText(text, { contextMode });
-process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+process.exitCode = main(process.argv.slice(2));

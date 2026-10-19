@@ -1,7 +1,7 @@
 ---
 name: avoid-ai-writing-router
 version: "2.0"
-last_updated: 2026-09-14
+last_updated: 2026-10-19
 tags: [avoid, ai, writing, router]
 description: "Use when a request combines AI-writing audit, rewrite, file editing, voice preservation, false-positive interpretation, verification, or when the user invokes Avoid AI Writing without naming a mode."
 ---
@@ -26,14 +26,15 @@ Classify the request once, create the smallest useful handoff envelope, then pas
 The envelope should carry only observed or user-provided facts such as:
 
 - intent and source kind
-- general vs technical context
+- requested editing scope and explicit factual corrections
+- canonical context profile and detector context mode
 - requested voice or supplied style sample
 - protected semantic constraints
 - whether detector, mutation, or verifier execution actually ran
 - detector summary when available
 - preservation status when available
 - risk flags
-- current pass index and stop limit
+- editing passes used and stop limit
 
 Never mark an execution field as `executed` without host evidence.
 
@@ -52,11 +53,11 @@ For requests such as "scan this, rewrite it, and make sure nothing important cha
 
 1. `ai-writing-detector` collects signals when deterministic execution is available, otherwise it performs a model-only audit under the canonical rulebook.
 2. `voice-preserving-rewriter` rewrites returned text, or `file-edit-in-place` mutates an explicitly named file.
-3. `preservation-verifier` checks before/after material.
-4. A verifier `FAIL` returns to the correct repair owner once.
+3. The mutation owner performs any justified corrective edit within the shared editing-pass budget, then `preservation-verifier` checks before/after material.
+4. A verifier `FAIL` returns to the correct repair owner once only if the shared budget has room; that repair consumes the next editing pass.
 5. Verification runs once more after repair when possible.
-6. Residual detection runs only when the user requested convergence or a residual audit.
-7. Stop after the canonical pass cap. Do not cycle indefinitely.
+6. Residual detection runs only when the user requested convergence or a residual audit. The check is read-only; a resulting edit still needs room in the shared budget.
+7. Stop when no justified in-scope edit remains or after the canonical pass cap. Do not cycle indefinitely.
 
 ## Typed edges
 
@@ -103,7 +104,7 @@ Preserve the existing handoff envelope and change only fields affected by the ne
 
 ## Stop conditions
 
-Stop when the user's requested stage is complete and any required verification gate has passed or been explicitly reported as unavailable.
+Stop when the user's requested stage is complete and any required verification gate has passed, been explicitly reported as unavailable, or failed with no editing pass left for repair. Report an exhausted-budget failure without calling the result verified.
 
 Do not:
 
@@ -116,7 +117,7 @@ Do not:
 
 ## Output
 
-Return the selected workflow result. For multi-stage work, state which stages actually ran, which were model-only, which deterministic checks executed, whether any repair loop occurred, and the final preservation status when available.
+Return the selected workflow result only after the requested stages and available verification finish. For returned-text rewriting, include exactly one full Final rewrite; do not expose a draft that a later stage superseded. For named-file editing, report changed spans without dumping a duplicate of the file. For multi-stage work, state which stages actually ran, which were model-only, which deterministic checks executed, how many editing passes were used, whether any repair occurred, and the final preservation status or unresolved failure.
 
 <!-- MCP:START -->
 

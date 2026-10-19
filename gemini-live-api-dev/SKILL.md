@@ -1,7 +1,7 @@
 ---
 name: gemini-live-api-dev
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-10-19
 tags: [gemini, live, api, dev]
 description: "Use this skill when building real-time, bidirectional streaming applications with the Gemini Live API. Covers WebSocket-based audio/video/text streaming, voice activity detection (VAD), native audio features, function calling, session management, ephemeral tokens for client-side auth, live translation, and all Live API configuration options. SDKs covered - google-genai (Python), @google/genai (JavaScript/TypeScript)."
 ---
@@ -9,42 +9,43 @@ description: "Use this skill when building real-time, bidirectional streaming ap
 
 ## Overview
 
-The Live API enables **low-latency, real-time voice and video interactions** with Gemini over WebSockets. It processes continuous streams of audio, video, or text to deliver immediate, human-like spoken responses.
+The Live API enables **low-latency, real-time voice and video interactions** with Gemini over WebSockets. It processes continuous streams of audio, video, or text to deliver immediate, human-like spoken responses and background reasoning.
 
 Key capabilities:
 - **Bidirectional audio streaming** — real-time mic-to-speaker conversations
+- **Background reasoning (extended thinking)** — multi-step background reasoning with spoken conversational fillers
+- **Live streaming transcription** — real-time speech-to-text with interim and finalized streams
 - **Video streaming** — send camera/screen frames alongside audio
 - **Text input/output** — send and receive text within a live session
 - **Audio transcriptions** — get text transcripts of both input and output audio
-- **Voice Activity Detection (VAD)** — automatic interruption handling
-- **Native audio** — thinking (with configurable `thinkingLevel`)
-- **Function calling** — synchronous tool use
-- **Google Search grounding** — ground responses in real-time search results
+- **Voice Activity Detection (VAD)** — automatic server VAD, client-side Hybrid VAD, and manual Push-to-Talk
+- **Asynchronous function calling** — non-blocking tool execution while audio continues streaming
+- **Full-session client content** — inject and update conversation turns mid-stream
 - **Session management** — context compression, session resumption, GoAway signals
 - **Ephemeral tokens** — secure client-side authentication
 
 > [!NOTE]
-> The Live API currently **only supports WebSockets**. For WebRTC support or simplified integration, use a [partner integration](#partner-integrations).
+> The Live API connects directly via **WebSockets**. For WebRTC support or simplified integration, use a [partner integration](#partner-integrations).
 
 ## Models
 
-- `gemini-3.1-flash-live-preview` — Optimized for low-latency, real-time dialogue. Native audio output, thinking (via `thinkingLevel`). 128k context window. **This is the recommended model for all Live API use cases.**
+### Current Models (Use These)
+
+- `gemini-3.8-live` — Default option for most low-latency voice agent experiences and real-time dialogue without reasoning delays. Supports interleaved reasoning, asynchronous function calling by default (`behavior: NON_BLOCKING`), and full-session client content updates.
+- `gemini-3.8-live-extended-thinking` — High-reasoning audio-to-audio model recommended when higher background reasoning is required during live interactions. Processes background reasoning and async tool calls (`behavior: NON_BLOCKING` required) while streaming continuous spoken conversational fillers; lifecycle managed via `interaction_status` (`IN_PROGRESS` vs `IDLE`).
 - `gemini-3.5-transcribe-live` — Real-time streaming speech-to-text with interim hypotheses, finalized transcripts, smart formatting, and Hybrid VAD.
-- `gemini-3.5-live-translate-preview` — Real-time streaming translation model.
+- `gemini-3.5-live-translate-preview` — Real-time speech-to-speech streaming translation across 70+ languages.
 
 > [!WARNING]
-> The following Live API models are **deprecated** and will be shut down. Migrate to `gemini-3.1-flash-live-preview`.
-> - `gemini-2.5-flash-native-audio-preview-12-2025` — Migrate to `gemini-3.1-flash-live-preview`.
-> - `gemini-live-2.5-flash-preview` — Released June 17, 2025. Shutdown: December 9, 2025.
-> - `gemini-2.0-flash-live-001` — Released April 9, 2025. Shutdown: December 9, 2025.
+> **Legacy Models (`gemini-3.1-flash-live-preview`, `gemini-2.5-flash-native-audio-*`, `gemini-live-2.5-flash-preview`, `gemini-2.0-flash-live-001`)**: Read [`references/migration.md`](references/migration.md) for breaking protocol changes (`behavior: "NON_BLOCKING"`, `thinking_level`, `interaction_status`, `send_client_content`).
 
 ## SDKs
 
-- **Python**: `google-genai` — `pip install google-genai`
-- **JavaScript/TypeScript**: `@google/genai` — `npm install @google/genai`
+- **Python**: `google-genai` >= `2.3.0` — `pip install -U google-genai`
+- **JavaScript/TypeScript**: `@google/genai` >= `2.3.0` — `npm install @google/genai`
 
 > [!WARNING]
-> Legacy SDKs `google-generativeai` (Python) and `@google/generative-ai` (JS) are deprecated. Use the new SDKs above.
+> Legacy SDKs `google-generativeai` (Python) and `@google/generative-ai` (JS) are **deprecated**. Never use them.
 
 ## Partner Integrations
 
@@ -63,7 +64,7 @@ To streamline real-time audio/video app development, use a third-party integrati
 - **Output**: Raw PCM, little-endian, 16-bit, mono. 24kHz sample rate.
 
 > [!IMPORTANT]
-> Use `send_realtime_input` / `sendRealtimeInput` for all real-time user input (audio, video, **and text**). `send_client_content` / `sendClientContent` is **only** supported for seeding initial context history (requires setting `initial_history_in_client_content` in `history_config`). Do **not** use it to send new user messages during the conversation.
+> Use `send_realtime_input` / `sendRealtimeInput` for all real-time streaming user input (audio, video, **and text**). On Gemini 3.8 models, `send_client_content` / `sendClientContent` is supported across the full session lifecycle with explicit roles (`user` or `model`) to inject conversation context (`turn_complete=true` unconditionally interrupts active generation).
 
 > [!WARNING]
 > Do **not** use `media` in `sendRealtimeInput`. Use the specific keys: `audio` for audio data, `video` for images/video frames, and `text` for text input.
@@ -103,14 +104,14 @@ config = types.LiveConnectConfig(
     )
 )
 
-async with client.aio.live.connect(model="gemini-3.1-flash-live-preview", config=config) as session:
+async with client.aio.live.connect(model="gemini-3.8-live", config=config) as session:
     pass  # Session is active
 ```
 
 #### JavaScript
 ```js
 const session = await ai.live.connect({
-  model: 'gemini-3.1-flash-live-preview',
+  model: 'gemini-3.8-live',
   config: {
     responseModalities: ['audio'],
     systemInstruction: { parts: [{ text: 'You are a helpful assistant.' }] }
@@ -209,6 +210,21 @@ if (content?.inputTranscription) console.log('User:', content.inputTranscription
 if (content?.outputTranscription) console.log('Gemini:', content.outputTranscription.text);
 if (content?.interrupted) { /* Stop playback, clear audio queue */ }
 ```
+
+---
+
+## Background Reasoning (Extended Thinking)
+
+Use `gemini-3.8-live-extended-thinking` when your voice agent must evaluate complex data, plan multiple steps, or handle long-running tools. The model speaks natural conversational fillers (e.g. *"Checking flight options now..."*) while executing asynchronous tools in the background.
+
+Key requirements:
+- **Thinking config**: Set `thinking_config=types.ThinkingConfig(thinking_level="low")` (`"minimal"` | `"low"` | `"medium"` | `"high"`).
+- **Non-blocking tools**: All function declarations **must** set `behavior="NON_BLOCKING"`. Synchronous blocking mode is not supported and returns an error.
+- **Lifecycle tracking (`interaction_status`)**: Do **not** rely on `turn_complete=True` alone to detect turn completion. Monitor `message.interaction_status` (Python) / `message.interactionStatus` (JS):
+  - `"IN_PROGRESS"`: Server is reasoning, speaking conversational fillers, or waiting for async tool responses.
+  - `"IDLE"`: Server has completed all background reasoning and tool calls; session is ready for user input.
+
+See [`references/migration.md`](references/migration.md) and the [Thinking in Live API Guide](https://ai.google.dev/gemini-api/docs/live-api/thinking.md.txt) for complete Python and JavaScript implementation examples.
 
 ---
 
@@ -324,28 +340,16 @@ session.sendRealtimeInput({ audioStreamEnd: true }); // Hybrid VAD
 
 ## Limitations
 
-- **Response modality** — Only `TEXT` **or** `AUDIO` per session, not both. Native audio models only support audio.
+- **Response modality** — Only `TEXT` **or** `AUDIO` per session, not both. Native audio models output audio (`response_modalities=["AUDIO"]`); enable `output_audio_transcription` if you need text transcripts.
 - **Audio-only session** — 15 min without compression
 - **Audio+video session** — 2 min without compression
 - **Connection lifetime** — ~10 min (use session resumption)
-- **Context window** — 128k tokens (native audio) / 32k tokens (standard)
-- **Async function calling** — Not yet supported; function calling is synchronous only. The model will not start responding until you've sent the tool response.
-- **Proactive audio** — Not yet supported in Gemini 3.1 Flash Live. Remove any configuration for this feature.
-- **Affective dialogue** — Not yet supported in Gemini 3.1 Flash Live. Remove any configuration for this feature.
-- **Code execution** — Not supported
-- **URL context** — Not supported
+- **Context window** — 128k input tokens / 64k output tokens
+- **Code execution / URL context** — Not supported
 
-## Migrating from Gemini 2.5 Flash Live
+## Upgrading & Migration
 
-When migrating from `gemini-2.5-flash-native-audio-preview-12-2025` to `gemini-3.1-flash-live-preview`:
-
-1. **Model string** — Update from `gemini-2.5-flash-native-audio-preview-12-2025` to `gemini-3.1-flash-live-preview`.
-2. **Thinking configuration** — Use `thinkingLevel` (`minimal`, `low`, `medium`, `high`) instead of `thinkingBudget`. Default is `minimal` for lowest latency.
-3. **Server events** — A single event can contain multiple content parts simultaneously (audio + transcript). Process **all** parts in each event.
-4. **Client content** — `send_client_content` is only for seeding initial context history (set `initial_history_in_client_content` in `history_config`). Use `send_realtime_input` for text during conversation.
-5. **Turn coverage** — Defaults to `TURN_INCLUDES_AUDIO_ACTIVITY_AND_ALL_VIDEO` instead of `TURN_INCLUDES_ONLY_ACTIVITY`. If sending constant video frames, consider sending only during audio activity to reduce costs.
-6. **Async function calling** — Not yet supported. Function calling is synchronous only.
-7. **Proactive audio & affective dialogue** — Not yet supported. Remove any configuration for these features.
+For step-by-step migration checklists and protocol deltas when upgrading from `gemini-3.1-flash-live-preview`, `gemini-2.5-flash-native-audio-*`, or `gemini-2.0-flash-live-001` to **Gemini 3.8 Live** or **Gemini 3.8 Live Extended Thinking**, read [`references/migration.md`](references/migration.md).
 
 ## Best Practices
 
@@ -353,10 +357,11 @@ When migrating from `gemini-2.5-flash-native-audio-preview-12-2025` to `gemini-3
 2. **Enable context window compression** for sessions longer than 15 minutes
 3. **Implement session resumption** to handle connection resets gracefully
 4. **Use ephemeral tokens** for client-side deployments — never expose API keys in browsers
-5. **Use `send_realtime_input`** for all real-time user input (audio, video, text). Reserve `send_client_content` only for seeding initial context history
-6. **Send `audioStreamEnd`** when the mic is paused to flush cached audio
-7. **Clear audio playback queues** on interruption signals
+5. **Use `send_realtime_input`** for real-time user input (audio, video, text). Use `send_client_content` with explicit `user`/`model` roles to inject context turns mid-stream
+6. **Send `audioStreamEnd` / `audio_stream_end`** (Hybrid VAD) when the mic is paused or user finishes speaking
+7. **Clear audio playback queues** on interruption signals (`interrupted: true`)
 8. **Process all parts** in each server event — events can contain multiple content parts
+9. **Monitor `interaction_status`** (`IN_PROGRESS` vs `IDLE`) when using `gemini-3.8-live-extended-thinking` rather than relying on `turn_complete` alone
 
 ## Documentation Lookup
 
@@ -388,13 +393,17 @@ This index contains links to all documentation pages in `.md.txt` format. Use we
 > Those are not all the documentation pages. Use the `llms.txt` index to discover available documentation pages
 
 - [Live API Overview](https://ai.google.dev/gemini-api/docs/live.md.txt) — getting started, raw WebSocket usage
+- [Thinking in Live API](https://ai.google.dev/gemini-api/docs/live-api/thinking.md.txt) — background reasoning, conversational fillers, interaction_status, non-blocking tools
+- [Model Card: Gemini 3.8 Live](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live) — default low-latency voice agent model & migration guide
+- [Model Card: Gemini 3.8 Live Extended Thinking](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live-extended-thinking) — high-reasoning voice model & upgrading guide
 - [Live Transcription](https://ai.google.dev/gemini-api/docs/live-api/live-transcribe.md.txt) — real-time speech-to-text, interim hypotheses, smart formatting, and Hybrid VAD
 - [Live Translate](https://ai.google.dev/gemini-api/docs/live-api/live-translate.md.txt) — configuration options and capabilities for translation
-- [Live API Capabilities Guide](https://ai.google.dev/gemini-api/docs/live-guide.md.txt) — voice config, transcription config, native audio (thinking), VAD configuration, media resolution
+- [Live API Capabilities Guide](https://ai.google.dev/gemini-api/docs/live-guide.md.txt) — voice config, transcription config, VAD configuration, media resolution
 - [Live API Tool Use](https://ai.google.dev/gemini-api/docs/live-tools.md.txt) — function calling (sync and async), Google Search grounding
 - [Session Management](https://ai.google.dev/gemini-api/docs/live-session.md.txt) — context window compression, session resumption, GoAway signals
 - [Ephemeral Tokens](https://ai.google.dev/gemini-api/docs/ephemeral-tokens.md.txt) — secure client-side authentication for browser/mobile
 - [WebSockets API Reference](https://ai.google.dev/api/live.md.txt) — raw WebSocket protocol details
+- [Migration & Upgrading Guide](references/migration.md) — step-by-step checklists and code examples for Gemini 3.8 Live and Extended Thinking
 
 ## Supported Languages
 

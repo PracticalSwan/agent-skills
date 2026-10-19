@@ -2,6 +2,15 @@
 
 All notable changes to the `plugin-creator` skill are documented here.
 
+## [2026-10-19] - Provenance Reconciliation
+
+### Changed
+
+- Reclassified this retained Codex-plugin workflow as a catalog-local snapshot:
+  the current `.system` root no longer contains `plugin-creator`, and the
+  current plugin package exposes narrower create, update, and submission
+  workflows that were reviewed but not imported.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

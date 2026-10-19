@@ -121,6 +121,11 @@ external; this parent catalog is canonical for maintained cross-client content.
   generation, paper lookup, scientific writing, and peer review. The
   `literature-review` and `citation-management` candidates were excluded as
   standalone imports after overlap review against existing workflows.
+- Audited the three requested discovery catalogs at the pinned revisions in
+  `REFERENCE_SOURCES.md`; no additional portable, non-overlapping research or
+  algorithm-development skill was selected. OpenAlex retrieval is already
+  covered by `paper-lookup`; candidates with a host-specific Rube MCP dependency,
+  unsafe Sci-Hub guidance, or automatic workspace-memory writes were excluded.
 - Updated the Playwright source pins to `@playwright/cli@0.1.22` and stable
   `microsoft/playwright@v1.64.1`; the exact mapped skill paths were unchanged
   between the prior source commit and the newer stable release.

@@ -35,6 +35,10 @@ file.
 - Updated root inventory and maintenance documentation for 253 catalog skills
   and 311 live workspace skills. No eligible child-only skills were promoted,
   and no new Codex plugin skill was added after overlap and scope review.
+- Audited the three user-named discovery catalogs at their pinned revisions;
+  no additional paper, research, or algorithm-development candidate met the
+  cross-client usefulness and non-overlap bar. Review notes explain exclusions
+  for provider-specific, memory-mutating, and unsafe paper-download workflows.
 
 ### Fixed
 

@@ -304,6 +304,13 @@ Codex skill catalog.
   preserve an upstream suite's full bundle. Add reviewed-out catalog-owned
   names to the sync script's exact retirement list so stale mirror copies are
   removed without touching unknown personal skills.
+- Treat source catalogs as discovery indexes, not install authority: pin each
+  index, inspect the canonical skill content and license, and compare its real
+  workflow with the maintained catalog. The three requested indexes yielded no
+  additional distinct import: OpenAlex was already covered, while candidates
+  either required a host-specific MCP, wrote persistent workspace memory, or
+  included unsafe paywall-bypass guidance. Algorithmic art is not algorithm
+  development.
 - Re-audit only personal `.codex`, `.agents`, and `.claude` roots for child-only
   skills. Keep protected `.system`, the 95-name Codex-only Blender overlay,
   copied Superpowers, and project-specific paths outside promotion and sync.

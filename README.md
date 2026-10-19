@@ -120,6 +120,14 @@ Snapshot date: `2026-10-19`. Local overlay totals can differ by machine.
   `peer-review`. `literature-review` and `citation-management` were not kept as
   standalone skills because their workflows overlap existing research,
   scholarly-retrieval, and manuscript-writing guidance.
+- Audited the three requested discovery catalogs at the pinned revisions in
+  `REFERENCE_SOURCES.md`; no additional research, paper, or algorithm-development
+  candidate cleared the portability and non-overlap bar. OpenAlex search is
+  already covered by `paper-lookup`; the OpenClaw `literature-manager` page
+  documents a Sci-Hub fallback and a Suspicious security signal, while its
+  paper-KB candidate writes to workspace memory. The Composio Semantic Scholar
+  workflow requires Rube MCP, and `algorithmic-art` is generative art rather
+  than algorithm-development guidance.
 - Refreshed the Playwright source pins to the latest verified stable releases:
   `@playwright/cli@0.1.22` and `microsoft/playwright@v1.64.1`. The two mapped
   Playwright workflow paths were unchanged between the prior audit commit and

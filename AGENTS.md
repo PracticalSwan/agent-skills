@@ -152,6 +152,11 @@ parent catalog is canonical for maintained cross-client content.
   `literature-review` and `citation-management` candidates were excluded as
   standalone imports after overlap review against existing research,
   scholarly-retrieval, and manuscript-writing workflows.
+- Audited the three requested discovery catalogs at the pinned revisions in
+  `REFERENCE_SOURCES.md`; no additional portable, non-overlapping research or
+  algorithm-development skill was selected. OpenAlex retrieval is already
+  covered by `paper-lookup`; candidates with a host-specific Rube MCP dependency,
+  unsafe Sci-Hub guidance, or automatic workspace-memory writes were excluded.
 - Re-audited only the personal `.codex`, `.agents`, and `.claude` roots; no
   eligible child-only skills remained. Protected Codex `.system`, Blender,
   copied Superpowers, and project-specific paths remained outside promotion.

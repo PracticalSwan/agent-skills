@@ -10,20 +10,20 @@ from __future__ import annotations
 from typing import TypedDict
 
 
-SNAPSHOT_DATE = "2026-10-19"
+SNAPSHOT_DATE = "2026-11-16"
 
 SOURCE_COMMITS = {
     "vercel_agent_skills": (
         "https://github.com/vercel-labs/agent-skills",
-        "063bee94c3f4df8453406c830b0a7df0f2860278",
+        "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
     ),
     "netlify_context_and_tools": (
         "https://github.com/netlify/context-and-tools",
-        "dc9ebf1b994420a4791e9d5d7cd68f62e07a0a41",
+        "905256ef236890a842be1ff1c5fd6bb07baa1890",
     ),
     "mongodb_agent_skills": (
         "https://github.com/mongodb/agent-skills",
-        "26231c59b980405c33d4981428d71e41486e00b0",
+        "776c47f6f705b19f1c0ef54d912a59066bef29a7",
     ),
     "supabase_agent_skills": (
         "https://github.com/supabase/agent-skills",
@@ -31,11 +31,11 @@ SOURCE_COMMITS = {
     ),
     "figma_mcp_server_guide": (
         "https://github.com/figma/mcp-server-guide",
-        "f2789420e7e8b4e2465dfeb1e12e1fc6a31397e5",
+        "5f3024c3decd83ff6f0bfb3ef36a2c4cfbff961d",
     ),
     "huggingface_skills": (
         "https://github.com/huggingface/skills",
-        "c3ff942be3e07116b475253f0a8fc4f54682c1a8",
+        "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
     ),
 }
 
@@ -219,10 +219,9 @@ PLATFORM_SKILLS["hf-mcp"] = _spec(
 )
 
 
-# These are deliberately absent from PLATFORM_SKILLS because the requested
-# local-runtime gate was not met on 2026-08-20: `hf`/`huggingface-cli` and
-# `hf-mem`'s command-line runtime are not installed on this laptop.
-CLI_SKILLS_NOT_INSTALLED = ("hf-cli", "hf-mem")
+# Keep CLI-specific leaves outside the portable import set until their command
+# runtime can be selected and verified for the target client.
+CLI_SKILLS_EXCLUDED = ("hf-cli", "hf-mem")
 
 
 SOURCE_CLONE_DIRS = {

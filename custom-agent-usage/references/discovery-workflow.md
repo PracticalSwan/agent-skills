@@ -65,20 +65,23 @@ tools: [Browser, Page, Locator]
 ### Command Line
 
 ```powershell
+$claudeAgentDirectory = Join-Path $env:USERPROFILE '.claude\agents'
+$vsCodeInsidersPromptDirectory = Join-Path $env:APPDATA 'Code - Insiders\User\prompts'
+
 # Claude Code agent directory
-Get-ChildItem 'C:\Users\LOQ\.claude\agents' -Filter *.agent.md -File
+Get-ChildItem $claudeAgentDirectory -Filter *.agent.md -File
 
 # VS Code Insiders prompts directory
 # Keep only *.agent.md because this folder can also contain .prompt.md and .instructions.md
-Get-ChildItem 'C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts' -Filter *.agent.md -File
+Get-ChildItem $vsCodeInsidersPromptDirectory -Filter *.agent.md -File
 ```
 
 ### VS Code Search
 
 - Use file search with pattern: `*.agent.md`
 - Search inside:
-  - `C:\Users\LOQ\.claude\agents`
-  - `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+  - `%USERPROFILE%\.claude\agents`
+  - `%APPDATA%\Code - Insiders\User\prompts`
 - Exclude: `node_modules/**`
 
 ## Validation Checklist
@@ -90,4 +93,4 @@ Before using an agent as a subagent, verify:
 - [ ] `disable-model-invocation` is explicitly set to `false`
 - [ ] `name` field is present and meaningful
 - [ ] `description` explains agent's purpose clearly
-- [ ] File is in a discoverable directory: `C:\Users\LOQ\.claude\agents` or `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+- [ ] File is in a discoverable directory: `%USERPROFILE%\.claude\agents` or `%APPDATA%\Code - Insiders\User\prompts`

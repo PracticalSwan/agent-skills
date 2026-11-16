@@ -14,17 +14,17 @@ validate_src="$repo_root/detector/validate.js"
 categories_src="$repo_root/detector/CATEGORIES.md"
 check_style_src="$repo_root/scripts/check-style.js"
 markdown_prose_src="$repo_root/scripts/markdown-prose.js"
+html_entity_names_src="$repo_root/scripts/html-entity-names.js"
 normalize_quotes_src="$repo_root/scripts/normalize-quotes.js"
 examples_src="$repo_root/examples"
 canonical_skill_root="$repo_root/skills/avoid-ai-writing"
 canonical_detector_dest="$canonical_skill_root/detector"
 canonical_scripts_dest="$canonical_skill_root/scripts"
-canonical_examples_dest="$canonical_skill_root/examples"
 detector_patterns_dest="$repo_root/skills/ai-writing-detector/scripts/patterns.js"
 verifier_patterns_dest="$repo_root/skills/preservation-verifier/scripts/patterns.js"
 verifier_validate_dest="$repo_root/skills/preservation-verifier/scripts/validate.js"
 
-for required in "$src" "$patterns_src" "$validate_src" "$categories_src" "$check_style_src" "$markdown_prose_src" "$normalize_quotes_src"; do
+for required in "$src" "$patterns_src" "$validate_src" "$categories_src" "$check_style_src" "$markdown_prose_src" "$html_entity_names_src" "$normalize_quotes_src"; do
   if [ ! -f "$required" ]; then
     echo "missing canonical source: $required" >&2
     exit 1
@@ -49,7 +49,7 @@ for skill_root in "$(dirname "$claude_dest")" "$canonical_skill_root"; do
   mkdir -p "$skill_root/references" "$skill_root/detector" "$skill_root/scripts"
   cp "$repo_root/references/patterns.md" "$skill_root/references/patterns.md"
   cp "$patterns_src" "$validate_src" "$categories_src" "$skill_root/detector/"
-  cp "$check_style_src" "$markdown_prose_src" "$normalize_quotes_src" "$skill_root/scripts/"
+  cp "$check_style_src" "$markdown_prose_src" "$html_entity_names_src" "$normalize_quotes_src" "$skill_root/scripts/"
   # Fixed destination is inside the selected bundled skill directory.
   rm -rf "$skill_root/examples"
   cp -R "$examples_src" "$skill_root/examples"
@@ -72,7 +72,7 @@ if [ -z "$skill_version" ]; then
 fi
 
 read_manifest_version() {
-  python3 - "$1" <<'PY'
+  "$python_bin" - "$1" <<'PY'
 import json
 import sys
 
@@ -81,15 +81,15 @@ try:
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 except FileNotFoundError:
-    print(f"Missing plugin manifest: {path}", file=sys.stderr)
+    print(f"Missing manifest: {path}", file=sys.stderr)
     sys.exit(1)
 except json.JSONDecodeError as e:
-    print(f"Invalid JSON in plugin manifest: {path}: {e}", file=sys.stderr)
+    print(f"Invalid JSON in manifest: {path}: {e}", file=sys.stderr)
     sys.exit(1)
 
 version = data.get("version")
 if not isinstance(version, str) or not version:
-    print(f'Invalid or missing "version" in plugin manifest: {path}', file=sys.stderr)
+    print(f'Invalid or missing "version" in manifest: {path}', file=sys.stderr)
     sys.exit(1)
 print(version)
 PY
@@ -97,6 +97,8 @@ PY
 
 claude_version="$(read_manifest_version "$repo_root/plugins/avoid-ai-writing/.claude-plugin/plugin.json")"
 openai_version="$(read_manifest_version "$repo_root/.codex-plugin/plugin.json")"
+antigravity_version="$(read_manifest_version "$repo_root/plugins/avoid-ai-writing/.antigravity-plugin/plugin.json")"
+package_version="$(read_manifest_version "$repo_root/package.json")"
 
 if [ "$skill_version" != "$claude_version" ]; then
   echo "version mismatch: SKILL.md=$skill_version Claude plugin=$claude_version" >&2
@@ -104,6 +106,14 @@ if [ "$skill_version" != "$claude_version" ]; then
 fi
 if [ "$skill_version" != "$openai_version" ]; then
   echo "version mismatch: SKILL.md=$skill_version OpenAI plugin=$openai_version" >&2
+  exit 1
+fi
+if [ "$skill_version" != "$antigravity_version" ]; then
+  echo "version mismatch: SKILL.md=$skill_version Antigravity plugin=$antigravity_version" >&2
+  exit 1
+fi
+if [ "$skill_version" != "$package_version" ]; then
+  echo "version mismatch: SKILL.md=$skill_version package.json=$package_version" >&2
   exit 1
 fi
 

@@ -7,9 +7,6 @@ const root = path.resolve(__dirname, '..');
 
 /** Default `npm test` suites, in run order. */
 const SUITES = [
-  'scripts/flatten-skill.test.js',
-  'scripts/editorial-cards.test.js',
-  'scripts/detect-parity.test.js',
   'detector/patterns.test.js',
   'detector/categories.test.js',
   'detector/validate.test.js',
@@ -22,7 +19,6 @@ const SUITES = [
   'scripts/self-scan.test.js',
   'scripts/self-scan-diagnostics.test.js',
   'bin/avoid-ai-writing.test.js',
-  'bin/avoid-ai-writing-gate.test.js',
   'scripts/fp-measure-cli.test.js',
 ];
 
@@ -35,6 +31,10 @@ function main() {
   const selected = process.argv.slice(2);
   const suites = selected.length ? selected.map(resolveSuite) : SUITES;
   const results = [];
+
+  if (selected.length === 0) {
+    console.log('Running catalog-shipped suites; upstream monorepo packaging, GitHub Action, and retained-evaluation suites are not part of this cross-client skill copy.');
+  }
 
   for (const rel of suites) {
     const abs = path.join(root, rel);

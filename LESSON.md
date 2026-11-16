@@ -1,471 +1,63 @@
-# Lessons
+# Maintenance Lessons
 
-Lessons and maintenance mistakes for the shared Copilot, Claude Code, and
-Codex skill catalog.
+Read this file at the start of each session in this repository.
 
-## Source of Truth
+## Source refresh
 
-- Edit skills in `C:\Users\LOQ\.copilot\skills` first.
-- Install or import new maintained skills in `C:\Users\LOQ\.copilot\skills` first.
-- Treat only three personal-global roots as deployment targets:
-  `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and
-  `C:\Users\LOQ\.claude\skills`.
-- Keep normal child promotion limited to personal `.codex`, `.agents`, and
-  `.claude` roots. Do not scan or sync project-local skill roots unless the
-  user explicitly scopes them.
-- Preserve Codex `.system` skills as host-managed. Publish normalized catalog
-  copies to shared and Claude roots without overwriting those system folders.
-- Treat `arjun988/blender-skills` as a Codex-only exception: its skills remain in `C:\Users\LOQ\.codex\skills`, are never promoted into the parent, and never sync to `.agents` or `.claude`.
-- Parent maintenance still owns freshness for that exception through `scripts/update-codex-local-blender-skills.ps1`, which must run during source-refresh or update-all-skills work.
+- Compare the exact mapped upstream skill paths and support files. A moved
+  repository head alone does not mean an installed skill changed.
+- Prefer canonical vendor repositories, official package releases, and primary
+  documentation. Pin the inspected revision and update only the mapped paths
+  that materially changed.
+- If an upstream path was removed, keep a useful local snapshot only when its
+  value and provenance remain clear. Do not describe it as actively maintained
+  upstream content.
+- Review imported instructions for tool assumptions, credential handling,
+  prompt injection, privacy, licensing, and working fallbacks before copying.
+- When an upstream skill refers to companion skills, use the local catalog
+  paths after importing the set. Do not install duplicate skill copies or
+  change credentials and client configuration without user authorization.
+- Do not import whole plugin bundles. Choose only portable workflows that add
+  distinct value over the existing catalog.
 
-## Inventory Lessons
+## Skill quality
 
-- Count real skill folders by checking for `SKILL.md`, not by counting directories.
-- Derive the maintained count by excluding the explicit copied official superpower list in `scripts/skill-registry.json`, not by whether a folder has `CHANGELOG.md`.
-- Keep copied official superpowers separate from maintained skills so counts and maintenance expectations stay honest.
-- Treat `gws-*` and `recipe-*` folders as local-only skills excluded from the public repo via `.gitignore`. Do not include them in public counts, catalogs, or GitHub-facing documentation.
-- Keep two inventory views in root docs: git-tracked catalog counts and local workspace counts. Mixing them in one number creates avoidable drift and confusion.
-- Child-path reconciliation must compare the parent only with the user-scoped
-  personal roots. Promote portable extras into the parent, normalize invalid
-  names to lowercase hyphen-case, and preserve source provenance.
-- Categorized upstream catalogs can hide skills below an extra directory level. Discover by `SKILL.md`, flatten by the normalized skill name, and check for duplicate names before copying.
-- An upstream installation page, repository README, and live skill tree can
-  expose different counts. For `--all` imports, reconcile the live
-  `SKILL.md` tree at a pinned commit and document any newer unlisted skill
-  instead of silently omitting it.
-- Exact duplicate files across separate skill folders are not automatically
-  redundant. Preserve self-contained schemas, validators, licenses, and
-  per-skill changelogs unless the deployment contract changes.
-- An untracked empty directory can mask a broken tracked Markdown link. Verify
-  links against files present in Git, not only against the live filesystem.
+- Keep activation descriptions specific so unrelated tasks do not load a skill.
+- Explain the preferred tool, how to confirm it exists, and what to do when it
+  is unavailable.
+- Keep `Verification Protocol` immediately after `Anti-Patterns` and make
+  checks observable.
+- Test helper scripts with safe fixtures. Distinguish static checks, local
+  execution, client compatibility, and live-service behavior.
+- Avoid generic instructions that assume one host's read, search, browser, or
+  task-tracking tool exists in every client.
 
-## Portability Lessons
+## Catalog and provenance
 
-- A portability footer alone is not enough; imported skills may still contain host-specific wording in frontmatter or body content.
-- Every MCP-aware skill needs an explicit no-MCP fallback path or it will fail in at least one client.
-- A portability footer does not grant host capabilities. Browser, image,
-  plugin, and docs skills need explicit Codex, Claude Code, and fallback
-  routes.
-- Claude Code on a third-party endpoint such as the GLM Coding Plan must not
-  assume Anthropic's native Chrome integration is available. Use an active
-  external browser MCP or stop at a manual handoff.
-- CLI-backed web skills remain portable when the skill separates capability
-  routing from the host surface: use a configured MCP server when present,
-  otherwise use the reviewed external CLI or official SDK.
-- Discovery catalogs are not automatically the canonical source. If a discovery repo points to an official upstream skill, record both and import from the stronger maintained original.
-- If you track a raw imported skill before normalizing it, update the root docs immediately so counts stay accurate and the schema exceptions are explicit.
+- Keep this repository as the authoring source for maintained skills.
+- Promote only eligible skills from the user's global `.codex`, `.agents`, and
+  `.claude` roots. Protected system skills, Codex-only overlays, and
+  project-specific paths remain outside the shared catalog.
+- Record external provenance against the exact repository, revision, and path.
+  Keep personal machine paths and local-only inventory out of public files.
+- Keep copied official Superpowers classified explicitly; folder shape or the
+  presence of a changelog is not a reliable classifier.
+- Generate the catalog index from Git-visible skills so ignored local overlays
+  do not leak into public documentation.
 
-## Skill Consolidation Lessons
+## Validation and delivery
 
-- Keep one canonical general frontend creation and art-direction workflow at
-  `frontend-design`. Route the retired `frontend-skill` and
-  `premium-frontend-ui` names there instead of recreating style-specific
-  skills.
-- Keep `web-design-reviewer` separate because post-implementation browser QA
-  has a different activation boundary and evidence path from design creation.
-- Define frontend quality as fitness for context with accessibility and
-  functional correctness as hard gates. Visual intensity, cards, motion,
-  immersive effects, and animation dependencies are conditional techniques.
-- Before deleting overlapping imported skills, inspect every source file and
-  upstream license. Preserve applicable license texts, attribution, historical
-  provenance, and modification notices with the canonical result.
-- When external skills link to a canonical section anchor such as
-  `#component-review-rubric`, verify the heading and every dependent link after
-  the rewrite.
-
-## Sync Lessons
-
-- The workspace sync script should treat the repo inventory and discovered workspace targets as separate summary keys. Reusing the same key hides useful state.
-- Downstream skill folders behave like branch mirrors: make changes in this repo first, then publish them outward with the sync script.
-- After a catalog-wide doc-only refresh, still rerun validation and downstream
-  sync so the mirrors do not lag the workspace copy.
-- Keep the primary Codex root (`C:\Users\LOQ\.codex\skills`) distinct from the shared mirror (`C:\Users\LOQ\.agents\skills`) so documentation does not blur installation targets.
-- The Codex root can keep extra local skills outside this catalog, so sync verification there should compare the expected maintained set rather than only the total folder count.
-- Downstream sync is locked to three personal-global roots:
-  `C:\Users\LOQ\.agents\skills`, `C:\Users\LOQ\.codex\skills`, and
-  `C:\Users\LOQ\.claude\skills`. The sync script enforces this allowlist and
-  refuses to write anywhere else.
-- Project-local roots such as those under `C:\Assumption University` are out
-  of scope for normal promotion and sync.
-- Mirror copies should replace stale skill folders entirely so old
-  `SKILL.md.bak` files or removed support files do not linger.
-- When routing changes, prune only known catalog-owned copies that now conflict
-  with policy. Preserve unknown personal skills and host-owned system folders.
-- When refreshing copied official skills from a newly categorized upstream,
-  replace stale support files in the parent while preserving catalog changelog
-  history. Promote extracted support documents that became standalone skills
-  instead of keeping duplicate embedded copies.
-- After a user-requested mutation task in this workspace is complete and
-  satisfactory, sync outward every time, then commit and push without asking
-  for extra confirmation. Escalate before commit or push only when work is
-  incomplete, validation/sync failed, a required command was rejected,
-  security or privacy risk remains, or staging is unsafe.
-- The five Codex Router skills can be digest-approved external copies in the
-  Codex mirror. When parent sync changes one of those exact folders, review the
-  synced content and re-approve only that changed external skill before relying
-  on router doctor; do not overwrite it with router-owned content just to clear
-  a stale approval.
-- When a maintained skill is deliberately retired, add only its reviewed exact
-  name to the sync cleanup and verify it is removed from all three approved
-  personal-global roots. Never expand that cleanup into unknown personal or
-  project-specific skill paths.
-
-## Documentation Lessons
-
-- Every new agent session in this workspace should begin by reading `LESSON.md` before any other task work so prior mistakes stay visible.
-- Root docs drift quickly when counts are copied from memory. Recompute live counts before editing `README.md` or `CLAUDE.md`.
-- Keep root docs aligned on supported clients and link a migration guide for
-  breaking client-support changes.
-- When a catalog-wide skill refresh bumps shared metadata or structure, document the new baseline explicitly in the root docs and root changelog even if the inventory counts do not change.
-- When a catalog-wide skill refresh adds a required section such as
-  `Verification Protocol`, update root docs, per-skill changelogs, and sync
-  mirrors in the same pass.
-- Keep documentation ASCII-first unless Unicode materially improves clarity.
-
-## Verification Lessons
-
-- Live social-post skills must distinguish drafting from publishing, require
-  action-time confirmation before media upload or final submission, and find
-  the new post in current activity before claiming success.
-- Structural validation must also reject removed-client wording in active
-  `SKILL.md` files and reject retired support surfaces in the repo.
-- When the catalog frontmatter or required section schema changes, update the validator before relying on the next export or sync pass.
-- Spot-check imported skills after bulk modernization. Source catalogs can include host-specific assumptions, placeholder variables, or formatting that does not match the rest of the repo.
-- Audit imported reference files as well as `SKILL.md`. A removed-client
-  integration can remain hidden in a support document even when the skill
-  entrypoint is portable.
-- Installing an agent skill does not authorize installing its runtime or
-  collecting credentials. Keep runtime setup explicit, prefer reviewable
-  package-manager commands, and leave authentication to an approved secret or
-  login flow.
-- Record source repo and commit metadata for imported skills so later updates can be traced safely.
-- When a child source is not owned by git, record a `local-workspace://` source plus a SHA-256 tree digest instead of inventing a commit.
-- Historical curated skills can disappear from upstream HEAD. Match the child copy byte-for-byte to the last canonical commit and record that historical commit rather than pretending the retired skill is still current.
-- Keep official provenance sidecars from trusted imports when they add value. NVIDIA skill imports, for example, ship `skill-card.md`, `skill.oms.sig`, and benchmark evidence that should stay with the vendored copy unless removal is deliberate and documented.
-- If an imported tracked skill is still missing catalog sections or `CHANGELOG.md`, document that exception plainly until the modernization pass is done.
-- When a source repository has moved, compare the exact recorded source paths before changing maintained skill content; many upstream commits do not touch the vendored skill path.
-- A catalog-wide source refresh should report both numbers: exact mapped paths
-  whose content changed and mapped skills that only received provenance pins.
-  For the 2026-09-14 pass these were `13` and `68` respectively across `27`
-  checked source heads; do not broad-import a repository merely because its
-  HEAD moved.
-- Smoke-test bundled helper scripts after import. A skill can look fine in Markdown while its local fallback tooling still behaves poorly.
-- The verified Stitch MCP surface in this workspace is design-system oriented: `create_project`, `upload_design_md`, `create_design_system_from_design_md`, `list_design_systems`, and `apply_design_system`. Do not claim screen lookup, screen generation, screen editing, or variant tools exist unless the active host exposes them.
-- Imported skills that broker third-party content need explicit prompt-injection boundaries and credential-collection limits in the normalized `SKILL.md`; do not assume upstream README safety notes survive a catalog rewrite.
-- Local secret scans should ignore agent metadata and generated caches by
-  default or they will drown in false positives.
-- Do not commit Python bytecode or generated `__pycache__` artifacts. They are ignored and should be removed if a helper-script smoke test creates them.
-- Validation scans should ignore local environment folders such as `.venv`, `venv`, and `env` when looking for stray `*.pyc` files, or they will produce false positives from toolchain internals.
-- Keep validator behavior aligned with documented policy. If docs ban `### Tested` and require `Verification Protocol` immediately after `Anti-Patterns`, enforce both conditions and migrate historical headings without deleting their evidence.
-- Partial clones can fail when a later checkout needs missing blobs. For source refreshes that require copying many support files, a shallow full checkout is more reliable than a filtered no-checkout clone on this Windows host.
-- Run the final cache scan after helper-script smoke tests because imports and
-  help commands can regenerate ignored `__pycache__` files.
-- Before removing a retired external mirror, resolve the exact leaf path,
-  compare inventories and digests, confirm that no configuration or process
-  uses it, and preserve all surrounding application state.
-
-## CodeGraph Lessons
-
-- A local CodeGraph index is useful for repository-structure questions, but it
-  is navigation evidence rather than validation. Use `codegraph status` and
-  `codegraph explore "<question>"` before broad text searches when
-  `.codegraph/` exists, then verify the observed path directly and run the
-  real helper or validator.
-- Commit only `.codegraph/.gitignore`. Keep the generated `codegraph.db`
-  machine-local and ignored; never sync it to `.codex`, `.agents`, `.claude`,
-  or project-specific paths.
-- Run `codegraph sync .` after source edits and use `CODEGRAPH_TELEMETRY=0`
-  when the local index should not emit telemetry. Initialize only the parent
-  catalog with `codegraph init -y .`.
-
-## 2026-08-08 Matt Pocock Skill Import
-
-- When importing from a categorized upstream catalog, audit every live
-  `SKILL.md` entrypoint and its support files first; README indexes can omit
-  beta, misc, or newly added entries.
-- Select skills by real workspace gaps and preserve stronger local equivalents
-  for overlapping TDD, debugging, review, implementation, planning, and skill
-  authoring workflows.
-- Normalize imported content before validation, retain the upstream license
-  and pinned commit, and adapt host-specific or destructive-operation guidance
-  to the catalog's cross-client and approval boundaries.
-- Keep the parent catalog as the source of truth and sync only the approved
-  personal-global roots. Project-local skill paths remain out of scope even
-  when the workspace audit reads their project documentation.
-
-## 2026-08-14 Catalog Freshness And Source Sync
-
-- Compare each recorded source commit with the live upstream head, then
-  inspect only the exact mapped paths before refreshing a normalized skill.
-  Repository-wide head movement is not evidence that every imported skill
-  changed.
-- When an upstream refresh adds a client-specific setup path that the catalog
-  intentionally retired, copy the current workflow but remove that setup
-  surface and keep an honest no-MCP or manual fallback.
-- Preserve the parent catalog's wrappers and changelogs when importing current
-  support trees. Replacing a full upstream folder can silently drop local
-  provenance, approval gates, or client-routing safeguards.
-- A catalog-wide metadata refresh must update all root inventory snapshots and
-  the generated source report in the same change, even when skill counts stay
-  unchanged.
-- Child reconciliation is a separate check from upstream refresh: compare only
-  personal `.codex`, `.agents`, and `.claude` roots, report eligible extras
-  explicitly, and do not scan project-specific paths.
-
-## 2026-08-16 Installed Platform And Web Skills
-
-- Compare each installed child tree with the exact upstream path at a pinned
-  current commit before promotion; this distinguishes a verified source match
-  from an unverified local copy.
-- Keep an aggregate audit router and its focused leaves separate when their
-  activation boundaries, evidence, or output shape differ. The same rule keeps
-  Vercel React performance guidance separate from framework and art-direction
-  skills.
-- Distinguish the Gemini API's official managed-agent workflow from retired
-  standalone command-line or IDE integrations. Verify agent IDs against
-  current official documentation; API support does not imply client
-  portability.
-- When a source skill is MCP-aware, name the optional server in the catalog
-  registry and keep an official-doc or CLI fallback. Configuration and
-  authentication remain explicit user-authorized actions.
-- Shell-based helpers need a truthful Windows/manual fallback. Do not claim a
-  POSIX script ran when its shell or `jq` dependency is unavailable.
-- Promote from the personal Codex root into the parent first, update registry
-  provenance and root counts, then validate and sync only the three approved
-  personal-global roots. Project-specific paths remain out of scope.
-
-## 2026-08-16 Related Skill Consolidation Audit
-
-- Compare parent skills with plugin-managed copies before merging. Plugin
-  copies can be older or omit catalog safety, provenance, and cross-client
-  sections; keep them external when the parent is the stronger maintained
-  canonical copy.
-- Keep related skills separate when their activation boundary, input/output
-  shape, or evidence path differs. Add explicit `Related Skills` routes so
-  discoverability improves without collapsing distinct workflows.
-- For this audit, platform/Postgres, general/Interactions, React
-  implementation/performance, and aggregate/focused web-quality workflows
-  remained separate after review.
-
-## 2026-08-20 VoltAgent Platform Import And Maintenance
-
-- Treat `VoltAgent/awesome-agent-skills` as a discovery index, then pin and
-  import from each canonical vendor repository; record the exact source commit
-  and selected path in `scripts/platform_skill_manifest.py` and the generated
-  `REFERENCE_SOURCES.md`.
-- Gate CLI-specific imports on commands actually present on the host. This
-  refresh found `vercel`, `netlify`, and `supabase`, but not `hf`,
-  `huggingface-cli`, `mongosh`, `mongo`, or `figma`; omit absent CLI skills
-  rather than documenting an uninstalled executable as available.
-- Audit imported support-file links from their actual nested location. A
-  source-relative `references/...` link can become broken after importing a
-  file that is already inside `references/`; resolve it or replace it with the
-  vendor's stable official documentation URL.
-- Run `scripts/update-codex-local-blender-skills.ps1` during parent source
-  maintenance. On this refresh it completed successfully at upstream commit
-  `8f778d2405a214b508d4c7d80742be8e43acdd52` with 94 upstream skills plus one
-  separately protected local entry and no promotion to the parent, shared, or
-  Claude roots.
-- Keep the approved sync boundary explicit: only
-  `C:\Users\LOQ\.codex\skills`, `C:\Users\LOQ\.agents\skills`, and
-  `C:\Users\LOQ\.claude\skills` may receive downstream catalog writes.
-
-## 2026-08-24 Catalog Freshness And Personal Child Promotion
-
-- Compare every recorded upstream head with the exact mapped skill path before
-  rewriting content. This pass found material changes in `avoid-ai-writing`,
-  the eight selected Matt Pocock workflows, and `x-twitter-scraper`; unrelated
-  repository movement was recorded in provenance without broad rewrites.
-- A personal Codex root can contain plugin-managed skills that are not in the
-  parent catalog. Promote only the eligible five Codex Router skills, omit
-  their host marker files, and retain package plus tree-digest provenance.
-- Keep `.codex`, `.agents`, and `.claude` child reconciliation separate from
-  project-specific paths. Codex `.system`, Blender, copied Superpowers, and
-  unknown personal skills remain protected from parent ownership and sync.
-- When an upstream skill deletes a reference file, apply that deletion while
-  preserving catalog changelogs and reviewed provenance sidecars. Run the
-  complete validator after the catalog-wide modernization pass.
-
-## 2026-10-19 Catalog Refresh And Scientific Workflow Import
-
-- Compare exact mapped source paths at pinned commits before copying. This
-  refresh audited 30 source repositories, found 37 changed skill entrypoints
-  and 54 changed support-file mappings, and updated pins for moved heads
-  without broad-importing unrelated repository content.
-- Query package registries and official release tags when the task says
-  “latest”; descriptions can lag the source pin. Here `@playwright/cli@0.1.22`
-  and `microsoft/playwright@v1.64.1` were current, and the two mapped Playwright
-  skill paths were unchanged at the stable release.
-- Import only distinct, workflow-level scientific gaps from the pinned
-  K-Dense source. Keep the focused design, hypothesis, scholarly retrieval,
-  manuscript-writing, and peer-review workflows. Exclude standalone
-  literature-review and citation-management variants when their activation
-  overlaps existing research/retrieval/writing skills; add neither merely to
-  preserve an upstream suite's full bundle. Add reviewed-out catalog-owned
-  names to the sync script's exact retirement list so stale mirror copies are
-  removed without touching unknown personal skills.
-- Treat source catalogs as discovery indexes, not install authority: pin each
-  index, inspect the canonical skill content and license, and compare its real
-  workflow with the maintained catalog. The three requested indexes yielded no
-  additional distinct import: OpenAlex was already covered, while candidates
-  either required a host-specific MCP, wrote persistent workspace memory, or
-  included unsafe paywall-bypass guidance. Algorithmic art is not algorithm
-  development.
-- Re-audit only personal `.codex`, `.agents`, and `.claude` roots for child-only
-  skills. Keep protected `.system`, the 95-name Codex-only Blender overlay,
-  copied Superpowers, and project-specific paths outside promotion and sync.
-- Review Codex plugin skills for a concrete cross-client gap before importing.
-  Plugin-specific create/update/submission workflows remain external when
-  overlapping catalog skills or their narrow host scope make them poor global
-  defaults.
-- A source pin can be stale even when content has not changed. When an upstream
-  removes a mapped skill or a host moves a skill out of `.system`, preserve a
-  useful copy only as an explicitly local snapshot with truthful provenance.
-- Distinguish current Gemini API managed agents from retired standalone client
-  integrations in both validators and portability rules without reintroducing
-  obsolete command names into active root guidance.
-- Run docs hygiene and the smallest affected tests again after the final docs
-  and skill mutations; catalog sync and mirrored-state checks are separate
-  completion evidence.
-
-## 2026-09-14 Humanizer Import And Catalog Routing
-
-- Audit the named upstream repository and exact release before importing. The
-  current `blader/humanizer` main revision is
-  `9862685f575c65a8247f90369951df1b3416e3d6` (v3.0.0); its upstream package
-  validator passed before the root skill was copied into the parent catalog.
-- Keep an explicitly requested overlapping skill separate only when its
-  activation contract is materially narrower and the routing boundary is
-  documented. `humanizer` owns the compact direct 25-pattern rewrite prompt;
-  `avoid-ai-writing` owns detection, preservation, edit-in-place, and
-  iterate-to-convergence workflows.
-- Import only runtime-relevant files. The Humanizer catalog copy retains
-  `SKILL.md`, `agents/openai.yaml`, the MIT license, and attribution notice;
-  upstream Claude marketplace metadata, CI, README duplication, and packaging
-  validator were omitted to avoid bloat.
-- Re-audit only the three approved personal child roots before declaring
-  promotion complete. This pass found 914 discovered skill files, with 819
-  already represented in the parent, 101 excluded as protected/system/
-  Superpowers material, and zero eligible child-only skills; project-specific
-  paths remained out of scope.
-- Preserve attribution for both the upstream MIT files and the cited Wikipedia
-  "Signs of AI writing" taxonomy. Do not imply that a Claude plugin manifest,
-  package installer, MCP server, or network access is required at runtime.
-- The 2026-09-14 intended inventory is `306` live folders (`274` maintained
-  and `32` copied Superpowers, including `58` local-only overlays); the
-  tracked catalog is `248` folders (`216` maintained and `32` copied
-  Superpowers).
-
-## 2026-09-12 Playwright CLI Package Refresh And Consolidation
-
-- Install the global `@playwright/cli` package explicitly and record the
-  observed version. The package installer currently writes only the official
-  `playwright-cli` skill into an agent home; companion workflows need a
-  parent-first import from their canonical Playwright source.
-- Keep `playwright-cli`, `playwright-component-testing`, and `playwright-trace`
-  as separate activation surfaces. The component gallery's built-in `mount`
-  fixture requires project-local `@playwright/test`; trace-file inspection
-  requires the project-local `playwright` binary. Neither should imply a silent
-  global test-runner or browser download.
-- Prefer the installed global `playwright-cli`, with the catalog wrapper's
-  `npx --yes --package @playwright/cli@latest` fallback when no global binary is
-  available. Use the current `requests` command and `.playwright/cli.config.json`
-  conventions; do not revive the old `network` or `playwright-cli.json` wording.
-- Retire the broad legacy `playwright` folder after consolidating its useful
-  wrapper and practical references into `playwright-cli`; add only exact-name
-  mirror cleanup so unknown personal skills remain untouched.
-- The 2026-09-12 live inventory is `305` folders (`273` maintained and `32`
-  copied official Superpowers, including `58` local-only overlays); the tracked
-  catalog is `247` folders (`215` maintained and `32` copied Superpowers).
-
-## 2026-09-08 Catalog Refresh, CodeGraph Index, And Mirror Preparation
-
-- Compare every recorded source head with its exact mapped path before
-  refreshing. This pass updated nine Awesome Copilot workflows and Avoid AI
-  Writing v3.33.2 plus six focused leaves; head movement outside those paths
-  stays provenance-only.
-- When an upstream package moves its canonical catalog from `SKILL.md` to a
-  reference file, carry the reference and executable helpers forward, update
-  count checks, and keep flattened-parent compatibility adaptations intact.
-- If upstream removes support files, remove only the exact stale files after
-  checking references, while preserving the catalog changelog and provenance.
-- Install CodeGraph at the repository boundary only. Commit its ignore marker,
-  keep the database local, and use its symbol/call-path query before broad
-  searches without confusing navigation output for execution proof.
-- When refreshing registry-owned sections, remove orphaned marker lines before
-  rebuilding them; audit that every skill has exactly one matched portability
-  and MCP marker pair before syncing downstream.
-- Re-audit personal `.codex`, `.agents`, and `.claude` roots independently;
-  protected `.system`, Blender, Superpowers, and project paths remain outside
-  promotion and sync ownership. Do not add plugin skills without a concrete
-  non-overlapping gap.
-- The 2026-09-08 inventory remains `303` live folders (`271` maintained and
-  `32` copied Superpowers, including `58` local-only overlays) and `245`
-  tracked folders (`213` maintained and `32` copied Superpowers).
-
-## 2026-09-05 Catalog Freshness, Plugin Review, And Mirror Preparation
-
-- Recheck every recorded upstream head, but refresh only exact mapped paths.
-  This pass changed Avoid AI Writing v3.29 and its six focused leaves, two
-  NVIDIA DeepStream workflows, seven Tavily workflows, Gemini API/Live/Omni,
-  and the affected Figma support trees; repository movement outside those
-  paths remains provenance-only.
-- Treat upstream removals as current behavior. `gemini-interactions-api` was
-  retired only after its migration guidance was confirmed in
-  `gemini-api-dev`; add exact retired names to sync cleanup rather than
-  deleting unknown personal folders.
-- Review installed plugin skills for a concrete gap before importing. This
-  pass selected only `agent-skillguard` because it is a standalone stdlib
-  scanner with no maintained equivalent. Keep its rule corpus and fixtures,
-  omit host metadata/large assets, and document that the package's
-  `tools/verify_rule_corpus.py` helper is absent instead of recreating it.
-- Flattened catalog promotion can invalidate source tests and relative paths.
-  Adapt imported validators to accept both the upstream `skills/` layout and
-  the parent root, then run the normalized validator from the parent. On
-  Windows, execute POSIX shell syntax checks through WSL; report Bash runtime
-  tests as platform-unverified when the required Linux environment is absent.
-- The 2026-09-05 inventory is `303` live folders (`271` maintained and `32`
-  copied Superpowers, including `58` local-only overlays) and `245` tracked
-  folders (`213` maintained and `32` copied Superpowers). Regenerate root docs
-  and provenance after modernization so counts and retired mappings agree.
-
-## 2026-08-31 Catalog Freshness And Corpus Refresh
-
-- Recheck live source heads at each continuation. This pass found one new
-  installed-path delta in `avoid-ai-writing` corpus support; repository head
-  movement alone was not evidence that the other mapped skills changed.
-- Preserve corpus lineage when adding public seeds: record register, selector,
-  rights status, hash, and sample-size limits in the manifest and README.
-- Smoke-test source helpers after a support refresh. The selector-aware corpus
-  extractor now has regression coverage for authored semantic elements and
-  page chrome outside the selected container.
-- Keep child reconciliation limited to `.codex`, `.agents`, and `.claude` and
-  keep protected Blender, `.system`, Superpowers, and project paths outside
-  promotion and sync ownership.
-
-## 2026-08-29 Catalog Freshness And Mirror Repair
-
-- Recheck live source heads on every continuation. A clean published parent can
-  still have stale pins within days, while most repository movement remains
-  outside the installed mappings.
-- Compare exact mapped paths before copying current source content. This pass
-  refreshed `avoid-ai-writing`, `x-twitter-scraper`, Gemini, React View
-  Transitions, and web-quality references while leaving unrelated paths alone.
-- A downstream mirror can drift independently after publication. Compare the
-  expected maintained set against each target and restore only evidence-backed
-  missing skills such as the Codex `doc` copy.
-- Treat source removals as current behavior: when Xquik dropped MCP setup files,
-  remove the stale registry mapping and regenerate the normalized no-MCP tail.
-- The current protected set is 94 upstream Blender skills plus one explicitly
-  configured local entry. Keep that distinction in generated documentation.
-
-## Update Checklist
-
-1. Edit the workspace copy.
-2. If the change is a new skill, install or import it into this repo before touching downstream targets.
-3. Update per-skill `CHANGELOG.md` files for every touched skill folder.
-4. Update root docs if counts, support matrix, sync behavior, client guidance, or startup rules changed.
-5. Run `python scripts/validate-skills.py`.
-6. Sync outward with `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`.
-7. If the work is satisfactory, commit and push to GitHub.
-8. Record any new gotchas here before closing the task.
+- Run the catalog validator, its helper tests, catalog-index check, and
+  whitespace check after the final edits.
+- After an approved mutation, sync only through the allowlisted script to the
+  three user-global skill roots; then verify target inventory and hashes.
+- Preserve unrelated dirty files, ignored overlays, and host-managed folders.
+- Keep the final diff scoped. Do not commit or publish while privacy,
+  provenance, or validation issues remain.
+- Treat a user request, a task or release recommendation, or a completed
+  substantial coherent change as a commit-and-push trigger. After checks and
+  required catalog sync pass, stage only task files, commit on the intended
+  branch, and push to its configured GitHub remote without asking again.
+- If the branch diverged, the remote is unavailable, checks fail, or unrelated
+  work cannot be safely separated, do not publish; report the blocker.
+- Do not rewrite published Git history without explicit authorization.

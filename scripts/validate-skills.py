@@ -32,6 +32,7 @@ REMOVED_CLIENT_RE = re.compile(
     re.IGNORECASE,
 )
 VALID_SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+DOWNSTREAM_ROOT_SUFFIXES = (".agents\\skills", ".codex\\skills", ".claude\\skills")
 ACTIVE_ROOT_DOCS = [
     "README.md",
     "AGENTS.md",
@@ -41,6 +42,27 @@ ACTIVE_ROOT_DOCS = [
     "SECURITY.md",
     "REFERENCE_SOURCES.md",
 ]
+
+
+def has_profile_derived_downstream_roots(sync_script: str) -> bool:
+    normalized = sync_script.replace("/", "\\")
+    profile_binding = re.search(
+        r"GetEnvironmentVariable\(\s*['\"]USERPROFILE['\"]",
+        normalized,
+        re.IGNORECASE,
+    ) or "SpecialFolder]::UserProfile" in normalized
+    if not profile_binding or "$profileRoot" not in normalized:
+        return False
+
+    for suffix in DOWNSTREAM_ROOT_SUFFIXES:
+        escaped_suffix = re.escape(suffix)
+        if not re.search(
+            rf"Join-Path\s+\$profileRoot\s+['\"]{escaped_suffix}['\"]",
+            normalized,
+            re.IGNORECASE,
+        ):
+            return False
+    return "alloweddownstreamroots" in normalized.lower()
 
 
 def parse_frontmatter(skill_path: Path) -> dict[str, str]:
@@ -136,8 +158,8 @@ def main() -> int:
         issues.append("codex_local_only_skill_sets.blender_skills must be defined.")
     else:
         expected = {
-            "checkout": "C:/Users/LOQ/.codex/vendor/blender-skills",
-            "install_root": "C:/Users/LOQ/.codex/skills",
+            "checkout": "%USERPROFILE%/.codex/vendor/blender-skills",
+            "install_root": "%USERPROFILE%/.codex/skills",
             "scope": "codex-only",
             "never_promote_to_parent": True,
             "never_sync_to_shared": True,
@@ -236,13 +258,10 @@ def main() -> int:
             issues.append(f"{doc_path}: active root documentation still names a removed client.")
 
     sync_script = (repo_root / "scripts" / "sync-skills.ps1").read_text(encoding="utf-8")
-    for required_root in (
-        r"C:\Users\LOQ\.agents\skills",
-        r"C:\Users\LOQ\.codex\skills",
-        r"C:\Users\LOQ\.claude\skills",
-    ):
-        if required_root not in sync_script:
-            issues.append(f"scripts/sync-skills.ps1 is missing approved downstream root {required_root}.")
+    if not has_profile_derived_downstream_roots(sync_script):
+        issues.append(
+            "scripts/sync-skills.ps1 must derive all three approved downstream roots from the user profile."
+        )
 
     removed_paths = [
         repo_root / ".gemini",

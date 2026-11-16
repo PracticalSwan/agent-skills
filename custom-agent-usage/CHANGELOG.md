@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-11-16] - Make Windows Paths Portable
+
+### Changed
+
+- Replaced account-specific Windows paths with `%USERPROFILE%`, `%APPDATA%`,
+  and PowerShell environment-based path construction.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added
@@ -161,7 +168,7 @@ All notable changes to this skill will be documented in this file.
 ## [2026-03-09] - Custom Agent Discovery Correction
 
 ### Changed
-- Repointed custom-agent discovery guidance to the real local agent directories: `C:\Users\LOQ\.claude\agents` and `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+- Repointed custom-agent discovery guidance to the real local agent directories: `%USERPROFILE%\.claude\agents` and `%USERPROFILE%\AppData\Roaming\Code - Insiders\User\prompts`
 - Updated the examples to search those directories directly instead of treating repo-local Copilot paths as the primary discovery roots
 
 ### Fixed
@@ -176,7 +183,7 @@ All notable changes to this skill will be documented in this file.
 ## [2026-03-09] - Workspace Modernization
 
 ### Changed
-- Updated the workspace and global skill path guidance to match the current `C:/Users/LOQ/.agents/skills/` fallback path
+- Updated the workspace and global skill path guidance to match the current `%USERPROFILE%/.agents/skills/` fallback path
 - Removed duplicate related-skill content so the skill reads cleanly
 
 ## [2026-02-28] - Description Rewrite & Cross-References

@@ -1,6 +1,6 @@
 {
   "name": "avoid-ai-writing-detector",
-  "version": "3.35.0",
+  "version": "3.38.0",
   "description": "Deterministic detection engine for the Avoid AI Writing skill \u2014 pattern + stylometric analysis of AI-generated text.",
   "license": "MIT",
   "keywords": ["writing", "editing", "ai-detection", "humanize"],
@@ -37,6 +37,9 @@
     "corpus:fetch": "node scripts/corpus.js fetch",
     "corpus:verify": "node scripts/corpus.js verify",
     "fp": "node scripts/fp-measure.js",
-    "fp:compare": "node scripts/fp-compare.js"
+    "eval:rewrite:validate": "node scripts/rewrite-eval.js validate",
+    "vale:build": "node scripts/build-vale.js",
+    "vale:check": "node scripts/build-vale.js --check",
+    "vale:measure": "node scripts/vale-measure.js"
   }
 }

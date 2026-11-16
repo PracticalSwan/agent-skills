@@ -2,6 +2,13 @@
 
 All notable changes to the `hypothesis-generation` skill are documented here.
 
+## [2026-11-16] - Repair Research Skill Routing
+
+### Fixed
+
+- Replaced the link to the excluded `literature-review` skill with the maintained
+  `research` workflow.
+
 ## [2026-10-19] - Catalog Freshness And Source Sync
 
 ### Added

@@ -59,10 +59,7 @@ const BUDGETS = {
   'PROOF.md': 20,
 };
 
-// Curated cross-client installs omit some upstream documentation and private
-// evaluation assets. Scan every budgeted document that is actually installed;
-// a complete upstream checkout still scans the full key set.
-const FILES = Object.keys(BUDGETS).filter((file) => fs.existsSync(path.join(ROOT, file)));
+const FILES = Object.keys(BUDGETS);
 
 // ── The self-reference escape hatch, made executable ───────────────────
 //

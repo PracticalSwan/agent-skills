@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -9,7 +10,7 @@ repo_root = Path(__file__).resolve().parents[1]
 registry_path = repo_root / "scripts" / "skill-registry.json"
 data = json.loads(registry_path.read_text(encoding="utf-8"))
 config = data["codex_local_only_skill_sets"]["blender_skills"]
-checkout = Path(config["checkout"])
+checkout = Path(os.path.expandvars(str(config["checkout"]))).expanduser()
 source_root = checkout / Path(config["source_subdir"])
 
 skill_names = sorted(
@@ -29,6 +30,9 @@ data["source_commits"]["blender_skills"] = {
     "repo": "https://github.com/arjun988/blender-skills",
     "commit": commit,
 }
+config["checkout"] = "%USERPROFILE%/.codex/vendor/blender-skills"
+config["install_root"] = "%USERPROFILE%/.codex/skills"
+config["manifest"] = "%USERPROFILE%/.codex/vendor/blender-skills-install.json"
 registry_path.write_text(
     json.dumps(data, indent=2, ensure_ascii=False) + "\n",
     encoding="utf-8",

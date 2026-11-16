@@ -1,0 +1,58 @@
+[
+  {
+    "id": "quantity-added",
+    "original": "The worker retries twice before stopping.",
+    "candidate": "The worker retries twice before stopping after 30 seconds.",
+    "mechanicalOk": true,
+    "warningCodes": [
+      "number-added"
+    ],
+    "semanticAssessment": "Unsupported timeout added; requires source review."
+  },
+  {
+    "id": "quantity-removed",
+    "original": "The worker stops after 30 seconds.",
+    "candidate": "The worker stops after the timeout.",
+    "mechanicalOk": true,
+    "warningCodes": [
+      "number-missing"
+    ],
+    "semanticAssessment": "Specific duration removed; requires source review."
+  },
+  {
+    "id": "quantity-spelled-out",
+    "original": "The worker retries 2 times.",
+    "candidate": "The worker retries two times.",
+    "mechanicalOk": true,
+    "warningCodes": [
+      "number-missing"
+    ],
+    "semanticAssessment": "Equivalent number spelling; preserve this legitimate edit."
+  },
+  {
+    "id": "quantity-digitized",
+    "original": "The worker retries two times.",
+    "candidate": "The worker retries 2 times.",
+    "mechanicalOk": true,
+    "warningCodes": [
+      "number-added"
+    ],
+    "semanticAssessment": "Equivalent number spelling; preserve this legitimate edit."
+  },
+  {
+    "id": "claim-added-without-number",
+    "original": "The worker retries twice before stopping.",
+    "candidate": "The worker retries twice with exponential backoff before stopping.",
+    "mechanicalOk": true,
+    "warningCodes": [],
+    "semanticAssessment": "Unsupported mechanism added; mechanical checks cannot detect this semantic failure."
+  },
+  {
+    "id": "claim-removed-without-number",
+    "original": "The worker retries twice with exponential backoff before stopping.",
+    "candidate": "The worker retries twice before stopping.",
+    "mechanicalOk": true,
+    "warningCodes": [],
+    "semanticAssessment": "Mechanism removed; mechanical checks cannot detect this semantic failure."
+  }
+]

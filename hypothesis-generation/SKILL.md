@@ -1,7 +1,7 @@
 ---
 name: hypothesis-generation
 version: "2.0"
-last_updated: 2026-10-19
+last_updated: 2026-11-16
 tags: [hypothesis, generation]
 description: "Formulates evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Used when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts."
 license: "MIT"
@@ -339,4 +339,4 @@ Before claiming the `hypothesis-generation` workflow succeeded:
 
 - [research](../research/SKILL.md): Gather primary-source evidence and document search boundaries before proposing explanations.
 - [experimental-design](../experimental-design/SKILL.md): Turn discriminating predictions into a design before collecting data.
-- [literature-review](../literature-review/SKILL.md): Synthesize a reproducible body of literature rather than generating candidate hypotheses alone.
+- [research](../research/SKILL.md): Synthesize a reproducible body of literature rather than generating candidate hypotheses alone.

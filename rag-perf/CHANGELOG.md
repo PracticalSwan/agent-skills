@@ -2,6 +2,22 @@
 
 All notable changes to the `rag-perf` skill will be documented in this file.
 
+## [2026-11-16] - NVIDIA RAG Blueprint 2.6.0 Refresh
+
+### Changed
+
+- Updated the workflow version and source provenance to the canonical
+  `NVIDIA-AI-Blueprints/rag` repository at commit
+  `62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df`.
+- Made repository-only benchmark code and documentation links explicit and
+  documented that this catalog copy does not bundle the CLI or presets.
+- Added NVIDIA's upstream Apache-2.0 license text.
+
+### Fixed
+
+- Removed the upstream Sigstore bundle because the catalog's frontmatter and
+  cross-client edits change the signed file content.
+
 ## [2026-09-08] - Catalog Freshness And Source Sync
 
 ### Added

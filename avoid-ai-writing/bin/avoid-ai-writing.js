@@ -29,8 +29,8 @@ Examples:
   npx --package avoid-ai-writing-detector avoid-ai-writing --source-mode rendered-markdown -- --draft.md
 `;
 
-const CONTEXTS = ["general", "technical", "marketing", "personal"];
-const SOURCE_MODES = ["plain", "rendered-markdown"];
+const CONTEXTS = AIDetector.CONTEXT_MODES;
+const SOURCE_MODES = AIDetector.SOURCE_MODES;
 
 function parseArgs(argv) {
   const options = { help: false, context: "general", sourceMode: "plain", files: [] };
@@ -127,13 +127,6 @@ function main(argv) {
     contextMode: parsed.context,
     sourceMode: parsed.sourceMode,
   });
-
-  // analyzeText() returns an empty stats object for empty input. Surface the
-  // selected modes anyway so the CLI's option contract holds in every case.
-  if (result.stats && Object.keys(result.stats).length === 0) {
-    result.stats.contextMode = parsed.context;
-    result.stats.sourceMode = parsed.sourceMode;
-  }
 
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
   return 0;

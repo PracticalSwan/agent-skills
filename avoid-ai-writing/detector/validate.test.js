@@ -14,7 +14,7 @@
  */
 
 const assert = require('node:assert/strict');
-const { validate, formatResult } = require('./validate.js');
+const { validate, formatResult, maskCode } = require('./validate.js');
 
 let failed = 0;
 function test(name, fn) {
@@ -50,6 +50,71 @@ test('fenced code removed → error', () => {
   assert.ok(codes(r).includes('code-block-count'));
 });
 
+test('a tilde line inside a backtick fence does not end it → error', () => {
+  const before = 'Text before.\n\n```md\nexample line one\n~~~\nSECRET CODE A\n```\n\nText after.';
+  const after = 'Text before.\n\n```md\nexample line one\n~~~\nSECRET CODE B\n```\n\nText after.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
+});
+
+test('a backtick line inside a tilde fence does not end it → error', () => {
+  const before = 'Text before.\n\n~~~md\nexample line\n```\nSECRET CODE A\n~~~\n\nAfter.';
+  const after = 'Text before.\n\n~~~md\nexample line\n```\nSECRET CODE B\n~~~\n\nAfter.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
+});
+
+test('a three-backtick line inside a four-backtick fence does not end it → error', () => {
+  // CommonMark: the closing fence must be at least as long as the opener. The
+  // four-backtick outer fence wrapping a three-backtick example is exactly how
+  // fences are documented, and the fence scanner must track the opening run
+  // length so the inner ``` line does not close it (#236 review).
+  const before = 'Text before.\n\n````md\ninner example\n```\nSECRET CODE A\n````\n\nAfter.';
+  const after = 'Text before.\n\n````md\ninner example\n```\nSECRET CODE B\n````\n\nAfter.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
+});
+
+test('an indented closing fence leaves following prose editable', () => {
+  const before = '  ```js\nconst x = 1;\n  ```\n\nOrdinary prose alpha.';
+  const after = '  ```js\nconst x = 1;\n  ```\n\nOrdinary prose beta.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
+test('an indented fenced-code edit still fires', () => {
+  const before = '  ```js\nconst x = 1;\n  ```\n\nOrdinary prose.';
+  const after = '  ```js\nconst x = 2;\n  ```\n\nOrdinary prose.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
+});
+
+test('a prose line opening with a triple-backtick inline span is not a fence', () => {
+  // CommonMark: a backtick fence's info string cannot contain a backtick, so
+  // this line is a paragraph. Treated as an opener it never closes, the rest
+  // of the document becomes one code block, and an ordinary prose edit below
+  // it reports as code-block-modified.
+  const before = '# Setup\n\n```npm test``` runs the suite.\n\nOrdinary prose alpha.';
+  const after = '# Setup\n\n```npm test``` runs the suite.\n\nOrdinary prose beta.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
+test('a real fence after a triple-backtick inline span still fires', () => {
+  const before = '```npm test``` runs the suite.\n\n```js\nconst x = 1;\n```\n\nOrdinary prose.';
+  const after = '```npm test``` runs the suite.\n\n```js\nconst x = 2;\n```\n\nOrdinary prose.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
+});
+
+test('a tilde fence keeps backticks in its info string → error', () => {
+  // The backtick restriction applies to backtick fences only.
+  const before = '~~~ `md`\nSECRET CODE A\n~~~\n\nOrdinary prose.';
+  const after = '~~~ `md`\nSECRET CODE B\n~~~\n\nOrdinary prose.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
+});
+
 test('blockquote reworded → error', () => {
   const before = 'He said:\n\n> The system is slow and it is getting slower.\n> We need to fix it.\n\nThat is the claim.';
   const after = 'He said:\n\n> The system is slow and getting slower.\n> We need to fix it.\n\nThat is the claim.';
@@ -62,6 +127,20 @@ test('table cell content changed → error', () => {
   const after = '| Repo | Stars |\n|---|---|\n| patina | 280 |\n';
   const r = validate(before, after, { skipResidual: true });
   assert.ok(codes(r).includes('table-modified'));
+});
+
+test('table without outer pipes changed → error', () => {
+  const before = 'Intro.\n\nRepo | Stars\n--- | ---\npatina | 278\n\nOutro.';
+  const after = 'Intro.\n\nRepo | Stars\n--- | ---\npatina | 280\n\nOutro.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('table-modified'), formatResult(r));
+});
+
+test('single-column pipe table changed → error', () => {
+  const before = '| Repo |\n| --- |\n| patina |\n';
+  const after = '| Repo |\n| --- |\n| changed |\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('table-modified'), formatResult(r));
 });
 
 test('inline code dropped → error', () => {
@@ -151,6 +230,13 @@ test('lone CR changed to LF inside fenced code -> error', () => {
   assert.ok(codes(r).includes('code-block-modified'), formatResult(r));
 });
 
+test('maskCode closes a CRLF fence before following prose', () => {
+  const source = crlf('```text\nprotected code\n```\n') + 'Ordinary prose.';
+  const masked = maskCode(source);
+  assert.match(masked, /Ordinary prose\.$/);
+  assert.doesNotMatch(masked, /protected code/);
+});
+
 // ── Documented, correct edits must pass ────────────────────────────────
 
 test('stripping an AI utm_source parameter → no error', () => {
@@ -193,11 +279,29 @@ test('stripping a terminal AI tracker preserves adjacent sentence punctuation', 
     ['https://example.com/post?referrer=grok.com,', 'https://example.com/post,'],
     ['https://example.com/post?utm_source=chatgpt.com?', 'https://example.com/post?'],
     ['https://example.com/post?utm_source=chatgpt.com!?', 'https://example.com/post!?'],
+    ['**https://example.com/post?utm_source=chatgpt.com**', '**https://example.com/post**'],
+    ['https://example.com/post?utm_source=chatgpt.com—it', 'https://example.com/post—it'],
+    ['https://example.com/post?a=1&utm_source=chatgpt.com…', 'https://example.com/post?a=1…'],
   ];
 
   for (const [beforeUrl, afterUrl] of cases) {
     const r = validate(`See ${beforeUrl}`, `See ${afterUrl}`, { skipResidual: true });
     assert.equal(r.ok, true, `${beforeUrl}: ${formatResult(r)}`);
+  }
+});
+
+test('dash and ellipsis suffixes cannot move query data into prose', () => {
+  for (const marker of ['–', '—', '…']) {
+    for (const tail of ['foo&keep=1', 'foo=1', 'foo&keep', 'foo%26keep%3D1']) {
+      const before = `See https://example.com/post?utm_source=chatgpt.com${marker}${tail}`;
+      const after = `See https://example.com/post${marker}${tail}`;
+      const r = validate(before, after, { skipResidual: true });
+      assert.ok(codes(r).includes('url-missing'), `${marker}${tail}: ${formatResult(r)}`);
+    }
+  }
+  for (const query of ['?ref=home—it', '?utm_source=chatgpt.com.au—x']) {
+    const r = validate(`See https://example.com/post${query}`, 'See https://example.com/post', { skipResidual: true });
+    assert.ok(codes(r).includes('url-missing'), formatResult(r));
   }
 });
 
@@ -237,6 +341,82 @@ test('re-aligning table padding → no error', () => {
   assert.equal(r.ok, true, formatResult(r));
 });
 
+test('re-aligning a table without outer pipes → no error', () => {
+  const before = 'Repo | Stars\n---|---\npatina|278\n';
+  const after = 'Repo   | Stars\n------ | -----\npatina | 278\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
+test('compact GFM delimiters protect cells and allow delimiter padding changes', () => {
+  for (const delimiter of ['- | -', '-- | --', ':-: | --:']) {
+    for (const outer of [false, true]) {
+      const row = (text) => outer ? `| ${text} |` : text;
+      const before = [row('Name | Value'), row(delimiter), row('alpha | beta')].join('\n');
+      const changed = validate(before, before.replace('alpha', 'changed'), { skipResidual: true });
+      assert.ok(codes(changed).includes('table-modified'), formatResult(changed));
+      const padded = before.replace(delimiter, delimiter.replace(/-+/g, '-----'));
+      const same = validate(before, padded, { skipResidual: true });
+      assert.equal(same.ok, true, formatResult(same));
+    }
+  }
+});
+
+test('colon-only cells do not form a table delimiter', () => {
+  const before = 'Name | Value\n: | ::\nalpha | beta';
+  const r = validate(before, before.replace('alpha', 'changed'), { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
+test('hyphens in table content remain significant', () => {
+  const before = 'Name | Value\n--- | ---\nfoo--bar | one\n';
+  const after = 'Name | Value\n--- | ---\nfoo-bar | one\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('table-modified'), formatResult(r));
+});
+
+test('a mismatched header and delimiter shape is not a table', () => {
+  const before = 'one | two\n--- | --- | ---\n';
+  const after = 'changed | two\n--- | --- | ---\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
+test('top-level indented code is not a table', () => {
+  const before = '    one | two\n    --- | ---\n    alpha | beta\n';
+  const after = '    changed | two\n    --- | ---\n    alpha | beta\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(!codes(r).includes('table-modified'), formatResult(r));
+});
+
+test('three-space-indented tables remain protected', () => {
+  const before = '   one | two\n   --- | ---\n   alpha | beta\n';
+  const after = '   changed | two\n   --- | ---\n   alpha | beta\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('table-modified'), formatResult(r));
+});
+
+test('escaped pipes do not add table cells', () => {
+  const before = 'one \\| literal | two\n--- | ---\nalpha | beta\n';
+  const after = 'changed \\| literal | two\n--- | ---\nalpha | beta\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.ok(codes(r).includes('table-modified'), formatResult(r));
+});
+
+test('prose containing a bare pipe is not treated as a table', () => {
+  const before = 'Use a | b in the shell.';
+  const after = 'Use c | d in the shell.';
+  const r = validate(before, after, { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
+test('pipe-delimited lines without a delimiter row are not a table', () => {
+  const before = 'one | two\nthree | four\n';
+  const after = 'one | changed\nthree | four\n';
+  const r = validate(before, after, { skipResidual: true });
+  assert.equal(r.ok, true, formatResult(r));
+});
+
 test('ordinary prose rewrite → no error', () => {
   const before = 'We leverage a robust and comprehensive framework to delve into the landscape of developer tooling.';
   const after = 'We use a reliable framework to look at developer tooling.';
@@ -249,6 +429,40 @@ test('four-space list continuation is not treated as code', () => {
   const after = '- First item\n\n    continued paragraph under the item\n\n- Second item';
   const r = validate(before, after, { skipResidual: true });
   assert.equal(r.stats.indentedBlocks, 0);
+});
+
+test('indented lines in fenced code or paragraph continuations are not indented blocks', () => {
+  const fenced = 'Intro.\n\n```py\ndef f():\n\n    return 1\n```\n';
+  assert.equal(validate(fenced, fenced, { skipResidual: true }).stats.indentedBlocks, 0);
+  const lazy = 'A paragraph\n    lazily continued.\n';
+  assert.equal(validate(lazy, lazy, { skipResidual: true }).stats.indentedBlocks, 0);
+  const code = 'Run this:\n\n    npm test\n';
+  assert.equal(validate(code, code, { skipResidual: true }).stats.indentedBlocks, 1);
+  const split = 'Run:\n\n    one\n\n```\nx\n```\n\n    two\n';
+  assert.equal(validate(split, split, { skipResidual: true }).stats.indentedBlocks, 2);
+});
+
+test('a tab-indented fence marker counts as an indented block', () => {
+  const tabbed = 'Intro.\n\n\t```\n';
+  assert.equal(validate(tabbed, tabbed, { skipResidual: true }).stats.indentedBlocks, 1);
+});
+
+test('top-level fences end list context before later indented code', () => {
+  for (const marker of ['```', '~~~']) {
+    for (const [item, indent] of [['- item', ''], ['- item', ' '], ['10. item', '   '], ['- first\n10. item', '  ']]) {
+      const text = `${item}\n\n${indent}${marker}js\nx\n${indent}${marker}\n\n    npm test\n`;
+      assert.equal(validate(text, text, { skipResidual: true }).stats.indentedBlocks, 1);
+    }
+  }
+});
+
+test('fences nested in a list keep later list continuations out of code stats', () => {
+  for (const marker of ['```', '~~~']) {
+    for (const item of ['- item', '- item\n  10. nested']) {
+      const text = `${item}\n\n  ${marker}js\n  x\n  ${marker}\n\n    continuation\n`;
+      assert.equal(validate(text, text, { skipResidual: true }).stats.indentedBlocks, 0);
+    }
+  }
 });
 
 test('URL inside a code block is not double-counted as prose', () => {
@@ -306,6 +520,143 @@ test('identical input and output is always clean', () => {
 
 test('non-string input throws', () => {
   assert.throws(() => validate('a', null), TypeError);
+});
+
+
+// Policy and API compatibility: controlled detector results isolate routing
+// from unrelated changes to pattern weights or text-length thresholds.
+const growthDetector = {
+  analyzeText(text) {
+    return { issues: text.includes('candidate') ? [{ type: 'example' }] : [], score: text.includes('candidate') ? 1 : 0 };
+  },
+};
+
+test('residual error remains the default, with additive independent results', () => {
+  const r = validate('source', 'candidate', { detector: growthDetector });
+  assert.equal(r.ok, false);
+  assert.deepEqual(codes(r), ['residual-grew']);
+  assert.deepEqual(r.preservation, { ok: true, errors: [], warnings: [] });
+  assert.equal(r.quality.status, 'checked');
+  assert.equal(r.quality.policy, 'error');
+  assert.deepEqual(r.quality.findings.map(f => f.code), ['residual-grew']);
+  assert.deepEqual(r.stats.residual, { issuesBefore: 0, issuesAfter: 1, scoreBefore: 0, scoreAfter: 1 });
+  assert.deepEqual(r.quality.residual, r.stats.residual);
+  assert.match(formatResult(r), /residual policy blocked; no mechanical preservation errors/);
+});
+
+test('warn policy keeps residual growth visible without failing preservation', () => {
+  const r = validate('source `token`', 'candidate `token`', { detector: growthDetector, residualPolicy: 'warn' });
+  assert.equal(r.ok, true);
+  assert.deepEqual(codes(r), []);
+  assert.deepEqual(warnCodes(r), ['residual-grew']);
+  assert.equal(r.preservation.ok, true);
+  assert.deepEqual(r.preservation.warnings, []);
+  assert.equal(r.quality.findings.length, 1);
+  assert.match(formatResult(r), /warning \[residual-grew\]/);
+});
+
+test('damage blocks in both policies even with a lower score and fewer patterns', () => {
+  for (const residualPolicy of ['error', 'warn']) {
+    const r = validate('candidate `token`', 'source', { detector: growthDetector, residualPolicy });
+    assert.equal(r.ok, false);
+    assert.equal(r.preservation.ok, false);
+    assert.deepEqual(codes(r), ['inline-code-missing']);
+    assert.equal(r.stats.residual.scoreBefore, 1);
+    assert.equal(r.stats.residual.scoreAfter, 0);
+    assert.deepEqual(r.quality.findings, []);
+  }
+});
+
+test('mixed damage and residual growth remain separate and visible', () => {
+  for (const residualPolicy of ['error', 'warn']) {
+    const r = validate('source `token`', 'candidate', { detector: growthDetector, residualPolicy });
+    assert.equal(r.ok, false);
+    assert.deepEqual(r.preservation.errors.map(e => e.code), ['inline-code-missing']);
+    assert.deepEqual(r.quality.findings.map(e => e.code), ['residual-grew']);
+    assert.deepEqual(codes(r), residualPolicy === 'error' ? ['inline-code-missing', 'residual-grew'] : ['inline-code-missing']);
+    assert.deepEqual(warnCodes(r), residualPolicy === 'warn' ? ['residual-grew'] : []);
+  }
+});
+
+test('skipResidual never invokes the detector or bypasses mechanical errors', () => {
+  const detector = { analyzeText() { throw new Error('must not run'); } };
+  for (const residualPolicy of ['error', 'warn']) {
+    const r = validate('source `token`', 'candidate', { detector, residualPolicy, skipResidual: true });
+    assert.equal(r.ok, false);
+    assert.deepEqual(codes(r), ['inline-code-missing']);
+    assert.equal(r.quality.status, 'skipped');
+    assert.equal(r.quality.residual, null);
+    assert.equal(r.stats.residual, null);
+  }
+});
+
+test('browser export reports unavailable detector, and accepts explicit injection', () => {
+  const fs = require('node:fs');
+  const vm = require('node:vm');
+  const context = vm.createContext({});
+  vm.runInContext(fs.readFileSync(require.resolve('./validate.js'), 'utf8') + '\nthis.validator = AIDetectorValidate;', context);
+  const r = context.validator.validate('source `token`', 'candidate', { residualPolicy: 'warn' });
+  assert.equal(r.ok, false);
+  assert.equal(r.errors[0].code, 'inline-code-missing');
+  assert.equal(r.quality.status, 'unavailable');
+  assert.equal(r.stats.residual, null);
+  assert.match(context.validator.formatResult(r), /residual unavailable/);
+  const injected = context.validator.validate('source', 'candidate', { detector: growthDetector, residualPolicy: 'warn' });
+  assert.equal(injected.quality.status, 'checked');
+  assert.equal(injected.warnings[0].code, 'residual-grew');
+});
+
+test('unscored inputs do not claim a completed residual comparison', () => {
+  for (const text of ['', 'short', 'word '.repeat(10001)]) {
+    const r = validate(text, text, { residualPolicy: 'warn' });
+    assert.equal(r.ok, true);
+    assert.equal(r.quality.status, 'unscored');
+    assert.equal(r.stats.residual.issuesAfter, 0);
+    assert.match(formatResult(r), /residual unscored/);
+  }
+});
+
+test('invalid residual policies cannot silently disable the legacy gate', () => {
+  for (const residualPolicy of ['ignore', '', null, false]) {
+    assert.throws(() => validate('a', 'b', { residualPolicy }), /residualPolicy must be error or warn/);
+  }
+});
+
+test('quantity and claim evaluation cases remain diagnostics, not semantic proof', () => {
+  const cases = require('../evals/rewrite/preservation-policy-cases.json');
+  for (const c of cases) {
+    const r = validate(c.original, c.candidate, { skipResidual: true, residualPolicy: 'warn' });
+    assert.equal(r.ok, c.mechanicalOk, c.id);
+    assert.deepEqual(warnCodes(r), c.warningCodes, c.id);
+    assert.deepEqual(r.preservation.warnings, r.warnings, c.id);
+  }
+});
+
+test('CLI preserves default failure and explicitly supports advisory residuals', () => {
+  const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+  const { spawnSync } = require('node:child_process');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'preservation-policy-'));
+  const before = path.join(dir, 'before.md'), after = path.join(dir, 'after.md');
+  try {
+    fs.writeFileSync(before, 'The team shipped the parser on Tuesday and checked the results before releasing the patch.');
+    fs.writeFileSync(after, 'The team leveraged a robust, comprehensive approach to delve into the landscape of parsing. It is important to note that this is a testament to their seamless, cutting-edge paradigm.');
+    const run = (...args) => spawnSync(process.execPath, [require.resolve('./validate.js'), ...args], { encoding: 'utf8' });
+    const legacy = run(before, after);
+    assert.equal(legacy.status, 1, legacy.stderr);
+    assert.match(legacy.stdout, /error\s+\[residual-grew\]/);
+    const advisory = run('--residual-policy', 'warn', before, after);
+    assert.equal(advisory.status, 0, advisory.stderr);
+    assert.match(advisory.stdout, /warning \[residual-grew\]/);
+    fs.appendFileSync(before, ' `protected`');
+    const damage = run('--residual-policy', 'warn', before, after);
+    assert.equal(damage.status, 1, damage.stderr);
+    assert.match(damage.stdout, /inline-code-missing/);
+    assert.equal(run('--residual-policy', 'ignore', before, after).status, 2);
+    assert.equal(run('--residual-policy').status, 2);
+    assert.equal(run().status, 2);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 console.log(`\n${failed === 0 ? 'all preservation tests passed' : `${failed} test(s) failed`}\n`);

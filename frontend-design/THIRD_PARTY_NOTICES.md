@@ -6,7 +6,7 @@ The canonical `frontend-design` skill is a modified consolidation completed on 2
 
 The original local `frontend-design` skill and its contrast checker are retained under the MIT License in `LICENSE.txt`:
 
-Copyright (c) 2026 Sithu Win San
+Copyright (c) 2026 Agent Skills contributors
 
 ## OpenAI frontend-skill material
 

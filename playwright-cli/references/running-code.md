@@ -21,6 +21,10 @@ playwright-cli run-code --filename=./my-script.js
 The code must be a single function expression, it is wrapped in `(...)` and evaluated.
 import/export/require syntax is not supported.
 
+The code runs in an isolated context, not in a full Node.js environment. `require`, `process` and Node modules are not
+available. Timers (`setTimeout`, `setInterval`), `fetch`, `URL`, `Buffer`, `crypto`, `AbortController`, `TextEncoder`
+and `TextDecoder` are available.
+
 ## Geolocation
 
 ```bash
@@ -213,6 +217,8 @@ playwright-cli run-code "async page => {
   }
 }"
 ```
+
+Event listener errors are reported as console errors.
 
 ## Complex Workflows
 

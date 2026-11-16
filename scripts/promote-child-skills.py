@@ -24,6 +24,12 @@ ROOT_SKILL_PATH_RE = re.compile(
     r"(?:\$\{SUPERPOWERS_SKILLS_ROOT\}/)?skills/"
     r"(?P<name>using-skills)(?P<suffix>/[A-Za-z0-9_.\-/]+)?"
 )
+LEGAL_NOTICE_PREFIXES = ("license", "notice", "copying", "copyright")
+
+
+def legal_notice_family(filename: str) -> str | None:
+    lowered = filename.casefold()
+    return next((prefix for prefix in LEGAL_NOTICE_PREFIXES if lowered.startswith(prefix)), None)
 
 
 def read_name(skill_path: Path) -> str:
@@ -59,6 +65,16 @@ def replace_skill(source: Path, destination: Path, preserve_skill: bool) -> str:
             candidate = destination / filename
             if candidate.is_file():
                 preserved[filename] = candidate.read_bytes()
+        source_notice_families = {
+            family
+            for candidate in source.iterdir()
+            if candidate.is_file()
+            if (family := legal_notice_family(candidate.name)) is not None
+        }
+        for candidate in destination.iterdir():
+            family = legal_notice_family(candidate.name)
+            if candidate.is_file() and family and family not in source_notice_families:
+                preserved[candidate.name] = candidate.read_bytes()
         shutil.rmtree(destination)
         action = "refreshed"
     else:

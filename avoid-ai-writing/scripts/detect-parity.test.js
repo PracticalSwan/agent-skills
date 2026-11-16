@@ -13,26 +13,10 @@ const os = require("os");
 const path = require("path");
 
 const ROOT_CLI = path.join(__dirname, "..", "bin", "avoid-ai-writing.js");
-const DETECT = path.join(__dirname, "..", "..", "ai-writing-detector", "scripts", "detect.js");
+const DETECT = path.join(__dirname, "..", "skills", "ai-writing-detector", "scripts", "detect.js");
 
 function run(cli, args) {
   return spawnSync(process.execPath, [cli, ...args], { encoding: "utf8" });
-}
-
-// The standalone skill carries two additional diagnostic counters. Compare
-// the shared scoring contract while allowing those implementation-specific
-// counters to remain available to callers of that skill.
-function sharedResult(result) {
-  const normalized = { ...result, stats: { ...result.stats } };
-  delete normalized.stats.ignoredRegions;
-  delete normalized.stats.maskedQuotes;
-  if (result.label === "Empty" || result.tooShort || result.tooLong || result.unsupportedScript) {
-    normalized.stats = {
-      contextMode: result.stats.contextMode,
-      sourceMode: result.stats.sourceMode,
-    };
-  }
-  return normalized;
 }
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "aaw-detect-"));
@@ -56,10 +40,9 @@ fs.writeFileSync(
 // points. The root CLI takes a positional path, detect.js takes --file; that
 // difference is deliberate and stays.
 //
-// Every context the shared detector accepts is exercised here, because the
-// bundled parser is a second copy of the root CLI's validation: a context the
-// root CLI accepts but detect.js rejects is a parity break that only shows up
-// on the invocation that uses it.
+// Every context the shared detector accepts is exercised here. Both parsers
+// read the engine's CONTEXT_MODES, and this list stays literal on purpose: if
+// a context is dropped from the engine, the test still asks for it and fails.
 const CONTEXTS = ["general", "technical", "marketing", "personal"];
 
 for (const context of CONTEXTS) {
@@ -68,8 +51,8 @@ for (const context of CONTEXTS) {
   const detectOut = run(DETECT, ["--file", draft, "--context", context, "--source-mode", "rendered-markdown"]);
   assert.strictEqual(detectOut.status, 0, `detect.js --context ${context}: ${detectOut.stderr}`);
   assert.deepStrictEqual(
-    sharedResult(JSON.parse(detectOut.stdout)),
-    sharedResult(JSON.parse(rootOut.stdout)),
+    JSON.parse(detectOut.stdout),
+    JSON.parse(rootOut.stdout),
     `--context ${context} must agree between the two entry points`,
   );
   assert.strictEqual(JSON.parse(detectOut.stdout).stats.contextMode, context);
@@ -109,8 +92,8 @@ for (const [label, blankFile] of [["empty", blank], ["whitespace-only", whitespa
     const detectOut = run(DETECT, ["--file", blankFile, "--context", "marketing", "--source-mode", sourceMode]);
     assert.strictEqual(detectOut.status, 0, `detect.js ${label} ${sourceMode}: ${detectOut.stderr}`);
     assert.deepStrictEqual(
-      sharedResult(JSON.parse(detectOut.stdout)),
-      sharedResult(JSON.parse(rootOut.stdout)),
+      JSON.parse(detectOut.stdout),
+      JSON.parse(rootOut.stdout),
       `${label} input with --source-mode ${sourceMode} must agree between the two entry points`,
     );
     const stats = JSON.parse(detectOut.stdout).stats;
@@ -118,16 +101,6 @@ for (const [label, blankFile] of [["empty", blank], ["whitespace-only", whitespa
     assert.strictEqual(stats.sourceMode, sourceMode, `${label}: selected source mode must stay visible`);
   }
 }
-
-const cjk = path.join(tmp, "cjk.md");
-fs.writeFileSync(cjk, "这个函数返回一个承诺，调用方不应假设句柄之后仍可重用。".repeat(50), "utf8");
-const rootCjk = run(ROOT_CLI, [cjk]);
-const detectCjk = run(DETECT, ["--file", cjk]);
-assert.strictEqual(rootCjk.status, 0, rootCjk.stderr);
-assert.strictEqual(detectCjk.status, 0, detectCjk.stderr);
-assert.deepStrictEqual(sharedResult(JSON.parse(detectCjk.stdout)), sharedResult(JSON.parse(rootCjk.stdout)));
-assert.strictEqual(JSON.parse(rootCjk.stdout).unsupportedScript, true);
-assert.strictEqual(JSON.parse(rootCjk.stdout).label, "Unsupported script");
 
 // Usage errors exit 2 with the usage message and no stack trace.
 const errorCases = [

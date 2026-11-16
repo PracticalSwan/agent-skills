@@ -1,181 +1,64 @@
-# Version 2.0 Client-Support Migration
+# Migration Guide
 
-Catalog version 2.0 is a breaking client-support reset dated `2026-07-29`.
+This guide covers current catalog compatibility and the supported folder
+layout. Detailed release history belongs in [CHANGELOG.md](CHANGELOG.md).
 
-## Old behavior
+## Catalog version 2.0
 
-- The catalog advertised four clients and generated an additional command
-  surface.
-- The sync script wrote to five personal-global roots.
-- Browser-oriented skills could imply that a Chrome integration was portable
-  across model providers.
+Version 2.0 standardized skill metadata, portability guidance, fallbacks, and
+verification. For each maintained skill:
 
-## New behavior
+1. Keep the skill folder name equal to the YAML `name`.
+2. Include `version`, `last_updated`, `tags`, and an activation-focused
+   `description` in frontmatter.
+3. Provide cross-client portability guidance and an MCP or no-MCP fallback.
+4. Put `## Verification Protocol` immediately after `## Anti-Patterns`.
+5. Keep `## Related Skills` as the final level-two section.
+6. Maintain a `CHANGELOG.md` in the skill folder.
 
-- Supported clients are GitHub Copilot, Claude Code, and Codex.
-- Validation operates directly on `SKILL.md`; no generated command export is
-  part of maintenance.
-- Sync is restricted to:
-  - `C:\Users\LOQ\.agents\skills`
-  - `C:\Users\LOQ\.codex\skills`
-  - `C:\Users\LOQ\.claude\skills`
-- Codex-owned `.system` skills remain authoritative and are excluded from
-  same-named top-level Codex mirror writes.
-- Claude Code sessions using the GLM Coding Plan must use an explicitly
-  configured external browser MCP for authenticated browser automation.
+Run `py -3 scripts/validate-skills.py` after migrating a skill. Preserve
+source licenses and attribution when content is moved.
 
-## Migration steps
+## Catalog name changes
 
-1. Remove any automation that calls the retired command exporter.
-2. Run `python scripts/validate-skills.py`.
-3. Run
-   `powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1`.
-   The sync removes known stale top-level system shadows and copied
-   Superpowers that conflict with the new routing, while preserving unknown
-   personal skills and Codex `.system`.
-4. Restart or reopen Codex and Claude Code when their skill discovery cache
-   requires it.
-5. For Claude browser workflows, inspect `claude mcp list` and the active tool
-   list. Use a healthy external Chrome DevTools, Puppeteer, or Playwright MCP,
-   or keep the workflow at a manual handoff.
+- Use `frontend-design` for general interface creation and art direction.
+  Framework, Figma, and Stitch workflows remain separate when they have a
+  narrower tool contract. Use `web-design-reviewer` for post-implementation
+  visual review.
+- Browser CLI workflows use `playwright-cli`. Component testing and trace
+  inspection use `playwright-component-testing` and `playwright-trace`.
+- Use the current Gemini API skill family for supported Google API workflows.
+  Retired standalone client integrations are not part of this catalog.
+- Tavily's current set is `tavily-search`, `tavily-sdk`, `tavily-entity`,
+  `tavily-list`, `tavily-monitor`, and `tavily-research`. The former
+  `tavily-best-practices`, `tavily-cli`, `tavily-crawl`,
+  `tavily-dynamic-search`, `tavily-extract`, and `tavily-map` entrypoints were
+  retired and consolidated into the current six workflows. Read their local
+  cross-links instead of reinstalling individual upstream skills.
+- Similar research and writing skills remain separate when they have distinct
+  activation boundaries or evidence requirements. Check the catalog index
+  before merging or renaming them.
 
-## 2026-08-02 Frontend Skill Consolidation
+When retiring a catalog name, migrate useful content and licensing first,
+update cross-references and source records, and add only the exact retired
+folder to the sync cleanup list.
 
-The general frontend creation surface now has one canonical skill:
-`frontend-design`.
+## Sync compatibility
 
-- Removed `frontend-skill`: use `frontend-design`.
-- Removed `premium-frontend-ui`: use `frontend-design` and select immersive or
-  experimental mode only when the context justifies it.
-- Retained `web-design-reviewer` as the separate post-implementation visual QA
-  workflow.
-- Retained React, Next.js, Vite, JavaScript, web testing, Figma, and Stitch
-  skills as specialized workflows.
+The parent catalog is authoritative. Sync only to the three approved
+user-global skill roots through `scripts/sync-skills.ps1`. Project-specific
+skill directories are not downstream targets. The script preserves unknown
+personal skills and host-managed content while pruning only reviewed retired
+catalog folders.
 
-The existing `#component-review-rubric` anchor remains valid for React,
-Next.js, and Vite references. The sync script removes only the two exact
-retired catalog folders from the Codex, shared, and Claude roots while
-preserving unknown personal skills and Codex `.system` folders.
-
-The consolidated folder preserves the original MIT license, the Apache-2.0
-license and modification notice for adapted historical OpenAI material, and
-the reviewed Awesome Copilot MIT attribution.
-
-The two verified legacy skill-only mirror trees were removed during the
-user-requested cleanup after confirming they were byte-identical, stale,
-unreferenced, and unused by running processes. Their surrounding application
-state was preserved. Do not delete neighboring client data when cleaning up
-retired mirror leaves.
-
-## 2026-08-17 Codex-Only Blender Overlay
-
-The `arjun988/blender-skills` pack is intentionally outside the shared catalog even though the parent maintenance agent owns its update workflow.
-
-- Install and update it only in `C:\Users\LOQ\.codex\skills`.
-- Keep its checkout under `C:\Users\LOQ\.codex\vendor\blender-skills`.
-- Never promote its protected skill names into the parent catalog or synchronize them to the shared or Claude roots.
-- Use `scripts/update-codex-local-blender-skills.ps1` for upstream refreshes; it owns only the recorded Blender skill names and shared reference folder.
-- The generic promotion and sync tooling rejects parent leakage for these names.
-
-## 2026-08-29 Catalog Source Refresh
-
-The catalog was rechecked against all recorded upstream heads and refreshed only
-the installed paths that changed. `avoid-ai-writing` is now at detector 3.28.0;
-the Gemini workflows include current transcription, Omni video, and embedding
-guidance; `react-view-transitions` includes troubleshooting guidance; and the
-web-quality workflows include current field-data and agentic-browsing checks.
-
-The current Xquik source removed its MCP setup documents and metadata. The
-normalized catalog therefore removes the stale preferred Xquik MCP mapping and
-uses the documented REST/SDK fallback. Do not rely on the retired
-`mcp-setup.md` or `mcp-tools.md` files in that skill.
-
-## 2026-08-31 Catalog Corpus Refresh
-
-The current `avoid-ai-writing` corpus includes small `docs` and
-`conversational` pre-LLM seeds. They improve extraction-path coverage but do
-not establish a register-level rate; keep the manifest's under-sampling limits
-visible and do not treat the seeds as a publishable benchmark.
-
-## 2026-09-05 Source Refresh And Gemini Consolidation
-
-The source-maintenance pass refreshed only exact mapped paths at the current
-heads: Avoid AI Writing v3.29 (including its six focused detector/router and
-preservation leaves), two NVIDIA DeepStream workflows, seven Tavily workflows,
-Gemini API/Live/Omni, and the affected Figma support trees. Other source-head
-movement was recorded in provenance without broad imports.
-
-- `gemini-interactions-api` is retired because its migration guidance is now
-  carried by `gemini-api-dev`; use `gemini-live-api-dev` for bidirectional
-  streaming and `gemini-omni-flash-api` for bounded media generation.
-- The approved sync script prunes only the exact retired folder name from the
-  Codex, shared, and Claude mirrors. Unknown personal skills and Codex
-  `.system` folders remain untouched.
-- The reviewed Codex plugin selection adds only `agent-skillguard`, a
-  self-contained read-only scanner. Its public fixtures intentionally contain
-  risky examples; a full bundle scan therefore returns review findings. The
-  package does not ship `tools/verify_rule_corpus.py`, so the catalog documents
-  the supported positive/negative fixture smoke tests instead of claiming that
-  helper ran.
-- The live catalog is now `303` folders and the tracked catalog is `245`; see
-  `README.md`, `AGENTS.md`, `CLAUDE.md`, and `REFERENCE_SOURCES.md` for the
-  synchronized inventory and exact provenance.
-
-## 2026-09-14 Humanizer Routing
-
-The catalog now includes the explicitly requested `humanizer` skill from
-`blader/humanizer` v3.0.0. Use it for a compact direct rewrite of prose that
-should sound like the writer without changing supported facts. Continue to
-route detection, false-positive review, preservation verification, in-place
-file edits, and iterative convergence to the existing `avoid-ai-writing`
-suite; use `voice-preserving-rewriter` when preserving a specific voice is the
-primary constraint. This is an additive skill and does not retire or rename
-any existing client-facing entry.
-
-The imported copy is normalized to the catalog v2.0 structure. Its upstream
-Claude marketplace metadata, CI, and package-install validator are not runtime
-requirements; use the parent catalog validator and approved three-root sync.
-
-## 2026-09-14 Mapped Source Refresh
-
-The maintenance pass checked all `27` recorded upstream heads, refreshed the
-`13` exact mapped paths that changed, and updated provenance-only pins for the
-remaining `68` mapped skills. Unchanged mapped paths were not rewritten. The
-Avoid AI Writing refresh is pinned to the final live v3.35.0 revision
-`aa4da8b255eb9821f0dae2a059762de900bb5d1f` and retains its runtime CLI/gate
-and focused regression helpers, while its upstream marketplace/CI/package-
-publishing metadata and large evaluation corpus are intentionally not part of
-the catalog install.
-
-## 2026-09-12 Playwright CLI Skill Consolidation
-
-The former broad `playwright` skill is retired. Route browser CLI requests to
-`playwright-cli`, component story-gallery requests to
-`playwright-component-testing`, and trace-file inspection to
-`playwright-trace`.
-
-- Replace `network` with the current `requests` command when inspecting page
-  traffic.
-- Replace the retired `playwright-cli.json` convention with the current
-  `.playwright/cli.config.json` location when a CLI config file is needed.
-- Use global `@playwright/cli@0.1.19` only for live browser CLI work. The
-  component `mount` fixture still requires project-local `@playwright/test`,
-  and trace-file inspection still requires the project-local `playwright`
-  executable; neither workflow silently installs a test runner or browser.
-- Run `playwright-cli install --skills=agents --global` or
-  `playwright-cli install --skills=claude --global` only when the corresponding
-  global agent-home installation is explicitly requested. Parent catalog sync
-  remains the source of truth for all three normalized entries.
+Codex system-managed skills and protected Codex-only overlays stay outside the
+shared catalog. Copied official Superpowers are routed separately according to
+the registry and must not be treated as maintained imports.
 
 ## Rollback
 
-To restore the prior support model, revert the version 2.0 catalog commit,
-restore the former exporter and five-root sync policy from Git history, run
-the restored validation/export workflow, and resync the restored destinations.
-Do not mix a version 1.3 sync script with version 2.0 skill metadata.
-
-To roll back only the frontend consolidation, restore both retired folders and
-their registry and active-reference entries from the pre-consolidation commit,
-remove them from the exact retired-name cleanup list, validate the whole
-catalog, and resync all three approved roots. Do not restore only the links;
-that would leave broken activation and licensing state.
+Review the exact diff and restore only the affected files from the last known
+good repository revision. Prefer a normal revert commit for published changes.
+Do not rewrite published history without explicit authorization. After a
+rollback, rerun catalog validation and verify the approved mirrors before
+claiming the rollback is complete.

@@ -2,6 +2,26 @@
 
 All notable changes to the `avoid-ai-writing` skill will be documented in this file.
 
+## [2026-11-16] - Catalog Freshness And Source Sync
+
+### Added
+
+- Refreshed the catalog metadata and retained-client portability baseline.
+- Added the current upstream glossary input, HTML named-reference table, and focused preservation fixture required by the shipped self-scan, style/quote helpers, and detector tests.
+
+### Changed
+
+- Updated the catalog metadata and last-updated state for the 2026-11-16 maintenance pass.
+- Kept the retained-client portability, MCP fallback, Anti-Patterns, Verification Protocol, and Related Skills sections aligned.
+- Scoped the default test command to catalog-shipped suites; upstream monorepo packaging, GitHub Action, and retained-evaluation suites are excluded from this cross-client copy.
+- Linked the omitted upstream issue template, corpus intake drafts, and dated
+  calibration report at the pinned source revision instead of leaving broken
+  local references in the catalog copy.
+
+### Fixed
+
+- Preserved explicit no-MCP fallbacks and the catalog's safety, approval, and source-boundary guidance.
+
 ## [2026-10-19] - Detector And Catalog Test Compatibility
 
 ### Added

@@ -1,68 +1,91 @@
 # Contributing
 
-Thanks for helping improve the shared skill catalog.
+This catalog serves GitHub Copilot, Claude Code, and Codex. Keep additions
+useful across clients and easy to verify.
 
-## Before You Start
+## Before editing
 
-- Read [LESSON.md](C:\Users\LOQ\.copilot\skills\LESSON.md) and [AGENTS.md](C:\Users\LOQ\.copilot\skills\AGENTS.md) before making changes.
-- Edit maintained content in `C:\Users\LOQ\.copilot\skills` first. Do not author new maintained skills directly in downstream sync targets.
-- Treat `SKILL.md` as the source of truth.
+- Read [LESSON.md](LESSON.md) and [AGENTS.md](AGENTS.md).
+- Inspect Git status and preserve unrelated work.
+- Treat `SKILL.md` as the source of truth for a skill's behavior.
+- Keep tracked content free of credentials, personal identifiers, and
+  machine-specific or project-specific paths.
 
-## Maintained Skill Changes
+## Add or refresh a skill
 
-For every maintained skill change:
+1. Confirm the task is not already covered by a maintained skill.
+2. Prefer a canonical upstream source over discovery catalogs or plugin
+   snapshots. For child-only skills, inspect only the user's global `.codex`,
+   `.agents`, and `.claude` skill roots.
+3. Review the exact upstream skill path and its supporting files at a pinned
+   revision. Import or refresh only material changes relevant to that mapping.
+4. Preserve applicable licenses, provenance, security safeguards, and
+   cross-client fallbacks. Do not copy host metadata or credentials.
+5. Keep the folder name aligned with frontmatter `name`. Include `CHANGELOG.md`
+   for maintained skills and follow the required sections described in
+   [AGENTS.md](AGENTS.md).
+6. Update `scripts/skill-registry.json` and
+   [REFERENCE_SOURCES.md](REFERENCE_SOURCES.md) for external provenance.
+7. Generate the public catalog index and update the relevant root
+   documentation.
 
-1. Update the skill folder in this repository first.
-2. Keep the `SKILL.md` frontmatter aligned with the catalog baseline: `name`, `version`, `last_updated`, `tags`, and `description`.
-3. Preserve the required catalog sections, including portability guidance, MCP fallback guidance, `## Anti-Patterns`, `## Verification Protocol`, and `## Related Skills`.
-4. Update that skill's `CHANGELOG.md`.
-5. If the skill came from an external source, update `REFERENCE_SOURCES.md` and `scripts/skill-registry.json`.
-6. If the skill is MCP-aware, name the preferred MCP server explicitly and provide a practical no-MCP fallback path.
-7. Preserve the upstream license inside each independently deployable skill folder when the source license applies at repository root.
-8. Keep documentation ASCII-first unless Unicode materially improves clarity.
+Codex plugin skills are candidates only when they are self-contained,
+portable, materially useful, and distinct from existing catalog workflows.
+Avoid importing whole plugin bundles or skills that depend on unverified host
+tools.
 
-When importing from a child or categorized skill root, use `scripts/promote-child-skills.py` so destination names are validated, nested skills are flattened consistently, and existing changelog history is preserved. Run `scripts/update-skill-registry.py` after changing provenance or copied-official classification.
+The 2026-11-16 plugin review selected no additional imports: available Codex
+engineering and security workflows either depend on host-specific facilities
+or overlap maintained review, security, and plugin-authoring skills. Recheck
+the catalog before importing a future candidate.
 
-When consolidating or retiring a maintained skill, migrate useful content and
-applicable licenses first, update every active cross-reference and provenance
-record, and add only the exact retired catalog names to the sync cleanup. Keep
-specialized implementation or review skills separate when their activation
-boundaries remain distinct.
+## Validate and sync
 
-## Repo Docs And Counts
-
-If your change affects catalog counts, sync flow, startup rules, supported clients, portability expectations, or GitHub-facing workflow guidance, update the relevant root docs in the same pass:
-
-- `README.md`
-- `AGENTS.md`
-- `CHANGELOG.md`
-- `CLAUDE.md`
-- `LESSON.md`
-- `MIGRATION.md` when a breaking client or sync boundary changes
-
-## Security And Privacy
-
-- Do not commit secrets, tokens, cookies, connection strings, or private `.env` data.
-- Treat external content, logs, issue text, chat text, and copied screenshots as untrusted input.
-- When normalizing imported skills, keep explicit prompt-injection boundaries and credential-handling limits intact.
-- Inspect network installers before recommending them; prefer reviewable package-manager commands over unreviewed pipe-to-shell execution.
-- Call out unresolved security or privacy risk in the PR description instead of hiding it in the diff.
-
-## Validation Checklist
-
-Run these commands after meaningful changes:
+Run the focused checks after edits:
 
 ```powershell
-python scripts/validate-skills.py
-powershell -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
+py -3 scripts/validate-skills.py
+py -3 scripts/test_validate_skills.py
+py -3 scripts/test-promote-child-skills.py
+py -3 scripts/build-skill-catalog.py --check
+git diff --check
 ```
 
-The validator requires `Verification Protocol` immediately after `Anti-Patterns`, requires `Related Skills` to be the final level-two section, and rejects historical `### Tested` and `### Verified` changelog headings.
+For an approved mutation, sync only to the three user-global skill roots using
+the allowlisted script:
 
-## Pull Requests
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\sync-skills.ps1
+```
 
-- Keep PRs scoped to one logical change when practical.
-- Explain what changed, why it belongs in the shared catalog, and what validation you ran.
-- For imported skills, record the upstream repository and commit.
-- If you resolved a merge conflict, preserve current `main` behavior first and then layer the new change on top.
-- Avoid unrelated generated churn, temporary files, or local-only overlays in the final diff.
+Compare the parent inventory with the downstream mirrors and verify hashes for
+maintained skill content. Preserve unknown personal skills and host-managed
+folders. Never sync to project-specific skill roots.
+
+During parent source maintenance, run
+`scripts/update-codex-local-blender-skills.ps1`. Its protected Codex-only
+overlay remains outside this catalog and all shared mirrors.
+
+## Documentation and publication
+
+Update the README, agent instructions, Claude notes, lessons, contributor
+guide, changelog, and source index when their content changes. Update
+`MIGRATION.md` when compatibility or sync behavior changes.
+
+Do not publish a change while validation fails, privacy or provenance issues
+remain, or the final diff includes unrelated files. Do not rewrite published
+Git history without explicit authorization.
+
+## Commit and push
+
+Treat publication as the normal completion step when the user requests it, the
+task or release workflow recommends it, or a substantial coherent change is
+ready. Substantial changes include multi-file implementations or refactors,
+catalog refreshes, and coordinated workflow or documentation updates; a
+scratch experiment or isolated trivial typo alone does not qualify. After the
+required checks and catalog sync/hash verification pass, inspect the branch and
+diff, stage only task files, commit on the intended current branch, and push to
+its configured GitHub remote without asking for a second confirmation. Keep
+unrelated user work unstaged. Stop and report if validation fails, unrelated
+changes cannot be separated, the branch has diverged, or the GitHub remote is
+unavailable. Never force-push or rewrite published history.

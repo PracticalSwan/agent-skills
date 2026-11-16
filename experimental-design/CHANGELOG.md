@@ -2,6 +2,21 @@
 
 All notable changes to the `experimental-design` skill are documented here.
 
+## [2026-11-16] - Remove Missing Statistics Dependencies
+
+### Changed
+
+- Clarified that this skill plans study designs and does not perform power analysis
+  or post-collection statistical analysis.
+- Routed evidence gathering to maintained catalog skills and documented that no
+  dedicated power or statistical-analysis companion is installed.
+
+### Fixed
+
+- Removed links and handoffs to absent `statistical-power` and
+  `statistical-analysis` skills; updated supporting guidance to recommend a
+  design-matched calculation or simulation with stated assumptions.
+
 ## [2026-10-19] - Catalog Freshness And Source Sync
 
 ### Added

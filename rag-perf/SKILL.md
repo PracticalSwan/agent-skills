@@ -1,11 +1,11 @@
 ---
 name: rag-perf
-version: "2.0"
-last_updated: 2026-09-08
+version: "2.6.0"
+last_updated: 2026-11-16
 tags: [nvidia, rag, performance, latency, throughput, profiling]
-description: "NVIDIA RAG Blueprint performance-tuning guidance for profiling retrieval stacks, comparing bottlenecks, and validating latency or throughput improvements."
+description: "Profiles NVIDIA RAG Blueprint latency and throughput with its rag-perf CLI and optional aiperf load tests. Use after deployment to diagnose bottlenecks; use rag-eval for answer quality."
 license: "Apache-2.0"
-compatibility: "Guidance imported from the NVIDIA RAG Blueprint performance skill for current benchmark and profiling workflows."
+compatibility: "Use in a checkout of NVIDIA-AI-Blueprints/rag with Python 3.11+, uv, and a reachable deployed RAG server; this catalog copy does not bundle the CLI or presets."
 ---
 # RAG-Perf — config-driven perf benchmark CLI
 
@@ -22,7 +22,7 @@ Drive a deployed NVIDIA RAG Blueprint server with a YAML config, run a server-si
 
 ## Prerequisites
 
-- Repo cloned; **run commands from the repo root** (config paths in the presets are repo-root-relative).
+- Use this skill in the [NVIDIA RAG Blueprint repository](https://github.com/NVIDIA-AI-Blueprints/rag/tree/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df); **run commands from the repo root** (config paths in the presets are repo-root-relative). This catalog copy contains workflow instructions, not the CLI, configs, or benchmark implementation. If the checkout does not contain `scripts/rag-perf`, explain the missing prerequisite and ask before cloning or installing anything.
 - Python **3.11+** and **uv** on PATH.
 - Install rag-perf into its own uv-managed venv: `uv sync --project scripts/rag-perf`.
 - For unit tests: install dev extras as well — `uv sync --project scripts/rag-perf --extra dev` (otherwise `pytest-asyncio` is missing and async tests error out at collection time).
@@ -32,7 +32,7 @@ Drive a deployed NVIDIA RAG Blueprint server with a YAML config, run a server-si
 
 ## Instructions
 
-1. **Pick a preset.** The three under [`scripts/rag-perf/configs/`](../../scripts/rag-perf/configs) are:
+1. **Pick a preset.** The three under [`scripts/rag-perf/configs/`](https://github.com/NVIDIA-AI-Blueprints/rag/tree/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/configs) are:
    - `quick_profile.yaml` — profile-only, ~30 s. Skips load test. For fast iteration on retrieval / reranker tuning.
    - `single_run.yaml` — one concurrency level, profiling + aiperf, ~2 min. Regression checks.
    - `sweep.yaml` — multi-axis sweep. `load.concurrency`, `rag.vdb_top_k`, `rag.reranker_top_k` are all `int | list[int]`; any of them as a list becomes a sweep axis (Cartesian product).
@@ -51,7 +51,7 @@ Drive a deployed NVIDIA RAG Blueprint server with a YAML config, run a server-si
 
 6. **Summarise for the user.** When reporting back, follow the playbook in [`references/output-and-analysis.md#summarising-results-to-the-user`](references/output-and-analysis.md#summarising-results-to-the-user): pick the canonical result file for the run shape, build a headline table (concurrency × top-k axes × TTFT × throughput × bottleneck × citation quality), compute scaling efficiency on sweeps, **always flag** zero citations / non-zero error rate / suspect `llm_ttft_ms` / small-sample p99, and propose a concrete next-experiment YAML.
 
-7. **Tune.** Schema is fully documented in [`docs/performance-benchmarking.md`](../../docs/performance-benchmarking.md) and the deeper-dive references below. Common knobs: turn `aiperf.enabled: false` for profile-only mode, increase `load.iterations` for variance estimation, set `load.sleep_between_points_s: 60` for overnight Cartesian sweeps.
+7. **Tune.** Schema is fully documented in [`docs/performance-benchmarking.md`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/docs/performance-benchmarking.md) and the deeper-dive references below. Common knobs: turn `aiperf.enabled: false` for profile-only mode, increase `load.iterations` for variance estimation, set `load.sleep_between_points_s: 60` for overnight Cartesian sweeps.
 
 ## Examples
 
@@ -130,14 +130,14 @@ uv run --project scripts/rag-perf python -m pytest tests/unit/test_rag_perf/
 
 | Piece | Location |
 |---|---|
-| Driver | [`scripts/rag-perf/rag_perf/cli.py`](../../scripts/rag-perf/rag_perf/cli.py) (`main` is the single Click command) |
-| Schema | [`scripts/rag-perf/rag_perf/config.py`](../../scripts/rag-perf/rag_perf/config.py) (`RunConfig` and sub-models) |
-| Orchestrator | [`scripts/rag-perf/rag_perf/runner.py`](../../scripts/rag-perf/rag_perf/runner.py) (`BenchmarkRunner.run`, `RagProfiler`, `AiperfRunner`) |
-| aiperf plugin | [`scripts/rag-perf/rag_perf/plugin/nvidia_rag.py`](../../scripts/rag-perf/rag_perf/plugin/nvidia_rag.py) |
-| User-facing doc | [`docs/performance-benchmarking.md`](../../docs/performance-benchmarking.md) |
-| Presets | [`scripts/rag-perf/configs/{quick_profile,single_run,sweep}.yaml`](../../scripts/rag-perf/configs/) |
-| Sample queries | [`scripts/rag-perf/examples/queries.jsonl`](../../scripts/rag-perf/examples/queries.jsonl) |
-| Synthetic prompts | [`scripts/rag-perf/prompts/default_prompts.yaml`](../../scripts/rag-perf/prompts/default_prompts.yaml) |
+| Driver | [`scripts/rag-perf/rag_perf/cli.py`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/rag_perf/cli.py) (`main` is the single Click command) |
+| Schema | [`scripts/rag-perf/rag_perf/config.py`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/rag_perf/config.py) (`RunConfig` and sub-models) |
+| Orchestrator | [`scripts/rag-perf/rag_perf/runner.py`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/rag_perf/runner.py) (`BenchmarkRunner.run`, `RagProfiler`, `AiperfRunner`) |
+| aiperf plugin | [`scripts/rag-perf/rag_perf/plugin/nvidia_rag.py`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/rag_perf/plugin/nvidia_rag.py) |
+| User-facing doc | [`docs/performance-benchmarking.md`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/docs/performance-benchmarking.md) |
+| Presets | [`scripts/rag-perf/configs/{quick_profile,single_run,sweep}.yaml`](https://github.com/NVIDIA-AI-Blueprints/rag/tree/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/configs/) |
+| Sample queries | [`scripts/rag-perf/examples/queries.jsonl`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/examples/queries.jsonl) |
+| Synthetic prompts | [`scripts/rag-perf/prompts/default_prompts.yaml`](https://github.com/NVIDIA-AI-Blueprints/rag/blob/62c2739e2f9b7f42aa81d5bc3d224a3513bbd6df/scripts/rag-perf/prompts/default_prompts.yaml) |
 | Config schema details | [`references/config-schema.md`](references/config-schema.md) |
 | Synthetic-query generation | [`references/synthetic-generation.md`](references/synthetic-generation.md) |
 | Output layout & metric semantics | [`references/output-and-analysis.md`](references/output-and-analysis.md) |

@@ -1,7 +1,7 @@
 ---
 name: custom-agent-usage
-version: "2.0"
-last_updated: 2026-09-08
+version: "2.1"
+last_updated: 2026-11-16
 tags: [custom, usage, agents, delegation, workflow]
 description: "Discover, validate, and invoke .agent.md custom agents. Use when finding agent files in the local Claude or VS Code Insiders directories, checking frontmatter, verifying disable-model-invocation, or determining agentName for runSubagent calls."
 ---
@@ -23,9 +23,9 @@ Activate this skill when:
 
 ## Custom Agent Discovery
 
-Custom agents for this environment are discovered from these directories:
-- Claude agents: `C:\Users\LOQ\.claude\agents`
-- VS Code Insiders prompts: `C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts`
+Custom agents for this environment are discovered from the current user's directories:
+- Claude agents: `%USERPROFILE%\.claude\agents`
+- VS Code Insiders prompts: `%APPDATA%\Code - Insiders\User\prompts`
 
 Notes:
 - Filter to `*.agent.md` when discovering subagents.
@@ -67,9 +67,11 @@ tools: [Read, Search]
 
 Search the real agent directories and keep only `*.agent.md` files:
 ```powershell
+$claudeAgentDirectory = Join-Path $env:USERPROFILE '.claude\agents'
+$vsCodeInsidersPromptDirectory = Join-Path $env:APPDATA 'Code - Insiders\User\prompts'
 Get-ChildItem `
-  'C:\Users\LOQ\.claude\agents', `
-  'C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts' `
+  $claudeAgentDirectory, `
+  $vsCodeInsidersPromptDirectory `
   -Filter *.agent.md `
   -File
 ```
@@ -147,7 +149,7 @@ Before claiming "skill applied successfully":
 // "I need comprehensive testing for the checkout flow"
 
 // Step 2: Discover custom testing agent
-// Found: C:\Users\LOQ\.claude\agents\playwright-tester.agent.md
+// Found in the current user's Claude agents directory
 // disable-model-invocation: false and name: "Playwright Tester Mode"
 
 // Step 3: Delegate to custom agent

@@ -146,19 +146,22 @@ only **0.92 similar** to its currently published counterpart, and five of the
 twenty-five fall below 0.90. Measuring "his pre-2023 writing" against pages
 edited in 2025 would have measured the wrong thing.
 
-**One documentation source**, [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259),
-is included as a first `docs` seed. It is a pre-LLM, human-authored
-standards-track document with a named editor and a stable IETF publication
-record. It is useful for checking that the fetch-and-hash path handles a
-technical document, but one source is nowhere near a register-level sample.
+**Two documentation sources** are included as `docs` seeds:
+[RFC 8259](https://www.rfc-editor.org/rfc/rfc8259), a standards-track document
+with a named editor, and [RFC 4180](https://www.rfc-editor.org/rfc/rfc4180), an
+Informational RFC with a single named author. Both are pre-LLM, human-authored
+documents with a stable IETF publication record. They are useful for checking
+that the fetch-and-hash path handles technical documents, but two sources are
+nowhere near a register-level sample.
 
-**One conversational source**, a 1995 message from the public
-[W3C `www-talk` archive](https://lists.w3.org/Archives/Public/www-talk/1995MayJun/0026.html),
-is included as a first `conversational` seed. It is a pre-LLM mailing-list
-exchange with preserved author, date, and thread context. The archive's page
-chrome is excluded by the HTML extractor; only the message page's main content
-is hashed. This seed is still far short of the `n >= 100` units needed for a
-claim.
+**Two conversational sources**, both May 1995 messages from the public
+W3C `www-talk` archive, are included as small `conversational` seeds:
+[Nathaniel Borenstein's "Re: Session tracking"](https://lists.w3.org/Archives/Public/www-talk/1995MayJun/0026.html)
+and [Brian Behlendorf's "Re: CGI spec revisited"](https://lists.w3.org/Archives/Public/www-talk/1995MayJun/0027.html).
+Both are pre-LLM mailing-list exchanges with preserved author, date, and thread
+context. The archive's page chrome is excluded by the HTML extractor; only each
+message page's main content is hashed. Two seeds are still far short of the
+`n >= 100` units needed for a claim.
 
 The manifest therefore has non-zero coverage for `docs` and `conversational`,
 but both remain under-sampled. `social` and `email` remain at zero: social posts
@@ -346,6 +349,12 @@ write in today, and carries a confidence interval. The current run satisfies the
 interval and the n, and fails the register test outright.
 
 ## Adding to it
+
+The upstream project keeps its [corpus intake task drafts](https://github.com/conorbronsdon/avoid-ai-writing/blob/cc1d34319b4cc599bf503b80d35d7442bcde8047/corpus/INTAKE_TASKS.md)
+and offline fetch/hash example outside this catalog copy. Check live claims
+before starting. Public
+newsletter archives may supply email evidence; private correspondence must not
+be submitted, including as hashes.
 
 Public-domain or permissively licensed source, fetchable by URL:
 

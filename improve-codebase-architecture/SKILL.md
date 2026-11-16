@@ -1,7 +1,7 @@
 ---
 name: improve-codebase-architecture
 version: "2.0"
-last_updated: 2026-10-19
+last_updated: 2026-11-16
 tags: [improve, codebase, architecture]
 description: "Scan a codebase for deepening opportunities, present them as a visual HTML report, then guide a user-directed decision loop for the selected candidate."
 license: "MIT"
@@ -26,7 +26,7 @@ This command is _informed_ by the project's domain model and built on a shared d
 
 Read the project's domain glossary (`GLOSSARY.md`) and any ADRs in the area you're touching first.
 
-Then spawn a sub-agent to walk the codebase. Don't follow rigid heuristics; explore organically and note where you experience friction:
+Then spawn a sub-agent with a fresh context window to walk the codebase. Don't follow rigid heuristics; explore organically and note where you experience friction:
 
 - Where does understanding one concept require bouncing between many small modules?
 - Where are modules **shallow**, with an interface nearly as complex as the implementation?

@@ -1,13 +1,14 @@
 ---
 name: figma-use
 version: "2.0"
-last_updated: 2026-10-19
+last_updated: 2026-11-16
 tags: [figma, use]
 description: "**MANDATORY prerequisite** — you MUST invoke this skill BEFORE every `use_figma` tool call. NEVER call `use_figma` directly without loading this skill first. Skipping it causes common, hard-to-debug failures. Trigger whenever the user wants to perform a write action or a unique read action that requires JavaScript execution in the Figma file context — e.g. create/edit/delete nodes, set up variables or tokens, build components and variants, modify auto-layout or fills, bind variables to properties, or inspect file structure programmatically."
 ---
 # use_figma — Figma Plugin API Skill
-
 Use the `use_figma` tool to execute JavaScript in Figma files via the Plugin API. All detailed reference docs live in `references/`.
+
+When available, call `create_session` with `fileKey` and `description` before file reads or edits (create the file first if needed), then pass the returned `sessionId` unchanged to every call that accepts it, including follow-ups and work across files.
 
 **Always include `figma-use` in the comma-separated `skillNames` parameter when calling `use_figma`. If this skill was loaded via an MCP resource, you MUST prefix the name with `resource:` (e.g. `resource:figma-use`).** This is a logging parameter used to track skill usage — it does not affect execution.
 
@@ -17,7 +18,9 @@ Use the `use_figma` tool to execute JavaScript in Figma files via the Plugin API
 
 **Reusable library exception:** If the primary deliverable is a reusable component, component set, variant system, variable/token collection, style foundation, or other library asset intended for reuse or publication, load [figma-generate-library](../figma-generate-library/SKILL.md) instead. It provides the component-creation workflow—variable foundations, variant sets, and design-token bindings—that `figma-use` alone does not cover. For tasks that include both library assets and a composed design that uses them, load both companion skills. Read-only `use_figma` calls need neither.
 
-Before anything, load [plugin-api-standalone.index.md](references/plugin-api-standalone.index.md) to understand what is possible. When you are asked to write plugin API code, use this context to grep [plugin-api-standalone.d.ts](references/plugin-api-standalone.d.ts) for relevant types, methods, and properties. This is the definitive source of truth for the API surface. It is a large typings file, so do not load it all at once, grep for relevant sections as needed.
+**3D transforms:** For perspective, depth, X/Y tilt, isometric cubes, or other static 3D poses, consult [Figma's 3D transforms workflow](https://github.com/figma/mcp-server-guide/blob/5f3024c3decd83ff6f0bfb3ef36a2c4cfbff961d/skills/figma-3d-transforms/SKILL.md) when available. This companion is not bundled in this catalog. It covers gated `transform3d`, `scene3d`, and `transformOrigin` APIs, including fields that may be absent from the general typings. Follow this skill's node-creation rules, then apply the 3D poses to the resulting nodes. If the companion or APIs are unavailable, explain that 3D authoring is not enabled in this session. Flat in-plane rotation uses `node.rotation` and does not need the 3D workflow.
+
+For other APIs, load [plugin-api-standalone.index.md](references/plugin-api-standalone.index.md) to understand what is possible. When you are asked to write plugin API code, use this context to grep [plugin-api-standalone.d.ts](references/plugin-api-standalone.d.ts) for relevant types, methods, and properties. This is the definitive source of truth for the general API surface. It is a large typings file, so do not load it all at once, grep for relevant sections as needed.
 
 IMPORTANT: Whenever you work with design systems, start with [working-with-design-systems/wwds.md](references/working-with-design-systems/wwds.md) to understand the key concepts, processes, and guidelines for working with design systems in Figma. Then load the more specific references for components, variables, text styles, and effect styles as needed.
 
@@ -45,6 +48,9 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 16. **Always set `variable.scopes` explicitly when creating variables.** The default `ALL_SCOPES` pollutes every property picker — almost never what you want. Use specific scopes like `["FRAME_FILL", "SHAPE_FILL"]` for backgrounds, `["TEXT_FILL"]` for text colors, `["GAP"]` for spacing, etc. See [variable-patterns.md](references/variable-patterns.md) for the full list.
 17. **`await` every Promise.** Never leave a Promise unawaited — unawaited async calls (e.g. `figma.loadFontAsync(...)` without `await`, or `figma.setCurrentPageAsync(page)` without `await`) will fire-and-forget, causing silent failures or race conditions. The script may return before the async operation completes, leading to missing data or half-applied changes.
 18. **Never read `componentPropertyDefinitions` from a variant component.** Narrow the owner first: use the node itself when it is a `COMPONENT_SET`, use a `COMPONENT` only when its parent is not a `COMPONENT_SET`, and otherwise promote a variant `COMPONENT` to its parent set. Optional chaining does not make the getter safe. See [Component-property owner narrowing](references/component-patterns.md#component-property-owner-narrowing).
+19. **Never read `componentPropertyDefinitions`, `componentProperties`, or `valuesByMode` across a collection.** Resolve specific node IDs first, then read the property bundle only for those IDs. Reading one resolved node is safe; mapping these getters over `findAll*` results, `children`, or `getLocalVariables*` is the single largest cause of oversized returns.
+20. **Broad reads return `id`, `name`, `type` and counts only.** Fetch details for selected IDs in later calls. Return each file-wide inventory — variables, text styles, effect styles, paint styles, components, pages — in its own call; do not combine them into one return.
+21. **When a read may be large, measure the serialized return before returning it.** Bytes, not array length: `.slice()` bounds row count but not per-item size. If over budget, narrow the ID set or split across calls. Never drop required IDs or silently truncate.
 > For detailed WRONG/CORRECT examples of each rule, see [Gotchas & Common Mistakes](references/gotchas.md).
 
 ## 2. Page Rules (Critical)

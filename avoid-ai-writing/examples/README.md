@@ -6,7 +6,9 @@ applies **register/voice** directives and removes AI tells, on top of whatever
 (`--style ./house.json`, or a bare name matching `examples/<name>.json`): it is applied, and
 the checkable subset of its mechanics is verified deterministically (see the table below for
 which rules gate the exit code and which are advisory). The files here are *examples of that
-format*; copy one and edit it.
+format*; copy one and edit it. They also serve as test fixtures: `scripts/check-style.test.js`
+resolves bare `--config` names against this directory and asserts on their contents, so editing
+or removing either file breaks `npm test`.
 
 ## Where encoded guides live
 
@@ -65,9 +67,15 @@ A config is JSON with two parts:
 | `quotes` | `straight` \| `curly` | **hard** — flags the wrong mark form in prose |
 | `latinAbbrev` | `never` \| `parentheses` \| `any` | **hard** — `never` flags any `e.g.`/`i.e.`; `parentheses` flags them outside parentheses; `any` is unchecked |
 | `headings` | `sentence` \| `title` | advisory — proper nouns make sentence vs. title case ambiguous, so it can't be verified deterministically |
-| `emDash` | `sparing` \| `deliberate` | advisory — `sparing` flags a rate over ~1 per 1,000 words; `deliberate` is unchecked |
+| `emDash` | `sparing` \| `deliberate` \| `never` | `never` is **hard** and flags any em dash in prose, including `&mdash;` and numeric references; `sparing` is advisory and flags a rate over ~1 per 1,000 words; `deliberate` is unchecked |
+| `colons` | `never` \| `any` | **hard** — `never` flags colons in prose, including character references (`&colon;`, `&#58;`), except clock times and ratios (`10:30`, `1:2:3`), URL schemes (`https://`, `mailto:`, `tel:`, `sms:`), and table delimiter rows (`\|:---\|`, including blockquotes); `any` is unchecked |
+| `semicolons` | `never` \| `any` | **hard** — `never` flags semicolons in prose, including references that render as semicolons (`&semi;`, `&#59;`); delimiters of valid, case-sensitive HTML entities (`&amp;`, `&frac12;`) are exempt; `any` is unchecked |
 | `spellNumbersUpTo` | number | advisory — flags numerals at or below the threshold in prose |
 | `serialComma` | `true` \| `false` | model-applied only; not machine-checked |
+
+`prose.json` sets `headings: "title"` although the catalog flags Title Case headings. It shows
+the rule from `SKILL.md`'s `--style` section: when a config's mechanics conflict with the
+catalog, the config wins the mechanic.
 
 Unrecognized keys or values are reported as **warnings** (a config the tool couldn't fully
 apply) rather than silently ignored; omitted keys do nothing.

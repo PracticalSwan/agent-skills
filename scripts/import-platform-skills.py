@@ -260,7 +260,7 @@ def main() -> int:
                 "snapshot": MANIFEST.SNAPSHOT_DATE,
                 "copied": copied,
                 "skipped_existing": skipped,
-                "cli_skills_not_installed": list(MANIFEST.CLI_SKILLS_NOT_INSTALLED),
+                "cli_skills_excluded": list(MANIFEST.CLI_SKILLS_EXCLUDED),
             },
             indent=2,
         )

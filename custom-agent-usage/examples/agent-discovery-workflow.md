@@ -7,9 +7,12 @@
 Search the real agent directories and keep only `*.agent.md` files:
 
 ```powershell
+$claudeAgentDirectory = Join-Path $env:USERPROFILE '.claude\agents'
+$vsCodeInsidersPromptDirectory = Join-Path $env:APPDATA 'Code - Insiders\User\prompts'
+
 Get-ChildItem `
-  'C:\Users\LOQ\.claude\agents', `
-  'C:\Users\LOQ\AppData\Roaming\Code - Insiders\User\prompts' `
+  $claudeAgentDirectory, `
+  $vsCodeInsidersPromptDirectory `
   -Filter *.agent.md `
   -File
 ```

@@ -1,9 +1,9 @@
 ---
 name: experimental-design
-version: "2.0"
-last_updated: 2026-10-19
+version: "2.1"
+last_updated: 2026-11-16
 tags: [experimental, design]
-description: "Designs experiments and studies BEFORE data is collected — choosing a design, randomizing, blocking, and laying out treatment combinations so results are interpretable. Use whenever someone is planning a study, asks how to assign subjects/samples to groups, mentions randomization, blocking, stratification, controls, factorial or fractional-factorial designs, design of experiments (DOE), screening many factors, response-surface optimization, crossover or repeated-measures or split-plot designs, cluster/group randomization, Latin squares, plate layouts, batch/run-order effects, replication vs. pseudoreplication, or sequential/adaptive/group-sequential designs. Trigger even for informal phrasings like \"how should I set up this experiment\", \"how do I avoid confounding\", \"what's the best way to test these 6 factors\", or \"assign these mice to conditions\". For computing the sample size or power once the design is chosen, use statistical-power; for analyzing data already collected, use statistical-analysis."
+description: "Plans experiments before data collection by choosing a design, randomization, blocking, replication, and treatment combinations. Use for questions about confounding, factorial or fractional-factorial designs, response surfaces, crossover or repeated measures, cluster randomization, plate layouts, or sequential studies."
 license: "MIT license"
 compatibility: "Requires Python >=3.12 with numpy, pandas, and pydoe 1.5.0 (DOE matrices). Network access is needed only to install packages; no credentials are required."
 ---
@@ -220,15 +220,16 @@ These are structural — they can't be fixed in analysis, only in design.
 2. **List nuisance factors** (batch, day, site, operator, position) — plan to block,
    stratify, or randomize across each.
 3. **Pick the design** using the decision tree and reference files.
-4. **Decide replication** at the correct level (and get n from the
-   **statistical-power** skill for the chosen design).
+4. **Decide replication** at the correct level and determine sample size with a
+   power analysis that models the chosen design.
 5. **Generate the layout** with `randomization.py` / `doe_designs.py`, seeded.
 6. **Randomize run/processing order** and plate/batch positions within the design
    restrictions; verify roster IDs, completed-block balance, range limits, and rank.
 7. **Document** the design, software versions, seed, and schedule. Pre-specify the
    analysis; restrict access to the seed and future assignments during enrollment.
 8. **Match the analysis to the design** — blocks, strata, clusters, and nesting must
-   appear in the model (hand off to **statistical-analysis** / **statsmodels**).
+   appear in the model. Use a statistical-analysis workflow or package that can
+   represent that structure; this catalog has no dedicated analysis companion.
 
 ---
 
@@ -253,10 +254,16 @@ These are structural — they can't be fixed in analysis, only in design.
 - `references/sequential_and_adaptive.md` — group-sequential designs, alpha spending,
   interim stopping, and adaptive sample-size re-estimation.
 
-### Related skills
-- **statistical-power** — required sample size / power for the design you've chosen.
-- **statistical-analysis** — running and reporting the analysis after collection.
-- **statsmodels** / **pymc** — fitting the models the design implies.
+### Related workflows
+- **Power and sample size:** this catalog has no dedicated power-analysis skill.
+  Use a method or package that models the selected design and report its
+  assumptions; clustered, repeated-measures, and sequential designs may require
+  simulation.
+- **Post-collection analysis:** use a statistical-analysis workflow or package
+  that models the design, blocks, strata, clusters, and nesting. Do not infer that
+  the design tools in this skill perform the analysis.
+- **statsmodels / PyMC:** use these only after selecting a model that matches the
+  study design.
 
 ### Key references
 - Fisher, R. A. (1935). *The Design of Experiments*.
@@ -333,5 +340,5 @@ Before claiming the `experimental-design` workflow succeeded:
 
 ## Related Skills
 
-- [statistical-power](../statistical-power/SKILL.md): Choose sample size and power after the design and estimand are specified.
-- [statistical-analysis](../statistical-analysis/SKILL.md): Analyze collected data using a model that respects the design, blocking, and assignment structure.
+- [hypothesis-generation](../hypothesis-generation/SKILL.md): Turn discriminating predictions into a design before collecting data.
+- [research](../research/SKILL.md): Find and evaluate evidence for design choices; it does not replace statistical analysis.

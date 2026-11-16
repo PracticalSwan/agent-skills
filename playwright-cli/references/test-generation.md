@@ -7,7 +7,7 @@ End-to-end workflow for authoring and maintaining Playwright tests with `playwri
 - **Generate** — turn a spec into Playwright test files. Update the spec if it's vague or stale.
 - **Heal** — diagnose failing tests, fix the code, reconcile the spec with reality.
 
-Plan / generate / heal lean on the same mechanic: run `npx --no-install playwright test --debug=cli` in the background, then `playwright-cli attach tw-XXXX` to drive the paused page interactively. See [playwright-tests.md](playwright-tests.md) for the debug/attach mechanics.
+Plan / generate / heal lean on the same mechanic: run `npx playwright test --debug=cli` in the background, then `playwright-cli attach tw-XXXX` to drive the paused page interactively. See [playwright-tests.md](playwright-tests.md) for the debug/attach mechanics.
 
 ---
 
@@ -86,7 +86,7 @@ Generated code captures actions but not assertions. Add expectations in your tes
 - `toBeVisible()` — element is rendered and visible
 - `toHaveText(text)` — element text content matches
 - `toHaveValue(value) / toBeEmpty()` — input/select value matches
-- `toBeChecked() / toBeUnchecked()` — checkbox state matches
+- `toBeChecked() / not.toBeChecked()` — checkbox state matches
 - `toMatchAriaSnapshot(snapshot)` — page (or locator) matches a partial accessibility snapshot
 
 Use `playwright-cli generate-locator <target>` to produce the locator expression for the assertion, and the snapshot/eval commands to capture the expected value.
@@ -205,7 +205,7 @@ If no seed exists, create one that at least navigates to the app.
 Launch the app via the seed in the background and attach:
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx --no-install playwright test tests/seed.spec.ts --debug=cli
+PLAYWRIGHT_HTML_OPEN=never npx playwright test tests/seed.spec.ts --debug=cli
 # wait for "Debugging Instructions" and the session name tw-XXXX
 playwright-cli attach tw-XXXX
 ```
@@ -293,7 +293,7 @@ Goal: take a spec file and produce Playwright test files. Optionally update the 
 For each target scenario, in sequence (never in parallel — scenarios share the seed session):
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx --no-install playwright test <seed-file> --debug=cli   # background
+PLAYWRIGHT_HTML_OPEN=never npx playwright test <seed-file> --debug=cli   # background
 playwright-cli attach tw-XXXX
 # resume
 ```
@@ -349,14 +349,14 @@ Rules:
 
 ### 2.3 Generate multiple scenarios
 
-Loop 2.2 over the targeted scenarios one at a time, restarting the seed between each so every test starts from a clean page. This is safe to parallelise due to unique generated session names - just make sure each test run is stopped.
+Loop 2.2 over the targeted scenarios one at a time, restarting the seed between each so every test starts from a clean page. Make sure each test run is stopped before starting the next one.
 
 ### 2.4 Run generated tests
 
 After generation, run the new tests once:
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx --no-install playwright test tests/<group>/<scenario>.spec.ts
+PLAYWRIGHT_HTML_OPEN=never npx playwright test tests/<group>/<scenario>.spec.ts
 ```
 
 Any failure goes to Section 3.
@@ -370,7 +370,7 @@ Goal: fix failing tests, and update the spec if the app's intended behaviour cha
 ### 3.1 Find failing tests
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx --no-install playwright test
+PLAYWRIGHT_HTML_OPEN=never npx playwright test
 ```
 
 Record the list of failing `<file>:<line>` entries and process them one at a time. Do not attempt parallel fixes — shared state and the single CLI session make that fragile.
@@ -380,7 +380,7 @@ Record the list of failing `<file>:<line>` entries and process them one at a tim
 Run the single failing test in debug mode in the background, then attach:
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx --no-install playwright test tests/<group>/<scenario>.spec.ts:<line> --debug=cli
+PLAYWRIGHT_HTML_OPEN=never npx playwright test tests/<group>/<scenario>.spec.ts:<line> --debug=cli
 # wait for "Debugging Instructions" and the tw-XXXX session name
 playwright-cli attach tw-XXXX
 ```

@@ -1,7 +1,7 @@
 ---
 name: figma-use-slides
 version: "2.0"
-last_updated: 2026-09-08
+last_updated: 2026-11-16
 tags: [figma, use, slides]
 description: "This skill helps agents use Figma's use_figma MCP tool in the Slides context. Can be used alongside figma-use which has foundational context for using the use_figma tool."
 ---
@@ -10,22 +10,6 @@ description: "This skill helps agents use Figma's use_figma MCP tool in the Slid
 This skill contains Slides-specific context for the `use_figma` MCP tool. The [figma-use](../figma-use/SKILL.md) skill provides foundational context for plugin API execution via MCP as well as the full Figma plugin API for more advanced use-cases that are not described here.
 
 **Always include `figma-use-slides` in the comma-separated `skillNames` parameter when calling `use_figma` for Slides operations. If this skill was loaded via an MCP resource, you MUST prefix the name with `resource:` (e.g. `resource:figma-use-slides`).** This is a logging parameter used to track skill usage — it does not affect execution.
-
-## Choosing How to Build a Slides Deck
-
-If your environment also provides a `generate_deck` tool, choose **one** approach per deck request — do not call both for the same deck.
-
-### When to use which
-
-**`use_figma` + this skill (default):** Handles any Slides task — new decks, edits to existing decks, brand-matched designs, reference-file styling, iterative refinement, speaker notes, and full creative control over layout, color, and typography. Use this for most requests.
-
-**`generate_deck`:** Generates a complete deck in a single call using prebuilt, curated templates. Useful for quick, straightforward decks where the user doesn't need custom design, brand matching, or reference-file styling. It cannot use custom templates, cannot reference other Figma files for design direction, and does not support iterative editing or follow-up modifications through the conversation.
-
-When in doubt, default to `use_figma` + this skill — it covers everything `generate_deck` can do and more.
-
-### Pick one and commit
-
-Once you choose an approach for a deck, complete the entire request with that approach. Do not generate a deck with `generate_deck` and then also create or populate a file with `use_figma` — the user ends up with duplicate, conflicting artifacts and a confusing experience.
 
 ## Critical Rules (Slides-specific)
 

@@ -23,14 +23,13 @@ prose statement of the engine `type` total against `TYPE_LABELS`.
 
 | Detector `type` | Label | references/patterns.md section |
 |---|---|---|
-| `tier1` / `tier2` / `tier3` | AI vocabulary / Word cluster / Overused word | Words and phrases to replace (`load-bearing`: immediate abstract-noun allowlist only; literal, predicative, and unlisted forms pass; `technical` context mode suppresses eight technical-legitimate terms: `robust`, `comprehensive`, `seamless`, `ecosystem`, `leverage`, `facilitate`, `underpin`, `streamline`) |
+| `tier1` / `tier2` / `tier3` | AI vocabulary / Word cluster / Overused word | Words and phrases to replace (`tier3` fires per word at `max(3, floor(wordCount × 0.03))` uses of one listed form, so spread Tier 3 vocabulary stays clean; `load-bearing`: immediate abstract-noun allowlist only; literal, predicative, and unlisted forms pass; `technical` context mode suppresses eight technical-legitimate terms: `robust`, `comprehensive`, `seamless`, `ecosystem`, `leverage`, `facilitate`, `underpin`, `streamline`) |
 | `tier1-clarity` | Wordiness | Words and phrases to replace (Tier 1B) |
 | `transition` | AI transition | Transition phrases to remove or rewrite |
-| `template-phrase` | Template phrase | Template phrases (avoid) |
+| `template-phrase` | Template phrase | Template phrases (avoid) — *partial; in the step-towards/forward shape, only the listed vague-praise adjectives (such as "major", "crucial", "significant") before "step" flag; neutral adjectives ("first", "small") stay clean regardless of the following goal; see references/patterns.md* |
 | `tier3-phrase` / `tier3-phrase-cluster` | Boilerplate phrase / cluster | Template phrases (avoid) |
 | `chatbot` | Chatbot artifact | Chatbot artifacts |
 | `sycophantic` | Sycophantic tone | Sycophantic tone |
-| `acknowledgment-loop` | Acknowledgment loop | Acknowledgment loops |
 | `filler` | Filler phrase | Filler phrases |
 | `hollow-intensifier` | Hollow intensifier | Filler phrases (intensifiers), except context-dependent `actually` (see §C) |
 | `generic-conclusion` | Generic conclusion | Generic conclusions |
@@ -38,7 +37,7 @@ prose statement of the engine `type` total against `TYPE_LABELS`.
 | `future-narrative` | Generic future narrative | Generic future-narrative closers |
 | `lets-construction` | "Let's" opener | "Let's" constructions |
 | `reasoning-artifact` | Reasoning artifact | Reasoning chain artifacts |
-| `significance-inflation` | Significance inflation | Significance inflation |
+| `significance-inflation` | Significance inflation | Significance inflation — *partial; the evolution-of shape requires an immediately preceding inflating word (such as "chapter", "milestone", "role", "turning point"); bare and neutral uses stay clean regardless of the following object; see references/patterns.md* |
 | `novelty-inflation` | Novelty inflation | Novelty inflation *(the invented-concept-labels sub-rule is LLM-judgment only — open-ended coinages aren't regex-matchable)* |
 | `real-actual-inflation` | "Real/actual" inflation | "Real/actual" adjective inflation |
 | `vague-attribution` | Vague attribution | Vague attributions |
@@ -68,19 +67,24 @@ prose statement of the engine `type` total against `TYPE_LABELS`.
 | `fake-casual-prop` | Fake-casual prop | Fake-casual register *(six asterisk stage directions and the four (yes\|no) x (really\|seriously) parentheticals, nothing else. "chef's kiss" requires its apostrophe, and neighbours like "*checks calendar*" and "(yes, honestly)" are disclosed misses. Verdict closers, label-prefix openers, the self-QA volley and "because of course it does" stay LLM-judgment)* |
 | `performed-insight` | Performed-insight phrase | Performed-insight phrases — *partial; literal-sense exclusions documented in references/patterns.md* |
 | `negation-chain` | Negation chain | Negation chains — *partial; three-item deterministic threshold documented in references/patterns.md* |
+| `negative-parallelism` | Negative parallelism | Sentence structure: "It's not X — it's Y" — *partial: the joined frame needs a restated "it / this / that / they" + be after a comma, semicolon, colon, or dash. "isn't just / merely / simply X, it's Y" flags alone; the plain "isn't X, it's Y", "isn't about X, it's about Y", and "isn't only X, it's Y" frames and the split-sentence "isn't just X. It's Y." flag only when another frame starts within three sentences (the same sentence, the next, or the one after) in the same paragraph, so one correction per piece passes and unrelated corrections far apart stay clean. "not only X but Y" and "not X but Y" are ordinary correlatives and stay LLM-judgment, as do the multi-negation countdown and the tailing negation* |
 | `dev-blog-boilerplate` | Dev-blog boilerplate | Dev-blog boilerplate — *partial; literal-sense exclusion documented in references/patterns.md* |
 
-> **Partial map:** `smart-punct-signature` fires only when curly quotes co-occur
-> with an em-dash, an Oxford comma, and clean typing (≥80 words) — never on curly
-> punctuation alone. The references/patterns.md Formatting rule treats curly quotes as a weak,
-> corroborating signal in plain-text contexts and excludes apostrophes. The two
-> agree in spirit (curly punctuation is never conclusive on its own) but differ in
-> mechanism — so this is a partial map, not 1:1.
-> `performed-insight` omits literal "the punchline" and "worth naming" senses;
+> **Partial map:** `smart-punct-signature` is style-only. In plain mode it
+> requires curly punctuation, a prose em dash, an Oxford comma, the existing
+> spacing/contraction checks, and at least 80 words. It emits a low-priority
+> style finding with zero authorship weight and no classifier corroboration;
+> score, label, probabilities, confidence and AI sentence highlights stay
+> unchanged. Rendered-Markdown mode omits it because publication typography
+> should be preserved. Co-occurrence does not establish machine authorship.
+> `performed-insight` omits "the punchline", "worth naming", and
+> "X is dead; long live Y" because legitimate uses need reading;
 > `dev-blog-boilerplate` omits literal "batteries included." Those ambiguous
 > surface forms remain judgment rules rather than deterministic matches.
 > `negation-chain` requires three short sentence-initial "no …" items; two-item
 > chains remain judgment calls.
+> `negative-parallelism` flags a plain contrast only with a second frame within
+> three sentences; a single "It isn't raining, it's snowing." stays clean.
 
 ## B. Detector-only (stylometric / fingerprint — no skill prose)
 
@@ -109,7 +113,7 @@ mistake their absence for a coverage gap:
 - Copula avoidance
 - Promotional language
 - Context-dependent `actually` as a hollow intensifier *(delete it when it only adds emphasis; keep it when it carries a named correction or expectation gap). The same token performs both jobs, so matching it unconditionally would flag ordinary corrective prose.*
-- Sentence structure: "It's not X — it's Y" / split-sentence form / multi-negation countdown / tailing negation
+- Sentence structure: split-sentence negation without a minimizer ("The headline isn't the speed. The real story is Y.") / multi-negation countdown / tailing negation / "not only X but Y" and "not X but Y" correlatives *(the joined "It's not X, it's Y" frame is `negative-parallelism` in §A)*
 - Structural issues / Excessive structure / Inline-header lists / Numbered list inflation
 - Moral-adjective category errors (including ontological slop on assumptions, gratuitous universal quantifiers)
 - Invented contrast-pair mirroring
@@ -121,19 +125,25 @@ mistake their absence for a coverage gap:
 - Self-labeling significance
 - Wall-of-text replies (missing line breaks) *(tried as a detector — "reply-length, >=4 sentences, zero newlines" — and reverted; it fires on any ordinary short paragraph, not just conversational-reply register, so it stayed judgment-only. See the NOTE in `patterns.js` near the bullet-NP-list block)*
 - Recap-flattery opener
+- Acknowledgment loops *(tried as a detector — "you're asking about", "the question of whether", "to answer your question" — and retired (#239): the first opens ordinary replies and support answers ("You're asking about the retry limit. It is five by default..."), the third opens replies to a named earlier question ("To answer your question from Tuesday: the invoice went out on the 3rd..."), and the second is standard academic and analytical English. Both reply openers are document-initial in those examples, so position cannot separate them from the tell. Judging it needs reading whether the restatement adds anything before the answer arrives)*
 - Narrated candor *(tried as a detector and reverted: the phrasings are shared with idiomatic conflict-of-interest disclosure ("in the interest of full disclosure, I own shares in...") and with the ordinary English comparative ("I'd rather die than let you drive"), so any regex tight enough to avoid those stopped matching the tell. Judging it needs reading whether the clause carries information or only announces that information is coming)*
 - Immaculate typography in casual registers *(folded into the Formatting section — same weak-signal tier as curly quotes, not a standalone category)*
 - Subjectless fragments and agentless passives *(docs and changelog registers are carve-outs — the fragment is the correct form there)*
 - Diff-anchored writing *(changelogs, release notes, and migration guides are carve-outs)*
-- Manufactured punchlines / staccato drama (including repeated setup/reversal punchlines: P2 only when repetition replaces concrete claims; supported reversals and intentional comedy, fiction, speeches, and quotations pass)
+- List-label periods *(the period is correct when the label is itself a full sentence; telling a noun-phrase label from a short sentence needs reading)*
+- Speculative gap-filling *(the same hedges are correct when the source itself is uncertain; the tell is a guess standing in for a missing fact, which a regex can't see)*
+- Infomercial engagement hooks *(the tell is a staged setup-and-reveal, not the words: "honestly" or "look" mid-sentence is ordinary English)*
+- Manufactured punchlines and staccato drama (including repeated setup/reversal punchlines: P2 only when repetition replaces concrete claims; supported reversals and intentional comedy, fiction, speeches, and quotations pass)
+- Performed-insight "X is dead; long live Y" form *(essay titles, supported contrasts, and literal announcements share the wording; judge whether it substitutes for an argument)*
 - Aphorism formulas *(a regex for "X is the Y of Z" would flag ordinary genitive copulas — "Paris is the capital of France")*
 - Stacked rhetorical questions *(interviews, FAQs, and dialogue stack questions legitimately; a regex can't read register)*
 - Same-opener sentence runs *(whether the anaphora is earned is the whole judgment; pronoun-opener runs are ordinary narration)*
 - Stranded auxiliary contrast *(a single instance is legitimate style; only density across a piece distinguishes voice from tic)*
 - Colon into a triple *(three-item lists are often simply true, especially in technical writing — weigh by genre, not per hit)*
 - When to rewrite from scratch vs. patch
-- Severity tiers (P0 / P1 / P2)
-- Self-reference escape hatch
+- Severity tiers (P0 / P1 / P2) *(the engine has a fourth severity, `low` (P3), with no counterpart in the writing rules, and its labels can differ from the skill's tier for the same rule; see the severity table in [`README.md`](./README.md#severity-and-p-tiers))*
+- Self-reference escape hatch *(the engine applies the quoted-material half: blockquote lines and double-quoted spans are masked before scoring, see [`README.md`](./README.md). Single-quoted spans and text marked as illustrative stay judgment-only)*
+- Paragraph-reshuffle immunity (structure test) and Treadmill effect / low information density (content test) *(writer-side tests, not text patterns; out of scope for the detector)*
 - Output format
 
 > **Partial:** the skill's six context profiles map to the engine's broader

@@ -12,7 +12,7 @@
 #   3. the node detector/validate.js mechanical check -> a manual prose check
 #   4. the --style config path (scripts/check-style.js, examples/) -> apply, unverified
 #   5. --style resolution by bare name out of examples/ -> a path only
-#   6. the automatic marks command -> manual convention pass, unverified
+#   6. the automatic marks-pass paragraph -> the manual convention, stated once
 # Each rewrite is anchored on the exact upstream text and FAILS LOUDLY if the
 # anchor stops matching exactly once — so an upstream edit to one of those
 # spans breaks CI here instead of silently shipping a wrong Cursor rule.
@@ -23,9 +23,10 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+python_bin="$(command -v python3 || command -v python)"
 
 node "$repo_root/scripts/flatten-skill.js"
-python3 - "$repo_root/SKILL.full.md" "$repo_root/cursor-rules/avoid-ai-writing.mdc" <<'PY'
+"$python_bin" - "$repo_root/SKILL.full.md" "$repo_root/cursor-rules/avoid-ai-writing.mdc" <<'PY'
 import io
 from pathlib import Path
 import re
@@ -75,18 +76,18 @@ body = replace_once(
     """**Mechanical check (optional, recommended for edit mode).** If the repo ships the detector engine, run the preservation validator against the before and after text:
 
 ```bash
-node detector/validate.js <original> <rewritten>
+node detector/validate.js --residual-policy warn <original> <rewritten>
 ```
 
-It exits non-zero when a rewrite altered a fenced code block, YAML frontmatter, a blockquote, a table cell, inline code, a URL, a file path, or the heading structure, and when the rewrite introduced more flagged patterns than it removed. Those are the promises made above; this is what checks them. Rewording a heading to fix Title Case and stripping an AI tracking parameter from a URL are carved out, because this skill instructs both.""",
+This editorial policy keeps mechanical preservation errors blocking and reports residual pattern growth as a quality warning. Review each residual finding for applicability; a higher count alone does not establish content damage or authorize another edit. When the mechanical checks pass, report that no mechanical preservation errors were found, not that meaning was verified. Check facts, added or removed claims, quantities, uncertainty, and user-authorized changes separately. Rewording headings and stripping AI tracking parameters from URLs remain documented carve-outs.""",
     """**3. Preservation check**
-Confirm the rewrite did not alter a fenced code block, YAML frontmatter, a blockquote, a table cell, inline code, a URL, a file path, or the heading structure, and that it did not introduce more flagged patterns than it removed. Those are the promises made above. Rewording a heading to fix Title Case and stripping an AI tracking parameter from a URL are the two carve-outs, because this skill instructs both.""",
+Compare protected content and structure against the source. Review residual pattern findings for applicability; a higher count alone does not establish content damage or authorize another edit. Check facts, added or removed claims, quantities, uncertainty, and user-authorized changes separately. This standalone rule has no bundled validator: report the assessment as model-only and do not claim mechanical checks ran. Rewording headings and stripping AI tracking parameters from URLs remain documented carve-outs.""",
     "span 3 (validate.js mechanical check)",
 )
 body = replace_once(
     body,
-    """**Preferred: a config file.** `--style ./house.json` (or a bare name matching `examples/<name>.json`) applies a user-supplied JSON config and verifies the checkable subset of its mechanics with `node scripts/check-style.js <file> --config <path>` (exit 0 clean / 1 hard violation / 2 tool error). A config is JSON: **`register`** (voice directives you apply as written) plus **`mechanics`** (`quotes` and `latinAbbrev` hard-checkable; `headings`, `emDash`, `spellNumbersUpTo` advisory; `serialComma` model-applied). Schema and rationale: `examples/README.md`. Open the output by naming the resolved config (`Applying config examples/technical.json; checkable mechanics verified.`), the way the fallback below names its guide, so which mode ran is never ambiguous.""",
-    """**Preferred: a config file.** `--style ./house.json` applies a user-supplied JSON config: **`register`** (voice directives you apply as written) plus **`mechanics`** (`quotes`, `latinAbbrev`, `headings`, `emDash`, `spellNumbersUpTo`, `serialComma`). Apply the register and enforce the mechanics as written. The upstream repo ships a deterministic checker for the checkable ones; without it, treat the mechanics as applied but unverified. Open the output by naming the config you applied, the way the fallback below names its guide, so which mode ran is never ambiguous.""",
+    """**Preferred: a config file.** `--style ./house.json` (or a bare name matching `examples/<name>.json`) applies a user-supplied JSON config and verifies the checkable subset of its mechanics with `node scripts/check-style.js <file> --config <path>` (exit 0 clean / 1 hard violation / 2 tool error). A config is JSON: **`register`** (voice directives you apply as written) plus **`mechanics`** (`quotes`, `latinAbbrev`, `colons`, `semicolons`, and `emDash: never` hard-checkable; `headings`, `emDash: sparing`, `spellNumbersUpTo` advisory; `serialComma` model-applied). Schema and rationale: `examples/README.md`. Open the output by naming the resolved config (`Applying config examples/technical.json; checkable mechanics verified.`), the way the fallback below names its guide, so which mode ran is never ambiguous.""",
+    """**Preferred: a config file.** `--style ./house.json` applies a user-supplied JSON config: **`register`** (voice directives you apply as written) plus **`mechanics`** (`quotes`, `latinAbbrev`, `colons`, `semicolons`, `headings`, `emDash`, `spellNumbersUpTo`, `serialComma`). Apply the register and enforce the mechanics as written. The upstream repo ships a deterministic checker for the checkable ones; without it, treat the mechanics as applied but unverified. Open the output by naming the config you applied, the way the fallback below names its guide, so which mode ran is never ambiguous.""",
     "span 4 (check-style.js config path)",
 )
 body = replace_once(
@@ -98,9 +99,9 @@ body = replace_once(
 
 body = replace_once(
     body,
-    "Run `node scripts/normalize-quotes.js <rewritten-prose> --reference <original> --write` from the installed skill directory; no explicit quote target is needed.",
-    "Apply the convention manually; this standalone rule does not bundle the upstream normalization command.",
-    "span 6 (automatic marks command)",
+    """**Automatic marks pass (rewrite and edit).** Keep a copy of the original document before rewriting. As part of each editing pass, normalize quotes and apostrophes in the editable prose against that original before reviewing or delivering the result. The command processes all prose it receives; it does not recognize attribution or table semantics. Copy only the editable paragraphs you changed into a scratch file named `<rewritten-prose>`; exclude quoted material, tables, attributed text, and untouched paragraphs. Never pass the complete target document to `--write` when it contains any of those regions. Run `node scripts/normalize-quotes.js <rewritten-prose> --reference <original> --write` from the installed skill directory; no explicit quote target is needed. Double quotes and single quotes/apostrophes are inferred independently from unprotected original prose: majority wins, ties use the first observed style, and no evidence leaves that family unchanged. An explicit house-style quote setting overrides inference with `--quotes straight` or `--quotes curly` (omit `--reference`). Apply the result only to editable spans; quoted material, code, tables and attributed text retain the exemptions above. If the bundled command cannot run, apply the same convention manually and report that the marks pass was not mechanically verified. Detect mode never runs this pass.""",
+    """**Marks pass (rewrite and edit).** Keep a copy of the original document before rewriting. As part of each editing pass, normalize quotes and apostrophes in the editable prose you changed, against that original, before reviewing or delivering the result. Infer double quotes and single quotes/apostrophes independently from unprotected original prose: majority wins, ties use the first observed style, and no evidence leaves that family unchanged. An explicit house-style quote setting overrides inference. Apply the convention only to editable spans; quoted material, code, tables and attributed text retain the exemptions above. This standalone rule applies the convention by hand, so report that the marks pass was not mechanically verified. Detect mode never runs this pass.""",
+    "span 6 (marks-pass paragraph)",
 )
 
 cursor_fm = f"""---

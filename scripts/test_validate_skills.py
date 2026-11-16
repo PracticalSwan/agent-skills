@@ -38,5 +38,28 @@ class RemovedClientDetectionTests(unittest.TestCase):
                 self.assertIsNone(VALIDATOR.REMOVED_CLIENT_RE.search(text))
 
 
+class DownstreamRootValidationTests(unittest.TestCase):
+    def test_accepts_profile_derived_global_roots(self) -> None:
+        script = r"""
+        $profileRoot = [Environment]::GetEnvironmentVariable('USERPROFILE')
+        $allowedDownstreamRoots = @(
+            (Join-Path $profileRoot '.agents\skills'),
+            (Join-Path $profileRoot '.codex\skills'),
+            (Join-Path $profileRoot '.claude\skills')
+        )
+        """
+        self.assertTrue(VALIDATOR.has_profile_derived_downstream_roots(script))
+
+    def test_rejects_roots_without_profile_binding(self) -> None:
+        script = r"""
+        $allowedDownstreamRoots = @(
+            'C:\profile\.agents\skills',
+            'C:\profile\.codex\skills',
+            'C:\profile\.claude\skills'
+        )
+        """
+        self.assertFalse(VALIDATOR.has_profile_derived_downstream_roots(script))
+
+
 if __name__ == "__main__":
     unittest.main()

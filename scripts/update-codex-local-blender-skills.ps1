@@ -11,22 +11,31 @@ $registryPath = Join-Path $PSScriptRoot "skill-registry.json"
 $registry = Get-Content -LiteralPath $registryPath -Raw | ConvertFrom-Json
 $config = $registry.codex_local_only_skill_sets.blender_skills
 
-$checkout = [System.IO.Path]::GetFullPath($config.checkout)
+$profileRoot = [Environment]::GetEnvironmentVariable('USERPROFILE')
+if ([string]::IsNullOrWhiteSpace($profileRoot)) {
+    $profileRoot = [Environment]::GetFolderPath([System.Environment+SpecialFolder]::UserProfile)
+}
+if ([string]::IsNullOrWhiteSpace($profileRoot)) {
+    throw "Unable to resolve the current user's profile directory."
+}
+$expectedCheckout = [System.IO.Path]::GetFullPath((Join-Path $profileRoot '.codex\vendor\blender-skills'))
+$expectedInstallRoot = [System.IO.Path]::GetFullPath((Join-Path $profileRoot '.codex\skills'))
+$checkout = [System.IO.Path]::GetFullPath([Environment]::ExpandEnvironmentVariables([string]$config.checkout))
 $sourceRoot = Join-Path $checkout $config.source_subdir
-$installRoot = [System.IO.Path]::GetFullPath($config.install_root)
-$manifestPath = [System.IO.Path]::GetFullPath($config.manifest)
+$installRoot = [System.IO.Path]::GetFullPath([Environment]::ExpandEnvironmentVariables([string]$config.install_root))
+$manifestPath = [System.IO.Path]::GetFullPath([Environment]::ExpandEnvironmentVariables([string]$config.manifest))
 $sharedReferencesName = $config.shared_references
 $extraProtectedSkillNames = @($config.extra_protected_skill_names)
 foreach ($name in $extraProtectedSkillNames) {
     if ($name -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') { throw "Invalid protected Blender overlay skill name: $name" }
 }
 
-$expectedCheckout = "C:\Users\LOQ\.codex\vendor\blender-skills"
-$expectedInstallRoot = "C:\Users\LOQ\.codex\skills"
-if ($checkout.TrimEnd("\") -ne $expectedCheckout) {
+$normalizedCheckout = $checkout.TrimEnd("\")
+if (-not $normalizedCheckout.Equals($expectedCheckout.TrimEnd("\"), [System.StringComparison]::OrdinalIgnoreCase)) {
     throw "Refusing unexpected Blender checkout path: $checkout"
 }
-if ($installRoot.TrimEnd("\") -ne $expectedInstallRoot) {
+$normalizedInstallRoot = $installRoot.TrimEnd("\")
+if (-not $normalizedInstallRoot.Equals($expectedInstallRoot.TrimEnd("\"), [System.StringComparison]::OrdinalIgnoreCase)) {
     throw "Refusing unexpected Blender install root: $installRoot"
 }
 if ($config.scope -ne "codex-only" -or
@@ -156,8 +165,8 @@ foreach ($name in $extraProtectedSkillNames) {
 }
 $forbiddenRoots = @(
     $repoRoot,
-    "C:\Users\LOQ\.agents\skills",
-    "C:\Users\LOQ\.claude\skills"
+    (Join-Path $profileRoot '.agents\skills'),
+    (Join-Path $profileRoot '.claude\skills')
 )
 foreach ($root in $forbiddenRoots) {
     foreach ($name in $protectedSkillNames) {

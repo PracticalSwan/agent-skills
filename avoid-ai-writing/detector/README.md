@@ -46,24 +46,27 @@ file rather than the composite score:
 avoid-ai-writing-gate --glob "**/*.md" --context technical
 avoid-ai-writing-gate --threshold 0 docs/strict-policy.md
 avoid-ai-writing-gate --threshold 2 docs/guide.md README.md
+avoid-ai-writing-gate --json --glob "**/*.md"
 ```
 
 Exit codes:
 
 - `0`: every scanned file is at or below the finding threshold;
 - `1`: at least one file exceeds the threshold;
-- `2`: usage, glob-expansion, file-read, UTF-8, or unscannable-input error (including documents above the detector's 10,000-word limit).
+- `2`: usage, glob-expansion, file-read, UTF-8, or unscannable-input error (including documents above the detector's 10,000-word limit and unsegmented-script documents the engine declined to score).
+
+The `--json` flag formats scan results as structured JSON on standard output with `schemaVersion`, per-file entries (`path`, `findings`, `pass`, `types`), and aggregates (`pass`, `totalFindings`, `failedFiles`).
 
 The GitHub Action in `action.yml` exposes `glob`, `threshold`, `context`,
-and `source-mode` inputs. The CLI, Action, and shipped pre-commit hook default
-to **6 findings per file** with `technical` context and `rendered-markdown`
-source mode.
+and `source-mode` inputs, and outputs `pass`, `total-findings`, and `failed-files`.
+The CLI, Action, and shipped pre-commit hook default to **6 findings per file**
+with `technical` context and `rendered-markdown` source mode.
 
-That default is measured rather than guessed. On the current 376-document human
-control corpus under those exact settings, threshold 0 rejects 31.4% of human
-documents, while threshold 6 rejects 1.9% (7/376). A value of 6 is at or above
-the observed 95th-percentile finding count for every represented register; the
-single `technical-blog` document is an explicitly under-sampled slice. Use
+The upstream [dated gate calibration](https://github.com/conorbronsdon/avoid-ai-writing/blob/cc1d34319b4cc599bf503b80d35d7442bcde8047/evals/gate-calibration/2026-10-15.md) binds the
+human-control measurements to the exact detector and corpus revision. It records
+rejection counts and per-register percentiles, including the under-sampled
+single-document `technical-blog` slice. Results can change as detector rules
+change; they are not a live rate for every later revision. Use
 `--threshold 0` when a repository deliberately wants a strict zero-findings
 policy. The corpus predates current model generations, so this threshold is a
 practical writing-quality default, not an AI-authorship accuracy claim.
@@ -100,18 +103,23 @@ CommonJS).
 | Field | Type | Meaning |
 |---|---|---|
 | `score` | `0–100` | 0 = clean, 100 = heavy AI |
-| `label` | string | scored: `Clean` (0) / `Minimal AI signals` (1–15) / `Some AI patterns` (16–35) / `Moderate AI signals` (36–60) / `Strong AI signals` (61–80) / `Heavy AI patterns` (81–100). Unscored: `Empty` / `Too short` / `Text too long` |
-| `issues[]` | `{type, text, severity, …}` | one entry per detected pattern; `type` keys map to [`CATEGORIES.md`](./CATEGORIES.md) |
+| `label` | string | scored: `Clean` (0) / `Minimal AI signals` (1–15) / `Some AI patterns` (16–35) / `Moderate AI signals` (36–60) / `Strong AI signals` (61–80) / `Heavy AI patterns` (81–100). Unscored: `Empty` / `Too short` / `Unsupported script` / `Text too long` |
+| `issues[]` | `{type, text, severity, …}` | one entry per detected pattern; `type` keys map to [`CATEGORIES.md`](./CATEGORIES.md); `severity` values are listed under [Severity and P-tiers](#severity-and-p-tiers) |
 | `stats` | object | `wordCount`, per-tier counts, `contextMode`, `sourceMode`, masked-span counts, `denseAIVocab`, normalization flags, etc. |
 | `document_classification` | string | `HUMAN_ONLY` / `MIXED` / `AI_ONLY` (shape mirrors GPTZero for swap-in), or `UNSCORED` on the early-exit paths |
 | `class_probabilities` | `{human, mixed, ai}` | sums to exactly 1.0 |
 | `confidence_category` | `low` / `medium` / `high` | |
 | `highlight_sentence_for_ai` | region[] | sentence spans with source offsets + per-region score, for UI highlighting |
 
-The three unscored labels share one result shape: `score` 0,
+The four unscored labels share one result shape: `score` 0,
 `document_classification` `UNSCORED`, an even `class_probabilities` split, and
 `confidence_category` `low`. Branch on that classification rather than on the
-score, since clean text also scores 0 and is labeled `Clean`.
+score, since clean text also scores 0 and is labeled `Clean`. `Unsupported
+script` marks a document dominated by an unsegmented script (Chinese/Japanese:
+Han and kana characters, whose language has no inter-word spaces for
+`countWords` to split on) that was declined, not scored. An incidental place
+name or single Han character in otherwise English text does not qualify;
+Korean (Hangul) is space-separated and scores normally.
 
 `options.contextMode` accepts `general` (default), `technical`, `marketing`, and
 `personal`. Technical mode suppresses flags that are legitimate in code-adjacent
@@ -120,7 +128,7 @@ prose (e.g. Title Case headers and eight technical-legitimate terms: `robust`,
 `streamline`); `marketing` and `personal` are accepted and reported in
 `stats.contextMode`, but currently score the same as `general`.
 Invalid modes fall back to `general` and set `stats.contextModeFallback` to the
-value you passed.
+value you passed. The accepted modes are exported as `CONTEXT_MODES`.
 
 The skill's context profiles map to `contextMode` as follows:
 
@@ -149,11 +157,86 @@ sentence-highlight offsets still address the original source. The result
 reports `sourceMode`, `sourceModeFallback`, `maskedFrontmatter`, and
 `maskedHtmlComments` in `stats`. When an explicit invalid source mode falls
 back to `plain`, `sourceModeFallback` retains the requested value, including
-falsy values; without a fallback it is `undefined`.
+falsy values; without a fallback it is `undefined`. The accepted modes are
+exported as `SOURCE_MODES`.
 
 Comment contents are fully excluded in rendered mode. Use plain mode or a
 source-hygiene linter when TODO placeholders inside comments should still be
 reported.
+
+In both source modes, `<!-- avoid-ai-writing:ignore-start -->` and
+`<!-- avoid-ai-writing:ignore-end -->` exclude everything between them, markers
+included, before any other pass runs. Matching is case-insensitive. A marker
+counts only as a whole line: the full comment, at most three spaces of indent,
+and nothing else on the line. Markers inside fenced code, indented code, inline
+code, running prose, or quotations therefore do nothing, as do markers inside an HTML `<pre>`, `<code>`,
+`<script>`, or `<style>` element, inside another HTML comment, or in initial
+YAML frontmatter, in either source mode. Markers are found in one
+left-to-right scan: whichever of these constructs opens first owns the text
+until its own close, so a fence inside a comment and a comment inside a fence
+are both inert. An unclosed construct runs to the end of the text. Starts nest:
+the region runs from the outermost start to its matching end. An unclosed start
+runs to the end of the text, and an end with no open start is ignored. Masking
+preserves offsets, and `stats.ignoredRegions` counts the regions.
+
+In both source modes, quoted material does not count against the writer. Every
+Markdown blockquote line (`> `, `>> `, or the compact `>text`) is excluded,
+whether it stands alone or in a block, and `stats.quotedLines` counts them. A
+line such as `>=5` or `>5` is a comparison, not a quote. The content of each
+double-quoted span (straight `"…"` or curly `“…”`, one line, up to 300 characters) is
+blanked, and `stats.maskedQuotes` counts the spans. A nested quotation
+escaped as a pair (`\"…\"`) stays inside the span, within the same
+300-character limit. A straight quote right
+after a letter or digit, such as the inch mark in `15"`, cannot open a span,
+and a span never crosses a backtick, so a quotation holding inline code is
+still scored. Single quotes are left alone because
+apostrophes in contractions and possessives would pair up across ordinary
+prose. Zero-width characters, lookalike letters, and roleplay markers inside a
+quotation or blockquote do not raise the normalization flag.
+
+### Typography findings
+
+`smart-punct-signature` is a low-priority style check in `plain` mode: at
+least 80 words, curly punctuation, a prose em dash, an Oxford comma, and the
+existing spacing/contraction checks. Those checks do not establish that a
+document has no typos or that a model wrote it. Preserve house-style
+punctuation. Rendered-Markdown mode omits this finding.
+
+The type remains in the public API, but its authorship weight is zero and it
+is not a classifier corroborator. It cannot change the score, label,
+classification, probabilities, confidence, or AI sentence highlights. It
+still counts in plain-mode finding totals, including count-based gates;
+filter by type or severity when only higher-priority findings should block.
+Other findings and their existing thresholds remain active.
+
+### Severity and P-tiers
+
+Each `issues[]` entry carries one of four `severity` values. `SEVERITY_LABELS`
+in `patterns.js` maps them to P-labels:
+
+| `severity` | P-label | Types that emit it |
+|---|---|---|
+| `critical` | P0 | `chatbot`, `sycophantic`, `reasoning-artifact`, `vague-attribution`, `cutoff-disclaimer`, `ai-placeholder`, `ai-citation-markup`, `ai-utm-source`, `normalization-flag` (zero-width or homoglyph characters) |
+| `high` | P1 | `tier1`, `significance-inflation`, `template-phrase`, `hedge-stack`, `future-narrative`, `social-cta-closer`, `negation-chain`, `negative-parallelism`, `formulaic-opener`, `speculative-opener`, `launch-intro`, `fake-casual-prop`, `tier3-phrase-cluster`, `bullet-np-list`, `normalization-flag` (roleplay markers), `fnword-trigram-entropy` (one trigram repeated across the document) |
+| `medium` | P2 | `tier1-clarity`, `tier2`, `transition`, `filler`, `generic-conclusion`, `lets-construction`, `hollow-intensifier`, `lingering-attention`, `novelty-inflation`, `false-concession`, `rhetorical-question`, `real-actual-inflation`, `performed-insight`, `dev-blog-boilerplate`, `crowd-contrast`, `parenthetical-hedge`, `title-case-header`, `unnecessary-hyphenation`, `tier3-phrase`, `hashtag-stuff`, `em-dash`, `formatting`, `punct-distribution`, `cross-para-burstiness`, `uniformity` (sentence length), `fnword-trigram-entropy` (low entropy) |
+| `low` | P3 | `smart-punct-signature`, `tier3`, `emotional-flatline`, `confidence-calibration`, `low-ttr`, `uniformity` (paragraph length) |
+
+The skill's writing rules define only P0 to P2, so `low` / P3 has no
+counterpart there. The engine assigns its labels independently: a type can
+carry a different tier from the skill's matching rule. For example,
+`real-actual-inflation` is P2 here while the skill lists "Real/actual"
+adjective inflation under P1. To block on P0 and P1, gate on `critical` and
+`high`.
+
+## `PATTERN_TABLES`
+
+The pattern tables as plain data, for tools that re-emit them in another format;
+`scripts/build-vale.js` builds the Vale style in `vale/` from it. It is keyed by issue
+`type` and recursively frozen. Each regex is a `{ source, flags }` pair: rebuild it
+with `new RegExp(source, flags)`. A `gate` field names logic `analyzeText` applies on
+top of a table, such as the Tier 2 paragraph cluster, so matching a gated table alone
+does not reproduce the finding. `schemaVersion` changes when the shape does, not when
+the patterns do. `analyzeText` does not read it.
 
 ## `validate(original, rewritten, options?)` → result
 
@@ -171,14 +254,53 @@ if (!result.ok) console.error(formatResult(result));
 node detector/validate.js before.md after.md   # exits 1 on a preservation error
 ```
 
-**Errors** (the rewrite altered content it had no business touching): fenced
-code modified or dropped, YAML frontmatter changed, blockquote reworded, table
-cell changed, inline code removed, URL or file path lost, heading count or
-nesting changed, and `residual-grew` when the rewrite introduces more flagged
-patterns than it removes.
+**Mechanical preservation errors:** fenced code modified or dropped, YAML
+frontmatter changed, blockquote reworded, table cell changed, inline code
+removed, URL or file path lost, or heading count/nesting changed.
 
-**Warnings** (usually legitimate, occasionally a mistake): heading reworded,
-a figure from the original missing, more than 40% of the words dropped.
+The default `residualPolicy: "error"` also blocks `residual-grew`, preserving
+existing API and CLI gates. This is a quality-policy failure, not evidence of
+content damage. Editorial callers can opt into advisory residuals:
+
+```js
+const result = validate(originalText, rewrittenText, { residualPolicy: "warn" });
+```
+
+```bash
+node detector/validate.js --residual-policy warn before.md after.md
+```
+
+The option precedes the two paths. Use `--` before paths that could be read as
+options. Exit codes are 0 for no blocking findings, 1 for a failed gate or an
+uncaught I/O error (such as a missing input file), and 2 for invalid arguments.
+Check stderr for execution failures; exit 1 alone does not prove content damage.
+Invalid API policy values throw `TypeError`.
+
+The human-readable validator banner and residual message now distinguish mechanical
+preservation from quality diagnostics under both policies. Parse the documented
+API fields and issue codes for automation; normal gate exits remain 0/1. Use
+`--residual-policy` only with a validator version that supports it; update the
+validator and skill together. An execution or argument error is an incomplete
+check, not evidence of damaged content.
+
+| Result field | Contract |
+|---|---|
+| `ok`, `errors`, `warnings` | Existing aggregate gate; under `warn`, only residual growth moves from errors to warnings. |
+| `stats.residual` | Existing counts and scores, or `null` if analysis was skipped/unavailable. |
+| `preservation` | Additive `{ok, errors, warnings}` for mechanical checks only; excludes residual growth. |
+| `quality` | Additive `{status, policy, findings, residual}` for pattern diagnostics; `residual` mirrors `stats.residual`. |
+
+`quality.status` is `checked`, `skipped` (`skipResidual: true`), `unavailable`
+(no detector), or `unscored` (either input was declined by the detector).
+An unscored comparison retains the raw counts for compatibility; they do not
+establish improvement. Browser callers can inject `options.detector`; Node
+loads `./patterns.js` by default. `skipResidual` never bypasses mechanical checks.
+
+**Mechanical warnings:** heading wording changed, numeric literals added or
+missing, or more than 40% of the words dropped. Number comparisons are literal:
+`2` to `two` may warn without being wrong. Added or removed prose claims can
+escape every mechanical check. Separately review meaning, facts, units,
+negation, causality, and uncertainty. A mechanical pass is not semantic proof.
 
 Two edits this skill documents as correct are carved out so the validator never
 fires on its own instructions: stripping AI tracking parameters from URLs

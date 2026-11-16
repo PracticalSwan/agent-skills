@@ -179,8 +179,7 @@ try {
   t('the CLI scans every tracked document against its own budget', () => {
     const out = execFileSync(process.execPath, [path.join(__dirname, 'self-scan.js'), '--json'], { encoding: 'utf8' });
     const { rows } = JSON.parse(out);
-    const installedFiles = Object.keys(BUDGETS).filter((file) => fs.existsSync(path.join(ROOT, file)));
-    assert.deepStrictEqual(rows.map((r) => r.file), installedFiles);
+    assert.deepStrictEqual(rows.map((r) => r.file), Object.keys(BUDGETS));
     for (const r of rows) assert.strictEqual(r.budget, BUDGETS[r.file], `${r.file} scanned against budget ${r.budget}`);
   });
 

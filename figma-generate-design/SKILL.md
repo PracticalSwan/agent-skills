@@ -1,12 +1,11 @@
 ---
 name: figma-generate-design
 version: "2.0"
-last_updated: 2026-10-19
+last_updated: 2026-11-16
 tags: [figma, generate, design]
 description: "Use this skill alongside figma-use when the task involves translating an application page, view, or multi-section layout into Figma. Triggers: 'write to Figma', 'create in Figma from code', 'push page to Figma', 'take this app/page and build it in Figma', 'create a screen', 'build a landing page in Figma', 'update the Figma screen to match code', 'convert this modal/dialog/drawer/panel to Figma'. This is the preferred workflow skill whenever the user wants to build or update a full page, modal, dialog, drawer, sidebar, panel, or any composed multi-section view in Figma from code or a description. Discovers design system components, variables, and styles from Code Connect files, existing screens, and library search, then imports them and assembles views incrementally section-by-section using design system tokens instead of hardcoded values."
 ---
 # Build / Update Screens and Views from Design System
-
 **Hard deliverable gate:** Code-to-design output must recreate the UI as editable text, components, icons, and hierarchy.
 Treat any screenshot or flattened rendering of the complete UI only as a visual reference: never upload or import it into the deliverable, including as the wrapper fill or a child node, even if it exists in the repository or appears more pixel-accurate. Before completion, inspect the result; if the UI is not primarily represented by editable layers, rebuild it semantically or report failure.
 
@@ -14,17 +13,11 @@ Use this skill to create or update **screens, views, and multi-section UI contai
 
 **MANDATORY**: You MUST also load [figma-use](../figma-use/SKILL.md) before any `use_figma` call. That skill contains critical rules (color ranges, font loading, etc.) that apply to every script you write.
 
+When available, call `create_session` with `fileKey` and `description` before file reads or edits (create the file first if needed), then pass the returned `sessionId` unchanged to every call that accepts it, including follow-ups and work across files.
+
 **Always include `figma-generate-design` in the comma-separated `skillNames` parameter when calling `use_figma` as part of this skill. If this skill was loaded via an MCP resource, you MUST prefix the name with `resource:` (e.g. `resource:figma-generate-design`).** This is a logging parameter — it does not affect execution.
-
-## HTML-to-Figma Exceptions
-
-Use `html_to_figma` for initial creation in these cases:
-
-- The input is an existing raw or static HTML document. Pass it directly to `html_to_figma`.
-- The prompt asks to create a new design and there is no rendered UI implementation to reproduce. Create a self-contained HTML document and pass it to `html_to_figma`.
-
-If `html_to_figma` is unavailable, follow the existing workflow below.
-
+## Image and vector assets
+Reuse available source, captured, or library assets first. If suitable assets are unavailable, use Figma’s `generate_image` for raster images or `generate_vector_illustration` for editable icons, logos, and illustrations.
 ## Skill Boundaries
 
 - Use this skill when the deliverable is a **composed Figma view** (new or updated) — including a form, dashboard, list, table, card, header, panel, dialog, message preview, or other multi-section container — built from design system component instances. This applies even when the user calls the composed view a component.
@@ -378,7 +371,7 @@ Inspect the composition screenshot for:
 - Truncated content from layout sizing bugs
 - Wrong component variants (e.g., Neutral vs Primary button)
 - **Wrong font family** — text rendered in a different typeface than the product uses (e.g. Inter where the product is SF Pro). The script ran without error, so this is invisible at a glance; assert it explicitly (see "Assert the font family is correct" below)
-- **Blank image placeholders** — if images are missing, transfer them from the `generate_figma_design` capture before considering `generate_image` to generate placeholders (see "Transfer images from the generate_figma_design capture" below)
+- **Blank image placeholders** — if images are missing, transfer them from the `generate_figma_design` capture before considering `generate_image` or `generate_vector_illustration` to generate placeholders (see "Transfer images from the generate_figma_design capture" below)
 
 #### Assert the font family is correct
 
@@ -407,11 +400,11 @@ If you ran `generate_figma_design` in parallel, transfer only discrete content a
    ```
 4. Delete the `generate_figma_design` capture output after all images are transferred.
 
-#### Generating placeholder images
+#### Generating placeholder images and vectors
 
-Reuse available source, captured, or library images first. If placeholders remain, tell the user how many images need to be generated using the Figma `generate_image` tool. Ask permission, noting that this tool uses Figma AI credits. After consent, call `generate_image` with the requisite params.
+Reuse existing assets if possible. If not, choose between `generate_image` and `generate_vector_illustration`. Then inform the user that Figma AI credits were used.
 
-If Figma AI is unavailable or its AI credit limit is reached, confirm with the user if alternative image generation tools can be used. Upload only these alternative-provider images with `upload_assets`.
+If Figma AI is unavailable or its credit limit is reached, ask before using an alternative image-generation provider. Upload only these alternative-provider images with `upload_assets`.
 
 ### Step 6: Updating an Existing View
 
@@ -456,7 +449,7 @@ For detailed API patterns and gotchas, load these from the [figma-use](../figma-
 
 ## Error Recovery
 
-Follow [figma-use error recovery](../figma-use/SKILL.md#7-error-recovery--self-correction):
+Follow [figma-use error recovery](../figma-use/references/validation-and-recovery.md#error-recovery-after-failed-use_figma):
 
 - If `safeToRetryWithoutCanvasRead` is `true`, fix the error and retry.
 - If `false`, read the canvas, determine what changed, then make changes.

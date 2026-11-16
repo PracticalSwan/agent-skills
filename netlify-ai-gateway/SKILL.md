@@ -1,7 +1,7 @@
 ---
 name: netlify-ai-gateway
 version: "2.0"
-last_updated: 2026-10-19
+last_updated: 2026-11-16
 tags: [netlify, ai, gateway]
 description: "Use OpenAI, Anthropic, Google Gemini, or OpenRouter models from Netlify Functions or Edge Functions without managing provider API keys or accounts — the gateway injects credentials automatically. Reach for this when you add an AI chatbot or completion endpoint, generate images or text with Gemini/GPT/Claude, summarize form submissions with AI, build an LLM-backed API route, stream a long AI generation, or wire up any server-side AI provider call on Netlify. Covers provider SDK setup, injected env vars, model availability, rate limits, credit costs, streaming for long generations, and local dev with netlify dev or the Vite plugin."
 ---
@@ -34,7 +34,7 @@ import Anthropic from '@anthropic-ai/sdk';
 const anthropic = new Anthropic(); // uses ANTHROPIC_API_KEY, ANTHROPIC_BASE_URL
 
 const message = await anthropic.messages.create({
-  model: 'claude-sonnet-4-5-20250929',
+  model: 'claude-sonnet-5-5',
   max_tokens: 1024,
   messages: [{ role: 'user', content: 'Hello!' }]
 });
@@ -46,7 +46,7 @@ import OpenAI from 'openai';
 const openai = new OpenAI(); // uses OPENAI_API_KEY, OPENAI_BASE_URL
 
 const completion = await openai.chat.completions.create({
-  model: 'gpt-5',
+  model: 'gpt-6.1-sol',
   messages: [{ role: 'user', content: 'Hello!' }]
 });
 ```
@@ -57,7 +57,7 @@ import { GoogleGenAI } from '@google/genai';
 const genAI = new GoogleGenAI({}); // uses GEMINI_API_KEY, GOOGLE_GEMINI_BASE_URL
 
 const result = await genAI.models.generateContent({
-  model: 'gemini-2.5-pro',
+  model: 'gemini-3.8-flash',
   contents: 'Hello!'
 });
 ```
@@ -106,7 +106,7 @@ const result = await openRouter.chat.send({
 
 Models available through OpenRouter can be called with either the OpenRouter SDK or the OpenAI SDK using OpenRouter model-ID notation (e.g. `deepseek/deepseek-v4-flash-0731`) — just pass the ID as the `model`.
 
-Model IDs above (`gpt-5`, `claude-sonnet-4-5-20250929`, `gemini-2.5-pro`, `x-ai/grok-4.5`, etc.) are examples that change — check the live providers endpoint.
+Model IDs above (`gpt-6.1-sol`, `claude-sonnet-5-5`, `gemini-3.8-flash`, `x-ai/grok-4.5`, etc.) are examples that change — check the live providers endpoint.
 
 ## Env vars — which to use
 
@@ -140,9 +140,9 @@ export default async () => {
   try {
     const client = new OpenAI();
     const res = await client.responses.create({
-      model: "gpt-5-mini",
+      model: "gpt-6-luna",
       input: [{ role: "user", content: "Give me a short dad joke about coffee" }],
-      reasoning: { effort: "minimal" },
+      reasoning: { effort: "none" },
     });
     return Response.json({
       joke: res.output_text?.trim() || "Out of jokes",

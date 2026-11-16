@@ -1,9 +1,9 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [string]$SourceRoot = "",
-    [string]$CodexRoot = "C:\Users\LOQ\.codex\skills",
-    [string]$SharedRoot = "C:\Users\LOQ\.agents\skills",
-    [string]$ClaudeRoot = "C:\Users\LOQ\.claude\skills",
+    [string]$CodexRoot = "",
+    [string]$SharedRoot = "",
+    [string]$ClaudeRoot = "",
     [switch]$SkipCodex,
     [switch]$SkipShared,
     [switch]$SkipClaude
@@ -12,14 +12,32 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Downstream sync is locked to these three personal-global targets. Any other
-# skill folder path (including workspace-local roots such as .agent\skills,
-# .agents\skills, or .claude\skills under a project tree) is an upstream
-# promotion source only, never a downstream sync destination.
+# Resolve the three user-global destinations from the active profile. Do not
+# hard-code a machine account in this public maintenance script.
+$profileRoot = [Environment]::GetEnvironmentVariable('USERPROFILE')
+if ([string]::IsNullOrWhiteSpace($profileRoot)) {
+    $profileRoot = [Environment]::GetFolderPath([System.Environment+SpecialFolder]::UserProfile)
+}
+if ([string]::IsNullOrWhiteSpace($profileRoot)) {
+    throw "Unable to resolve the current user's profile directory."
+}
+$profileRoot = [System.IO.Path]::GetFullPath($profileRoot)
+
+if ([string]::IsNullOrWhiteSpace($CodexRoot)) {
+    $CodexRoot = Join-Path $profileRoot '.codex\skills'
+}
+if ([string]::IsNullOrWhiteSpace($SharedRoot)) {
+    $SharedRoot = Join-Path $profileRoot '.agents\skills'
+}
+if ([string]::IsNullOrWhiteSpace($ClaudeRoot)) {
+    $ClaudeRoot = Join-Path $profileRoot '.claude\skills'
+}
+
+# Other skill roots are promotion sources only, never downstream destinations.
 $script:allowedDownstreamRoots = @(
-    'C:\Users\LOQ\.agents\skills',
-    'C:\Users\LOQ\.codex\skills',
-    'C:\Users\LOQ\.claude\skills'
+    (Join-Path $profileRoot '.agents\skills'),
+    (Join-Path $profileRoot '.codex\skills'),
+    (Join-Path $profileRoot '.claude\skills')
 )
 
 # These exact maintained-skill names were retired by reviewed catalog
@@ -31,7 +49,13 @@ $script:retiredCatalogSkills = @(
     'gemini-interactions-api',
     'playwright',
     'literature-review',
-    'citation-management'
+    'citation-management',
+    'tavily-best-practices',
+    'tavily-cli',
+    'tavily-crawl',
+    'tavily-dynamic-search',
+    'tavily-extract',
+    'tavily-map'
 )
 
 function Get-NormalizedPath {
